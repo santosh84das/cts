@@ -1,0 +1,47 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="grid">
+            <div class="col">
+                <div class="grid nested-grid">
+                    <div class="col-fixed">
+                        <img
+                            src="assets/layout/images/icons/options.png"
+                            alt="logo"
+                            height="60"
+                        />
+                    </div>
+                    <div class="col-11">
+                        <div class="text-900 font-bold text-3xl mb-1">
+                            Token <span class="text-cyan-500 font-bold ">{{tokenNo}}</span>
+                        </div>
+                        <div class="text-700 text-1xl line-height-3">Token Date <span class="text-orange-500  font-bold">{{tokenDate}}</span></div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-fixed">
+                <p-button
+                    label="Token No"
+                    styleClass="p-button-rounded p-button-raised"
+                    icon="pi pi-file-edit"
+                ></p-button>
+            </div> -->
+        </div>
+    </div>
+    <div class="col-3">
+        <app-option-card *ngxPermissionsOnly="['can-bill-check']" logo='bill-check' optionName="Bill Checking" class="col-12 lg:col-6 xl:col-6" [routerLink]="['/bill-checking/new-bill-check/bill-details']"></app-option-card>
+<!-- 
+        <div class="card mb-0 application-card" >
+            <div class="flex justify-content-between mb-3">
+                <div>
+                    <div class="text-900 font-medium text-xl">
+                        Bill Checking
+                    </div>
+                </div>
+                <div class="flex align-items-center justify-content-center border-round"
+                    [ngStyle]="{ width: '2.5rem', height: '2.5rem' }">
+                        <img src="assets/layout/images/icons/bill-check.png" alt="logo" height="60" />
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>

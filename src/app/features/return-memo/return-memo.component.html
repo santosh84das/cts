@@ -1,0 +1,127 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="grid">
+            <div class="col">
+                <div class="grid nested-grid">
+                    <div class="col-fixed">
+                        <img src="assets/layout/images/icons/return-memo.png" alt="logo" height="60" />
+                    </div>
+                    <div class="col-11">
+                        <div class="text-900 font-bold text-3xl mb-1">
+                            Return Memo
+                        </div>
+                        <div class="text-700 text-1xl line-height-3">List of return Memo.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-fixed">
+                <button pButton pRipple label="Close" type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-raised" [routerLink]="['/']"></button>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="grid">
+            <div class="col-12 lg:col-6 p-3">
+                <div class="transition-colors transition-duration-500 hover:shadow-2 surface-card hover:bg-primary-100 p-3 border-round border-2 border-transparent hover:border-primary cursor-pointer">
+                    <div class="flex align-items-center justify-content-between">
+                        <div>
+                            <span class="text-3xl text-900 font-bold">0</span>
+                            <p class="mt-1 mb-0 text-600 text-xl">Awaiting Memo Generation </p>
+                        </div>
+                        <div>
+                            <img src="assets/layout/images/icons/filter/work-pending.png" height="60">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 lg:col-6 p-3">
+                <div class="transition-colors transition-duration-500 hover:shadow-2  surface-card hover:bg-primary-100 p-3 border-round border-2 border-transparent hover:border-primary cursor-pointer">
+                    <div class="flex align-items-center justify-content-between">
+                        <div>
+                            <span class="text-3xl text-900 font-bold">0</span>
+                            <p class="mt-1 mb-0 text-600 text-xl">Generated Retrun Memo</p>
+                        </div>
+                        <div>
+                            <img src="assets/layout/images/icons/filter/work-done.png" height="60">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <app-token-list apiPath="ReturnMemo/GetTokens" actionLable="Generate" actionIcon="pi pi-file"></app-token-list>
+    </div>
+    <p-dialog header="Advanced Details" [(visible)]="showReturnMemoModal" [style]="{width: '45vw'}" [modal]="true">
+        <div class="bg-cyan-50">
+            <div class="flex">
+                <div class="col-6 flex">
+                    <div class="text-700 font-medium mb-2 mr-2 text-lg">Token Number:</div>
+                    <div class="text-900 text-lg text-cyan-500 font-semibold">
+                        {{ this.billservice.billDetails?.tokenDetails?.tokenNumber }}
+                    </div>
+                </div>
+                <div class="col-6 flex">
+                    <div class="text-700 font-medium mb-2 mr-2 text-lg">Token Date: </div>
+                    <div class="text-900 text-lg text-cyan-500 font-semibold">
+                        {{ this.billservice.billDetails?.tokenDetails?.tokenDate}}
+                    </div>
+                </div>
+            </div>
+            <div class="flex">
+                <div class="col-6 flex">
+                    <div class="text-700 font-medium mb-2 mr-2 text-lg">Bill Number: </div>
+                    <div class="text-900 text-lg text-cyan-500 font-semibold">
+                        {{ this.billservice.billDetails?.billDetailsDetails?.billNo }}
+
+                    </div>
+                </div>
+                <div class="col-6 flex">
+                    <div class="text-700 font-medium mb-2 mr-2 text-lg">Bill Date: </div>
+                    <div class="text-900 text-lg text-cyan-500 font-semibold">
+                        {{ this.billservice.billDetails?.billDetailsDetails?.billDate }}
+
+                    </div>
+                </div>
+            </div>
+            <div class="flex">
+                <div class="col-6 flex">
+                    <div class="text-700 font-medium mb-2 mr-2 text-lg">DDO Code: </div>
+                    <div class="text-900 text-lg text-cyan-500 font-semibold">
+                        {{ this.billservice.billDetails?.billDetailsDetails?.ddoCode }}
+
+                    </div>
+                </div>
+                <div class="col-6 flex">
+                    <div class="text-700 font-medium mb-2 mr-2 text-lg">Chart Of Account:</div>
+                    <div class="text-900 text-lg text-cyan-500 font-semibold">
+                        {{ this.billservice.billDetails?.billDetailsDetails?.billDate }}
+
+                    </div>
+                </div>
+            </div>
+            <div class="flex">
+                <div class="col-6 flex">
+                    <div class="text-700 font-medium mb-2 mr-2 text-lg">Gross Amount:</div>
+                    <div class="text-900 text-lg text-cyan-500 font-semibold">
+                        {{ this.billservice.billDetails?.billDetailsDetails?.grossAmount }}
+                    </div>
+                </div>
+                <div class="col-6 flex">
+                    <div class="text-700 font-medium mb-2 mr-2 text-lg">Net Amount:</div>
+                    <div class="text-900 text-lg text-cyan-500 font-semibold">
+                        {{ this.billservice.billDetails?.billDetailsDetails?.netAmount }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-template pTemplate="footer">
+            <!-- <button p-button (click)="showReturnMemoModal=false" label="Cancel"  classstyleClass="p-button-outlined"></p-button> -->
+            <button (click)="showReturnMemoModal=false" pButton pRipple type="button" label="Cancel"
+                class="mr-5 p-button-outlined p-button-secondary"></button>
+            <p-button (click)="generateReturnMemo()" label="Generate" icon="pi pi-check"
+                styleClass="p-button"></p-button>
+        </ng-template>
+
+    </p-dialog>
+</div>
