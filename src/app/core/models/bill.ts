@@ -116,3 +116,19 @@ export interface ISelectedObjection{
   objectionType?:string,
   objectionBy?:string,
 }
+
+export interface IRetunMemoBillDetils{
+  tokenId :number,
+  tokenNumber :number,
+  tokenDate :string,
+  billNo :string,
+  billDate :string,
+  ddoCode :string,
+  hoaChain  :HoaChain,
+  grossAmount :number,
+  netAmount :number
+}
+export interface IReturnMemoCount{
+  generatedReturnMemo: number,
+  awatingReturnMemo: number
+}

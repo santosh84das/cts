@@ -7,6 +7,7 @@ import { LoginComponent } from './features/login/login.component';
 import { AuthGuard } from './core/guard/auth.guard';
 import { NgxPermissionsGuard } from 'ngx-permissions';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { StaticLoginComponent } from './features/static-login/static-login.component';
 
 @NgModule({
     imports: [
@@ -29,6 +30,7 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
                 ]
             },
             {path:'login',component:LoginComponent},
+            {path:'static-login',component:StaticLoginComponent},
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
             { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
             { path: 'notfound', component: NotFoundComponent },

@@ -60,9 +60,24 @@ $gutter: 1rem; //for primeflex grid system
         background: #C8E6C9;
         color: #256029;
     }
-
+    &.status-to_objected {
+        background: #FFD8B2;
+        color: #805b36;
+    }
     &.status-bill_clear {
         background: #C8E6C9;
         color: #256029;
+    }
+    &.status-bill_clear {
+        background: #C8E6C9;
+        color: #256029;
+    }
+    &.status-Global {
+        background: #ECCFFF;
+        color: #694382;
+    }
+    &.status-Local {
+        background: #B3E5FC;
+        color: #23547b;
     }
 }

@@ -15,6 +15,8 @@ import { ToastService } from 'src/app/core/services/toast.service';
 export class TokenListComponent implements OnInit {
 
   @Input() actionRoute:string|any;  
+  @Input() actionButtonClass:string="";  
+  @Input() listType:number|any;  
   @Input() isAllToken:number =  0;  
   @Input() apiPath:string |any;
   @Input() actionLable:string |any;
@@ -28,7 +30,7 @@ export class TokenListComponent implements OnInit {
     if(this.isAllToken!=0){
       this.allTokenList();
     }else{
-      this.tokensList();
+      this.tokensList(this.listType);
     }
   }
   //=============================
@@ -47,8 +49,8 @@ export class TokenListComponent implements OnInit {
       }
     });
   }
-  tokensList(){
-    this.tokenServices.getTokens(this.apiPath).subscribe((response)=>{
+  tokensList(listType:number){
+    this.tokenServices.getTokens(this.apiPath+'?ListType='+listType).subscribe((response)=>{
       if(response.apiResponseStatus==1){
         this.tokens = response.result;
       }

@@ -86,7 +86,7 @@
                     <td style="text-align: center">
                         <!-- <button pButton type="button" icon="pi pi-angle-right" class="p-button-raised p-button-rounded" (click)="tokenFeatures(token.tokenId,token.tokenNumber, token.tokenDate,token.referenceNo)"></button> -->
                         <button pButton type="button" icon="{{actionIcon}}" label="{{actionLable}}"
-                            class="p-button-raised p-button-rounded" (click)="action(token)"></button>
+                            class="p-button-rounded " [class]="actionButtonClass" (click)="action(token)"></button>
                         <!-- <p-button icon="pi pi-angle-right" [rounded]="true"></p-button> -->
                         <!-- <p-button
                         label="Token Click"

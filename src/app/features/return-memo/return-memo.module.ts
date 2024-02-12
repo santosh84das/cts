@@ -8,7 +8,7 @@ import { GenerateReturnMemoComponent } from './generate-return-memo/generate-ret
 import {CardModule} from 'primeng/card';
 import {ButtonModule} from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
-
+import { DividerModule } from 'primeng/divider';
 @NgModule({
   declarations: [ReturnMemoComponent, GenerateReturnMemoComponent],
   imports: [
@@ -17,7 +17,8 @@ import { DialogModule } from 'primeng/dialog';
     TokenListModule,
     CardModule,
     ButtonModule,
-    DialogModule
+    DialogModule,
+    DividerModule
   ]
 })
 export class ReturnMemoModule { }

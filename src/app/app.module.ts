@@ -30,10 +30,11 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 import { FirstLetterPipe } from './core/pipe/first-letter.pipe';
 import { ReturnMemoComponent } from './features/return-memo/return-memo.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { StaticLoginComponent } from './features/static-login/static-login.component';
 
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, ServerDownComponent, LoginComponent, NotFoundComponent
+        AppComponent, NotfoundComponent, ServerDownComponent, LoginComponent, NotFoundComponent, StaticLoginComponent
     ],
     imports: [
         AppRoutingModule,

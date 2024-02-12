@@ -42,18 +42,20 @@
                     <div class="text-900 flex md:w-5" [ngClass]="{'line-through': selectedObjection.isOverruled}">
                         {{selectedObjection.description}}</div>
                     <div class="text-900 flex-1 md:w-2" style="padding-left: 15px;">
-                        {{(selectedObjection.overruledRemark!='null')?selectedObjection.overruledRemark:selectedObjection.remark}}
+                        <!-- {{selectedObjection.overruledRemark}}aaaaaaaaaaa -->
+                        {{(selectedObjection.overruledRemark!=undefined)?'aa' +selectedObjection.overruledRemark:selectedObjection.remark}}
                     </div>
                     <div class="text-900 flex flex-1  md:w-1 justify-content-center">{{(selectedObjection.objectionBy)?selectedObjection.objectionBy:'You'}}</div>
                     <div class="text-900 flex-1  md:w-1 justify-content-end">
-                        <p-badge severity="{{(selectedObjection.objectionType==='Global')?'':'info'}}" value={{selectedObjection.objectionType}}></p-badge>
+                        <!-- <p-badge severity="{{(selectedObjection.objectionType==='Global')?'':'info'}}" value={{selectedObjection.objectionType}}></p-badge> -->
+                        <span [class]="'customer-badge status-' + selectedObjection.objectionType">{{selectedObjection.objectionType}}</span>
                     </div>
                     <div class="flex-initial flex md:w-2 justify-content-end">
                         <button *ngIf="selectedObjection.remark&&!selectedObjection.exiestObjectionId" pButton pRipple
-                            label="Edit Remarks" icon="pi pi-comment" class="p-button-warning p-button-text"
+                            label="Edit Remarks" icon="pi pi-comment" class="p-button-warning p-button-text p-button-sm"
                             (click)="openRemarkPanel($event,i)"></button>
-                        <button *ngIf="!selectedObjection.remark" pButton pRipple label="Add Remarks"
-                            icon="pi pi-comment" class="p-button-info p-button-text"
+                        <button *ngIf="!selectedObjection.remark" pButton pRipple label="Add Remarks "
+                            icon="pi pi-comment" class="p-button-info p-button-text p-button-sm"
                             (click)="openRemarkPanel($event,i)"></button>
                         <button *ngIf="!selectedObjection.exiestObjectionId" pButton pRipple label="Remove"
                             icon="pi pi-minus-circle" class="p-button-danger p-button-text"
