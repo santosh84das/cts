@@ -31,6 +31,7 @@ import { FirstLetterPipe } from './core/pipe/first-letter.pipe';
 import { ReturnMemoComponent } from './features/return-memo/return-memo.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { StaticLoginComponent } from './features/static-login/static-login.component';
+import { PaymentMandateComponent } from './features/payment-mandate/payment-mandate.component';
 
 @NgModule({
     declarations: [

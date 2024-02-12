@@ -1,0 +1,37 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="grid">
+            <div class="col">
+                <div class="grid nested-grid">
+                    <div class="col-fixed">
+                        <img
+                            src="assets/layout/images/icons/short-list.png"
+                            alt="logo"
+                            height="60"
+                        />
+                    </div>
+                    <div class="col-11">
+                        <div class="text-900 font-bold text-3xl mb-1">
+                            Pay Mandate shortlist
+                        </div>
+                        <!-- <div class="text-700 text-1xl line-height-3">List of return Memo.</div> -->
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-fixed">
+                <button pButton pRipple label="Close" type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-raised" [routerLink]="['/']"></button>
+            </div> -->
+        </div>
+    </div>
+    <div class="col-12">
+        <p-toolbar>
+            <div class="p-toolbar-group-left">
+                <p-toggleButton onLabel="Payment" offLabel="Paymaent" onIcon="pi pi-check" [style]="{ width: '10em' }"></p-toggleButton>
+            </div>
+            <p-selectButton [options]="stateOptions" [(ngModel)]="value" optionLabel="label" optionValue="value"></p-selectButton>            
+            <div class="p-toolbar-group-right">
+                <button pButton pRipple type="button" icon="pi pi-search" class="p-button-rounded p-button-success"></button>
+            </div>
+        </p-toolbar>
+    </div>
+</div>
