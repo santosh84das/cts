@@ -9,6 +9,8 @@ import { RippleModule } from 'primeng/ripple';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import {SelectButtonModule} from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
+import { TableModule } from 'primeng/table';
+
 
 @NgModule({
   declarations: [PayMandateShortlistComponent],
@@ -20,7 +22,8 @@ import { FormsModule } from '@angular/forms';
     RippleModule,
     ToggleButtonModule,
     SelectButtonModule,
-    FormsModule
+    FormsModule,
+    TableModule
   ]
 })
 export class PayMandateShortlistModule { }

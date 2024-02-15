@@ -4,11 +4,7 @@
             <div class="col">
                 <div class="grid nested-grid">
                     <div class="col-fixed">
-                        <img
-                            src="assets/layout/images/icons/short-list.png"
-                            alt="logo"
-                            height="60"
-                        />
+                        <img src="assets/layout/images/icons/short-list.png" alt="logo" height="60" />
                     </div>
                     <div class="col-11">
                         <div class="text-900 font-bold text-3xl mb-1">
@@ -26,12 +22,185 @@
     <div class="col-12">
         <p-toolbar>
             <div class="p-toolbar-group-left">
-                <p-toggleButton  [(ngModel)]="isPaymentSelected" onLabel="Payment" offLabel="Paymaent" onIcon="pi pi-check" [style]="{ width: '10em' }"></p-toggleButton>
+                <p-toggleButton [(ngModel)]="isPaymentSelected" onLabel="Payment" offLabel="Paymaent"
+                    onIcon="pi pi-check" [style]="{ width: '10em' }"></p-toggleButton>
             </div>
-            <p-selectButton [options]="stateOptions" [(ngModel)]="value" optionLabel="label" optionValue="value"></p-selectButton>            
+            <p-selectButton [options]="stateOptions" [(ngModel)]="value" optionLabel="label"
+                optionValue="value"></p-selectButton>
             <div class="p-toolbar-group-right">
-                <button pButton pRipple type="button" icon="pi pi-search" class="p-button-rounded p-button-success"></button>
+                <button pButton pRipple type="button" icon="pi pi-search"
+                    class="p-button-rounded p-button-success"></button>
             </div>
         </p-toolbar>
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <h5>PayMandate Shortlist</h5>
+            <p-table #dt2  dataKey="id" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+                [loading]="loading" [paginator]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [globalFilterFields]="['billDate','trFormats','billTypes','billModule','billPeriod','noBeneficiarie','netAmount','ecsAmount','chequeAmount','detailHead','headOfAcc','ddoCode','paymentMandate','include']"
+                [tableStyle]="{'min-width':'80rem'}">
+                <ng-template pTemplate="caption">
+                    <div class="flex">
+                        <span class="p-input-icon-left ml-auto">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" placeholder="Search keyword" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width:8%">Bill Date</th>
+                        <th style="width:8%">TR Formats</th>
+                        <th style="width:8%">Bill Types</th>
+                        <th style="width:8%">Bill Module</th>
+                        <th style="width:8%">Bill Period</th>
+                        <th style="width:8%">Nos Of Beneficiarie</th>
+                        <th style="width:8%">Net Amount</th>
+                        <th style="width:8%">ECS Amount</th>
+                        <th style="width:8%">Cheque Amount</th>
+                        <th style="width:8%">Detail Head</th>
+                        <th style="width:8%">Head Of Accounts</th>
+                        <th style="width:8%">DDO Code </th>
+                        <th style="width:6%">Payment Mandate Date</th>
+                        <th style="width:6%">Include</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <p-columnFilter type="text" field="billDate"></p-columnFilter>
+                        </th>
+                        <th>
+                            <p-columnFilter type="text" field="trFormats"></p-columnFilter>
+                        </th>
+                        <th>
+                            <p-columnFilter type="text" field="billTypes"></p-columnFilter>
+                        </th>
+                        <th>
+                            <p-columnFilter type="text" field="billModule"></p-columnFilter>
+                        </th>
+                        <th>
+                            <p-columnFilter type="text" field="billPeriod"></p-columnFilter>
+                        </th>
+                        <th>
+                            <p-columnFilter type="text" field="netAmount"></p-columnFilter>
+                        </th>
+                        <th>
+                            <p-columnFilter type="text" field="detailHead"></p-columnFilter>
+                        </th>
+                        <th>
+                            <p-columnFilter type="text" field="nameheadOfAcc"></p-columnFilter>
+                        </th>
+                        <th>
+                            <p-columnFilter type="text" field="ddoCode"></p-columnFilter>
+                        </th>
+                        <!-- <th>
+                            <p-columnFilter field="representative" matchMode="in" [showMenu]="false">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <p-multiSelect [ngModel]="value" placeholder="Any"
+                                         optionLabel="name">
+                                        <ng-template let-option pTemplate="item">
+                                            <div class="p-multiselect-representative-option">
+                                                <img [alt]="option.label"
+                                                    src="assets/showcase/images/demo/avatar/{{option.image}}" width="32"
+                                                    style="vertical-align: middle" />
+                                                <span class="ml-1">{{option.name}}</span>
+                                            </div>
+                                        </ng-template>
+                                    </p-multiSelect>
+                                </ng-template>
+                            </p-columnFilter>
+                        </th>
+                        <th>
+                            <p-columnFilter field="status" matchMode="equals" [showMenu]="false">
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <p-dropdown [ngModel]="value"  
+                                        placeholder="Any">
+                                        <ng-template let-option pTemplate="item">
+                                            <span
+                                                [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                                        </ng-template>
+                                    </p-dropdown>
+                                </ng-template>
+                            </p-columnFilter>
+                        </th>
+                        <th>
+                            <p-columnFilter type="boolean" field="verified"></p-columnFilter>
+                        </th> -->
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-customer>
+                    <tr>
+                        <td>
+                            {{customer.name}}
+                        </td>
+                        <td>
+                            <img src="assets/showcase/images/demo/flag/flag_placeholder.png"
+                                [class]="'flag flag-' + customer.country.code" width="30">
+                            <span class="image-text">{{customer.country.name}}</span>
+                        </td>
+                        <td>
+                            <img [alt]="customer.representative.name"
+                                src="assets/showcase/images/demo/avatar/{{customer.representative.image}}" width="32"
+                                style="vertical-align: middle" />
+                            <span class="image-text">{{customer.representative.name}}</span>
+                        </td>
+                        <td>
+                            <span [class]="'customer-badge status-' + customer.status">{{customer.status}}</span>
+                        </td>
+                        <td>
+                            <i class="pi"
+                                [ngClass]="{'true-icon pi-check-circle': customer.verified, 'false-icon pi-times-circle': !customer.verified}"></i>
+                        </td>
+                        <td>
+                            <i class="pi"
+                                [ngClass]="{'true-icon pi-check-circle': customer.verified, 'false-icon pi-times-circle': !customer.verified}"></i>
+                        </td>
+                        <td>
+                            <i class="pi"
+                                [ngClass]="{'true-icon pi-check-circle': customer.verified, 'false-icon pi-times-circle': !customer.verified}"></i>
+                        </td>
+                        <td>
+                            <i class="pi"
+                                [ngClass]="{'true-icon pi-check-circle': customer.verified, 'false-icon pi-times-circle': !customer.verified}"></i>
+                        </td>
+                        <td>
+                            <i class="pi"
+                                [ngClass]="{'true-icon pi-check-circle': customer.verified, 'false-icon pi-times-circle': !customer.verified}"></i>
+                        </td>
+                        <td>
+                            <i class="pi"
+                                [ngClass]="{'true-icon pi-check-circle': customer.verified, 'false-icon pi-times-circle': !customer.verified}"></i>
+                        </td>
+                        <td>
+                            <i class="pi"
+                                [ngClass]="{'true-icon pi-check-circle': customer.verified, 'false-icon pi-times-circle': !customer.verified}"></i>
+                        </td>
+                        <td>
+                            <i class="pi"
+                                [ngClass]="{'true-icon pi-check-circle': customer.verified, 'false-icon pi-times-circle': !customer.verified}"></i>
+                        </td>
+                        <td>
+                            <i class="pi"
+                                [ngClass]="{'true-icon pi-check-circle': customer.verified, 'false-icon pi-times-circle': !customer.verified}"></i>
+                        </td>
+                        <td>
+                            <i class="pi"
+                                [ngClass]="{'true-icon pi-check-circle': customer.verified, 'false-icon pi-times-circle': !customer.verified}"></i>
+                        </td>
+                        <td>
+                            <i class="pi"
+                                [ngClass]="{'true-icon pi-check-circle': customer.verified, 'false-icon pi-times-circle': !customer.verified}"></i>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="5">No records found.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
     </div>
 </div>
