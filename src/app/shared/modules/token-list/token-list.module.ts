@@ -6,7 +6,11 @@ import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { TokenListComponent } from './token-list.component';
 import {CalendarModule} from 'primeng/calendar';
-
+import {DataViewModule} from 'primeng/dataview';
+import {DropdownModule} from 'primeng/dropdown';
+import {RatingModule} from 'primeng/rating';
+import {FormsModule} from '@angular/forms';
+import {InputTextModule} from 'primeng/inputtext';
 
 @NgModule({
   declarations: [TokenListComponent],
@@ -15,7 +19,12 @@ import {CalendarModule} from 'primeng/calendar';
     ButtonModule,
     CardModule,
     TableModule,
-    CalendarModule
+    CalendarModule,
+    DataViewModule,
+    DropdownModule,
+    RatingModule,
+    FormsModule,
+    InputTextModule,
   ],
   exports:[
     TokenListComponent

@@ -35,4 +35,8 @@ export class BillCheckingComponent implements OnInit {
   setToBillCheck(){
     this.router.navigate(["/bill-checking/new-bill-check/bill-details"]);
   }
+  closeButton(event: any) {
+    console.log('functioncall', event);
+    this.router.navigate(["/"]);
+  }
 }

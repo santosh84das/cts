@@ -10,6 +10,9 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import {SelectButtonModule} from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
+import { CommonHeaderModule } from 'src/app/shared/modules/common-header/common-header.module';
+import {InputTextModule} from 'primeng/inputtext';
+
 
 
 @NgModule({
@@ -23,7 +26,9 @@ import { TableModule } from 'primeng/table';
     ToggleButtonModule,
     SelectButtonModule,
     FormsModule,
-    TableModule
+    TableModule,
+    CommonHeaderModule,
+    InputTextModule
   ]
 })
 export class PayMandateShortlistModule { }

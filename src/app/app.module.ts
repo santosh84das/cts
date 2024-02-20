@@ -32,6 +32,7 @@ import { ReturnMemoComponent } from './features/return-memo/return-memo.componen
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { StaticLoginComponent } from './features/static-login/static-login.component';
 import { PaymentMandateComponent } from './features/payment-mandate/payment-mandate.component';
+import { CommonHeaderComponent } from './shared/modules/common-header/common-header.component';
 
 @NgModule({
     declarations: [

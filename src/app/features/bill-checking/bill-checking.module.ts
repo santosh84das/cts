@@ -14,6 +14,8 @@ import { ListboxModule } from 'primeng/listbox';
 import { TokenListModule } from 'src/app/shared/modules/token-list/token-list.module';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import {ButtonModule} from 'primeng/button';
+import { CommonHeaderModule } from 'src/app/shared/modules/common-header/common-header.module';
+
 @NgModule({
   declarations: [BillCheckingComponent],
   imports: [
@@ -24,6 +26,7 @@ import {ButtonModule} from 'primeng/button';
     ListboxModule,
     TokenListModule,
     ButtonModule,
+    CommonHeaderModule,
     NgxPermissionsModule.forChild()
   ]
 })

@@ -1,25 +1,7 @@
 <div class="grid">
     <div class="col-12">
-        <div class="grid">
-            <div class="col">
-                <div class="grid nested-grid">
-                    <div class="col-fixed">
-                        <img src="assets/layout/images/icons/short-list.png" alt="logo" height="60" />
-                    </div>
-                    <div class="col-11">
-                        <div class="text-900 font-bold text-3xl mb-1">
-                            Pay Mandate shortlist
-                        </div>
-                        <!-- <div class="text-700 text-1xl line-height-3">List of return Memo.</div> -->
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="col-fixed">
-                <button pButton pRipple label="Close" type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-raised" [routerLink]="['/']"></button>
-            </div> -->
-        </div>
-    </div>
-    <div class="col-12">
+        <app-common-header [headerName]="'Pay Mandate shortlist'"
+            [imgSrc]="'assets/layout/images/icons/payment-mandate.png'"></app-common-header>
         <p-toolbar>
             <div class="p-toolbar-group-left">
                 <p-toggleButton [(ngModel)]="isPaymentSelected" onLabel="Payment" offLabel="Paymaent"
@@ -35,12 +17,12 @@
     </div>
     <div class="col-12">
         <div class="card">
-            <h5>PayMandate Shortlist</h5>
-            <p-table #dt2  dataKey="id" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+            <!-- <h5>PayMandate Shortlist</h5> -->
+            <p-table #dt2 dataKey="id" [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
                 [loading]="loading" [paginator]="true"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                [globalFilterFields]="['billDate','trFormats','billTypes','billModule','billPeriod','noBeneficiarie','netAmount','ecsAmount','chequeAmount','detailHead','headOfAcc','ddoCode','paymentMandate','include']"
-                [tableStyle]="{'min-width':'80rem'}">
+                [globalFilterFields]="['slNo','tokenNo','tokenDate','billDate','trFormats','billTypes','billModule','billPeriod','noBeneficiarie','netAmount','ecsAmount','chequeAmount','detailHead','headOfAcc','ddoCode','paymentMandate']"
+                [tableStyle]="{'min-width':'90rem'}">
                 <ng-template pTemplate="caption">
                     <div class="flex">
                         <span class="p-input-icon-left ml-auto">
@@ -51,22 +33,33 @@
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
+                        <th style="width:3%">SL No</th>
+                        <th style="width:6%">Token No</th>
+                        <th style="width:8%">Token Date</th>
                         <th style="width:8%">Bill Date</th>
-                        <th style="width:8%">TR Formats</th>
+                        <th style="width:6%">TR Formats</th>
                         <th style="width:8%">Bill Types</th>
                         <th style="width:8%">Bill Module</th>
                         <th style="width:8%">Bill Period</th>
-                        <th style="width:8%">Nos Of Beneficiarie</th>
-                        <th style="width:8%">Net Amount</th>
-                        <th style="width:8%">ECS Amount</th>
+                        <th style="width:6%">Nos Of Beneficiarie</th>
+                        <th style="width:6%">Net Amount</th>
+                        <th style="width:6%">ECS Amount</th>
                         <th style="width:8%">Cheque Amount</th>
                         <th style="width:8%">Detail Head</th>
                         <th style="width:8%">Head Of Accounts</th>
                         <th style="width:8%">DDO Code </th>
                         <th style="width:6%">Payment Mandate Date</th>
-                        <th style="width:6%">Include</th>
                     </tr>
                     <tr>
+                        <th>
+                            <p-columnFilter type="text" field="slNo"></p-columnFilter>
+                        </th>
+                        <th>
+                            <p-columnFilter type="text" field="tokenNo"></p-columnFilter>
+                        </th>
+                        <th>
+                            <p-columnFilter type="text" field="tokenDate"></p-columnFilter>
+                        </th>
                         <th>
                             <p-columnFilter type="text" field="billDate"></p-columnFilter>
                         </th>
