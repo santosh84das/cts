@@ -27,6 +27,7 @@ import { StaticLoginComponent } from './features/static-login/static-login.compo
                     { path: 'option', loadChildren: () => import('./features/options/options.module').then(m => m.OptionsModule) },
                     {path:'bill-checking', canActivate: [NgxPermissionsGuard],data: {permissions: {only: 'can-bill-check',redirectTo: '/notfound'}},loadChildren: () => import('./features/bill-checking/bill-checking.module').then(m => m.BillCheckingModule)},
                     {path:'return-memo',canActivate: [NgxPermissionsGuard],data: {permissions: {only: 'can-generate-return-memo',redirectTo: '/notfound'}},loadChildren: () => import('./features/return-memo/return-memo.module').then(m => m.ReturnMemoModule)},
+                    {path:'payment-mandate',loadChildren:()=>import('./features/payment-mandate/payment-mandate.module').then(m=>m.PaymentMandateModule)}
                 ]
             },
             {path:'login',component:LoginComponent},

@@ -1,5 +1,5 @@
 <div class="grid">
-    <div class="col-12">
+    <!-- <div class="col-12">
         <div class="grid">
             <div class="col">
                 <div class="grid nested-grid">
@@ -14,7 +14,7 @@
                         <div class="text-900 font-bold text-3xl mb-1">
                             Bill Checking
                         </div>
-                        <!-- <div class="text-700 text-1xl line-height-3">Token List.</div> -->
+                        <div class="text-700 text-1xl line-height-3">Token List.</div>
                     </div>
                 </div>
             </div>
@@ -22,8 +22,15 @@
                 <button pButton pRipple label="Close" type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-raised" [routerLink]="['/']"></button>
             </div>
         </div>
+    </div> -->
+    <div class="col-12">
+        <app-common-header [headerName]="'Bill Checking'" [imgSrc]="'assets/layout/images/icons/bill-check.png'">
+            <button pButton pRipple type="button"  icon="pi pi-times"label="Close"
+            class="p-button-rounded p-button-danger p-button-raised"  (click)="closeButton($event)"></button>
+        </app-common-header>
     </div>
     <div class="col-12">
-        <app-token-list apiPath="Token/GetTokens" listType="bill-cheking" actionLable="Bill Check" actionIcon="pi pi-check-circle" ></app-token-list>
+        <app-token-list apiPath="Token/GetTokens" listType="bill-cheking" actionLable="Bill Check"
+            actionIcon="pi pi-check-circle"></app-token-list>
     </div>
 </div>
