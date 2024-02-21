@@ -86,13 +86,13 @@ export class ListOfObjectionComponent implements OnInit {
             remark: this.selectedObjections[this.currentIndex].overruledRemark
         }
         this.selectedObjectionsForOverrule.push(a)
-        this.overruleRemarks = this.overruleRemarks || "";
+        this.overruleRemarks = undefined;
         this.overruleRemarkPanel.toggle(this.currentEvent);
         this.setSubmitButtonLabel();
     }
     public undoObjectionOverrule(index: number) {
         this.selectedObjections[index].isOverruled = false;
-        this.selectedObjections[index].overruledRemark = "";
+        this.selectedObjections[index].overruledRemark = undefined;
         const objectionId = this.selectedObjections[index].exiestObjectionId;
         this.selectedObjectionsForOverrule = this.selectedObjectionsForOverrule.filter(obj => obj.tokenObjectionId !== objectionId);
         console.log(this.selectedObjectionsForOverrule);

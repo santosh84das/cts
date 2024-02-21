@@ -42,8 +42,8 @@
                     <div class="text-900 flex md:w-5" [ngClass]="{'line-through': selectedObjection.isOverruled}">
                         {{selectedObjection.description}}</div>
                     <div class="text-900 flex-1 md:w-2" style="padding-left: 15px;">
-                        <!-- {{selectedObjection.overruledRemark}}aaaaaaaaaaa -->
-                        {{(selectedObjection.overruledRemark!=undefined)?'aa' +selectedObjection.overruledRemark:selectedObjection.remark}}
+                        <!-- {{typeof(selectedObjection.overruledRemark)}} -->
+                        {{(selectedObjection.overruledRemark!=undefined)?selectedObjection.overruledRemark:selectedObjection.remark}}
                     </div>
                     <div class="text-900 flex flex-1  md:w-1 justify-content-center">{{(selectedObjection.objectionBy)?selectedObjection.objectionBy:'You'}}</div>
                     <div class="text-900 flex-1  md:w-1 justify-content-end">
