@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { CommonHeaderModule } from 'src/app/shared/modules/common-header/common-header.module';
 import {InputTextModule} from 'primeng/inputtext';
+import {CalendarModule} from 'primeng/calendar';
 
 
 
@@ -28,7 +29,8 @@ import {InputTextModule} from 'primeng/inputtext';
     FormsModule,
     TableModule,
     CommonHeaderModule,
-    InputTextModule
+    InputTextModule,
+    CalendarModule
   ]
 })
 export class PayMandateShortlistModule { }
