@@ -47,6 +47,8 @@ export class TokenListComponent implements OnInit {
     this.tokenServices.getAllToken().subscribe((response)=>{
       if(response.apiResponseStatus==1){
         this.tokens = response.result;
+        console.log("my results",this.tokens);
+        
       }
       else{
         this.toastService.showAlert(response.message,response.apiResponseStatus);

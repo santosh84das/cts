@@ -22,6 +22,7 @@ export class BillReceiveListComponent implements OnInit {
     this.billService.getAllBills().subscribe((response)=>{
       if(response.apiResponseStatus==1){
           this.bills = response.result;
+          console.log('checking',this.bills);
       }else{
         this.toastService.showAlert(response.message,response.apiResponseStatus);
       }

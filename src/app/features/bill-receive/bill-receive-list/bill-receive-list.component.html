@@ -4,10 +4,10 @@
         Enter Permisiion Name
     </ng-template> -->
     <ng-template pTemplate="content">
-        <p-table #dt [value]="bills" dataKey="id" [rowHover]="true"
-            [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
-            [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [filterDelay]="0" [globalFilterFields]="['name','country.name','representative.name','status']">
+        <p-table #dt [value]="bills" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+            [globalFilterFields]="['referenceNo','ddoCode','ddoDesignation','billNo','billDate','hoa','grossAmount','netAmount']">
             <!-- <ng-template pTemplate="caption">
                 <div class="flex justify-content-between flex-column sm:flex-row">
                     <span class="p-input-icon-left mb-2">
@@ -18,70 +18,75 @@
             </ng-template> -->
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="name" style="min-width: 14rem">
-                        <div class="flex justify-content-between align-items-center">
-                            Bill Id
-                            <p-sortIcon field="name"></p-sortIcon>
-                            <p-columnFilter type="text" field="name" display="menu" class="ml-auto"></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="country.name"style="min-width: 14rem">
+                    <th pSortableColumn="referenceNo" style="min-width: 14rem">
                         <div class="flex justify-content-between align-items-center">
                             Reference No
-                            <p-sortIcon field="country.name"></p-sortIcon>
-                            <p-columnFilter type="text" field="country.name" display="menu" class="ml-auto"></p-columnFilter>
+                            <p-sortIcon field="referenceNo"></p-sortIcon>
+                            <p-columnFilter type="text" field="referenceNo" display="menu"
+                                class="ml-auto"></p-columnFilter>
                         </div>
                     </th>
-                    <th pSortableColumn="representative.name" style="min-width: 14rem">
+                    <th pSortableColumn="ddoCode" style="min-width: 14rem">
                         <div class="flex justify-content-between align-items-center">
                             DDO Code
-                            <p-sortIcon field="representative.name"></p-sortIcon>
-                            <p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
+                            <p-sortIcon field="ddoCode"></p-sortIcon>
+                            <p-columnFilter field="ddoCode" matchMode="in" display="menu"
+                                [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
                                 <ng-template pTemplate="header">
                                     <div class="px-3 pt-3 pb-0">
-                                        <span class="font-bold">Agent Picker</span>
+                                        <span class="font-bold">DDO Code</span>
                                     </div>
                                 </ng-template>
-                                <!-- <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                    <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
-                                        <ng-template let-option pTemplate="item">
-                                            <div class="p-multiselect-representative-option">
-                                                <img [alt]="option.label" src="assets/showcase/images/demo/avatar/{{option.image}}" width="32" style="vertical-align: middle" />
-                                                <span class="ml-1">{{option.name}}</span>
-                                            </div>
-                                        </ng-template>
-                                    </p-multiSelect>
-                                </ng-template> -->
                             </p-columnFilter>
                         </div>
                     </th>
-                    <th pSortableColumn="date" style="min-width: 10rem">
+                    <th pSortableColumn="ddoDesignation" style="min-width: 10rem">
                         <div class="flex justify-content-between align-items-center">
                             DDO Designation
-                            <p-sortIcon field="date"></p-sortIcon>
-                            <p-columnFilter type="date" field="date" display="menu" class="ml-auto"></p-columnFilter>
+                            <p-sortIcon field="ddoDesignation"></p-sortIcon>
+                            <p-columnFilter type="text" field="ddoDesignation" display="menu" class="ml-auto"></p-columnFilter>
                         </div>
                     </th>
-                    <th pSortableColumn="balance" style="min-width: 10rem">
+                    <th pSortableColumn="billNo" style="min-width: 10rem">
                         <div class="flex justify-content-between align-items-center">
                             Bill No
-                            <p-sortIcon field="balance"></p-sortIcon>
-                            <p-columnFilter type="numeric" field="balance" display="menu" currency="USD" class="ml-auto"></p-columnFilter>
+                            <p-sortIcon field="billNo"></p-sortIcon>
+                            <p-columnFilter type="numeric" field="billNo" display="menu" currency="USD"
+                                class="ml-auto"></p-columnFilter>
                         </div>
                     </th>
-                    <th pSortableColumn="status" style="min-width: 10rem">
+                    <th pSortableColumn="billDate" style="min-width: 10rem">
                         <div class="flex justify-content-between align-items-center">
                             BillDate
-                            <p-sortIcon field="status"></p-sortIcon>
-                            <p-columnFilter field="status" matchMode="equals" display="menu" class="ml-auto">
+                            <p-sortIcon field="billDate"></p-sortIcon>
+                            <p-columnFilter field="billDate" matchMode="equals" display="menu" class="ml-auto">
                                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                    <!-- <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any">
-                                        <ng-template let-option pTemplate="item">
-                                            <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
-                                        </ng-template>
-                                    </p-dropdown> -->
                                 </ng-template>
                             </p-columnFilter>
+                        </div>
+                    </th>
+                    <th pSortableColumn="hoa" style="min-width: 14rem">
+                        <div class="flex justify-content-between align-items-center">
+                            HOA
+                            <p-sortIcon field="hoa"></p-sortIcon>
+                            <p-columnFilter type="text" field="hoa" display="menu"
+                                class="ml-auto"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th pSortableColumn="grossAmount" style="min-width: 14rem">
+                        <div class="flex justify-content-between align-items-center">
+                            Gross Amount
+                            <p-sortIcon field="grossAmount"></p-sortIcon>
+                            <p-columnFilter type="text" field="grossAmount" display="menu"
+                                class="ml-auto"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th pSortableColumn="netAmount" style="min-width: 14rem">
+                        <div class="flex justify-content-between align-items-center">
+                            Net Amount
+                            <p-sortIcon field="netAmount"></p-sortIcon>
+                            <p-columnFilter type="text" field="netAmount" display="menu"
+                                class="ml-auto"></p-columnFilter>
                         </div>
                     </th>
                     <th style="width: 10rem"></th>
@@ -90,38 +95,42 @@
             <ng-template pTemplate="body" let-bill>
                 <tr class="p-selectable-row">
                     <td>
-                        <span class="p-column-title">Name</span>
-                        {{bill.billId}}
-                    </td>
-                    <td>
-                        <span class="p-column-title">Country</span>
+                        <span class="p-column-title">referenceNo</span>
                         <span class="image-text">{{bill.referenceNo}}</span>
                     </td>
                     <td>
-                        <span class="p-column-title">Representative</span>
+                        <span class="p-column-title">ddoCode</span>
                         <span class="image-text">{{bill.ddoCode}}</span>
                     </td>
-                    
+
                     <td>
-                        <span class="p-column-title">Balance</span>
+                        <span class="p-column-title">ddoDesignation</span>
                         {{bill.ddoDesignation}}
                     </td>
                     <td>
-                        <span class="p-column-title">Representative</span>
+                        <span class="p-column-title">billNo</span>
                         <span class="image-text">{{bill.billNo}}</span>
                     </td>
-                    
+
                     <td>
-                        <span class="p-column-title">Date</span>
+                        <span class="p-column-title">billDate</span>
                         {{bill.billDate | date: 'dd/MM/yyyy'}}
                     </td>
+                    <td>
+                        <span class="p-column-title">HOA</span>
+                       
+                    </td>
+                    <td>
+                        <span class="p-column-title">Gross Amount</span>
+                       
+                    </td>
+                    <td>
+                        <span class="p-column-title">Net Amount</span>
+                       
+                    </td>
                     <td style="text-align: center">
-                        <p-button
-                        label="Bill Receive"
-                        (onClick)="sendForBillReceive(bill.referenceNo,bill.billId)"
-                        icon="pi pi-download"
-                        iconPos="left"
-                    ></p-button>
+                        <p-button label="Bill Receive" (onClick)="sendForBillReceive(bill.referenceNo,bill.billId)"
+                            icon="pi pi-download" iconPos="left"></p-button>
                         <!-- <button pButton type="button" class="p-button-sm" icon="pi pi-check" label="Bill Receive" (onClick)="sendForBillReceive(bill.referenceNo)"></button> -->
                     </td>
                 </tr>
