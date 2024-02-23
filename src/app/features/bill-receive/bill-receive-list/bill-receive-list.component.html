@@ -4,10 +4,10 @@
         Enter Permisiion Name
     </ng-template> -->
     <ng-template pTemplate="content">
-        <p-table #dt [value]="bills" dataKey="id" [rowHover]="true"
-            [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
-            [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [filterDelay]="0" [globalFilterFields]="['name','country.name','representative.name','status']">
+        <p-table #dt [value]="bills" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+            [globalFilterFields]="['name','country.name','representative.name','status']">
             <!-- <ng-template pTemplate="caption">
                 <div class="flex justify-content-between flex-column sm:flex-row">
                     <span class="p-input-icon-left mb-2">
@@ -25,18 +25,20 @@
                             <p-columnFilter type="text" field="name" display="menu" class="ml-auto"></p-columnFilter>
                         </div>
                     </th>
-                    <th pSortableColumn="country.name"style="min-width: 14rem">
+                    <th pSortableColumn="country.name" style="min-width: 14rem">
                         <div class="flex justify-content-between align-items-center">
                             Reference No
                             <p-sortIcon field="country.name"></p-sortIcon>
-                            <p-columnFilter type="text" field="country.name" display="menu" class="ml-auto"></p-columnFilter>
+                            <p-columnFilter type="text" field="country.name" display="menu"
+                                class="ml-auto"></p-columnFilter>
                         </div>
                     </th>
                     <th pSortableColumn="representative.name" style="min-width: 14rem">
                         <div class="flex justify-content-between align-items-center">
                             DDO Code
                             <p-sortIcon field="representative.name"></p-sortIcon>
-                            <p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
+                            <p-columnFilter field="representative" matchMode="in" display="menu"
+                                [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" class="ml-auto">
                                 <ng-template pTemplate="header">
                                     <div class="px-3 pt-3 pb-0">
                                         <span class="font-bold">Agent Picker</span>
@@ -66,7 +68,8 @@
                         <div class="flex justify-content-between align-items-center">
                             Bill No
                             <p-sortIcon field="balance"></p-sortIcon>
-                            <p-columnFilter type="numeric" field="balance" display="menu" currency="USD" class="ml-auto"></p-columnFilter>
+                            <p-columnFilter type="numeric" field="balance" display="menu" currency="USD"
+                                class="ml-auto"></p-columnFilter>
                         </div>
                     </th>
                     <th pSortableColumn="status" style="min-width: 10rem">
@@ -101,7 +104,7 @@
                         <span class="p-column-title">Representative</span>
                         <span class="image-text">{{bill.ddoCode}}</span>
                     </td>
-                    
+
                     <td>
                         <span class="p-column-title">Balance</span>
                         {{bill.ddoDesignation}}
@@ -110,18 +113,16 @@
                         <span class="p-column-title">Representative</span>
                         <span class="image-text">{{bill.billNo}}</span>
                     </td>
-                    
+
                     <td>
                         <span class="p-column-title">Date</span>
                         {{bill.billDate | date: 'dd/MM/yyyy'}}
                     </td>
                     <td style="text-align: center">
-                        <p-button
-                        label="Bill Receive"
-                        (onClick)="sendForBillReceive(bill.referenceNo,bill.billId)"
-                        icon="pi pi-download"
-                        iconPos="left"
-                    ></p-button>
+                        <!-- <p-toast></p-toast> -->
+                        <p-confirmPopup></p-confirmPopup>
+                        <p-button label="Bill Receive" (click)="confirm($event,bill.billId)" icon="pi pi-download"
+                            iconPos="left"></p-button>
                         <!-- <button pButton type="button" class="p-button-sm" icon="pi pi-check" label="Bill Receive" (onClick)="sendForBillReceive(bill.referenceNo)"></button> -->
                     </td>
                 </tr>
@@ -134,3 +135,74 @@
         </p-table>
     </ng-template>
 </p-card>
+
+<p-dialog  #myDialog  header="TOKEN SLIP" [(visible)]="displayMaximizable" [modal]="true" [style]="{width: '50vw'}"
+    [maximizable]="true" [draggable]="false" [resizable]="false">
+    <p-messages [(value)]="messages" [enableService]="false" [closable]="false"></p-messages>
+    <div class="token-container">
+        <div class="col-12">
+            <div class="text-center">Govt. of West Bengal - Treasury</div>
+            <div class="text-center mb-5">Chandernagore</div>
+        </div>
+        <div class="col-12 flex p-0">
+            <div class="col-6 flex-1 md:flex-none flex p-1">
+                <span class="text-700 font-medium mb-2 mr-2 text-lg">Token Number:</span>
+                <span class="text-500 ">16</span>
+            </div>
+            <div class="col-6 flex-1 md:flex-none flex p-1">
+                <span class="text-700 font-medium mb-2 mr-2 text-lg">Token Date:</span>
+                <span class="text-500">20/12/2023</span>
+            </div>
+        </div>
+        <div class="col-12 flex p-0">
+            <div class="col-6 flex-1 md:flex-none flex p-1">
+                <span class="text-700 font-medium mb-2 mr-2 text-lg">Bill Number:</span>
+                <span class="text-500 ">8674897487874</span>
+            </div>
+            <div class="col-6 flex-1 md:flex-none flex p-1">
+                <span class="text-700 font-medium mb-2 mr-2 text-lg">Bill Date:</span>
+                <span class="text-500 ">20/12/2023</span>
+            </div>
+        </div>
+        <div class="col-12 flex p-0">
+            <div class="col-6 flex-1 md:flex-none flex p-1">
+                <span class="text-700 font-medium mb-2 mr-2 text-lg">DDO Code:</span>
+                <span class="text-500 ">HGDIWA003</span>
+            </div>
+            <div class="col-6 flex-1 md:flex-none flex p-1">
+                <span class="text-700 font-medium mb-2 mr-2 text-lg">Payee Dept:</span>
+                <span class="text-500 ">AM</span>
+            </div>
+        </div>
+        <div class="col-12 flex p-0">
+            <div class="col-6 flex-1 md:flex-none flex p-1">
+                <span class="text-700 font-medium mb-2 mr-2 text-lg">Account Code:</span>
+                <span class="text-500 ">2043-00-001-001-V-01</span>
+            </div>
+
+        </div>
+        <div class="col-12 flex p-0">
+            <div class="col-6 flex-1 md:flex-none flex p-1">
+                <span class="text-700 font-medium mb-2 mr-2 text-lg">Net Amount:</span>
+                <span class="text-500 ">250.00</span>
+            </div>
+            <div class="col-6 flex-1 md:flex-none flex p-1">
+                <span class="text-700 font-medium mb-2 mr-2 text-lg">Bill Gross Amount:</span>
+                <span class="text-500 ">250</span>
+            </div>
+        </div>
+        <div class="col-12 flex p-0">
+            <div class="col-6 flex-1 md:flex-none flex p-1">
+                <span class="text-700 font-medium mb-2 mr-2 text-lg">Rs in Amount:</span>
+                <span class="text-500 ">Two Hundred Fifty Only.</span>
+            </div>
+        </div>
+    </div>
+    <p>Note - This is a system generated slip. No signature is required</p>
+    <div class="mt-5">
+        Generated By: MILAN NAG 20/12/2023 13.48.20
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="printDialogContent()" label="Print" styleClass="p-button"></p-button>
+    </ng-template>
+</p-dialog>
