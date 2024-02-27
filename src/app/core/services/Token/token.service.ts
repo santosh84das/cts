@@ -4,6 +4,7 @@ import { IapiResponce } from '../../models/iapi-responce';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../toast.service';
 import { tokenDetails } from '../../models/token';
+import { DynamicList, DynamicListQueryParameters } from '../../models/dynamic-list';
 
 @Injectable({
     providedIn: 'root',
@@ -33,8 +34,15 @@ export class TokenService {
             })
         );
     }
-    getTokens(path:string): Observable<IapiResponce> {
-        return this.http.get<IapiResponce>('v1/'+path).pipe(
+    // getTokens(path:string): Observable<IapiResponce<DynamicList<tokenDetails>>> {
+    //     return this.http.get<IapiResponce<DynamicList<tokenDetails>>>('v1/'+path).pipe(
+    //         catchError((error) => {
+    //             throw this.toastservice.showError(error.message);
+    //         })
+    //     );
+    // }
+    getTokens(path:string,queryParameters:DynamicListQueryParameters): Observable<IapiResponce<DynamicList<tokenDetails>>> {
+        return this.http.post<IapiResponce<DynamicList<tokenDetails>>>('v1/'+path,queryParameters).pipe(
             catchError((error) => {
                 throw this.toastservice.showError(error.message);
             })

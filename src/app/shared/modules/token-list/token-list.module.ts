@@ -11,6 +11,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {RatingModule} from 'primeng/rating';
 import {FormsModule} from '@angular/forms';
 import {InputTextModule} from 'primeng/inputtext';
+import {PaginatorModule} from 'primeng/paginator';
 
 @NgModule({
   declarations: [TokenListComponent],
@@ -25,6 +26,7 @@ import {InputTextModule} from 'primeng/inputtext';
     RatingModule,
     FormsModule,
     InputTextModule,
+    PaginatorModule
   ],
   exports:[
     TokenListComponent

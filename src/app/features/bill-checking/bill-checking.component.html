@@ -31,6 +31,9 @@
     </div>
     <div class="col-12">
         <app-token-list apiPath="Token/GetTokens" listType="bill-cheking" actionLable="Bill Check"
-            actionIcon="pi pi-check-circle"></app-token-list>
+            actionIcon="pi pi-check-circle">
+            <button id="dynamic-action-button" pButton pRipple type="button"  icon="pi pi-times"label="Close"
+            class="p-button-rounded p-button-danger p-button-raised"></button>
+        </app-token-list>
     </div>
 </div>

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TokenStatus } from 'src/app/core/enum/common';
 import { IBillDetails } from 'src/app/core/models/bill';
+import { DynamicList, DynamicListQueryParameters, FilterParameter } from 'src/app/core/models/dynamic-list';
 import { tokenDetails } from 'src/app/core/models/token';
 import { BillService } from 'src/app/core/services/Bill/bill.service';
 import { TokenService } from 'src/app/core/services/Token/token.service';
@@ -16,14 +17,16 @@ export class TokenListComponent implements OnInit {
 
   @Input() actionRoute:string|any;  
   @Input() actionButtonClass:string="";  
-  @Input() listType:number|any;  
+  @Input() listType:string="";  
   @Input() isAllToken:number =  0;  
   @Input() apiPath:string |any;
   @Input() actionLable:string |any;
   @Input() actionIcon:string |any;
   tokens: tokenDetails[][] | any;
+  listData: DynamicList<tokenDetails>|any;
   loading:boolean = false;
-
+  filterParams: FilterParameter[] = [];
+  refreshTable:boolean = false;
   sortOrder: number |any;
 
   sortField: string | any;
@@ -53,10 +56,17 @@ export class TokenListComponent implements OnInit {
       }
     });
   }
-  tokensList(listType:number){
-    this.tokenServices.getTokens(this.apiPath+'?ListType='+listType).subscribe((response)=>{
+  tokensList(listType:string){
+    const queryParameters:DynamicListQueryParameters = {
+      listType: listType,
+      pageSize: 10,
+      pageIndex: 0,
+      filterParameters: this.filterParams
+    }
+    this.tokenServices.getTokens(this.apiPath,queryParameters).subscribe((response)=>{
       if(response.apiResponseStatus==1){
-        this.tokens = response.result;
+        this.listData = response.result;
+        // this.tokens = response.result;
       }
       else{
         this.toastService.showAlert(response.message,response.apiResponseStatus);
@@ -76,7 +86,42 @@ export class TokenListComponent implements OnInit {
   //   this.tokenServices.selectedTokenRef = tokenRef;
   //   this.router.navigate([this.actionRoute]);
   // }
-
+  test(event: any) {
+    const originalObject = event.filters;
+    const convertedFilters: FilterParameter[] = [];
+  
+    // Store previously processed filters to avoid duplicates
+    const processedFilters = new Set<string>();
+  
+    for (const key in originalObject) {
+      const filterObject = originalObject[key][0];
+  
+      // Check if value has changed and filter hasn't been processed
+      const filterKey = `${key}-${filterObject.value}`;
+      if (filterObject.value !== null && !processedFilters.has(filterKey)) {
+        processedFilters.add(filterKey);
+        convertedFilters.push({
+          field: this.uppercaseFirstLetter(key),
+          value: filterObject.value.toString(),
+          operator: filterObject.matchMode,
+        });
+      }
+    }
+  
+    // Update filterParams only if there are changes
+    if (JSON.stringify(this.filterParams) !== JSON.stringify(convertedFilters)) {
+      this.filterParams = convertedFilters;
+      this.tokensList(this.listType);
+    }
+  }
+  lowercaseFirstLetter(input: string): string {
+    const [firstLetter, ...rest] = input;
+    return `${firstLetter.toLowerCase()}${rest.join('')}`;
+  }
+  uppercaseFirstLetter(input: string): string {
+    const [firstLetter, ...rest] = input;
+    return `${firstLetter.toLocaleUpperCase()}${rest.join('')}`;
+  }
   onSortChange(event:any) {
     let value = event.value;
 
