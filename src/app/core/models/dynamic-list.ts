@@ -1,6 +1,7 @@
 export interface DynamicList<T> {
     listHeaders: ListHeader[];
     data: T[];
+    dataCount:number;
 }
 
 export interface ListHeader {
@@ -17,9 +18,15 @@ export interface FilterParameter {
     operator: string;
 }
 
+export interface SortParameter {
+    field: string;
+    order:string;
+}
+
 export interface DynamicListQueryParameters {
     listType: string;
     pageSize: number;
     pageIndex: number;
     filterParameters: FilterParameter[];
+    sortParameters: SortParameter;
 }
