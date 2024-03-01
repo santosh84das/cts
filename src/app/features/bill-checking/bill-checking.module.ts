@@ -15,6 +15,7 @@ import { TokenListModule } from 'src/app/shared/modules/token-list/token-list.mo
 import { NgxPermissionsModule } from 'ngx-permissions';
 import {ButtonModule} from 'primeng/button';
 import { CommonHeaderModule } from 'src/app/shared/modules/common-header/common-header.module';
+import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic-table.module';
 
 @NgModule({
   declarations: [BillCheckingComponent],
@@ -27,6 +28,7 @@ import { CommonHeaderModule } from 'src/app/shared/modules/common-header/common-
     TokenListModule,
     ButtonModule,
     CommonHeaderModule,
+    DynamicTableModule,
     NgxPermissionsModule.forChild()
   ]
 })

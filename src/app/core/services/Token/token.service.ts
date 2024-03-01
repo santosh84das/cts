@@ -4,7 +4,7 @@ import { IapiResponce } from '../../models/iapi-responce';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../toast.service';
 import { tokenDetails } from '../../models/token';
-import { DynamicList, DynamicListQueryParameters } from '../../models/dynamic-list';
+import { DynamicList, DynamicListQueryParameters } from '../../models/dynamic-table';
 
 @Injectable({
     providedIn: 'root',

@@ -24,16 +24,28 @@
         </div>
     </div> -->
     <div class="col-12">
-        <app-common-header [headerName]="'Bill Checking'" [imgSrc]="'assets/layout/images/icons/bill-check.png'">
-            <button pButton pRipple type="button"  icon="pi pi-times"label="Close"
-            class="p-button-rounded p-button-danger p-button-raised"  (click)="closeButton($event)"></button>
+        <app-common-header
+            [headerName]="'Bill Checking'"
+            [imgSrc]="'assets/layout/images/icons/bill-check.png'"
+        >
+            <button
+                pButton
+                pRipple
+                type="button"
+                icon="pi pi-times"
+                label="Close"
+                class="p-button-rounded p-button-danger p-button-raised"
+                (click)="closeButton($event)"
+            ></button>
         </app-common-header>
     </div>
     <div class="col-12">
-        <app-token-list apiPath="Token/GetTokens" listType="bill-cheking" actionLable="Bill Check"
+        <!-- <app-token-list apiPath="Token/GetTokens" listType="bill-cheking" actionLable="Bill Check"
             actionIcon="pi pi-check-circle">
             <button id="dynamic-action-button" pButton pRipple type="button"  icon="pi pi-times"label="Close"
             class="p-button-rounded p-button-danger p-button-raised"></button>
-        </app-token-list>
+        </app-token-list> -->
+        <app-dynamic-table dataURL="v1/Token/GetTokens" listType="bill-cheking">     
+        </app-dynamic-table>
     </div>
 </div>

@@ -7,7 +7,7 @@ import {
     DynamicListQueryParameters,
     FilterParameter,
     SortParameter,
-} from 'src/app/core/models/dynamic-list';
+} from 'src/app/core/models/dynamic-table';
 import { tokenDetails } from 'src/app/core/models/token';
 import { BillService } from 'src/app/core/services/Bill/bill.service';
 import { TokenService } from 'src/app/core/services/Token/token.service';

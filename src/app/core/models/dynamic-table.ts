@@ -30,3 +30,13 @@ export interface DynamicListQueryParameters {
     filterParameters: FilterParameter[];
     sortParameters: SortParameter;
 }
+export interface IActionButtonConfig{
+    lable:string,
+    icon:string,
+    class:string,
+    buttonIdentifier:string,
+}
+export interface IactionButtonEvent{
+    rowData:any,
+    buttonIdentifier:string
+}
