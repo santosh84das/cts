@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild} from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IBills } from 'src/app/core/models/bill';
 import { BillService } from 'src/app/core/services/Bill/bill.service';
@@ -8,33 +8,72 @@ import { ConfirmationService } from 'primeng/api';
 import { TokenService } from 'src/app/core/services/Token/token.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { DatePipe } from '@angular/common';
-import { Message,MessageService } from 'primeng/api';
-import { jsPDF } from 'jspdf'
+import { Message, MessageService } from 'primeng/api';
+// import  jsPDF  from 'jspdf';
+// import "jspdf-autotable";
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
 
 @Component({
   selector: 'app-bill-receive-list',
   templateUrl: './bill-receive-list.component.html',
   styleUrls: ['./bill-receive-list.component.scss'],
-  providers: [ConfirmationService,MessageService]
+  providers: [ConfirmationService, MessageService]
 })
 export class BillReceiveListComponent implements OnInit {
   bills: IBills[][] | any;
   loading: boolean = false;
   displayMaximizable: boolean | undefined;
-  messages: Message[] =[] ;
-  @ViewChild('myDialog') myDialog: any; 
-  constructor( private elementRef: ElementRef, private billService: BillService, private toastService: ToastService, private onlineBillReceiveService: OnlineBillReceiveService, private router: Router, private confirmationService: ConfirmationService, private tokenService: TokenService, private notificationService: NotificationService, private datePipe:DatePipe) { }
+  messages: Message[] = [];
+  cols: any[] = [];
+  exportColumns: any;
+  products = [
+    {
+      treasury_name: 'Product 1',
+      tokenNo: 20,
+      tokenDate: '12/2/2022',
+      billNo: 12,
+      billDate: '12/2/2022',
+      ddoCode: '22',
+      payeeDept: 'AM',
+      AccountCode: '2043-00-001-001-V-01',
+      NetAmount: 250.00,
+      BillGrossAmount: 250,
+      RsinAmount: 'Two Hundred Fifty Only.'
+    },];
+  @ViewChild('myDialog') myDialog: any;
+  constructor(private elementRef: ElementRef, private billService: BillService, private toastService: ToastService, private onlineBillReceiveService: OnlineBillReceiveService, private router: Router, private confirmationService: ConfirmationService, private tokenService: TokenService, private notificationService: NotificationService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
+    // this.products  = [
+    //   { treasury_name: 'Product 1', tokenNo: 20, tokenDate: '12/2/2022', billNo:12,billDate:'12/2/2022',ddoCode:'22',payeeDept:'AM', AccountCode:'2043-00-001-001-V-01', NetAmount:250.00, BillGrossAmount: 250, RsinAmount:'Two Hundred Fifty Only.'},
+    // ];
     this.allBillls();
     this.messages = [{ severity: 'success', summary: 'Success', detail: 'Token Generated Successfully' }];
+    this.cols = [
+      { field: "name", header: "Govt. of West Bengal - Treasury" },
+      { field: "category", header: "Token Number" },
+      { field: "quantity", header: "Token Date:" },
+      { field: "quantity", header: "Bill Number::" },
+      { field: "quantity", header: "Bill Date:" },
+      { field: "quantity", header: "DDO Code:" },
+      { field: "quantity", header: "Payee Dept:" },
+      { field: "quantity", header: "Account Code:" },
+      { field: "quantity", header: "Net Amount:" },
+      { field: "quantity", header: "Bill Gross Amount:" },
+      { field: "quantity", header: "Rs in Amount:" },
+    ];
+    this.exportColumns = this.cols.map(col => ({
+      title: col.header,
+      dataKey: col.field
+    }));
   }
   allBillls() {
     this.billService.getAllBills().subscribe((response) => {
       if (response.apiResponseStatus == 1) {
         this.bills = response.result;
-        console.log('the bills:',this.bills);
-        
+        console.log('the bills:', this.bills);
+
       } else {
         this.toastService.showAlert(response.message, response.apiResponseStatus);
       }
@@ -75,31 +114,55 @@ export class BillReceiveListComponent implements OnInit {
     });
   }
 
-  test(){
+  test() {
     this.displayMaximizable = true;
   }
 
-  printDialogContent(){
+  printDialogContent() {
+
     const doc = new jsPDF();
-    const dialogElement  = this.myDialog;;
-    console.log(dialogElement)
-    // Option 1: Print entire dialog content
-    doc.html(dialogElement, {
+    const content = this.myDialog.nativeElement.innerHTML;
+    console.log('c', content);
+
+    doc.html(content, {
       callback: () => {
-        doc.save('token-slip.pdf');
+        const printWindow = window.open(doc.output('bloburl'), '_blank');
+        printWindow?.addEventListener('load', () => {
+          printWindow.print();
+        })
       },
       windowWidth: 1000 // Adjust as needed to avoid cut-off
-    })
-    // const content = `
-    //   <h2>Token Details</h2>
-    //   <p>Token Number: 20</p>
-    //   <p>Token Date:30 </p>
-    //   <p>Bill Number: 40</p>
-    //   <p>Bill Date:50 </p>
-    //   `;
+    });
+  }
+  exportPdf() {
+    const doc = new jsPDF();
+    // doc.autoTable();
+    // doc['autoTable']({ columns: this.exportColumns, body: this.products });
+    // doc['autoTable'](this.exportColumns, this.products);
+    // doc['autoTable']();
+    doc.save("products.pdf");
+  }
 
-    //  doc.text(content, { align: 'center', margin: { top: 20 } }); // Center and add margin
-
-    //  doc.save('token-slip.pdf');
+  print() {
+    const printWindow = window.open('', '_blank');
+    const tableToPrint = this.myDialog.nativeElement.cloneNode(true);
+    const printCSS = `
+    table {
+      width: 100%;
+      margin: 0 auto;
+      border: 1px solid;
+    }
+    td{
+      padding:5px;
+    }
+    td span{
+      margin-left:15px;
+    }
+    `;
+    const styleElement = printWindow!.document.createElement('style');
+    styleElement.textContent = printCSS;
+    printWindow!.document.head.appendChild(styleElement);
+    printWindow!.document.body.appendChild(tableToPrint);
+    printWindow!.print();
   }
 }
