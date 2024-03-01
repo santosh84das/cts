@@ -55,7 +55,8 @@
                 <p-tableCheckbox *ngIf="rowSelectionMode==='single'||rowSelectionMode==='multiple'" [value]="rowData"></p-tableCheckbox>
             </td>
             <td *ngFor="let col of columns">
-                <span>{{ rowData[lowercaseFirstLetter(col.fieldName)] }}</span> 
+                <span *ngIf="col.dataType!=='object'">{{ rowData[col.fieldName] }}</span> 
+                <span *ngIf="col.dataType==='object'" [class]="'customer-badge ' + getEnumStyle(col.)">{{ rowData[col.fieldName] }}</span> 
             </td>
             <td>
                 <button *ngFor="let actionButton of actionButtons" pButton type="button" [icon]="actionButton.icon" [label]="actionButton.lable" class="ml-2"
