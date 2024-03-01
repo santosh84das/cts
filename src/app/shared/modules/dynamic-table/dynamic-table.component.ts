@@ -11,6 +11,7 @@ import { log } from 'console';
 import {
     DynamicList,
     DynamicListQueryParameters,
+    FilterEnum,
     FilterParameter,
     IActionButtonConfig,
     IactionButtonEvent,
@@ -93,9 +94,9 @@ export class DynamicTableComponent<T> implements OnInit {
 
     //[Filter]=================================================================
     onFilter(event: any) {
+        debugger;
         const originalObject = event.filters;
         const convertedFilters: FilterParameter[] = [];
-
         // Store previously processed filters to avoid duplicates
         const processedFilters = new Set<string>();
         for (const key in originalObject) {
@@ -109,7 +110,7 @@ export class DynamicTableComponent<T> implements OnInit {
             ) {
                 processedFilters.add(filterKey);
                 convertedFilters.push({
-                    field: this.uppercaseFirstLetter(key),
+                    field: this.getFilterField(key,this.tableData.listHeaders),
                     value: filterObject.value.toString(),
                     operator: filterObject.matchMode,
                 });
@@ -182,6 +183,14 @@ export class DynamicTableComponent<T> implements OnInit {
     uppercaseFirstLetter(input: string): string {
         const [firstLetter, ...rest] = input;
         return `${firstLetter.toLocaleUpperCase()}${rest.join('')}`;
+    }
+    getFilterField(fieldName: string, objects: ListHeader[]): string{
+        const foundObject = objects.find(obj => obj.fieldName === fieldName);
+        return foundObject ? foundObject.filterField : "";
+    }
+    getEnumStyle(enumValue: number, objects: FilterEnum[]): string{
+        const foundObject = objects.find(obj => obj.value === enumValue);
+        return foundObject ? foundObject.styleClass : "";
     }
     //[Helper functions END]===================================================
 }

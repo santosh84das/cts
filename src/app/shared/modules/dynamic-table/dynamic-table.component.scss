@@ -1,0 +1,26 @@
+.customer-badge {
+    &.primary {
+        background: #B3E5FC !important;
+        color: #23547B !important;
+    }
+    &.success{
+        background: #C8E6C9;
+        color: #256029;
+    }
+    &.danger {
+        background: #FFCDD2;
+        color: #c63737;
+    }
+    &.warning {
+        background: #FFD8B2;
+        color: #805b36;
+    }
+    &.status-Global {
+        background: #ECCFFF;
+        color: #694382;
+    }
+    &.status-Local {
+        background: #B3E5FC;
+        color: #23547b;
+    }
+}

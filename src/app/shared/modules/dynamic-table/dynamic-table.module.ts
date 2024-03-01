@@ -4,7 +4,7 @@ import { DynamicTableComponent } from './dynamic-table.component';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { CheckboxModule } from 'primeng/checkbox';
-
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [DynamicTableComponent],
@@ -12,7 +12,8 @@ import { CheckboxModule } from 'primeng/checkbox';
     CommonModule,
     ButtonModule,
     TableModule,
-    CheckboxModule
+    CheckboxModule,
+    DropdownModule
   ],
   exports:[
     DynamicTableComponent
