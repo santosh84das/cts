@@ -45,7 +45,6 @@
             <button id="dynamic-action-button" pButton pRipple type="button"  icon="pi pi-times"label="Close"
             class="p-button-rounded p-button-danger p-button-raised"></button>
         </app-token-list> -->
-        <app-dynamic-table dataURL="v1/Token/GetTokens" listType="bill-cheking">     
-        </app-dynamic-table>
+        <app-dynamic-table dataURL="v1/Token/GetTokens" listType="bill-cheking" [actionButtons]="tableActionButton" rowSelectionMode="single" (rowSelect)="handleRowSelection($event)" (actionButtonClicked)="handleButtonClick($event)"></app-dynamic-table>
     </div>
 </div>

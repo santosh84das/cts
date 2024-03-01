@@ -3,8 +3,7 @@
     (onSort)="onSortChange($event)"
     (onFilter)="onFilter($event)"
     [(selection)]="selectedRows"
-    selectionMode="multiple"
-    (selectionChange)="emitRowSelectEvent($event)"
+    (selectionChange)="emitRowSelectEvent()"
     [value]="tableData.data"
     [rows]="10"
     [paginator]="true"
@@ -18,7 +17,7 @@
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th style="width: 4rem">
-                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                <p-tableHeaderCheckbox *ngIf="rowSelectionMode==='multiple'"></p-tableHeaderCheckbox>
             </th>
             <th
                 pSortableColumn="{{ col.fieldName }}"
@@ -45,7 +44,7 @@
     <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
             <td>
-                <p-tableCheckbox [value]="rowData" (onChange)="emitRowSelectEvent(rowData)"></p-tableCheckbox>
+                <p-tableCheckbox *ngIf="rowSelectionMode==='single'||rowSelectionMode==='multiple'" [value]="rowData"></p-tableCheckbox>
             </td>
             <td *ngFor="let col of columns">
                 {{ rowData[lowercaseFirstLetter(col.fieldName)] }}

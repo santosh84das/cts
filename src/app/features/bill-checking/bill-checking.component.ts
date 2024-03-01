@@ -63,21 +63,6 @@ export class BillCheckingComponent implements OnInit {
       console.log(event);
     }
     handleButtonClick(event: any) {
-        // const { buttonIdentifier, rowId } = eventData;
-        // // Handle button click action based on button identifier and row id
-        // switch (buttonIdentifier) {
-        //     case 'button1':
-        //         console.log(`Button 1 clicked in parent for row with id ${rowId}`);
-        //         // Handle button 1 action
-        //         break;
-        //     case 'button2':
-        //         console.log(`Button 2 clicked in parent for row with id ${rowId}`);
-        //         // Handle button 2 action
-        //         break;
-        //     default:
-        //         console.log(`Unknown button clicked in parent for row with id ${rowId}`);
-        //         break;
-        // }
         console.log(event);
     }
 }

@@ -30,15 +30,20 @@ import { environment } from 'src/environments/environment';
 export class DynamicTableComponent<T> implements OnInit {
     @Input()
     dataURL: string = '';
-
     @Input()
     listType: string = '';
-
     @Input()
     actionButtons: IActionButtonConfig[] = [];
+    /**
+     * none
+     * single 
+     * multiple
+     */
+    @Input()
+    rowSelectionMode:string='none';
 
     @Output()
-    rowSelected = new EventEmitter<any>();
+    rowSelect = new EventEmitter<any>();
     @Output()
     actionButtonClicked = new EventEmitter<any>();
 
@@ -64,8 +69,25 @@ export class DynamicTableComponent<T> implements OnInit {
         };
         this.actionButtonClicked.emit(data1);
     }
-    emitRowSelectEvent(data: any) {
-        this.rowSelected.emit(data);
+    emitRowSelectEvent() {
+        if(this.rowSelectionMode==='single'){
+            const parentIdToLastIndex = new Map<number, number>();
+            for (let i = this.selectedRows.length - 1; i >= 0; i--) {
+                const item = this.selectedRows[i];
+                if (!parentIdToLastIndex.has(item.parentId)) {
+                    parentIdToLastIndex.set(item.parentId, i);
+                }
+            }
+            
+            for (let i = this.selectedRows.length - 1; i >= 0; i--) {
+                const item = this.selectedRows[i];
+                const lastIndex = parentIdToLastIndex.get(item.parentId);
+                if (i !== lastIndex) {
+                    this.selectedRows.splice(i, 1);
+                }
+            }
+        }
+        this.rowSelect.emit(this.selectedRows);
     }
     //[Event END]==============================================================
 
