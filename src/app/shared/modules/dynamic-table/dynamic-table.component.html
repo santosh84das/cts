@@ -1,10 +1,11 @@
 <p-table
     [columns]="tableData.listHeaders"
+    [value]="tableData.data"
+    [resizableColumns]="true"
     (onSort)="onSortChange($event)"
     (onFilter)="onFilter($event)"
     [(selection)]="selectedRows"
     (selectionChange)="emitRowSelectEvent()"
-    [value]="tableData.data"
     [rows]="10"
     [paginator]="true"
     [showCurrentPageReport]="true"
@@ -20,6 +21,7 @@
             </th>
             <th
                 pSortableColumn="{{ col.fieldName }}"
+                pResizableColumn
                 *ngFor="let col of columns"
                 style="min-width: 14rem"
             >
@@ -29,11 +31,11 @@
                     <p-columnFilter *ngIf="col.dataType!=='object'"
                         [showAddButton]="false"
                         type="{{ col.dataType }}"
-                        field="{{ lowercaseFirstLetter(col.fieldName) }}"
+                        field="{{ col.fieldName }}"
                         display="menu"
                         class="ml-auto"
                     ></p-columnFilter>
-                    <p-columnFilter *ngIf="col.dataType==='object'" field="status" matchMode="equals" display="menu">
+                    <p-columnFilter *ngIf="col.dataType==='object'" field="{{ col.fieldName }}" matchMode="equals" display="menu" [showAddButton]="false">
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                             <p-dropdown [options]="col.filterEnums" (onChange)="filter($event.value)" placeholder="Any" [style]="{'min-width': '12rem'}" >
                                 <ng-template let-option pTemplate="item">
@@ -44,7 +46,7 @@
                     </p-columnFilter>
                 </div>
             </th>
-            <th>
+            <th pResizableColumn *ngIf="actionButtons!=null">
 
             </th>
         </tr>
@@ -56,7 +58,7 @@
             </td>
             <td *ngFor="let col of columns">
                 <span *ngIf="col.dataType!=='object'">{{ rowData[col.fieldName] }}</span> 
-                <span *ngIf="col.dataType==='object'" [class]="'customer-badge ' + getEnumStyle(col.)">{{ rowData[col.fieldName] }}</span> 
+                <span *ngIf="col.dataType==='object'" [class]="'customer-badge ' + getEnumStyle(rowData[col.objectTypeValueField],col.filterEnums)">{{ rowData[col.fieldName] }}</span> 
             </td>
             <td>
                 <button *ngFor="let actionButton of actionButtons" pButton type="button" [icon]="actionButton.icon" [label]="actionButton.lable" class="ml-2"

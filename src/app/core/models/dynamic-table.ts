@@ -11,7 +11,8 @@ export interface ListHeader {
     filterField: string;
     isSortable: boolean;
     isFilterable: boolean;
-    filterEnums: FilterEnum[];
+    filterEnums?: FilterEnum[];
+    objectTypeValueField?: number;
 }
 export interface FilterEnum{
      value:Number

@@ -94,7 +94,6 @@ export class DynamicTableComponent<T> implements OnInit {
 
     //[Filter]=================================================================
     onFilter(event: any) {
-        debugger;
         const originalObject = event.filters;
         const convertedFilters: FilterParameter[] = [];
         // Store previously processed filters to avoid duplicates
