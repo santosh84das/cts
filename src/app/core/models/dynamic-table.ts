@@ -1,10 +1,10 @@
-export interface DynamicList<T> {
-    listHeaders: ListHeader[];
+export interface DynamicTable<T> {
+    headers: TableHeader[];
     data: T[];
     dataCount:number;
 }
 
-export interface ListHeader {
+export interface TableHeader {
     name: string;
     dataType: string;
     fieldName: string;
@@ -30,20 +30,20 @@ export interface SortParameter {
     order:string;
 }
 
-export interface DynamicListQueryParameters {
-    listType: string;
+export interface DynamicTableQueryParameters {
+    // listType: string;
     pageSize: number;
     pageIndex: number;
     filterParameters: FilterParameter[];
     sortParameters: SortParameter;
 }
-export interface IActionButtonConfig{
+export interface ActionButtonConfig{
     lable:string,
     icon:string,
     class:string,
     buttonIdentifier:string,
 }
-export interface IactionButtonEvent{
+export interface ActionButtonEvent{
     rowData:any,
     buttonIdentifier:string
 }

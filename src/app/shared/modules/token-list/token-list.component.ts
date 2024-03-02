@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { TokenStatus } from 'src/app/core/enum/common';
 import { IBillDetails } from 'src/app/core/models/bill';
 import {
-    DynamicList,
-    DynamicListQueryParameters,
+    DynamicTable,
+    DynamicTableQueryParameters,
     FilterParameter,
     SortParameter,
 } from 'src/app/core/models/dynamic-table';
@@ -27,7 +27,7 @@ export class TokenListComponent implements OnInit {
     @Input() actionLable: string | any;
     @Input() actionIcon: string | any;
     tokens: tokenDetails[][] | any;
-    listData: DynamicList<tokenDetails> | any;
+    listData: DynamicTable<tokenDetails> | any;
     loading: boolean = false;
     filterParams: FilterParameter[] = [];
     sortParams: SortParameter|any;
@@ -69,8 +69,8 @@ export class TokenListComponent implements OnInit {
         });
     }
     tokensList(listType: string) {
-        const queryParameters: DynamicListQueryParameters = {
-            listType: listType,
+        const queryParameters: DynamicTableQueryParameters = {
+            // listType: listType,
             pageSize: this.pageSize,
             pageIndex: this.pageIndex,
             filterParameters: this.filterParams,

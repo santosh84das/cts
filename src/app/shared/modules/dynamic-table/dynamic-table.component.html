@@ -1,18 +1,19 @@
 <p-table
-    [columns]="tableData.listHeaders"
-    [value]="tableData.data"
+    [columns]="headers"
+    [value]="data"
     [resizableColumns]="true"
     (onSort)="onSortChange($event)"
     (onFilter)="onFilter($event)"
     [(selection)]="selectedRows"
     (selectionChange)="emitRowSelectEvent()"
-    [rows]="10"
+    [rows]="numberRowsShown"
     [paginator]="true"
     [showCurrentPageReport]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    currentPageReportTemplate="Showing {first} to {last} of {{dataCount}} entries"
     (onPage)="onPageChange($event)"
-    [totalRecords]="tableData.dataCount"
-    [rowsPerPageOptions]="[10, 20, 30]"
+    [totalRecords]="dataCount"
+    [rowsPerPageOptions]="rowsPerPageOptions"
+    [styleClass]="getTableSizeClass(size)"
 >
     <ng-template pTemplate="header" let-columns>
         <tr>
