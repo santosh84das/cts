@@ -13,12 +13,13 @@
             <p-button label="Add Local Objection" icon="pi pi-plus" (click)="addLocalObjectionPanel.toggle($event)"
                 styleClass="p-button-outlined"></p-button>
             <p-confirmPopup></p-confirmPopup>
-            <p-overlayPanel #addLocalObjectionPanel [showCloseIcon]="true">
+            <p-overlayPanel #addLocalObjectionPanel [showCloseIcon]="true" [style]="{ 'width': '500px', 'height': '200px'}">
                 <div class="formgroup-inline">
                     <div class="field">
                         <label htmlFor="localObjection" class="p-sr-only">Objection Description</label>
-                        <input pInputText id="localObjection" ngm type="text" placeholder="Objection description"
-                            [(ngModel)]="newObjection" />
+                        <!-- <input pInputText id="localObjection" ngm type="text" placeholder="Objection description"
+                            [(ngModel)]="newObjection" /> -->
+                            <textarea rows="5" cols="66" pInputTextarea id="localObjection" placeholder="Objection description" [(ngModel)]="newObjection"></textarea>
                     </div>
                     <p-button label="Add" (onClick)="addLocalObjection()"></p-button>
                 </div>
@@ -31,12 +32,13 @@
             <ul class="list-none p-0 m-0">
                 <li class="flex align-items-center surface-400 px-4 py-2 mb-3 shadow-2 border-round flex-wrap">
                     <div class="text-500 flex  pr-5 font-medium">#</div>
-                    <div class="text-900 flex   md:w-5" >Objections</div>
+                    <div class="text-900 flex   md:w-5">Objections</div>
                     <div class="text-900 flex-1 md:w-2 p-2 ">Remarks</div>
                     <div class="text-900 flex-1  md:w-1">Raised By</div>
                     <div class="flex-initial flex md:w-2">Objection Type</div>
                 </li>
-                <li class="flex bg-indigo-50 align-items-center px-4 py-3 mb-3 shadow-2 border-round  flex-wrap " [ngClass]="{'bg-red-200': selectedObjection.isOverruled}"
+                <li class="flex bg-indigo-50 align-items-center px-4 py-3 mb-3 shadow-2 border-round  flex-wrap "
+                    [ngClass]="{'bg-red-200': selectedObjection.isOverruled}"
                     *ngFor="let selectedObjection of selectedObjections;index as i">
                     <div class="text-500 flex  pr-5 font-medium">{{i+1}}</div>
                     <div class="text-900 flex md:w-5" [ngClass]="{'line-through': selectedObjection.isOverruled}">
@@ -45,10 +47,12 @@
                         <!-- {{typeof(selectedObjection.overruledRemark)}} -->
                         {{(selectedObjection.overruledRemark!=undefined)?selectedObjection.overruledRemark:selectedObjection.remark}}
                     </div>
-                    <div class="text-900 flex flex-1  md:w-1 justify-content-center">{{(selectedObjection.objectionBy)?selectedObjection.objectionBy:'You'}}</div>
+                    <div class="text-900 flex flex-1  md:w-1 justify-content-center">
+                        {{(selectedObjection.objectionBy)?selectedObjection.objectionBy:'You'}}</div>
                     <div class="text-900 flex-1  md:w-1 justify-content-end">
                         <!-- <p-badge severity="{{(selectedObjection.objectionType==='Global')?'':'info'}}" value={{selectedObjection.objectionType}}></p-badge> -->
-                        <span [class]="'customer-badge status-' + selectedObjection.objectionType">{{selectedObjection.objectionType}}</span>
+                        <span
+                            [class]="'customer-badge status-' + selectedObjection.objectionType">{{selectedObjection.objectionType}}</span>
                     </div>
                     <div class="flex-initial flex md:w-2 justify-content-end">
                         <button *ngIf="selectedObjection.remark&&!selectedObjection.exiestObjectionId" pButton pRipple
@@ -63,8 +67,13 @@
                         <button *ngIf="selectedObjection.exiestObjectionId&&!selectedObjection.isOverruled" pButton
                             pRipple label="Overrule" icon="pi pi-times" class="p-button-danger p-button-text"
                             (click)="openOverruleRemarkPanel($event,i)"></button>
-                        <button *ngIf="selectedObjection.isOverruled && selectedObjection.OverruledBy==='You'" pButton pRipple label="Undo" icon="pi pi-undo"
-                            class="p-button-info p-button-text" (click)="undoObjectionOverrule(i)"></button>
+                        <button *ngIf="selectedObjection.isOverruled && selectedObjection.OverruledBy==='You'" pButton
+                            pRipple label="Undo" icon="pi pi-undo" class="p-button-info p-button-text"
+                            (click)="undoObjectionOverrule(i)"></button>
+                        <button *ngIf="isRevertButton && selectedObjection.isOverruled  && selectedObjection.OverruledBy!='You'" pButton pRipple label="Revert"
+                            class="p-button-info p-button-text p-button-sm"
+                            (click)="confirmRevert($event,i)"></button>
+
                     </div>
                 </li>
             </ul>
@@ -115,14 +124,16 @@
                     <input pInputText id="localObjection" ngm type="text" placeholder="Remarks"
                         [(ngModel)]="overruleRemarks" />
                 </div>
-                <button pButton pRipple label="Overruled" class="p-button-danger" (click)="objectionOverrule()"></button>
+                <button pButton pRipple label="Overruled" class="p-button-danger"
+                    (click)="objectionOverrule()"></button>
             </div>
         </p-overlayPanel>
     </ng-template>
     <ng-template pTemplate="footer">
         <div class="grid grid-nogutter justify-content-between">
             <p-button label="Back" icon="pi pi-angle-left" (onClick)="prevStep()"></p-button>
-            <p-button [label]="submitButtonLabel" (onClick)="billCheck()" icon="pi pi-save" class="p-button-success"></p-button>
+            <p-button [label]="submitButtonLabel" (onClick)="billCheck()" icon="pi pi-save"
+                class="p-button-success"></p-button>
         </div>
     </ng-template>
 </p-card>

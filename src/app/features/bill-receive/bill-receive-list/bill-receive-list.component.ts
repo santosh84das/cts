@@ -165,4 +165,5 @@ export class BillReceiveListComponent implements OnInit {
     printWindow!.document.body.appendChild(tableToPrint);
     printWindow!.print();
   }
+
 }
