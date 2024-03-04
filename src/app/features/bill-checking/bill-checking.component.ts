@@ -33,17 +33,23 @@ export class BillCheckingComponent implements OnInit {
             });
         this.tableActionButton = [
             {
-                buttonIdentifier: 'test',
-                class: 'p-button-rounded p-button-danger p-button-raised',
-                icon: 'pi pi-times',
-                lable: 'test',
-            },
-            {
-                buttonIdentifier: 'test2',
+                buttonIdentifier: 'view',
                 class: '',
-                icon: 'pi pi-times',
-                lable: 'test2',
-            },
+                icon: 'pi pi-eye',
+                lable: 'View',
+              },
+              {
+                buttonIdentifier: 'edit',
+                class: 'p-button-warning',
+                icon: 'pi pi-file-edit',
+                lable: 'Edit',
+              },
+              {
+                buttonIdentifier: 'del',
+                class: 'p-button-danger',
+                icon: 'pi pi-trash',
+                lable: 'Delete',
+              },
         ];
         this.routeItems = [
             { label: 'Bill Details', routerLink: 'personal' },

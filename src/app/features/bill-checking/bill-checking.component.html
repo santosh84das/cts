@@ -56,5 +56,17 @@
         (actionButtonClicked)="handleButtonClick($event)"
         (queryParameterChange)="handQueryParameterChange($event)">
     </app-dynamic-table>
+    <br>
+    <mh-prime-dynamic-table size="small" [numberRowsShown]="10"
+    [rowsPerPageOptions]="[10,30,50]"
+    [headers]="tableData.headers" 
+    [data]="tableData.data" 
+    [dataCount]="tableData.dataCount"
+    [actionButtons]="tableActionButton"
+    (rowSelect)="handleRowSelection($event)" 
+    (actionButtonClicked)="handleButtonClick($event)"
+    (queryParameterChange)="handQueryParameterChange($event)">></mh-prime-dynamic-table>
     </div>
 </div>
+
+"small" | "normal" | "large"

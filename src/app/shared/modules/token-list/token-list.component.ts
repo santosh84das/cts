@@ -92,7 +92,7 @@ export class TokenListComponent implements OnInit {
     }
     setTokenDetils(selectedToken: tokenDetails) {
         this.tokenServices.selectedId = selectedToken.tokenId;
-        this.tokenServices.selectedTokenNo = selectedToken.tokenNumber;
+        this.tokenServices.selectedTokenNo = selectedToken.tokenNumberr;
         this.tokenServices.selectedTokenDate = selectedToken.tokenDate;
         this.tokenServices.selectedTokenRef = selectedToken.referenceNo;
     }

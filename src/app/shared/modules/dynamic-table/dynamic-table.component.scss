@@ -1,4 +1,13 @@
-.customer-badge {
+.custom-badge{
+    border-radius: var(--border-radius);
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+}
+
+.custom-badge {
     &.primary {
         background: #B3E5FC !important;
         color: #23547B !important;
@@ -23,4 +32,7 @@
         background: #B3E5FC;
         color: #23547b;
     }
+}
+.custom-divider {
+    border-top: 5px #f703a5 !important;
 }

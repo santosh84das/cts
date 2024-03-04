@@ -1,3 +1,4 @@
+<ng-container *ngIf="errors.length === 0; else error">
 <p-table
     [columns]="headers"
     [value]="data"
@@ -59,7 +60,7 @@
             </td>
             <td *ngFor="let col of columns">
                 <span *ngIf="col.dataType!=='object'">{{ rowData[col.fieldName] }}</span> 
-                <span *ngIf="col.dataType==='object'" [class]="'customer-badge ' + getEnumStyle(rowData[col.objectTypeValueField],col.filterEnums)">{{ rowData[col.fieldName] }}</span> 
+                <span *ngIf="col.dataType==='object'" [class]="'custom-badge ' + getEnumStyle(rowData[col.objectTypeValueField],col.filterEnums)">{{ rowData[col.fieldName] }}</span> 
             </td>
             <td>
                 <button *ngFor="let actionButton of actionButtons" pButton type="button" [icon]="actionButton.icon" [label]="actionButton.lable" class="ml-2"
@@ -73,3 +74,9 @@
         </tr>
     </ng-template>
 </p-table>
+</ng-container>
+<ng-template #error>
+    <p-divider align="center" type="dashed">mh-prime-dynamic-table</p-divider>
+    <p-messages [(value)]="errors" [enableService]="false" [closable]="false"></p-messages>
+    <p-divider align="center" type="dashed"></p-divider>
+</ng-template>

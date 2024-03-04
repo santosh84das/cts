@@ -5,7 +5,8 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
-
+import { MessagesModule } from 'primeng/messages';
+import {DividerModule} from 'primeng/divider';
 @NgModule({
   declarations: [DynamicTableComponent],
   imports: [
@@ -13,7 +14,9 @@ import { DropdownModule } from 'primeng/dropdown';
     ButtonModule,
     TableModule,
     CheckboxModule,
-    DropdownModule
+    DropdownModule,
+    MessagesModule,
+    DividerModule
   ],
   exports:[
     DynamicTableComponent

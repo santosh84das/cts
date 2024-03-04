@@ -16,6 +16,7 @@ import { NgxPermissionsModule } from 'ngx-permissions';
 import {ButtonModule} from 'primeng/button';
 import { CommonHeaderModule } from 'src/app/shared/modules/common-header/common-header.module';
 import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic-table.module';
+import { MhPrimeDynamicTableModule } from 'mh-prime-dynamic-table';
 
 @NgModule({
   declarations: [BillCheckingComponent],
@@ -29,6 +30,7 @@ import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic
     ButtonModule,
     CommonHeaderModule,
     DynamicTableModule,
+    MhPrimeDynamicTableModule,
     NgxPermissionsModule.forChild()
   ]
 })

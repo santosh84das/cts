@@ -7,7 +7,7 @@ import {
     Output,
     Type,
 } from '@angular/core';
-import { log } from 'console';
+import { Message } from 'primeng/api/message';
 import {
     DynamicTable,
     DynamicTableQueryParameters,
@@ -18,10 +18,6 @@ import {
     TableHeader,
     SortParameter,
 } from 'src/app/core/models/dynamic-table';
-import { IapiResponce } from 'src/app/core/models/iapi-responce';
-import { tokenDetails } from 'src/app/core/models/token';
-import { ToastService } from 'src/app/core/services/toast.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-dynamic-table',
@@ -30,22 +26,22 @@ import { environment } from 'src/environments/environment';
 })
 export class DynamicTableComponent implements OnInit {
     /**
-     * Small
-     * Normal 
-     * Large
+     * small
+     * normal 
+     * large
      */
     @Input()
-    size:string='';
+    size: string = '';
     @Input()
-    headers :TableHeader[]=[] ;
+    headers: TableHeader[] = [];
     @Input()
     data: any;
     @Input()
-    dataCount:number=0;
+    dataCount: number =0;
     @Input()
-    numberRowsShown:number = 10;
+    numberRowsShown: number = 10;
     @Input()
-    rowsPerPageOptions:any[] = [10,20,30];
+    rowsPerPageOptions: any[] = [10, 20, 30];
     @Input()
     actionButtons: ActionButtonConfig[] = [];
     /**
@@ -54,7 +50,7 @@ export class DynamicTableComponent implements OnInit {
      * multiple
      */
     @Input()
-    rowSelectionMode:string='none';
+    rowSelectionMode: string = 'none';
 
     @Output()
     rowSelect = new EventEmitter<any>();
@@ -62,7 +58,7 @@ export class DynamicTableComponent implements OnInit {
     actionButtonClicked = new EventEmitter<any>();
     @Output()
     queryParameterChange = new EventEmitter<any>();
-    sizes!:any[];
+    sizes!: any[];
     filterParams: FilterParameter[] = [];
     selectedRows: any;
     sortParams: SortParameter | any;
@@ -70,25 +66,35 @@ export class DynamicTableComponent implements OnInit {
     pageSize: number = 10;
     pageIndex: number = 0;
     sortField: string | any;
-    headerLength: number = 0;
+    errors: Message[] = []
 
     ngOnInit(): void {
+        console.log('header', this.headers.length);
+
+        if (this.headers.length == 0) {
+            this.errors.push({ severity: 'error', summary: 'Header Miesing!', detail: 'Message Content'});
+        }
+        if (this.dataCount == 0) {
+            this.errors.push({severity:'error', summary:'Data Count mesing', detail:'Message Content'});
+        }
+        console.log(this.errors);
+
         this.sizes = [
-            { name: 'Small', class: 'p-datatable-sm' },
-            { name: 'Normal', class: '' },
-            { name: 'Large',  class: 'p-datatable-lg' }
+            { name: 'small', class: 'p-datatable-sm' },
+            { name: 'normal', class: '' },
+            { name: 'large', class: 'p-datatable-lg' }
         ];
     }
     //[Event]==================================================================
     emitButtonClickEvent(data: any, buttonType: string) {
-        const data1: ActionButtonEvent = {
+        const actionButtonEventProperties: ActionButtonEvent = {
             buttonIdentifier: buttonType,
             rowData: data,
         };
-        this.actionButtonClicked.emit(data1);
+        this.actionButtonClicked.emit(actionButtonEventProperties);
     }
     emitRowSelectEvent() {
-        if(this.rowSelectionMode==='single'){
+        if (this.rowSelectionMode === 'single') {
             const parentIdToLastIndex = new Map<number, number>();
             for (let i = this.selectedRows.length - 1; i >= 0; i--) {
                 const item = this.selectedRows[i];
@@ -96,7 +102,7 @@ export class DynamicTableComponent implements OnInit {
                     parentIdToLastIndex.set(item.parentId, i);
                 }
             }
-            
+
             for (let i = this.selectedRows.length - 1; i >= 0; i--) {
                 const item = this.selectedRows[i];
                 const lastIndex = parentIdToLastIndex.get(item.parentId);
@@ -107,7 +113,7 @@ export class DynamicTableComponent implements OnInit {
         }
         this.rowSelect.emit(this.selectedRows);
     }
-    emitQueryParameterChange(){
+    emitQueryParameterChange() {
         const queryParameters: DynamicTableQueryParameters = {
             pageSize: this.pageSize,
             pageIndex: this.pageIndex,
@@ -120,6 +126,7 @@ export class DynamicTableComponent implements OnInit {
 
     //[Filter]=================================================================
     onFilter(event: any) {
+        debugger;
         const originalObject = event.filters;
         const convertedFilters: FilterParameter[] = [];
         // Store previously processed filters to avoid duplicates
@@ -135,7 +142,7 @@ export class DynamicTableComponent implements OnInit {
             ) {
                 processedFilters.add(filterKey);
                 convertedFilters.push({
-                    field: this.getFilterField(key,this.headers),
+                    field: this.getFilterField(key, this.headers),
                     value: filterObject.value.toString(),
                     operator: filterObject.matchMode,
                 });
@@ -181,28 +188,6 @@ export class DynamicTableComponent implements OnInit {
     }
     //[Pagination END]=========================================================
 
-    // //[API Call]===============================================================
-    // getData() {
-    //     const queryParameters: DynamicListQueryParameters = {
-    //         listType: this.listType,
-    //         pageSize: this.pageSize,
-    //         pageIndex: this.pageIndex,
-    //         filterParameters: this.filterParams,
-    //         sortParameters: this.sortParams,
-    //     };
-    //     this.http
-    //         .post<IapiResponce<DynamicList<T>>>(this.dataURL, queryParameters)
-    //         .subscribe((response) => {
-    //             if (response.apiResponseStatus == 1) {
-    //                 this.tableData = response.result;
-    //                 console.log(this.tableData);
-    //                 return;
-    //             }
-    //             this.toastservice.showError(response.message);
-    //         });
-    // }
-    // //[API Call END]===========================================================
-
     //[Helper functions]=======================================================
     lowercaseFirstLetter(input: string): string {
         const [firstLetter, ...rest] = input;
@@ -212,15 +197,15 @@ export class DynamicTableComponent implements OnInit {
         const [firstLetter, ...rest] = input;
         return `${firstLetter.toLocaleUpperCase()}${rest.join('')}`;
     }
-    getFilterField(fieldName: string, objects: TableHeader[]): string{
+    getFilterField(fieldName: string, objects: TableHeader[]): string {
         const foundObject = objects.find(obj => obj.fieldName === fieldName);
         return foundObject ? foundObject.filterField : "";
     }
-    getEnumStyle(enumValue: number, objects: FilterEnum[]): string{
+    getEnumStyle(enumValue: number, objects: FilterEnum[]): string {
         const foundObject = objects.find(obj => obj.value === enumValue);
         return foundObject ? foundObject.styleClass : "";
     }
-    getTableSizeClass(size:string){
+    getTableSizeClass(size: string) {
         const foundObject = this.sizes.find(obj => obj.name === size);
         return foundObject ? foundObject.class : "";
     }

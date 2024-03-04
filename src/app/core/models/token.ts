@@ -6,7 +6,7 @@ export interface newToken{
 
 export interface tokenDetails{
     tokenId:number,
-    tokenNumber: Number,
+    tokenNumberr: Number,
     tokenDate: Date,
     currentStatus:string,
     currentStatusSlug:string,
