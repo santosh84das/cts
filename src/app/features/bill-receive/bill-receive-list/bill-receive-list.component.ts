@@ -86,8 +86,8 @@ export class BillReceiveListComponent implements OnInit {
       message: 'Are you sure that you want to proceed?',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        // this.sendForBillReceive(billId);
-        this.test();
+         this.sendForBillReceive(billId);
+        //this.test();
       },
       reject: () => {
         //reject action
