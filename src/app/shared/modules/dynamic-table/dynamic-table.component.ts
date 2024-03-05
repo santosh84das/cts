@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { MenuItem } from 'primeng/api';
 import {
     Component,
     EventEmitter,
@@ -25,6 +26,7 @@ import {
     styleUrls: ['./dynamic-table.component.scss'],
 })
 export class DynamicTableComponent implements OnInit {
+[x: string]: any;
     /**
      * small
      * normal 
@@ -66,7 +68,8 @@ export class DynamicTableComponent implements OnInit {
     pageSize: number = 10;
     pageIndex: number = 0;
     sortField: string | any;
-    errors: Message[] = []
+    errors: Message[] = [];
+    items!: MenuItem[];
 
     ngOnInit(): void {
         console.log('header', this.headers.length);
@@ -83,6 +86,16 @@ export class DynamicTableComponent implements OnInit {
             { name: 'small', class: 'p-datatable-sm' },
             { name: 'normal', class: '' },
             { name: 'large', class: 'p-datatable-lg' }
+        ];
+        this.items = [
+            {
+                label: 'Export',
+                icon: 'pi-download'
+            },
+            {
+                label: 'Other',
+                icon: 'pi pi-times'
+            },
         ];
     }
     //[Event]==================================================================

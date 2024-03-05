@@ -46,7 +46,9 @@
         <br>
         <!-- <app-dynamic-table dataURL="v1/Token/GetTokens" listType="bill-cheking" [actionButtons]="tableActionButton" rowSelectionMode="none" (rowSelect)="handleRowSelection($event)" (actionButtonClicked)="handleButtonClick($event)"></app-dynamic-table> -->
     <app-dynamic-table
+    size="small"
         [numberRowsShown]="10"
+        rowSelectionMode="multiple"
         [rowsPerPageOptions]="[10,30,50]"
         [headers]="tableData.headers" 
         [data]="tableData.data" 
@@ -57,7 +59,7 @@
         (queryParameterChange)="handQueryParameterChange($event)">
     </app-dynamic-table>
     <br>
-    <mh-prime-dynamic-table size="small" [numberRowsShown]="10"
+    <!-- <mh-prime-dynamic-table size="small" [numberRowsShown]="10"
     [rowsPerPageOptions]="[10,30,50]"
     [headers]="tableData.headers" 
     [data]="tableData.data" 
@@ -65,8 +67,6 @@
     [actionButtons]="tableActionButton"
     (rowSelect)="handleRowSelection($event)" 
     (actionButtonClicked)="handleButtonClick($event)"
-    (queryParameterChange)="handQueryParameterChange($event)">></mh-prime-dynamic-table>
+    (queryParameterChange)="handQueryParameterChange($event)">></mh-prime-dynamic-table> -->
     </div>
 </div>
-
-"small" | "normal" | "large"
