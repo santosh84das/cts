@@ -25,7 +25,7 @@ import { CardModule } from 'primeng/card';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import {DialogModule} from 'primeng/dialog';
 import { MessagesModule } from 'primeng/messages';
-import * as jsPDF from 'jspdf';
+
 @NgModule({
   declarations: [BillReceiveComponent, BillReceiveListComponent],
   imports: [
@@ -36,7 +36,8 @@ import * as jsPDF from 'jspdf';
     CardModule,
     ConfirmPopupModule,
     DialogModule,
-    MessagesModule
+    MessagesModule,
+    
   ]
 })
 export class BillReceiveModule { }

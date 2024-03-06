@@ -11,8 +11,6 @@ import { DatePipe } from '@angular/common';
 import { Message, MessageService } from 'primeng/api';
 // import  jsPDF  from 'jspdf';
 // import "jspdf-autotable";
-import jsPDF from 'jspdf'
-import autoTable from 'jspdf-autotable'
 
 @Component({
   selector: 'app-bill-receive-list',
@@ -72,6 +70,7 @@ export class BillReceiveListComponent implements OnInit {
     this.billService.getAllBills().subscribe((response) => {
       if (response.apiResponseStatus == 1) {
         this.bills = response.result;
+        //return  this.bills;
         console.log('the bills:', this.bills);
 
       } else {
@@ -108,8 +107,9 @@ export class BillReceiveListComponent implements OnInit {
         // this.notificationService.success(res.message, "Your Token No is: " + res.result);
         this.displayMaximizable = true;
         // this.router.navigate(['/bill-receive']);
-        // return;
+         return;
       }
+      
       this.notificationService.error(res.message);
     });
   }
@@ -118,29 +118,29 @@ export class BillReceiveListComponent implements OnInit {
     this.displayMaximizable = true;
   }
 
-  printDialogContent() {
+  // printDialogContent() {
 
-    const doc = new jsPDF();
-    const content = this.myDialog.nativeElement.innerHTML;
-    console.log('c', content);
+  //   const doc = new jsPDF();
+  //   const content = this.myDialog.nativeElement.innerHTML;
+  //   console.log('c', content);
 
-    doc.html(content, {
-      callback: () => {
-        const printWindow = window.open(doc.output('bloburl'), '_blank');
-        printWindow?.addEventListener('load', () => {
-          printWindow.print();
-        })
-      },
-      windowWidth: 1000 // Adjust as needed to avoid cut-off
-    });
-  }
+  //   doc.html(content, {
+  //     callback: () => {
+  //       const printWindow = window.open(doc.output('bloburl'), '_blank');
+  //       printWindow?.addEventListener('load', () => {
+  //         printWindow.print();
+  //       })
+  //     },
+  //     windowWidth: 1000 
+  //   });
+  // }
   exportPdf() {
-    const doc = new jsPDF();
+    // const doc = new jsPDF();
     // doc.autoTable();
     // doc['autoTable']({ columns: this.exportColumns, body: this.products });
     // doc['autoTable'](this.exportColumns, this.products);
     // doc['autoTable']();
-    doc.save("products.pdf");
+    // doc.save("products.pdf");
   }
 
   print() {
@@ -164,6 +164,7 @@ export class BillReceiveListComponent implements OnInit {
     printWindow!.document.head.appendChild(styleElement);
     printWindow!.document.body.appendChild(tableToPrint);
     printWindow!.print();
+    window.location.reload();
   }
 
 }
