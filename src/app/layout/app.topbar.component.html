@@ -32,6 +32,10 @@
                 <div class="flex text-cyan-500 font-medium text-sm">{{userDetais?.Role|uppercase }}</div>
             </div>
         </div>
+            <a class="p-link layout-topbar-button" routerLink="/static-login">
+                <i class="pi pi-sign-in"></i>
+                <span>Sign</span>
+            </a>
             <button class="p-link layout-topbar-button" (click)="logoutConfirmation($event)">
                 <i class="pi pi-sign-out"></i>
                 <span>Sign</span>
