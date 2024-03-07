@@ -6,12 +6,18 @@
 
             <!-- <i class="pi pi-bars"></i> -->
 
-            <p-splitButton label="Export To Excel" icon="pi pi-check" styleClass="p-button-warning" pTooltip="Export To Excel" tooltipPosition="right"></p-splitButton>
+            <p-splitButton label="Export To Excel" icon="pi pi-check" styleClass="p-button-warning"
+                pTooltip="Export To Excel" tooltipPosition="right"></p-splitButton>
         </div>
 
         <div class="p-toolbar-group-right">
-            <p-button icon="pi pi-search" class="mr-2" pTooltip="Search" tooltipPosition="top"></p-button>
-            <p-button icon="pi pi-filter-slash" styleClass="p-button-success" pTooltip="Clear Filter" tooltipPosition="top"></p-button>
+            <div class="search-box" [ngClass]="{ 'open': isSearch }">
+                <input type="text" *ngIf="isSearch" class="search-txt" placeholder="Type your search" />
+                <p-button icon="pi pi-search" class="mr-2 search-btn" pTooltip="Search" tooltipPosition="top"
+                    (click)="toggleSearch()"></p-button>
+            </div>
+            <p-button icon="pi pi-filter-slash" styleClass="p-button-success" pTooltip="Clear Filter"
+                tooltipPosition="top"></p-button>
             <!-- <p-button icon="pi pi-times" styleClass="p-button-danger"></p-button> -->
         </div>
     </p-toolbar>

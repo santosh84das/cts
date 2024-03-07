@@ -24,6 +24,7 @@ import {
     selector: 'app-dynamic-table',
     templateUrl: './dynamic-table.component.html',
     styleUrls: ['./dynamic-table.component.scss'],
+    
 })
 export class DynamicTableComponent implements OnInit {
 [x: string]: any;
@@ -70,6 +71,8 @@ export class DynamicTableComponent implements OnInit {
     sortField: string | any;
     errors: Message[] = [];
     items!: MenuItem[];
+    isSearch = false;
+
 
     ngOnInit(): void {
         console.log('header', this.headers.length);
@@ -222,5 +225,9 @@ export class DynamicTableComponent implements OnInit {
         const foundObject = this.sizes.find(obj => obj.name === size);
         return foundObject ? foundObject.class : "";
     }
+
+    toggleSearch() {
+        this.isSearch = !this.isSearch;
+      }
     //[Helper functions END]===================================================
 }
