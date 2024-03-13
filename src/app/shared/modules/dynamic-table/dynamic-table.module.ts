@@ -11,6 +11,8 @@ import {DataViewModule} from 'primeng/dataview';
 import {ToolbarModule} from 'primeng/toolbar';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import {TooltipModule} from 'primeng/tooltip';
+import {FormsModule} from '@angular/forms';
+import {InputTextModule} from 'primeng/inputtext';
 @NgModule({
   declarations: [DynamicTableComponent],
   imports: [
@@ -24,7 +26,9 @@ import {TooltipModule} from 'primeng/tooltip';
     DataViewModule,
     ToolbarModule,
     SplitButtonModule,
-    TooltipModule
+    TooltipModule,
+    FormsModule,
+    InputTextModule
   ],
   exports:[
     DynamicTableComponent

@@ -1,24 +1,18 @@
 <div class="mb-5">
     <p-toolbar>
         <div class="p-toolbar-group-left">
-            <!-- <p-button label="New" icon="pi pi-plus"></p-button> -->
-            <!-- <p-button label="Export To PDF" icon="pi pi-upload" styleClass="p-button-success"></p-button> -->
-
-            <!-- <i class="pi pi-bars"></i> -->
-
             <p-splitButton label="Export To Excel" icon="pi pi-check" styleClass="p-button-warning"
                 pTooltip="Export To Excel" tooltipPosition="right"></p-splitButton>
         </div>
-
         <div class="p-toolbar-group-right">
-            <div class="search-box" [ngClass]="{ 'open': isSearch }">
-                <input type="text" *ngIf="isSearch" class="search-txt" placeholder="Type your search" />
-                <p-button icon="pi pi-search" class="mr-2 search-btn" pTooltip="Search" tooltipPosition="top"
-                    (click)="toggleSearch()"></p-button>
+            <div class="mr-2">
+                <div class="p-inputgroup">
+                    <input type="text" pInputText placeholder="Search" #searchInput>   
+                    <button type="button" pButton pRipple icon="pi pi-search" styleClass="p-button-warn" (click)="globalSearch(searchInput.value)"></button>      
+                </div>
             </div>
             <p-button icon="pi pi-filter-slash" styleClass="p-button-success" pTooltip="Clear Filter"
-                tooltipPosition="top"></p-button>
-            <!-- <p-button icon="pi pi-times" styleClass="p-button-danger"></p-button> -->
+                tooltipPosition="top" (click)="clearFilters()"></p-button>
         </div>
     </p-toolbar>
 

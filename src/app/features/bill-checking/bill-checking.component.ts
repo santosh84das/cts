@@ -90,4 +90,8 @@ export class BillCheckingComponent implements OnInit {
             }
         });
     }
+
+    handleSearchKeyChange(searchKey: string) {
+        console.log('Received search key:', searchKey);
+    }
 }

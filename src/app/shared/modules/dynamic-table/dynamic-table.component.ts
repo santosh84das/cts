@@ -71,8 +71,8 @@ export class DynamicTableComponent implements OnInit {
     sortField: string | any;
     errors: Message[] = [];
     items!: MenuItem[];
-    isSearch = false;
-
+    @Output() searchKeyChange: EventEmitter<string> = new EventEmitter<string>();
+    searchKey: string = '';
 
     ngOnInit(): void {
         console.log('header', this.headers.length);
@@ -226,8 +226,12 @@ export class DynamicTableComponent implements OnInit {
         return foundObject ? foundObject.class : "";
     }
 
-    toggleSearch() {
-        this.isSearch = !this.isSearch;
-      }
+    globalSearch(searchKey: string){
+        this.searchKeyChange.emit(searchKey);
+    }
+
+    clearFilters(){
+         
+    }
     //[Helper functions END]===================================================
 }

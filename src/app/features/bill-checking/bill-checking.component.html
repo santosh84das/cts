@@ -56,7 +56,7 @@
         [actionButtons]="tableActionButton"
         (rowSelect)="handleRowSelection($event)" 
         (actionButtonClicked)="handleButtonClick($event)"
-        (queryParameterChange)="handQueryParameterChange($event)">
+        (queryParameterChange)="handQueryParameterChange($event)" (searchKeyChange)="handleSearchKeyChange($event)">
     </app-dynamic-table>
     <br>
     <!-- <mh-prime-dynamic-table size="small" [numberRowsShown]="10"
