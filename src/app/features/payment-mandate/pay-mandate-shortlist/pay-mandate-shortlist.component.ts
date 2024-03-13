@@ -17,6 +17,7 @@ export class PayMandateShortlistComponent implements OnInit {
   isPaymentSelected: boolean = true;
   loading: boolean = false;
   paymandateShortlist: Paymandate []=[];
+  selectedPaymandates: any[] = [];
   constructor(private paymandateservice: PaymandateService, public billservice: BillService,) { }
 
   ngOnInit(): void {
@@ -33,6 +34,24 @@ export class PayMandateShortlistComponent implements OnInit {
 
       }
     })
+  }
+
+  updateSelectedPaymandates(paymandate: any) {
+    if (paymandate.selected) {
+      this.selectedPaymandates.push(paymandate);
+    } else {
+      const index = this.selectedPaymandates.findIndex(item => item.tokenId === paymandate.tokenId);
+      if (index !== -1) {
+        this.selectedPaymandates.splice(index, 1);
+      }
+    }
+  }
+
+  dataSave() {
+    const payload = {
+      selectedPaymentMandateIds: this.selectedPaymandates
+    };
+    console.log(payload); 
   }
 
 }
