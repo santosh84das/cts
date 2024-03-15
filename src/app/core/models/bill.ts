@@ -5,6 +5,8 @@ export interface IBills {
     ddoDesignation?: string | null;
     billNo?: string | null;
     billDate?: Date | null;
+    grossAmount: number,
+    netAmount: number,
 }
 
 export interface IOnlineBillDetailsRefNo{

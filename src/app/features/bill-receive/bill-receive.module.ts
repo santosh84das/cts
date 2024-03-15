@@ -25,7 +25,7 @@ import { CardModule } from 'primeng/card';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import {DialogModule} from 'primeng/dialog';
 import { MessagesModule } from 'primeng/messages';
-
+import { SharedModule } from 'src/app/shared/modules/shared.module';
 @NgModule({
   declarations: [BillReceiveComponent, BillReceiveListComponent],
   imports: [
@@ -37,7 +37,7 @@ import { MessagesModule } from 'primeng/messages';
     ConfirmPopupModule,
     DialogModule,
     MessagesModule,
-    
+    SharedModule
   ]
 })
 export class BillReceiveModule { }

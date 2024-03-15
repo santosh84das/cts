@@ -27,7 +27,6 @@ import { HasRoleDirective } from './core/directive/has-role.directive';
 import { NgxPermissionsModule, NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
 import { AuthTokenService } from './core/services/auth/auth-token.service';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
-import { FirstLetterPipe } from './core/pipe/first-letter.pipe';
 import { ReturnMemoComponent } from './features/return-memo/return-memo.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { StaticLoginComponent } from './features/static-login/static-login.component';

@@ -1,3 +1,5 @@
+import { HoaChain } from "./hoa-chain";
+
 export interface newToken{
     billId: Number,
     physicalBillDate : string,
@@ -13,4 +15,15 @@ export interface tokenDetails{
     financialYear: string,
     referenceNo: string,
     ddoCode: string
+}
+export interface tokenPrint{
+    tokenNumber: Number,
+    tokenDate: Date,
+    billNo:number,
+    billDate:Date,
+    ddoCode:string,
+    payeeDept:string,
+    hoaChain: HoaChain,
+    grossAmount: number;
+    netAmount: number;
 }

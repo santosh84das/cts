@@ -9,6 +9,7 @@ import { TokenService } from 'src/app/core/services/Token/token.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { DatePipe } from '@angular/common';
 import { Message, MessageService } from 'primeng/api';
+import { tokenPrint } from 'src/app/core/models/token';
 // import  jsPDF  from 'jspdf';
 // import "jspdf-autotable";
 
@@ -20,6 +21,7 @@ import { Message, MessageService } from 'primeng/api';
 })
 export class BillReceiveListComponent implements OnInit {
   bills: IBills[][] | any;
+  tokenPrintDetail:tokenPrint|any;
   loading: boolean = false;
   displayMaximizable: boolean | undefined;
   messages: Message[] = [];
@@ -40,7 +42,7 @@ export class BillReceiveListComponent implements OnInit {
       RsinAmount: 'Two Hundred Fifty Only.'
     },];
   @ViewChild('myDialog') myDialog: any;
-  constructor(private elementRef: ElementRef, private billService: BillService, private toastService: ToastService, private onlineBillReceiveService: OnlineBillReceiveService, private router: Router, private confirmationService: ConfirmationService, private tokenService: TokenService, private notificationService: NotificationService, private datePipe: DatePipe) { }
+  constructor(private elementRef: ElementRef, public billService: BillService, private toastService: ToastService, private onlineBillReceiveService: OnlineBillReceiveService, private router: Router, private confirmationService: ConfirmationService, private tokenService: TokenService, private notificationService: NotificationService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     // this.products  = [
@@ -104,6 +106,7 @@ export class BillReceiveListComponent implements OnInit {
       if (res.result) {
         this.onlineBillReceiveService.selectedBillId = 0;
         this.onlineBillReceiveService.selectedBillRefNo = 0;
+        this.tokenPrint(Number(res.result));
         // this.notificationService.success(res.message, "Your Token No is: " + res.result);
         this.displayMaximizable = true;
         // this.router.navigate(['/bill-receive']);
@@ -113,7 +116,16 @@ export class BillReceiveListComponent implements OnInit {
       this.notificationService.error(res.message);
     });
   }
-
+  tokenPrint(tokenId:number){
+    this.tokenService.getPrintDetails(tokenId).subscribe((response)=>{
+      if(response.apiResponseStatus==1){
+        this.tokenPrintDetail = response.result;
+        this.displayMaximizable = true;
+        return;
+      }
+      this.toastService.showError(response.message);
+    });
+  }
   test() {
     this.displayMaximizable = true;
   }

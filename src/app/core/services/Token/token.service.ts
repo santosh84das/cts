@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, catchError } from 'rxjs';
+import { Observable, Subject, catchError, retry } from 'rxjs';
 import { IapiResponce } from '../../models/iapi-responce';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../toast.service';
-import { tokenDetails } from '../../models/token';
+import { tokenDetails, tokenPrint } from '../../models/token';
 
 @Injectable({
     providedIn: 'root',
@@ -48,5 +48,12 @@ export class TokenService {
                     throw this.toastservice.showError(error.message);
                 })
             );
+    }
+    getPrintDetails(tokenId:number):Observable<IapiResponce<tokenPrint>>{
+        return this.http.get<IapiResponce<tokenPrint>>("v1/Token/TokenPrint/"+tokenId).pipe(
+            catchError((error) => {
+                throw this.toastservice.showError(error.message);
+            })
+        );
     }
 }
