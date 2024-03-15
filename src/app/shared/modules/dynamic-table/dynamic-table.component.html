@@ -2,7 +2,7 @@
     <p-toolbar>
         <div class="p-toolbar-group-left">
             <p-splitButton label="Export To Excel" icon="pi pi-check" styleClass="p-button-warning"
-                pTooltip="Export To Excel" tooltipPosition="right"></p-splitButton>
+                pTooltip="Export To Excel" tooltipPosition="right" [model]="items" (click)="exportPdf()"></p-splitButton>
         </div>
         <div class="p-toolbar-group-right">
             <div class="mr-2">

@@ -22,6 +22,8 @@
     "@angular/router": "~14.0.0",
     "@auth0/angular-jwt": "^5.2.0",
     "chart.js": "^3.3.2",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
     "mh-prime-dynamic-table": "^0.0.2",
     "ngx-permissions": "^14.0.0",
     "ngx-spinner": "^14.0.0",

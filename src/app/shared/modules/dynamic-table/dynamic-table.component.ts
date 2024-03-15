@@ -19,6 +19,8 @@ import {
     TableHeader,
     SortParameter,
 } from 'src/app/core/models/dynamic-table';
+import jsPDF from "jspdf";
+import 'jspdf-autotable'
 
 @Component({
     selector: 'app-dynamic-table',
@@ -92,12 +94,12 @@ export class DynamicTableComponent implements OnInit {
         ];
         this.items = [
             {
-                label: 'Export',
-                icon: 'pi-download'
+                label: 'Export All',
+                icon: 'pi pi-arrow-down'
             },
             {
-                label: 'Other',
-                icon: 'pi pi-times'
+                label: 'Export Scelected',
+                icon: 'pi pi-arrow-down'
             },
         ];
     }
@@ -232,6 +234,14 @@ export class DynamicTableComponent implements OnInit {
 
     clearFilters(){
          
+    }
+
+    exportPdf(){
+        const doc = new jsPDF('p','pt');
+         //doc['autoTable'](this.exportColumns, this.products);
+        /// doc.autoTable(this.exportColumns, this.products);
+        doc.autoTable({ html: '#myTable' })
+        doc.save("products.pdf");
     }
     //[Helper functions END]===================================================
 }

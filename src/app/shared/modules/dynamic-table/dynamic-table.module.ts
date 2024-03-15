@@ -13,6 +13,7 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import {TooltipModule} from 'primeng/tooltip';
 import {FormsModule} from '@angular/forms';
 import {InputTextModule} from 'primeng/inputtext';
+
 @NgModule({
   declarations: [DynamicTableComponent],
   imports: [
