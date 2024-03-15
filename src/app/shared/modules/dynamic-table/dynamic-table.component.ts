@@ -20,7 +20,7 @@ import {
     SortParameter,
 } from 'src/app/core/models/dynamic-table';
 import jsPDF from "jspdf";
-import 'jspdf-autotable'
+import autoTable from 'jspdf-autotable'
 
 @Component({
     selector: 'app-dynamic-table',
@@ -240,7 +240,7 @@ export class DynamicTableComponent implements OnInit {
         const doc = new jsPDF('p','pt');
          //doc['autoTable'](this.exportColumns, this.products);
         /// doc.autoTable(this.exportColumns, this.products);
-        doc.autoTable({ html: '#myTable' })
+        // doc.autoTable({ html: '#myTable' })
         doc.save("products.pdf");
     }
     //[Helper functions END]===================================================
