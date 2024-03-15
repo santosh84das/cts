@@ -93,7 +93,7 @@
                     </tr> -->
                 </ng-template>
                 <ng-template pTemplate="body" let-paymandate>
-                    <tr>
+                    <tr (click)="selectPaymandate(paymandate)">
                         <td>
                             1
                         </td>
@@ -145,7 +145,7 @@
                         </td>
                         <td>
                             <div class="field col-12 md:col-12">
-                                <p-calendar [showIcon]="true" inputId="icon"></p-calendar>
+                                <p-calendar [showIcon]="true" inputId="icon"  [(ngModel)]="paymandate.selectedDate"></p-calendar>
                             </div>
                         </td>
                         <td>

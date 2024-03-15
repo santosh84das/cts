@@ -16,8 +16,8 @@ export class PayMandateShortlistComponent implements OnInit {
   value: any = '1';
   isPaymentSelected: boolean = true;
   loading: boolean = false;
-  paymandateShortlist: Paymandate []=[];
-  selectedPaymandates: any[] = [];
+  paymandateShortlist: Paymandate[] = [];
+  selectedPaymandates: Paymandate[] = [];
   constructor(private paymandateservice: PaymandateService, public billservice: BillService,) { }
 
   ngOnInit(): void {
@@ -28,15 +28,25 @@ export class PayMandateShortlistComponent implements OnInit {
     this.paymandateservice.getPaymandateShortlist().subscribe((response) => {
       if (response.apiResponseStatus == 1) {
         this.paymandateShortlist = response.result;
-        console.log('->>>',this.paymandateShortlist);
-        
+        console.log('->>>', this.paymandateShortlist);
+
       } else {
 
       }
     })
   }
 
+  selectPaymandate(paymandate: any) {
+    if (!this.selectedPaymandates) {
+      this.selectedPaymandates = []; 
+    }
+    this.selectedPaymandates.push(paymandate);
+  }
+
   updateSelectedPaymandates(paymandate: any) {
+    if (!this.selectedPaymandates) {
+      this.selectedPaymandates = []; 
+    }
     if (paymandate.selected) {
       this.selectedPaymandates.push(paymandate);
     } else {
@@ -48,10 +58,16 @@ export class PayMandateShortlistComponent implements OnInit {
   }
 
   dataSave() {
-    const payload = {
-      selectedPaymentMandateIds: this.selectedPaymandates
-    };
-    console.log(payload); 
+    if (this.selectedPaymandates && this.selectedPaymandates.length > 0) {
+      console.log(this.selectedPaymandates);
+      const payload = {
+        tokenId: this.selectedPaymandates[0].tokenId,
+        calendarDate: this.selectedPaymandates[0].selectedDate,
+      };
+      console.log(payload);
+    } else {
+      console.error('No paymandates selected.');
+    }
   }
 
 }
