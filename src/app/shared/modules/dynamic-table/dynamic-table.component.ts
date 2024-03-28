@@ -19,17 +19,16 @@ import {
     TableHeader,
     SortParameter,
 } from 'src/app/core/models/dynamic-table';
-import jsPDF from "jspdf";
-import autoTable from 'jspdf-autotable'
+import * as FileSaver from 'file-saver';
 
 @Component({
     selector: 'app-dynamic-table',
     templateUrl: './dynamic-table.component.html',
     styleUrls: ['./dynamic-table.component.scss'],
-    
+
 })
 export class DynamicTableComponent implements OnInit {
-[x: string]: any;
+    [x: string]: any;
     /**
      * small
      * normal 
@@ -42,7 +41,7 @@ export class DynamicTableComponent implements OnInit {
     @Input()
     data: any;
     @Input()
-    dataCount: number =0;
+    dataCount: number = 0;
     @Input()
     numberRowsShown: number = 10;
     @Input()
@@ -75,15 +74,17 @@ export class DynamicTableComponent implements OnInit {
     items!: MenuItem[];
     @Output() searchKeyChange: EventEmitter<string> = new EventEmitter<string>();
     searchKey: string = '';
-
+    cols!: any[];
+    exportColumns!: any[];
     ngOnInit(): void {
-        console.log('header', this.headers.length);
-
+        console.log('header', this.headers);
+        console.log('header', this.data);
+        this.exportColumns = this.headers.map(col => ({ title: col.name, dataKey: col.fieldName }));
         if (this.headers.length == 0) {
-            this.errors.push({ severity: 'error', summary: 'Header Miesing!', detail: 'Message Content'});
+            this.errors.push({ severity: 'error', summary: 'Header Miesing!', detail: 'Message Content' });
         }
         if (this.dataCount == 0) {
-            this.errors.push({severity:'error', summary:'Data Count mesing', detail:'Message Content'});
+            this.errors.push({ severity: 'error', summary: 'Data Count mesing', detail: 'Message Content' });
         }
         console.log(this.errors);
 
@@ -95,11 +96,13 @@ export class DynamicTableComponent implements OnInit {
         this.items = [
             {
                 label: 'Export All',
-                icon: 'pi pi-arrow-down'
+                icon: 'pi pi-copy',
+                command: () => {this.exportHandler('data')}
             },
             {
-                label: 'Export Scelected',
-                icon: 'pi pi-arrow-down'
+                label: 'Export Selected',
+                icon: 'pi pi-check-square',
+                command: () =>{this.exportHandler('data')}
             },
         ];
     }
@@ -228,20 +231,75 @@ export class DynamicTableComponent implements OnInit {
         return foundObject ? foundObject.class : "";
     }
 
-    globalSearch(searchKey: string){
+    globalSearch(searchKey: string) {
         this.searchKeyChange.emit(searchKey);
     }
 
-    clearFilters(){
-         
+    clearFilters() {
+
     }
 
-    exportPdf(){
-        const doc = new jsPDF('p','pt');
-         //doc['autoTable'](this.exportColumns, this.products);
-        /// doc.autoTable(this.exportColumns, this.products);
-        // doc.autoTable({ html: '#myTable' })
-        doc.save("products.pdf");
+    exportHandler(type: string) {
+        if (type === 'excel') {
+           
+                this.exportExcel();
+           
+        } else if (type === 'pdf') {
+         
+          
+                this.exportPdf();
+           
+        }
+    }
+    
+
+    exportPdf() {
+        console.log('d');
+        import("jspdf").then(jsPDF => {
+            import("jspdf-autotable").then(x => {
+                const doc = new jsPDF.default('p', 'px', 'a4');
+                (doc as any).autoTable(this.exportColumns, this.data);
+                doc.save('products.pdf');
+            })
+        })
+    }
+
+    exportPdfSelected() {
+        console.log('d');
+        import("jspdf").then(jsPDF => {
+            import("jspdf-autotable").then(x => {
+                const doc = new jsPDF.default('p', 'px', 'a4');
+                (doc as any).autoTable(this.exportColumns, this.selectedRows);
+                doc.save('products.pdf');
+            })
+        })
+    }
+
+    saveAsExcelFile(buffer: any, fileName: string): void {
+        let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+        let EXCEL_EXTENSION = '.xlsx';
+        const data: Blob = new Blob([buffer], {
+            type: EXCEL_TYPE
+        });
+        FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    }
+
+    exportExcel() {
+        import("xlsx").then(xlsx => {
+            const worksheet = xlsx.utils.json_to_sheet(this.data);
+            const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+            const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+            this.saveAsExcelFile(excelBuffer, "data");
+        });    
+    }
+
+    exportExcelSelected() {
+        import("xlsx").then(xlsx => {
+            const worksheet = xlsx.utils.json_to_sheet(this.selectedRows);
+            const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+            const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+            this.saveAsExcelFile(excelBuffer, "data");
+        });    
     }
     //[Helper functions END]===================================================
 }
