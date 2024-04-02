@@ -72,6 +72,7 @@ export class DynamicTableComponent implements OnInit {
     sortField: string | any;
     errors: Message[] = [];
     items!: MenuItem[];
+    items1!: MenuItem[];
     @Output() searchKeyChange: EventEmitter<string> = new EventEmitter<string>();
     searchKey: string = '';
     cols!: any[];
@@ -97,12 +98,25 @@ export class DynamicTableComponent implements OnInit {
             {
                 label: 'Export All',
                 icon: 'pi pi-copy',
-                command: () => {this.exportHandler('data')}
+                command: () => { this.exportExcel()}
             },
             {
                 label: 'Export Selected',
                 icon: 'pi pi-check-square',
-                command: () =>{this.exportHandler('data')}
+                command: () =>{this.exportExcelSelected()}
+            },
+        ];
+
+        this.items1 = [
+            {
+                label: 'Export All',
+                icon: 'pi pi-copy',
+                command: () => {this.exportPdf() }
+            },
+            {
+                label: 'Export Selected',
+                icon: 'pi pi-check-square',
+                command: () =>{this.exportPdfSelected()}
             },
         ];
     }
@@ -239,18 +253,18 @@ export class DynamicTableComponent implements OnInit {
 
     }
 
-    exportHandler(type: string) {
-        if (type === 'excel') {
+    // exportHandler(type: string) {
+    //     if (type === 'excel') {
            
-                this.exportExcel();
+    //             this.exportExcel();
            
-        } else if (type === 'pdf') {
+    //     } else if (type === 'pdf') {
          
           
-                this.exportPdf();
+    //             this.exportPdf();
            
-        }
-    }
+    //     }
+    // }
     
 
     exportPdf() {

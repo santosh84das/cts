@@ -3,10 +3,10 @@
         <div class="p-toolbar-group-left">
             <p-splitButton label="Export To Excel" icon="pi pi-file-excel"
                 styleClass="p-button-sm p-button-warning mr-2" pTooltip="Export To Excel" tooltipPosition="top"
-                [model]="items" (onClick)="exportHandler('excel')"></p-splitButton>
+                [model]="items" (onClick)="exportExcel()"></p-splitButton>
             <p-splitButton label="Export To Pdf" icon="pi pi-file-pdf" styleClass="p-button-sm p-button-danger"
-                pTooltip="Export To Pdf" tooltipPosition="right" [model]="items"
-                (onClick)="exportHandler('pdf')"></p-splitButton>
+                pTooltip="Export To Pdf" tooltipPosition="right" [model]="items1"
+                (onClick)="exportPdf()"></p-splitButton>
         </div>
         <div class="p-toolbar-group-right">
             <div class="mr-2">
