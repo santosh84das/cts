@@ -24,6 +24,10 @@ export class TokenListComponent implements OnInit {
   tokens: tokenDetails[][] | any;
   loading:boolean = false;
 
+  sortOrder: number |any;
+
+  sortField: string | any;
+
   constructor(private tokenServices:TokenService, private toastService:ToastService, private router:Router) { }
 
   ngOnInit(): void {
@@ -72,4 +76,17 @@ export class TokenListComponent implements OnInit {
   //   this.tokenServices.selectedTokenRef = tokenRef;
   //   this.router.navigate([this.actionRoute]);
   // }
+
+  onSortChange(event:any) {
+    let value = event.value;
+
+    if (value.indexOf('!') === 0) {
+        this.sortOrder = -1;
+        this.sortField = value.substring(1, value.length);
+    }
+    else {
+        this.sortOrder = 1;
+        this.sortField = value;
+    }
+}
 }

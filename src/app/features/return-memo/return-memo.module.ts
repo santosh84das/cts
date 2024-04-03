@@ -9,6 +9,8 @@ import {CardModule} from 'primeng/card';
 import {ButtonModule} from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
+import { CommonHeaderModule } from 'src/app/shared/modules/common-header/common-header.module';
+
 @NgModule({
   declarations: [ReturnMemoComponent, GenerateReturnMemoComponent],
   imports: [
@@ -18,7 +20,8 @@ import { DividerModule } from 'primeng/divider';
     CardModule,
     ButtonModule,
     DialogModule,
-    DividerModule
+    DividerModule,
+    CommonHeaderModule
   ]
 })
 export class ReturnMemoModule { }

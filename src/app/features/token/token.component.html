@@ -1,29 +1,11 @@
 <div class="grid">
     <div class="col-12">
-        <div class="grid">
-            <div class="col">
-                <div class="grid nested-grid">
-                    <div class="col-fixed">
-                        <img
-                            src="assets/layout/images/icons/token.png"
-                            alt="logo"
-                            height="60"
-                        />
-                    </div>
-                    <div class="col-11">
-                        <div class="text-900 font-bold text-3xl mb-1">
-                            Token
-                        </div>
-                        <div class="text-700 text-1xl line-height-3">Token List.</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-fixed">
-                <button pButton pRipple label="Close" type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-raised" [routerLink]="['/']"></button>
-            </div>
-        </div>
+        <app-common-header [headerName]="'Token'" [SubHeaderName]="'Token List.'"  [imgSrc]="'assets/layout/images/icons/token.png'">
+            <button pButton pRipple type="button"  icon="pi pi-times"label="Close"
+            class="p-button-rounded p-button-danger p-button-raised"  (click)="closeButton($event)"></button>
+        </app-common-header>
     </div>
     <div class="col-12">
-        <app-token-list actionRoute="/option" [isAllToken]=1></app-token-list>
+        <app-token-list actionRoute="/option" [isAllToken]=1 actionIcon="pi pi-chevron-right"></app-token-list>
     </div>
 </div>
