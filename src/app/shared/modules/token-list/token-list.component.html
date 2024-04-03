@@ -99,17 +99,43 @@
     </ng-template>
 </p-table>
 
-<!-- <div class="card"> -->
-    <!-- <p-dataView #dv [value]="tokens" [paginator]="true" [rows]="9" [sortField]="sortField" [sortOrder]="sortOrder" style="background: none !important;">
+<div class="mt-5">
+    <p-dataView #dv [value]="tokens" [paginator]="true" [rows]="9" [sortField]="sortField" [sortOrder]="sortOrder" style="background: none !important;" >
         <ng-template pTemplate="header">
-            <div class="flex flex-column md:flex-row md:justify-content-between"> -->
+            <div class="flex flex-column md:flex-row md:justify-content-end border-round-xs">
                 <!-- <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By Price" (onChange)="onSortChange($event)" styleClass="mb-2 md:mb-0"></p-dropdown> -->
                 <!-- <span class="p-input-icon-left mb-2 md:mb-0">
                     <i class="pi pi-search"></i>
                     <input type="search" pInputText placeholder="Search by Name">
                 </span> -->
                 <!-- <p-dataViewLayoutOptions></p-dataViewLayoutOptions> -->
-            <!-- </div>
+              
+            </div>
+            <div class="col-12">
+                <div class="flex">
+                    <div class="w-2">
+                        token no
+                    </div>
+                    <div class="w-2">
+                        token Date
+                    </div>
+                    <div class="w-2">
+                        Financial Year
+                    </div>
+                    <div class="w-2">
+                        Reference No
+                    </div>
+                    <div class="w-2">
+                        DDO Code
+                    </div>
+                    <div class="w-2">
+                        token status
+                    </div>
+                    <div class="w-2">
+                        Action
+                    </div>
+                </div>
+            </div>
         </ng-template>
         <ng-template let-token pTemplate="listItem" >
             <div class="col-12 section" style="border-radius: 10px;margin-bottom: 10px;background: #fff; --tw-shadow: 5px 3px 5px #00000005; --tw-shadow-colored: 5px 3px 5px var(--tw-shadow-color); box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),var(--tw-ring-shadow, 0 0 #0000),var(--tw-shadow);">
@@ -139,6 +165,6 @@
                 </div>
             </div>
         </ng-template>
-    </p-dataView> -->
-<!-- </div> -->
+    </p-dataView>
+</div>
 

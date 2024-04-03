@@ -1,6 +1,7 @@
 import { HoaChain } from "./hoa-chain";
 
 export interface Paymandate {
+  selectedDate: any;
   tokenId: number;
   tokenDate:Date;
   billNo: string;

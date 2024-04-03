@@ -68,15 +68,13 @@ export class BillReceiveListComponent implements OnInit {
       dataKey: col.field
     }));
   }
-  allBillls() {
-    this.billService.getAllBills().subscribe((response) => {
-      if (response.apiResponseStatus == 1) {
-        this.bills = response.result;
-        //return  this.bills;
-        console.log('the bills:', this.bills);
-
-      } else {
-        this.toastService.showAlert(response.message, response.apiResponseStatus);
+  allBillls(){
+    this.billService.getAllBills().subscribe((response)=>{
+      if(response.apiResponseStatus==1){
+          this.bills = response.result;
+          console.log('checking',this.bills);
+      }else{
+        this.toastService.showAlert(response.message,response.apiResponseStatus);
       }
     });
   }

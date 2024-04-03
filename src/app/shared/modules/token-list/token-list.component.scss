@@ -3,13 +3,12 @@
     .p-dataview .p-dataview-content {
         background: none !important;
     }
-
-    // .col-12 > .flex:first-child {
-    // }
-    div.section>.flex:first-child {
+    div.flex>.product-list-item:first-child {
         margin-top: 10px;
     }
-
+    .col-12:first-child {
+        margin-top: 10px;
+    }
     .p-dropdown {
         width: 14rem;
         font-weight: normal;
@@ -37,7 +36,7 @@
     .product-list-item {
         display: flex;
         align-items: center;
-        padding: 1rem;
+        padding: .5rem;
         width: 100%;
 
         img {

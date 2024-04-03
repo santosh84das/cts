@@ -49,6 +49,9 @@
                         <th style="width:12%">Head Of Accounts</th>
                         <th style="width:4%">DDO Code </th>
                         <th style="width:16%">Payment Mandate Date</th>
+                        <th>
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
                     </tr>
                     <!-- <tr>
                         <th>
@@ -90,7 +93,7 @@
                     </tr> -->
                 </ng-template>
                 <ng-template pTemplate="body" let-paymandate>
-                    <tr>
+                    <tr (click)="selectPaymandate(paymandate)">
                         <td>
                             1
                         </td>
@@ -142,11 +145,14 @@
                         </td>
                         <td>
                             <div class="field col-12 md:col-12">
-                                <p-calendar [showIcon]="true" inputId="icon"></p-calendar>
+                                <p-calendar [showIcon]="true" inputId="icon"  [(ngModel)]="paymandate.selectedDate"></p-calendar>
                             </div>
-
+                        </td>
+                        <td>
+                            <p-tableCheckbox [value]="paymandateShortlist" (onChange)="updateSelectedPaymandates(paymandate)"></p-tableCheckbox>
                         </td>
                     </tr>
+                    <p-button label="Shortlisted" (click)="dataSave()" icon="pi pi-save" class="p-button-success align-items-end"></p-button>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
                     <tr>
