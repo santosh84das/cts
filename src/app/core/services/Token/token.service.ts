@@ -3,7 +3,7 @@ import { Observable, Subject, catchError, retry } from 'rxjs';
 import { IapiResponce } from '../../models/iapi-responce';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../toast.service';
-import { tokenDetails } from '../../models/token';
+import { tokenDetails, tokenPrint } from '../../models/token';
 import { DynamicTable, DynamicTableQueryParameters } from '../../models/dynamic-table';
 
 @Injectable({
