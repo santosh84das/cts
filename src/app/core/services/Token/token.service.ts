@@ -3,7 +3,8 @@ import { Observable, Subject, catchError, retry } from 'rxjs';
 import { IapiResponce } from '../../models/iapi-responce';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../toast.service';
-import { tokenDetails, tokenPrint } from '../../models/token';
+import { tokenDetails } from '../../models/token';
+import { DynamicTable, DynamicTableQueryParameters } from '../../models/dynamic-table';
 
 @Injectable({
     providedIn: 'root',
@@ -33,8 +34,15 @@ export class TokenService {
             })
         );
     }
-    getTokens(path:string): Observable<IapiResponce> {
-        return this.http.get<IapiResponce>('v1/'+path).pipe(
+    // getTokens(path:string): Observable<IapiResponce<DynamicList<tokenDetails>>> {
+    //     return this.http.get<IapiResponce<DynamicList<tokenDetails>>>('v1/'+path).pipe(
+    //         catchError((error) => {
+    //             throw this.toastservice.showError(error.message);
+    //         })
+    //     );
+    // }
+    getTokens(path:string,queryParameters:DynamicTableQueryParameters): Observable<IapiResponce<DynamicTable<tokenDetails>>> {
+        return this.http.post<IapiResponce<DynamicTable<tokenDetails>>>('v1/'+path,queryParameters).pipe(
             catchError((error) => {
                 throw this.toastservice.showError(error.message);
             })

@@ -33,7 +33,11 @@
             "styles": [
               "node_modules/ngx-spinner/animations/ball-scale-multiple.css",
               "src/styles.scss"
-            ]
+            ],
+            "scripts": [
+              "node_modules/jspdf/dist/jspdf.es.js",
+              "node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js"
+          ]
           },
           "configurations": {
             "production": {

@@ -24,13 +24,49 @@
         </div>
     </div> -->
     <div class="col-12">
-        <app-common-header [headerName]="'Bill Checking'" [imgSrc]="'assets/layout/images/icons/bill-check.png'">
-            <button pButton pRipple type="button"  icon="pi pi-times"label="Close"
-            class="p-button-rounded p-button-danger p-button-raised"  (click)="closeButton($event)"></button>
+        <app-common-header
+            [headerName]="'Bill Checking'"
+            [imgSrc]="'assets/layout/images/icons/bill-check.png'"
+        >
+            <button
+                pButton
+                pRipple
+                type="button"
+                icon="pi pi-times"
+                label="Close"
+                class="p-button-rounded p-button-danger p-button-raised"
+                (click)="closeButton($event)"
+            ></button>
         </app-common-header>
     </div>
     <div class="col-12">
-        <app-token-list apiPath="Token/GetTokens" listType="bill-cheking" actionLable="Bill Check"
-            actionIcon="pi pi-check-circle"></app-token-list>
+        <!-- <app-token-list apiPath="Token/GetTokens" listType="bill-cheking" actionLable="Bill Check"
+            actionIcon="pi pi-check-circle">
+        </app-token-list> -->
+        <br>
+        <!-- <app-dynamic-table dataURL="v1/Token/GetTokens" listType="bill-cheking" [actionButtons]="tableActionButton" rowSelectionMode="none" (rowSelect)="handleRowSelection($event)" (actionButtonClicked)="handleButtonClick($event)"></app-dynamic-table> -->
+    <app-dynamic-table
+    size="small"
+        [numberRowsShown]="10"
+        rowSelectionMode="multiple"
+        [rowsPerPageOptions]="[10,30,50]"
+        [headers]="tableData.headers" 
+        [data]="tableData.data" 
+        [dataCount]="tableData.dataCount"
+        [actionButtons]="tableActionButton"
+        (rowSelect)="handleRowSelection($event)" 
+        (actionButtonClicked)="handleButtonClick($event)"
+        (queryParameterChange)="handQueryParameterChange($event)" (searchKeyChange)="handleSearchKeyChange($event)">
+    </app-dynamic-table>
+    <br>
+    <!-- <mh-prime-dynamic-table size="small" [numberRowsShown]="10"
+    [rowsPerPageOptions]="[10,30,50]"
+    [headers]="tableData.headers" 
+    [data]="tableData.data" 
+    [dataCount]="tableData.dataCount"
+    [actionButtons]="tableActionButton"
+    (rowSelect)="handleRowSelection($event)" 
+    (actionButtonClicked)="handleButtonClick($event)"
+    (queryParameterChange)="handQueryParameterChange($event)">></mh-prime-dynamic-table> -->
     </div>
 </div>

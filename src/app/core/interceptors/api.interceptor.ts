@@ -47,7 +47,7 @@ export class ApiInterceptor implements HttpInterceptor {
                         this.router.navigate(['/login']);
                     }
                     if(error.status == 0){
-                    this.router.navigate(['/server-down']);
+                    // this.router.navigate(['/server-down']);
                     }
                 }
             ),
