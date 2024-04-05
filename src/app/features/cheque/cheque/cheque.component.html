@@ -1,0 +1,37 @@
+<div class="grid">
+    <div class="col-12">
+        <app-common-header [headerName]="'Cheque'" [imgSrc]="'assets/layout/images/icons/cheque.png'">
+            <button pButton pRipple type="button" icon="pi pi-plus" label="New Indent"
+                class="p-button-rounded p-button-raised" [routerLink]="['cheque-indent']"></button></app-common-header>
+    </div>
+    <!-- <app-option-card  logo='cheque-indent' optionName="Cheque Indent" class="col-12 lg:col-6 xl:col-3" [routerLink]="['/cheque-indent']"></app-option-card>
+    <app-option-card  logo='cheque-invoice' optionName="Cheque Invoice" class="col-12 lg:col-6 xl:col-3" [routerLink]="['/cheque-invoice']"></app-option-card> -->
+    <div class="col-12">
+        <div class="grid">
+            <div class="col-12 lg:col-6 p-3">
+                <div class="transition-colors transition-duration-500 p-3 border-round border-2 cursor-pointer">
+                    <div class="flex align-items-center justify-content-between">
+                        <div>
+                            <p>Cheque Indent</p>
+                        </div>
+                        <div>
+                            <img src="assets/layout/images/icons/cheque-indent.png" height="60">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 lg:col-6 p-3">
+                <div class="transition-colors transition-duration-500 p-3 border-round border-2 cursor-pointer">
+                    <div class="flex align-items-center justify-content-between">
+                        <div>
+                            <p>Cheque Invoice</p>
+                        </div>
+                        <div>
+                            <img src="assets/layout/images/icons/cheque-invoice.png" height="60">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

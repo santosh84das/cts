@@ -10,6 +10,9 @@ import { ButtonModule } from 'primeng/button';
 import {DialogModule} from 'primeng/dialog';
 import {InputTextModule} from 'primeng/inputtext';
 import {InputNumberModule} from 'primeng/inputnumber';
+import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic-table.module';
+import { FormsModule , ReactiveFormsModule} from '@angular/forms';
+
 
 
 
@@ -24,7 +27,10 @@ import {InputNumberModule} from 'primeng/inputnumber';
     ButtonModule,
     DialogModule,
     InputTextModule,
-    InputNumberModule
+    InputNumberModule,
+    DynamicTableModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class ChequeEntryModule { }

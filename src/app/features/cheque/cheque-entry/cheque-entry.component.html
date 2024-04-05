@@ -1,38 +1,56 @@
 <div class="grid">
     <div class="col-12">
-        <app-common-header [headerName]="'Cheque Entry'"
-            [imgSrc]="'assets/layout/images/icons/cheque-entry.png'"></app-common-header>
+        <app-common-header [headerName]="'Cheque Entry'" [imgSrc]="'assets/layout/images/icons/cheque-entry.png'">
+            <button pButton pRipple type="button" icon="pi pi-plus" label="New Entry"
+                class="p-button-rounded p-button-raised" (click)="showDialog()"></button></app-common-header>
     </div>
     <div class="col-12">
-        <p-card>
-            <ng-template pTemplate="header">
-                <div class="flex justify-content-end">
-                    <p-button icon="pi pi-plus" (click)="showDialog()" class="mr-2"></p-button>
-                </div>
-            </ng-template>
-            <div>
-                <p>List name</p>
-            </div>
-        </p-card>
-        <h2>hello</h2>
+        <!-- <app-dynamic-table
+        size="small"
+            [numberRowsShown]="10"
+            rowSelectionMode="multiple"
+            [rowsPerPageOptions]="[10,30,50]"
+            [headers]="tableData.headers" 
+            [data]="tableData.data" 
+            [dataCount]="tableData.dataCount">
+        </app-dynamic-table> -->
     </div>
 </div>
 
-<p-dialog header="Add Cheque" [(visible)]="displayModal" [style]="{width: '50vw'}" [baseZIndex]="10000">
-    <div class="flex justify-content-start flex-wrap gap-6">
-        <div class="flex align-items-center justify-content-center  mx-3 my-3 md:my-0 ">
-            <input type="text" pInputText>
+<p-dialog header="New Cheque Entry" [(visible)]="displayModal" [modal]="true" [style]="{width: '30vw'}" [baseZIndex]="10000">
+    <form [formGroup]="chequeEntryFrm" class="flex flex-column gap-3 mt-3">
+        <div>
+            <label for="series" class="block mb-1 text-color text-lg">Series</label>
+            <span class="p-input-icon-left w-full"><i class="pi pi-hashtag"></i>
+                <input name="series" type="text" pinputtext="" placeholder="1234-1234-1234-1234"
+                    class="p-inputtext p-component p-element w-full">
+            </span>
         </div>
-        <div class="flex align-items-center justify-content-center mx-3 my-3 md:my-0  ">
-            <p-inputNumber inputId="integeronly">
-            </p-inputNumber>
+        <div class="flex gap-2">
+            <div class="w-full">
+                <label for="start" class="block mb-1 text-color text-lg">Start</label>
+                <span class="p-input-icon-left w-full"><i class="pi pi-angle-double-right"></i>
+                    <input formControlName="start" type="number" pinputtext=""
+                        class="p-inputtext p-component p-element w-full">
+                </span>
+            </div>
+            <div class="w-full">
+                <label for="end" class="block mb-1 text-color text-lg">End</label>
+                <span class="p-input-icon-left w-full"><i class="pi pi-stop-circle"></i>
+                    <input formControlName="end" type="number" pinputtext=""
+                        class="p-inputtext p-component p-element w-full">
+                </span>
+                <div *ngIf="chequeEntryFrm.get('end')?.errors?.['invalidEnd'] && chequeEntryFrm.get('end')?.touched as validationErrors">
+                    <span style="color: #FF0000;">End value must be greater than Start value</span>
+                </div>
+            </div>
         </div>
-        <div class="flex align-items-center justify-content-center mx-3 my-3 md:my-0 ">
-            <p-inputNumber inputId="integeronly">
-            </p-inputNumber>
-        </div>
-        <p-button label="Submit" (click)="addCheque()" class="justify-content-center"></p-button>
-
-    </div>  
-
+        <!-- <p-button label="Submit" (click)="addCheque()" class="justify-content-center"></p-button> -->
+    </form>
+    <div class="flex gap-2 justify-content-end pt-3">
+        <button pbutton="" pripple="" label="Submit" class="p-element p-ripple p-button-rounded p-button p-component"
+            (click)="addCheque()">
+            <span class="p-button-label">Submit</span><span class="p-ink"></span>
+        </button>
+    </div>
 </p-dialog>
