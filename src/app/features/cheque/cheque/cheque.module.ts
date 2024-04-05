@@ -14,6 +14,9 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
 import {DropdownModule} from 'primeng/dropdown';
 import {FormsModule , ReactiveFormsModule } from '@angular/forms';
 import {RippleModule} from 'primeng/ripple';
+import {DialogModule} from 'primeng/dialog';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 
@@ -36,7 +39,9 @@ import {RippleModule} from 'primeng/ripple';
         DropdownModule,
         FormsModule,
         RippleModule,
-        ReactiveFormsModule 
+        ReactiveFormsModule,
+        DialogModule,
+        HttpClientModule 
         
     ]
 })

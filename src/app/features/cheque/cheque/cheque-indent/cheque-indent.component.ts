@@ -1,5 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { IapiResponce } from 'src/app/core/models/iapi-responce';
 
 interface Chequetype {
   name: string;
@@ -16,10 +19,11 @@ export class ChequeIndentComponent implements OnInit {
   cheques!: Chequetype[];
   indentForm!: FormGroup;
   lastindex!: number;
-  plusButtonIndex: number = 0;
-  
+  displayModal: boolean | undefined;
+  toastservice: any;
 
-  constructor(private _fb: FormBuilder) { }
+
+  constructor(private _fb: FormBuilder, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.cheques = [
@@ -30,10 +34,9 @@ export class ChequeIndentComponent implements OnInit {
       chequelist: this._fb.array([this.createCheque()])
     });
 
-    this.minusbutton();
   }
 
-  get chequelist(): FormArray  {
+  get chequelist(): FormArray {
     return this.indentForm.get('chequelist') as FormArray;
   }
 
@@ -54,10 +57,15 @@ export class ChequeIndentComponent implements OnInit {
     this.chequelist.removeAt(index);
   }
 
-  minusbutton(){
-    const index = this.chequelist.length 
-    console.log(index);
+  showBankDetails() {
+    this.displayModal = true;
   }
+
+  // getBankList(): Observable<IapiResponce> {
+  //   return this.http.post<IapiResponce>('v1/Bank/get-banks').pipe(
+
+  //   );
+  // }
 
 
 }

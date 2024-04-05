@@ -33,10 +33,10 @@
         </div>
     </div>
     <div class="col-6">
-
         <form [formGroup]="indentForm">
             <div formArrayName="chequelist">
-                <div class="card relative" *ngFor="let cheque of chequelist.controls; let i = index" [formGroupName]="i">
+                <div class="card relative" *ngFor="let cheque of chequelist.controls; let i = index"
+                    [formGroupName]="i">
                     <div class="flex flex-wrap gap-3 p-fluid">
                         <div class="flex-auto">
                             <!-- <label for="indent_date" class="block mb-1 text-color text-lg">Cheque Type</label> -->
@@ -48,7 +48,7 @@
                             <div class="p-inputgroup">
                                 <input type="text" pInputText placeholder="MICR Code"
                                     class="p-inputtext p-component p-element w-full" formControlName="micr_code">
-                                <button type="button" pButton pRipple label="Find"></button>
+                                <button type="button" pButton pRipple label="Find" (click)="showBankDetails()"></button>
                             </div>
                         </div>
                         <div class="flex-auto">
@@ -58,9 +58,36 @@
                         </div>
                     </div>
                     <button pButton pRipple type="button" icon="pi pi-times"
-                        class="p-button-rounded p-button-danger minus_button" (click)="removeCheque(i)" *ngIf="chequelist.length!=i+1"></button>
-                    <button pButton pRipple type="button" icon="pi pi-plus" class="plus_button p-button-rounded"(click)="addCheque()" *ngIf="chequelist.length==i+1"></button>
+                        class="p-button-rounded p-button-danger minus_button" (click)="removeCheque(i)"
+                        *ngIf="chequelist.length!=i+1"></button>
+                    <button pButton pRipple type="button" icon="pi pi-plus" class="plus_button p-button-rounded"
+                        (click)="addCheque()" *ngIf="chequelist.length==i+1"></button>
                 </div>
             </div>
         </form>
     </div>
+
+    <p-dialog header="Bank" [(visible)]="displayModal" [modal]="true" [style]="{width: '40vw'}" [baseZIndex]="10000">
+        <div>
+            <div class="flex flex-wrap gap-3 p-fluid">
+                <div class="flex-auto">
+                    <p-dropdown appendTo="body" [options]="cheques" placeholder="Select Bank" optionLabel="name" [showClear]="true" style="z-index: 10001 ;">
+                    </p-dropdown>
+                </div>
+                <div class="flex-auto">
+                    <div class="flex-auto">
+                        <p-dropdown appendTo="body" [options]="cheques" placeholder="Select Branch" optionLabel="name" [showClear]="true">
+                        </p-dropdown>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-5">
+                <p-card>
+                    <p> Bank Name: State Bank Of India</p>
+                    <p> MICR Code: 700002434</p>
+                    <p> IFSC Code:SBIN0012383</p>
+                    <p> Branch:Bnakra-birati</p>
+                </p-card>
+            </div>
+        </div>
+    </p-dialog>
