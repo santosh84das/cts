@@ -71,21 +71,21 @@
         <div>
             <div class="flex flex-wrap gap-3 p-fluid">
                 <div class="flex-auto">
-                    <p-dropdown appendTo="body" [options]="cheques" placeholder="Select Bank" optionLabel="name" [showClear]="true" style="z-index: 10001 ;">
+                    <p-dropdown appendTo="body" [options]="bankList " placeholder="Select Bank" optionLabel="name" [showClear]="true" [(ngModel)]="selectedBank" (onChange)="getBranchList()">
                     </p-dropdown>
                 </div>
                 <div class="flex-auto">
                     <div class="flex-auto">
-                        <p-dropdown appendTo="body" [options]="cheques" placeholder="Select Branch" optionLabel="name" [showClear]="true">
+                        <p-dropdown appendTo="body" [options]="branchlist" placeholder="Select Branch" optionLabel="name" [showClear]="true" [(ngModel)]="selectedBranch">
                         </p-dropdown>
                     </div>
                 </div>
             </div>
-            <div class="mt-5">
+            <div class="mt-5" *ngIf="selectedBranchName">
                 <p-card>
-                    <p> Bank Name: State Bank Of India</p>
-                    <p> MICR Code: 700002434</p>
-                    <p> IFSC Code:SBIN0012383</p>
+                    <p> Bank Name: </p>
+                    <p> MICR Code:{{ bankDetails}}</p>
+                    <p> IFSC Code:</p>
                     <p> Branch:Bnakra-birati</p>
                 </p-card>
             </div>
