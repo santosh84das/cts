@@ -1,0 +1,42 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { ChequeIndentInvoiceRoutingModule } from './cheque-indent-invoice-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { CardModule } from 'primeng/card';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RippleModule } from 'primeng/ripple';
+import { CommonHeaderModule } from 'src/app/shared/modules/common-header/common-header.module';
+import { OptionCardModule } from 'src/app/shared/modules/option-card/option-card.module';
+import { ChequeRoutingModule } from '../cheque-routing.module';
+import { ChequeIndentComponent } from './cheque-indent/cheque-indent.component';
+import { ChequeInvoiceComponent } from './cheque-invoice/cheque-invoice.component';
+import { ChequeIndentInvoiceComponent } from './cheque-indent-invoice.component';
+
+
+@NgModule({
+  declarations: [ChequeIndentInvoiceComponent, ChequeIndentComponent,ChequeInvoiceComponent,],
+  imports: [
+    CommonModule,
+    ChequeIndentInvoiceRoutingModule,
+    ChequeRoutingModule,
+    CommonHeaderModule,
+    ButtonModule,
+    OptionCardModule,
+    CardModule,
+    CalendarModule,
+    InputTextareaModule,
+    DropdownModule,
+    FormsModule,
+    RippleModule,
+    ReactiveFormsModule,
+    DialogModule,
+    HttpClientModule 
+  ]
+})
+export class ChequeIndentInvoiceModule { }

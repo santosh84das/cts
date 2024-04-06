@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChequeIndentComponent } from './cheque-indent/cheque-indent.component';
 
 @Component({
-  selector: 'app-cheque',
-  templateUrl: './cheque.component.html',
-  styleUrls: ['./cheque.component.scss']
+  selector: 'app-cheque-indent-invoice',
+  templateUrl: './cheque-indent-invoice.component.html',
+  styleUrls: ['./cheque-indent-invoice.component.scss']
 })
-export class ChequeComponent implements OnInit {
+export class ChequeIndentInvoiceComponent implements OnInit {
 
   @ViewChild(ChequeIndentComponent) addIndent!: ChequeIndentComponent;
 
