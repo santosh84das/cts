@@ -5,15 +5,15 @@
                 class="p-button-rounded p-button-raised" (click)="showDialog()"></button></app-common-header>
     </div>
     <div class="col-12">
-        <!-- <app-dynamic-table
-        size="small"
+        <app-dynamic-table
             [numberRowsShown]="10"
             rowSelectionMode="multiple"
             [rowsPerPageOptions]="[10,30,50]"
-            [headers]="tableData.headers" 
+            [actionButtons]="tableActionButton"
+            [headers]="tableData!.headers" 
             [data]="tableData.data" 
             [dataCount]="tableData.dataCount">
-        </app-dynamic-table> -->
+        </app-dynamic-table>
     </div>
 </div>
 
@@ -22,7 +22,7 @@
         <div>
             <label for="series" class="block mb-1 text-color text-lg">Series</label>
             <span class="p-input-icon-left w-full"><i class="pi pi-hashtag"></i>
-                <input name="series" type="text" pinputtext="" placeholder="1234-1234-1234-1234"
+                <input formControlName="series" type="text" pinputtext="" placeholder="1234-1234-1234-1234"
                     class="p-inputtext p-component p-element w-full">
             </span>
         </div>
