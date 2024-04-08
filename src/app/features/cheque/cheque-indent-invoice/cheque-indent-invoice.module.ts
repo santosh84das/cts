@@ -17,10 +17,11 @@ import { ChequeRoutingModule } from '../cheque-routing.module';
 import { ChequeIndentComponent } from './cheque-indent/cheque-indent.component';
 import { ChequeInvoiceComponent } from './cheque-invoice/cheque-invoice.component';
 import { ChequeIndentInvoiceComponent } from './cheque-indent-invoice.component';
+import { NewIndentComponent } from './cheque-invoice/new-indent/new-indent.component';
 
 
 @NgModule({
-  declarations: [ChequeIndentInvoiceComponent, ChequeIndentComponent,ChequeInvoiceComponent,],
+  declarations: [ChequeIndentInvoiceComponent, ChequeIndentComponent,ChequeInvoiceComponent, NewIndentComponent,],
   imports: [
     CommonModule,
     ChequeIndentInvoiceRoutingModule,
