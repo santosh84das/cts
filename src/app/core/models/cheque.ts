@@ -9,3 +9,18 @@ export interface NewChequeEntry {
     start: number, 
     end: number,
 }
+
+export interface newIndent {
+    indentDate: string
+    memoNumber: string
+    memoDate: string
+    remarks: string
+    chequeIndentDeatils: ChequeIndentDeatil[]
+  }
+  
+  export interface ChequeIndentDeatil {
+    chequeType: number
+    micrCode: string
+    quantity: number
+  }
+  

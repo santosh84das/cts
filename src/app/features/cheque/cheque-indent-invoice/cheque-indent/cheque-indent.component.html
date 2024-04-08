@@ -1,39 +1,40 @@
-<div class="grid">
-    <div class="col-12">
-        <app-common-header [headerName]="'Cheque'" [imgSrc]="'assets/layout/images/icons/cheque.png'">
-            <!-- <button pButton pRipple type="button" icon="pi pi-plus" label="New Indent"
+<!-- <div class="grid"> -->
+<div class="col-12">
+    <app-common-header [headerName]="'Cheque'" [imgSrc]="'assets/layout/images/icons/cheque.png'">
+        <!-- <button pButton pRipple type="button" icon="pi pi-plus" label="New Indent"
                 class="p-button-rounded p-button-raised"></button> -->
-        </app-common-header>
-    </div>
-    <div class="col-6">
-        <div class="card">
-            <div class="flex flex-wrap gap-3 p-fluid">
-                <div class="flex-auto">
-                    <label for="indent_date" class="block mb-1 text-color text-lg">Indent Date</label>
-                    <p-calendar [showIcon]="true" inputId="icon"></p-calendar>
-                </div>
+    </app-common-header>
+</div>
+<form [formGroup]="indentForm">
+    <div class="grid flex flex-wrap">
+        <div class="col-6">
+            <div class="card">
+                <div class="flex flex-wrap gap-3 p-fluid">
+                    <div class="flex-auto">
+                        <label for="indent_date" class="block mb-1 text-color text-lg">Indent Date</label>
+                        <p-calendar [showIcon]="true" inputId="icon" formControlName="indent_date"></p-calendar>
+                    </div>
 
-                <div class="flex-auto">
-                    <label for="memo_no" class="block mb-1 text-color text-lg">Memo Number</label>
-                    <input name="memo_no" type="text" pinputtext="" placeholder="1234-1234-1234-1234"
-                        class="p-inputtext p-component p-element w-full">
+                    <div class="flex-auto">
+                        <label for="memo_no" class="block mb-1 text-color text-lg">Memo Number</label>
+                        <input type="text" pinputtext="" placeholder="1234-1234-1234-1234"
+                            class="p-inputtext p-component p-element w-full" formControlName="memo_number">
+                    </div>
                 </div>
-            </div>
-            <div class="flex flex-wrap gap-3 p-fluid">
-                <div class="flex-auto">
-                    <label for="memo_date" class="block mb-1 text-color text-lg">Memo Date</label>
-                    <p-calendar [showIcon]="true" inputId="icon" class="w-full"></p-calendar>
-                </div>
+                <div class="flex flex-wrap gap-3 p-fluid">
+                    <div class="flex-auto">
+                        <label for="memo_date" class="block mb-1 text-color text-lg">Memo Date</label>
+                        <p-calendar [showIcon]="true" inputId="icon" class="w-full" formControlName="memo_date"></p-calendar>
+                    </div>
 
-                <div class="flex-auto">
-                    <label for="memo_no" class="block mb-1 text-color text-lg">Remarks</label>
-                    <textarea [rows]="1" pInputTextarea name="memo_no" class="w-full"></textarea>
+                    <div class="flex-auto">
+                        <label for="remarks" class="block mb-1 text-color text-lg">Remarks</label>
+                        <textarea [rows]="1" pInputTextarea class="w-full" formControlName="remarks"></textarea>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-6">
-        <form [formGroup]="indentForm">
+        <div class="col-6">
             <div formArrayName="chequelist">
                 <div class="card relative" *ngFor="let cheque of chequelist.controls; let i = index"
                     [formGroupName]="i">
@@ -41,19 +42,20 @@
                         <div class="flex-auto">
                             <!-- <label for="indent_date" class="block mb-1 text-color text-lg">Cheque Type</label> -->
                             <p-dropdown [options]="cheques" placeholder="Select a Cheque Type" optionLabel="name"
-                                [showClear]="true" formControlName="cheques_type"></p-dropdown>
+                                [showClear]="true" optionValue="code" formControlName="cheques_type"></p-dropdown>
                         </div>
                         <div class="flex-auto">
                             <!-- <label for="memo_no" class="block mb-1 text-color text-lg">MICR Code </label> -->
                             <div class="p-inputgroup">
-                                <input type="text" pInputText placeholder="MICR Code"
+                                <input type="number" pInputText placeholder="MICR Code"
                                     class="p-inputtext p-component p-element w-full" formControlName="micr_code">
-                                <button type="button" pButton pRipple label="Find" (click)="showBankDetails(i)"></button>
+                                <button type="button" pButton pRipple label="Find"
+                                    (click)="showBankDetails(i)"></button>
                             </div>
                         </div>
                         <div class="flex-auto">
                             <!-- <label for="memo_no" class="block mb-1 text-color text-lg">Quantity</label> -->
-                            <input formControlName="quantity" type="text" pinputtext=""
+                            <input formControlName="quantity" type="number" pinputtext=""
                                 class="p-inputtext p-component p-element w-full" placeholder="Quantity">
                         </div>
                     </div>
@@ -64,59 +66,72 @@
                         (click)="addCheque()" *ngIf="chequelist.length==i+1"></button>
                 </div>
             </div>
-        </form>
+        </div>
+        <div class="flex justify-content-end pt-3">
+            <button pbutton="" pripple="" label="Submit" class="p-element p-ripple p-button-rounded p-button p-component"
+                (click)="indentFormSubmit()">
+                <span class="p-button-label">Submit</span><span class="p-ink"></span>
+            </button>
+        </div>
     </div>
+</form>
+<!-- </div> -->
 
-    <p-dialog header="Find MICR Code" [(visible)]="displayModal" [modal]="true" [style]="{width: '40vw'}" [baseZIndex]="10000">
-        <div class="flex flex-wrap gap-3 p-fluid">
+<p-dialog header="Find MICR Code" [(visible)]="displayModal" [modal]="true" [style]="{width: '40vw'}"
+    [baseZIndex]="10000">
+    <div class="flex flex-wrap gap-3 p-fluid">
+        <div class="flex-auto">
+            <p-dropdown appendTo="body" [filter]="true" filterBy="name" [options]="bankList " placeholder="Select Bank"
+                optionLabel="name" [showClear]="true" [(ngModel)]="selectedBank" (onChange)="getBranchList()">
+            </p-dropdown>
+        </div>
+        <div class="flex-auto">
             <div class="flex-auto">
-                <p-dropdown appendTo="body" [filter]="true" filterBy="name" [options]="bankList " placeholder="Select Bank" optionLabel="name" [showClear]="true" [(ngModel)]="selectedBank" (onChange)="getBranchList()">
+                <p-dropdown appendTo="body" [filter]="true" filterBy="name" [options]="branchlist"
+                    placeholder="Select Branch" optionLabel="name" [showClear]="true" [(ngModel)]="selectedBranch"
+                    (onChange)="getBranchDeatils()">
                 </p-dropdown>
             </div>
-            <div class="flex-auto">
-                <div class="flex-auto">
-                    <p-dropdown appendTo="body" [filter]="true" filterBy="name" [options]="branchlist" placeholder="Select Branch" optionLabel="name" [showClear]="true" [(ngModel)]="selectedBranch" (onChange)="getBranchDeatils()">
-                    </p-dropdown>
+        </div>
+    </div>
+    <div class="mt-5" *ngIf="bankDetails">
+        <div class="grid grid-nogutter static bg-primary-100 p-4 border-round text-gray-800"
+            style="min-width: 300px; min-height: 150px;">
+            <div class="col-12 md:col-6 p-3 flex">
+                <div class="text-700 font-medium mb-2 mr-2 text-lg">
+                    Bank:
+                </div>
+                <div class="text-900 text-lg text-cyan-500 font-semibold">
+                    {{selectedBank.name}}
+                </div>
+            </div>
+            <div class="col-12 md:col-6 p-3 flex">
+                <div class="text-700 font-medium mb-2 mr-2 text-lg">
+                    MICR Code:
+                </div>
+                <div class="text-900 text-lg text-cyan-500 font-semibold">
+                    {{bankDetails?.mircCode}}
+                </div>
+            </div>
+            <div class="col-12 md:col-6 p-3 flex">
+                <div class="text-700 font-medium mb-2 mr-2 text-lg">
+                    Branch:
+                </div>
+                <div class="text-900 text-lg text-cyan-500 font-semibold">
+                    {{bankDetails?.branchName}}
+                </div>
+            </div>
+            <div class="col-12 md:col-6 p-3 flex">
+                <div class="text-700 font-medium mb-2 mr-2 text-lg">
+                    Address:
+                </div>
+                <div class="text-900 text-lg text-cyan-500 font-semibold">
+                    {{bankDetails?.branchAddress}}
                 </div>
             </div>
         </div>
-        <div class="mt-5" *ngIf="bankDetails">
-            <div class="grid grid-nogutter static bg-primary-100 p-4 border-round text-gray-800" style="min-width: 300px; min-height: 150px;">
-                <div class="col-12 md:col-6 p-3 flex">
-                    <div class="text-700 font-medium mb-2 mr-2 text-lg">
-                        Bank:
-                    </div>
-                    <div class="text-900 text-lg text-cyan-500 font-semibold">
-                        {{selectedBank.name}}
-                    </div>
-                </div>
-                <div class="col-12 md:col-6 p-3 flex">
-                    <div class="text-700 font-medium mb-2 mr-2 text-lg">
-                        MICR Code:
-                    </div>
-                    <div class="text-900 text-lg text-cyan-500 font-semibold">
-                        {{bankDetails?.mircCode}}
-                    </div>
-                </div>
-                <div class="col-12 md:col-6 p-3 flex">
-                    <div class="text-700 font-medium mb-2 mr-2 text-lg">
-                        Branch:
-                    </div>
-                    <div class="text-900 text-lg text-cyan-500 font-semibold">
-                        {{bankDetails?.branchName}}
-                    </div>
-                </div>
-                <div class="col-12 md:col-6 p-3 flex">
-                    <div class="text-700 font-medium mb-2 mr-2 text-lg">
-                        Address:
-                    </div>
-                    <div class="text-900 text-lg text-cyan-500 font-semibold">
-                        {{bankDetails?.branchAddress}}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="flex gap-2 justify-content-end pt-3">
-            <p-button label="Copy" icon="pi pi-copy" (onClick)="setMicrCodeInputField(bankDetails?.mircCode)"></p-button>
-        </div>
-    </p-dialog>
+    </div>
+    <div class="flex gap-2 justify-content-end pt-3">
+        <p-button label="Copy" icon="pi pi-copy" (onClick)="setMicrCodeInputField(bankDetails?.mircCode)"></p-button>
+    </div>
+</p-dialog>

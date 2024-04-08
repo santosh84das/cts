@@ -3,7 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { bankDetails } from 'src/app/core/models/bank';
 import { BankService } from 'src/app/core/services/Bank/bank.service';
+import { ChequeIndentService } from 'src/app/core/services/cheque/cheque-indent.service';
 import { ToastService } from 'src/app/core/services/toast.service';
+import { newIndent, ChequeIndentDeatil } from 'src/app/core/models/cheque';
+import { DatePipe } from '@angular/common';
 interface Chequetype {
   name: string;
   code: Number;
@@ -26,10 +29,10 @@ export class ChequeIndentComponent implements OnInit {
   branchlist: any[] = [];
   selectedBank: any;
   selectedBranch: any;
-  bankDetails!: bankDetails|undefined;
-  selectedIndex!:number;
-
-  constructor(private _fb: FormBuilder, private bankServices: BankService, private toastService: ToastService) { }
+  bankDetails!: bankDetails | undefined;
+  selectedIndex!: number;
+  chequeIndentFormDetails!: newIndent;
+  constructor(private _fb: FormBuilder, private bankServices: BankService, private toastService: ToastService, private chequeindentService: ChequeIndentService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.cheques = [
@@ -37,9 +40,14 @@ export class ChequeIndentComponent implements OnInit {
       { name: 'Others', code: 2 },
     ];
     this.indentForm = this._fb.group({
+      indent_date: [''],
+      memo_number: [''],
+      memo_date: [''],
+      memo_no: [''],
+      remarks: [''],
       chequelist: this._fb.array([this.createCheque()])
     });
-    this.getBanklist()
+    // this.getBanklist()
   }
 
   get chequelist(): FormArray {
@@ -63,9 +71,10 @@ export class ChequeIndentComponent implements OnInit {
     this.chequelist.removeAt(index);
   }
 
-  showBankDetails(index:number) {
+  showBankDetails(index: number) {
     this.displayModal = true;
-    this.selectedIndex=index;
+    this.selectedIndex = index;
+    this.getBanklist();
   }
 
   getBanklist() {
@@ -92,7 +101,7 @@ export class ChequeIndentComponent implements OnInit {
       }
     })
   }
-  setMicrCodeInputField(micrCode:string|undefined){
+  setMicrCodeInputField(micrCode: string | undefined) {
     const group = this.chequelist.at(this.selectedIndex) as FormGroup;
     group.patchValue({ micr_code: micrCode });
     this.displayModal = false;
@@ -113,6 +122,50 @@ export class ChequeIndentComponent implements OnInit {
         }
       })
     }
+
+  }
+
+  indentFormSubmit() {
+    let formattedIndentDate: string | null = '';
+    let memoDate: string | null = '';
+    if (this.indentForm) {
+      const indentDateValue = this.indentForm.get('indent_date')?.value;
+      if (indentDateValue !== null && indentDateValue !== undefined) {
+        formattedIndentDate = this.datePipe.transform(indentDateValue, 'yyyy-MM-dd');
+        console.log(formattedIndentDate);
+      }
+      const memoDateValue = this.indentForm.get('memo_date')?.value;
+      if (memoDateValue !== null && memoDateValue !== undefined) {
+        memoDate = this.datePipe.transform(memoDateValue, 'yyyy-MM-dd');
+      }
+      this.chequeIndentFormDetails = {
+        indentDate: formattedIndentDate as string,
+        memoNumber: this.indentForm.get('memo_number')?.value,
+        memoDate: memoDate as string,
+        remarks: this.indentForm.get('remarks')?.value,
+        chequeIndentDeatils: this.chequelist.controls.map<ChequeIndentDeatil>(fa => {
+          const formGroup = fa as FormGroup;
+          return {
+            chequeType: formGroup.get("cheques_type")?.value,
+            micrCode: formGroup.get("micr_code")?.value,
+            quantity: formGroup.get("quantity")?.value,
+          }
+        })
+      }
+      console.log(this.chequeIndentFormDetails);
+
+      this.chequeindentService.chqueIndentEntry(this.chequeIndentFormDetails).subscribe((response) => {
+        if (response.apiResponseStatus == 1) {
+          this.toastService.showAlert(
+            response.message,
+            response.apiResponseStatus
+          );
+        } else {
+          this.toastService.showError(response.message);
+        }
+      })
+    }
+
 
   }
 
