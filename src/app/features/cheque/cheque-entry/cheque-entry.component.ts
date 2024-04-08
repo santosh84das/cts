@@ -32,7 +32,7 @@ export class ChequeEntryComponent implements OnInit {
       this.tableActionButton = [
         {
             buttonIdentifier: 'edit',
-            class: 'p-button-warning',
+            class: 'p-button-warning p-button-sm',
             icon: 'pi pi-file-edit',
             lable: 'Edit',
           },

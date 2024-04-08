@@ -27,7 +27,7 @@
 
                 <div class="flex-auto">
                     <label for="memo_no" class="block mb-1 text-color text-lg">Remarks</label>
-                    <textarea pInputTextarea name="memo_no" class="w-full"></textarea>
+                    <textarea [rows]="1" pInputTextarea name="memo_no" class="w-full"></textarea>
                 </div>
             </div>
         </div>
@@ -48,13 +48,13 @@
                             <div class="p-inputgroup">
                                 <input type="text" pInputText placeholder="MICR Code"
                                     class="p-inputtext p-component p-element w-full" formControlName="micr_code">
-                                <button type="button" pButton pRipple label="Find" (click)="showBankDetails()"></button>
+                                <button type="button" pButton pRipple label="Find" (click)="showBankDetails(i)"></button>
                             </div>
                         </div>
                         <div class="flex-auto">
                             <!-- <label for="memo_no" class="block mb-1 text-color text-lg">Quantity</label> -->
                             <input formControlName="quantity" type="text" pinputtext=""
-                                class="p-inputtext p-component p-element w-full" placeholder="quantity">
+                                class="p-inputtext p-component p-element w-full" placeholder="Quantity">
                         </div>
                     </div>
                     <button pButton pRipple type="button" icon="pi pi-times"
@@ -67,27 +67,56 @@
         </form>
     </div>
 
-    <p-dialog header="Bank" [(visible)]="displayModal" [modal]="true" [style]="{width: '40vw'}" [baseZIndex]="10000">
-        <div>
-            <div class="flex flex-wrap gap-3 p-fluid">
+    <p-dialog header="Find MICR Code" [(visible)]="displayModal" [modal]="true" [style]="{width: '40vw'}" [baseZIndex]="10000">
+        <div class="flex flex-wrap gap-3 p-fluid">
+            <div class="flex-auto">
+                <p-dropdown appendTo="body" [filter]="true" filterBy="name" [options]="bankList " placeholder="Select Bank" optionLabel="name" [showClear]="true" [(ngModel)]="selectedBank" (onChange)="getBranchList()">
+                </p-dropdown>
+            </div>
+            <div class="flex-auto">
                 <div class="flex-auto">
-                    <p-dropdown appendTo="body" [options]="bankList " placeholder="Select Bank" optionLabel="name" [showClear]="true" [(ngModel)]="selectedBank" (onChange)="getBranchList()">
+                    <p-dropdown appendTo="body" [filter]="true" filterBy="name" [options]="branchlist" placeholder="Select Branch" optionLabel="name" [showClear]="true" [(ngModel)]="selectedBranch" (onChange)="getBranchDeatils()">
                     </p-dropdown>
                 </div>
-                <div class="flex-auto">
-                    <div class="flex-auto">
-                        <p-dropdown appendTo="body" [options]="branchlist" placeholder="Select Branch" optionLabel="name" [showClear]="true" [(ngModel)]="selectedBranch">
-                        </p-dropdown>
+            </div>
+        </div>
+        <div class="mt-5" *ngIf="bankDetails">
+            <div class="grid grid-nogutter static bg-primary-100 p-4 border-round text-gray-800" style="min-width: 300px; min-height: 150px;">
+                <div class="col-12 md:col-6 p-3 flex">
+                    <div class="text-700 font-medium mb-2 mr-2 text-lg">
+                        Bank:
+                    </div>
+                    <div class="text-900 text-lg text-cyan-500 font-semibold">
+                        {{selectedBank.name}}
+                    </div>
+                </div>
+                <div class="col-12 md:col-6 p-3 flex">
+                    <div class="text-700 font-medium mb-2 mr-2 text-lg">
+                        MICR Code:
+                    </div>
+                    <div class="text-900 text-lg text-cyan-500 font-semibold">
+                        {{bankDetails?.mircCode}}
+                    </div>
+                </div>
+                <div class="col-12 md:col-6 p-3 flex">
+                    <div class="text-700 font-medium mb-2 mr-2 text-lg">
+                        Branch:
+                    </div>
+                    <div class="text-900 text-lg text-cyan-500 font-semibold">
+                        {{bankDetails?.branchName}}
+                    </div>
+                </div>
+                <div class="col-12 md:col-6 p-3 flex">
+                    <div class="text-700 font-medium mb-2 mr-2 text-lg">
+                        Address:
+                    </div>
+                    <div class="text-900 text-lg text-cyan-500 font-semibold">
+                        {{bankDetails?.branchAddress}}
                     </div>
                 </div>
             </div>
-            <div class="mt-5" *ngIf="selectedBranchName">
-                <p-card>
-                    <p> Bank Name: </p>
-                    <p> MICR Code:{{ bankDetails}}</p>
-                    <p> IFSC Code:</p>
-                    <p> Branch:Bnakra-birati</p>
-                </p-card>
-            </div>
+        </div>
+        <div class="flex gap-2 justify-content-end pt-3">
+            <p-button label="Copy" icon="pi pi-copy" (onClick)="setMicrCodeInputField(bankDetails?.mircCode)"></p-button>
         </div>
     </p-dialog>

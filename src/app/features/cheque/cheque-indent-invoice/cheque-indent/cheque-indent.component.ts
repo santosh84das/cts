@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { bankDetails } from 'src/app/core/models/bank';
 import { BankService } from 'src/app/core/services/Bank/bank.service';
 import { ToastService } from 'src/app/core/services/toast.service';
 interface Chequetype {
@@ -25,9 +26,8 @@ export class ChequeIndentComponent implements OnInit {
   branchlist: any[] = [];
   selectedBank: any;
   selectedBranch: any;
-  bankDetails: any[] = [];
-  selectedBranchName: any;
-
+  bankDetails!: bankDetails|undefined;
+  selectedIndex!:number;
 
   constructor(private _fb: FormBuilder, private bankServices: BankService, private toastService: ToastService) { }
 
@@ -63,16 +63,15 @@ export class ChequeIndentComponent implements OnInit {
     this.chequelist.removeAt(index);
   }
 
-  showBankDetails() {
+  showBankDetails(index:number) {
     this.displayModal = true;
+    this.selectedIndex=index;
   }
 
   getBanklist() {
     this.bankServices.getBankList().subscribe((response) => {
       if (response.apiResponseStatus == 1) {
         this.bankList = response.result
-        console.log('hi', this.bankList);
-
       } else {
         this.toastService.showAlert(
           response.message,
@@ -82,8 +81,6 @@ export class ChequeIndentComponent implements OnInit {
     })
   }
   getBranchList() {
-    console.log(this.selectedBank);
-
     this.bankServices.getBankBranches(this.selectedBank.code).subscribe((response) => {
       if (response.apiResponseStatus == 1) {
         this.branchlist = response.result
@@ -95,21 +92,28 @@ export class ChequeIndentComponent implements OnInit {
       }
     })
   }
+  setMicrCodeInputField(micrCode:string|undefined){
+    const group = this.chequelist.at(this.selectedIndex) as FormGroup;
+    group.patchValue({ micr_code: micrCode });
+    this.displayModal = false;
+    this.selectedBank = 0;
+    this.selectedBranch = 0;
+    this.bankDetails = undefined;
+  }
+  getBranchDeatils() {
+    if (this.selectedBank) {
+      this.bankServices.getBranchDetail(this.selectedBranch.code).subscribe((response) => {
+        if (response.apiResponseStatus == 1) {
+          this.bankDetails = response.result
+        } else {
+          this.toastService.showAlert(
+            response.message,
+            response.apiResponseStatus
+          )
+        }
+      })
+    }
 
-  // getBranchDeatils() {
-  //   if (this.selectedBranchName) {
-  //     this.bankServices.getBranchDetail(this.selectedBranch.code).subscribe((response) => {
-  //       if (response.apiResponseStatus == 1) {
-  //         this.bankDetails = response.result
-  //       } else {
-  //         this.toastService.showAlert(
-  //           response.message,
-  //           response.apiResponseStatus
-  //         )
-  //       }
-  //     })
-  //   }
-
-  // }
+  }
 
 }
