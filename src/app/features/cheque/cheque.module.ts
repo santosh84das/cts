@@ -7,6 +7,8 @@ import { OptionCardModule } from 'src/app/shared/modules/option-card/option-card
 import { CommonHeaderModule } from 'src/app/shared/modules/common-header/common-header.module';
 import { ButtonModule } from 'primeng/button';
 import { DatePipe } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
     declarations: [
@@ -17,7 +19,9 @@ import { DatePipe } from '@angular/common';
         ChequeRoutingModule,
         OptionCardModule,
         CommonHeaderModule,
-        ButtonModule
+        ButtonModule,
+        ReactiveFormsModule,
+        FormsModule
     ],
     providers: [DatePipe], 
 })

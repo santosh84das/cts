@@ -23,4 +23,9 @@ export interface newIndent {
     micrCode: string
     quantity: number
   }
+
+  export interface Serieslist {
+    name: string;
+    code: Number;
+  }
   
