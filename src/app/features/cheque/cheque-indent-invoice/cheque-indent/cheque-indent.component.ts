@@ -71,7 +71,10 @@ export class ChequeIndentComponent implements OnInit {
     this.chequelist.removeAt(index);
   }
 
-  showBankDetails(index: number) {
+  showBankDetails(index:number) {
+    if(index!=this.selectedIndex){
+      this.resetMircFinderModal();
+    }
     this.displayModal = true;
     this.selectedIndex = index;
     this.getBanklist();
@@ -105,6 +108,9 @@ export class ChequeIndentComponent implements OnInit {
     const group = this.chequelist.at(this.selectedIndex) as FormGroup;
     group.patchValue({ micr_code: micrCode });
     this.displayModal = false;
+    this.resetMircFinderModal();
+  }
+  resetMircFinderModal(){
     this.selectedBank = 0;
     this.selectedBranch = 0;
     this.bankDetails = undefined;
