@@ -152,10 +152,11 @@ export class ChequeIndentComponent implements OnInit {
           }
         })
       }
-      console.log(this.chequeIndentFormDetails);
 
       this.chequeindentService.chqueIndentEntry(this.chequeIndentFormDetails).subscribe((response) => {
         if (response.apiResponseStatus == 1) {
+          this.indentForm.reset();
+          this.chequelist.reset();
           this.toastService.showAlert(
             response.message,
             response.apiResponseStatus
