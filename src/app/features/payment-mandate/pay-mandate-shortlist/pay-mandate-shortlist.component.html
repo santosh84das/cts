@@ -18,7 +18,7 @@
     <div class="col-12">
         <div class="card">
             <!-- <h5>PayMandate Shortlist</h5> -->
-            <p-table #dt2 [value]="paymandateShortlist" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+            <p-table [value]="paymandateShortlist" [rows]="10" [showCurrentPageReport]="true" [(selection)]="selectedPaymandates"
                 [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true"
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                 [globalFilterFields]="['slNo','tokenNo','tokenDate','billDate','trFormats','billTypes','billModule','billPeriod','noBeneficiarie','netAmount','ecsAmount','chequeAmount','detailHead','headOfAcc','ddoCode','paymentMandate']"
@@ -149,10 +149,9 @@
                             </div>
                         </td>
                         <td>
-                            <p-tableCheckbox [value]="paymandateShortlist" (onChange)="updateSelectedPaymandates(paymandate)"></p-tableCheckbox>
+                            <p-tableCheckbox [value]="paymandate"  (click)="updateSelectedPaymandates(paymandate)"></p-tableCheckbox>
                         </td>
                     </tr>
-                    <p-button label="Shortlisted" (click)="dataSave()" icon="pi pi-save" class="p-button-success align-items-end"></p-button>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
                     <tr>
@@ -160,6 +159,10 @@
                     </tr>
                 </ng-template>
             </p-table>
+            <div class="grid grid-nogutter justify-content-end">
+                <p-button label="Shortlisted" (click)="dataSave()" icon="pi pi-save" class="p-button-success align-items-end"></p-button>
+
+            </div>
         </div>
 
     </div>
