@@ -29,26 +29,14 @@ export class BillCheckingComponent implements OnInit {
         this.subscribtion = this.tokenServices
             .getActionButtonObservable()
             .subscribe((data) => {
-                this.setToBillCheck();
+                // this.setToBillCheck();
             });
         this.tableActionButton = [
             {
-                buttonIdentifier: 'view',
-                class: '',
-                icon: 'pi pi-eye',
-                lable: 'View',
-              },
-              {
-                buttonIdentifier: 'edit',
-                class: 'p-button-warning',
-                icon: 'pi pi-file-edit',
-                lable: 'Edit',
-              },
-              {
-                buttonIdentifier: 'del',
-                class: 'p-button-danger',
-                icon: 'pi pi-trash',
-                lable: 'Delete',
+                buttonIdentifier: 'bill_checking',
+                class: '"p-button-raised p-button-rounded',
+                icon: 'pi pi-check-circle',
+                lable: 'Bill Checking',
               },
         ];
         this.routeItems = [
@@ -66,11 +54,8 @@ export class BillCheckingComponent implements OnInit {
     ngOnDestroy() {
         this.subscribtion.unsubscribe();
     }
-    setToBillCheck() {
-        this.router.navigate(['/bill-checking/new-bill-check/bill-details']);
-    }
     closeButton(event: any) {
-        console.log('functioncall', event);
+        console.log('functional', event);
         this.router.navigate(['/']);
     }
     handleRowSelection(event:any){
@@ -78,6 +63,12 @@ export class BillCheckingComponent implements OnInit {
     }
     handleButtonClick(event: any) {
         console.log(event);
+        
+        if(event.buttonIdentifier=='bill_checking'){
+            this.tokenServices.selectedId = event.rowData.tokenId;
+            this.tokenServices.selectedTokenRef = event.rowData.referenceNo;
+            this.router.navigate(['/bill-checking/new-bill-check/bill-details']);
+        }
     }
     handQueryParameterChange(event: any) {
         this.tableQueryParameters =event;
