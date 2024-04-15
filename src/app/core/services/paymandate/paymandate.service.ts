@@ -20,4 +20,12 @@ export class PaymandateService {
       })
     );
   }
+
+  saveNewPaymandateShortlist(payload:any):Observable<IapiResponce>{
+    return this.http.post<IapiResponce>('v1/PayMandate/newShortList', payload).pipe(
+      catchError((error) => {
+        throw this.toastservice.showError(error.message);
+      })
+    )
+  }
 }

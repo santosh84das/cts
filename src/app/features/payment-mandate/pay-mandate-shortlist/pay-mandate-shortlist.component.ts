@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Paymandate } from 'src/app/core/models/paymandate';
 import { PaymandateService } from 'src/app/core/services/paymandate/paymandate.service';
 import { BillService } from 'src/app/core/services/Bill/bill.service';
+import { ToastService } from 'src/app/core/services/toast.service';
 
 
 
@@ -12,14 +13,14 @@ import { BillService } from 'src/app/core/services/Bill/bill.service';
   styleUrls: ['./pay-mandate-shortlist.component.scss']
 })
 export class PayMandateShortlistComponent implements OnInit {
-[x: string]: any;
+  [x: string]: any;
   stateOptions: any[] = [{ label: 'Current Financial Year', value: '1' }, { label: 'Previous Financial Year  ', value: '2' }];
   value: any = '1';
   isPaymentSelected: boolean = true;
   loading: boolean = false;
   paymandateShortlist: Paymandate[] = [];
   selectedPaymandates: any;
-  constructor(private paymandateservice: PaymandateService, public billservice: BillService,) { }
+  constructor(private paymandateservice: PaymandateService, public billservice: BillService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.allpaymandateShortlist();
@@ -39,7 +40,7 @@ export class PayMandateShortlistComponent implements OnInit {
 
   selectPaymandate(paymandate: any) {
     // console.log(paymandate);
-    
+
     // if (!this.selectedPaymandates) {
     //   this.selectedPaymandates = []; 
     // }
@@ -48,7 +49,7 @@ export class PayMandateShortlistComponent implements OnInit {
 
   updateSelectedPaymandates(paymandate: any) {
     // console.log(paymandate);
-    
+
     // if (!this.selectedPaymandates) {
     //   this.selectedPaymandates = []; 
     // }
@@ -61,15 +62,30 @@ export class PayMandateShortlistComponent implements OnInit {
     //   }
     // }
   }
-  
+
 
   dataSave() {
     if (this.selectedPaymandates && this.selectedPaymandates.length > 0) {
       const payloadArray = this.selectedPaymandates.map((paymandate: { tokenId: any; selectedDate: any; }) => ({
-          tokenId: paymandate.tokenId,
-          calendarDate: paymandate.selectedDate,
+        tokenId: paymandate.tokenId,
+        calendarDate: new Date(paymandate.selectedDate).toISOString(),
       }));
-      console.log('---->',payloadArray);
+      console.log('tt');
+      console.log(payloadArray);
+      this.paymandateservice.saveNewPaymandateShortlist(payloadArray).subscribe((response) => {
+        console.log('ht');
+        if (response.apiResponseStatus == 1) {
+          console.log('hi');
+          
+          this.toastService.showAlert(
+            response.message,
+            response.apiResponseStatus
+          );
+        } else {
+          this.toastService.showError(response.message);
+        }
+      })
+      console.log('---->', payloadArray);
     } else {
       console.error('No paymandates selected.');
     }
