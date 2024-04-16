@@ -129,8 +129,9 @@
                        
                     </td>
                     <td style="text-align: center">
-                        <p-button label="Bill Receive" (onClick)="sendForBillReceive(bill.billId)"
-                            icon="pi pi-download" iconPos="left"></p-button>
+                        <p-confirmPopup></p-confirmPopup>
+                        <p-button label="Bill Receive" (click)="confirm($event,bill.billId)" icon="pi pi-download"
+                        iconPos="left"></p-button>
                         <!-- <button pButton type="button" class="p-button-sm" icon="pi pi-check" label="Bill Receive" (onClick)="sendForBillReceive(bill.referenceNo)"></button> -->
                     </td>
                 </tr>

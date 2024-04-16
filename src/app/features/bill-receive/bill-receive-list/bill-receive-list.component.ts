@@ -80,11 +80,15 @@ export class BillReceiveListComponent implements OnInit {
   }
 
   confirm(event: Event | any, billId: any) {
-    this.confirmationService.confirm({
+  alert('h')
+    
+    this.confirmationService.confirm({      
       target: event.target,
       message: 'Are you sure that you want to proceed?',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
+    console.log('hi');
+
          this.sendForBillReceive(billId);
         //this.test();
       },
@@ -95,6 +99,8 @@ export class BillReceiveListComponent implements OnInit {
   }
 
   sendForBillReceive(billId: number) {
+    console.log('hi');
+    
     const payloadData = {
       billId: billId,
       physicalBillDate: this.datePipe.transform(new Date(), 'dd/MM/yyyy'),
