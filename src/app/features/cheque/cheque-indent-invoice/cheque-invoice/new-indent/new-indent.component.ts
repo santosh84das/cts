@@ -26,54 +26,71 @@ export class NewIndentComponent implements OnInit {
       invoiceDate: [''],
       invoiceNumber: [''],
       indateId: [''],
-      indateDate: [],
-      series: [],
-      start: [],
-      end: [],
-      chequelist: this.fb.array([])
-
+      indateDate: [''],
+      chequelist: this.fb.array([this.createSeries()])
     });
-    const sampleData = {
-      invoiceDate: new Date(), // Sample date
-      invoiceNumber: '1234-1234-1234-1234',
-      indateId: '12345',
-      indateDate: new Date(), // Sample date
-      chequelist: [
-        { series: 'list 1', start: 100, end: 200 },
-        { series: 'list 2', start: 300, end: 400 }
-        // Add more sample data as needed
-      ]
-    };
-    this.patchFormData(sampleData)
+    // ___________________Patch form data__________________________
+    // const sampleData = {
+    //   invoiceDate: new Date(), // Sample date
+    //   invoiceNumber: '1234-1234-1234-1234',
+    //   indateId: '12345',
+    //   indateDate: new Date(), // Sample date
+    //   chequelist: [
+    //     { series: 'list 1', start: 100, end: 200 }
+    //     // Add more sample data as needed
+    //   ]
+    // };
+    // this.patchFormData(sampleData)
   }
 
   get chequelist(): FormArray {
     return this.indentFormApproval.get('chequelist') as FormArray;
   }
 
-  patchFormData(data: any) {
-    this.indentFormApproval.patchValue({
-      invoiceDate: data.invoiceDate,
-      invoiceNumber: data.invoiceNumber,
-      indateId: data.indateId,
-      indateDate: data.indateDate
+  
+  createSeries(): FormGroup {
+    return this.fb.group({
+      series: [''],
+      start: [''],
+      end: [''],
     });
+  }
 
-    // Clear existing chequelist FormArray
-    while (this.chequelist.length !== 0) {
-      this.chequelist.removeAt(0);
-    }
-
-    // Patch data into the chequelist FormArray
-    data.chequelist.forEach((item: any) => {
-      const group = this.fb.group({
-        series: [item.series],
-        start: [item.start],
-        end: [item.end]
-      });
-      this.chequelist.push(group);
-    });
+  addSeries(){
+    this.chequelist.push(this.createSeries());
+    console.log(this.chequelist.value);
 
   }
+
+  removeSeries(index : number){
+    this.chequelist.removeAt(index);
+  }
+
+  // patchFormData(data: any) {
+  //   this.indentFormApproval.patchValue({
+  //     invoiceDate: data.invoiceDate,
+  //     invoiceNumber: data.invoiceNumber,
+  //     indateId: data.indateId,
+  //     indateDate: data.indateDate
+  //   });
+
+  //   // Clear existing chequelist FormArray
+  //   while (this.chequelist.length !== 0) {
+  //     this.chequelist.removeAt(0);
+  //   }
+
+  //   // Patch data into the chequelist FormArray
+  //   data.chequelist.forEach((item: any) => {
+  //     const group = this.fb.group({
+  //       series: [item.series],
+  //       start: [item.start],
+  //       end: [item.end]
+  //     });
+  //     this.chequelist.push(group);
+  //   });
+
+  // }
+
+
 
 }

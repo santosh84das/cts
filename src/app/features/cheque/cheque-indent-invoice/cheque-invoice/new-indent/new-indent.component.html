@@ -34,9 +34,8 @@
             </div>
         </div>
         <div class="col-6">
-            <div formArrayName="chequelist">
-                <div class="card" *ngFor="let control of chequelist.controls; let i = index" [formGroupName]="i">
-                    <div class="flex flex-wrap gap-3 p-fluid">
+                <div class="card">
+                    <!-- <div class="flex flex-wrap gap-3 p-fluid">
                         <div class="flex-auto">
                             <label class="block mb-1 text-color text-lg">Cheque Types: </label>
                             <p> Treasury</p>
@@ -49,8 +48,38 @@
                             <label for="memo_no" class="block mb-1 text-color text-lg">Quantity</label>
                             <p>2654234</p>
                         </div>
+                    </div> -->
+                    <div class="grid grid-nogutter static surface-300 border-round  text-gray-800 p-2 mb-3" style="min-width: 300px; min-height: 150px;">
+                        <div class="col-12 md:col-6 flex">
+                            <div class="font-medium mb-2 mr-2 text-lg">
+                                Cheque Types:
+                            </div>
+                            <div class="text-900 text-lg text-primary-500 font-semibold">
+                                Treasury
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-6 flex">
+                            <div class="font-medium mb-2 mr-2 text-lg">
+                                MICR Code:
+                            </div>
+                            <div class="text-900 text-lg text-primary-500 font-semibold">
+                                25442472
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-6 flex">
+                            <div class="font-medium mb-2 mr-2 text-lg">
+                                Quantity:
+                            </div>
+                            <div class="text-900 text-lg text-primary-500 font-semibold">
+                                25442472
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex flex-wrap gap-3 p-fluid mt-5">
+                </div>
+        
+            <div formArrayName="chequelist">
+                <div class="card relative" *ngFor="let list of chequelist.controls; let i = index" [formGroupName]="i">
+                    <div class="flex flex-wrap gap-3 p-fluid">
                         <div class="flex-auto">
                             <label for="series" class="block mb-1 text-color text-lg">Series</label>
                             <p-dropdown [options]="series" placeholder="Select series" optionLabel="name"
@@ -67,8 +96,11 @@
                                 class="p-inputtext p-component p-element w-full" formControlName="end">
                         </div>
                     </div>
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                        class="p-button-rounded p-button-danger minus_button" (click)="removeSeries(i)"  *ngIf="chequelist.length!=i+1"></button>
                 </div>
             </div>
+            <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded " (click)="addSeries()"></button>
         </div>
         <div class="flex justify-content-end pt-3">
             <button pbutton="" pripple="" label="Approved"
