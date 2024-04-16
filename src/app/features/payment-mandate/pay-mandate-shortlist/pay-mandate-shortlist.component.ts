@@ -68,7 +68,7 @@ export class PayMandateShortlistComponent implements OnInit {
     if (this.selectedPaymandates && this.selectedPaymandates.length > 0) {
       const payloadArray = this.selectedPaymandates.map((paymandate: { tokenId: any; selectedDate: any; }) => ({
         tokenId: paymandate.tokenId,
-        calendarDate: new Date(paymandate.selectedDate).toISOString(),
+        PaymentDate: new Date(paymandate.selectedDate).toISOString(),
       }));
       console.log('tt');
       console.log(payloadArray);
