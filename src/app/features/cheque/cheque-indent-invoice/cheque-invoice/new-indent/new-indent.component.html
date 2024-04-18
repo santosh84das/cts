@@ -91,16 +91,21 @@
                                 class="p-inputtext p-component p-element w-full" formControlName="start">
                         </div>
                         <div class="flex-auto">
-                            <label for="memo_no" class="block mb-1 text-color text-lg">End</label>
+                            <label for="end" class="block mb-1 text-color text-lg">End</label>
                             <input type="number" pinputtext="" placeholder="End"
                                 class="p-inputtext p-component p-element w-full" formControlName="end">
                         </div>
+                        <div class="flex-auto">
+                            <label for="quantity" class="block mb-1 text-color text-lg">Quantity</label>
+                            <input type="number" pinputtext="" placeholder="Quantity"
+                                class="p-inputtext p-component p-element w-full" formControlName="quantity">
+                        </div>
                     </div>
                     <button pButton pRipple type="button" icon="pi pi-times"
-                        class="p-button-rounded p-button-danger minus_button" (click)="removeSeries(i)"  *ngIf="chequelist.length!=i+1"></button>
+                        class="p-button-rounded p-button-danger minus_button" (click)="removeSeries(i)" ></button>
                 </div>
             </div>
-            <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded " (click)="addSeries()"></button>
+            <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded plus_button" (click)="addSeries()"></button>
         </div>
         <div class="flex justify-content-end pt-3">
             <button pbutton="" pripple="" label="Approved"

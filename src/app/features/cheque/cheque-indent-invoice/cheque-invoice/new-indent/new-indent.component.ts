@@ -53,6 +53,7 @@ export class NewIndentComponent implements OnInit {
       series: [''],
       start: [''],
       end: [''],
+      quantity: [''],
     });
   }
 
