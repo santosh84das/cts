@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormData } from 'src/app/core/models/indentFormData';
-import { Serieslist } from 'src/app/core/models/cheque';
+import { ChequeIndentDeatil, Serieslist } from 'src/app/core/models/cheque';
 
 @Component({
   selector: 'app-new-indent',
@@ -17,11 +17,17 @@ export class NewIndentComponent implements OnInit {
 
   indentFormApproval!: FormGroup;
   series!: Serieslist[];
+  chequeIndentList!: ChequeIndentDeatil[];
 
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.series = [{ name: 'list1', code: 1, }, { name: 'list2', code: 2, },]
+    this.series = [{ name: 'list1', code: 1, }, { name: 'list2', code: 2, },];
+    this.chequeIndentList = [
+      { chequeType: 1, micrCode: '34545342', quantity: 30 },
+      { chequeType: 2, micrCode: '57777773', quantity: 20 },
+
+    ]
     this.indentFormApproval = this.fb.group({
       invoiceDate: [''],
       invoiceNumber: [''],
@@ -43,11 +49,12 @@ export class NewIndentComponent implements OnInit {
     // this.patchFormData(sampleData)
   }
 
-  get chequelist(): FormArray {
-    return this.indentFormApproval.get('chequelist') as FormArray;
+  chequelist(index: number): FormArray {
+    const formGroup = this.indentFormApproval.controls[index] as FormGroup;
+    return formGroup.get('chequelist') as FormArray;
   }
 
-  
+
   createSeries(): FormGroup {
     return this.fb.group({
       series: [''],
@@ -57,14 +64,14 @@ export class NewIndentComponent implements OnInit {
     });
   }
 
-  addSeries(){
-    this.chequelist.push(this.createSeries());
-    console.log(this.chequelist.value);
+  addSeries(index: number) {
+    this.chequelist(index).push(this.createSeries());
+    // console.log(this.chequelist.value);
 
   }
 
-  removeSeries(index : number){
-    this.chequelist.removeAt(index);
+  removeSeries(index: number, index2: number) {
+    this.chequelist(index2).removeAt(index);
   }
 
   // patchFormData(data: any) {
