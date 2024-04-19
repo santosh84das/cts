@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../toast.service';
 import { Observable, catchError } from 'rxjs';
 import { IapiResponce } from '../../models/iapi-responce';
-import { newIndent, ChequeIndentDeatil } from '../../models/cheque';
+import { newIndent, ChequeIndentDeatil, ChequeIndentList } from '../../models/cheque';
+import { DynamicTable, DynamicTableQueryParameters } from '../../models/dynamic-table';
 
 
 @Injectable({
@@ -20,4 +21,16 @@ export class ChequeIndentService {
       })
     );
   }
+  getChqueIndentList(queryParameters: DynamicTableQueryParameters):Observable<IapiResponce<DynamicTable<ChequeIndentList>>> {
+    return this.http
+        .patch<IapiResponce<DynamicTable<ChequeIndentList>>>(
+            'v1/Cheque/cheque-indent-list',
+            queryParameters
+        )
+        .pipe(
+            catchError((error) => {
+                throw this.toastService.showError(error.message);
+            })
+        );
+}
 }

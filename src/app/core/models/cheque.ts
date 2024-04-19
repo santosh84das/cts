@@ -4,6 +4,13 @@ export interface ChequeList {
     end: number, 
     quantity: number 
 }
+export interface ChequeIndentList {
+  indentId:number,
+  indentDate:string,
+  memoNo:string,
+  memoDate:string,
+  remarks:string,
+}
 export interface NewChequeEntry {
     series: string, 
     start: number, 
@@ -17,6 +24,7 @@ export interface newIndent {
     remarks: string
     chequeIndentDeatils: ChequeIndentDeatil[]
   }
+  
   
   export interface ChequeIndentDeatil {
     chequeType: number
