@@ -18,6 +18,7 @@ import { ChequeIndentInvoiceComponent } from './cheque-indent-invoice.component'
 import { ChequeIndentComponent } from './cheque-indent/cheque-indent.component';
 import { ChequeInvoiceComponent } from './cheque-invoice/cheque-invoice.component';
 import { NewIndentComponent } from './cheque-invoice/new-indent/new-indent.component';
+import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic-table.module';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { NewIndentComponent } from './cheque-invoice/new-indent/new-indent.compo
     RippleModule,
     ReactiveFormsModule,
     DialogModule,
-    HttpClientModule 
+    HttpClientModule,
+    DynamicTableModule 
   ]
 })
 export class ChequeIndentInvoiceModule { }

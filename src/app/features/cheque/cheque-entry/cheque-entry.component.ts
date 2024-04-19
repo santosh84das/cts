@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NewChequeEntry } from 'src/app/core/models/cheque';
 import {
-  ActionButtonConfig,
+    ActionButtonConfig,
     DynamicTable,
     DynamicTableQueryParameters,
 } from 'src/app/core/models/dynamic-table';
@@ -26,16 +26,16 @@ export class ChequeEntryComponent implements OnInit {
         private fb: FormBuilder,
         private chequeEntryService: ChequeEntryService,
         private toastService: ToastService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
-      this.tableActionButton = [
-        {
-            buttonIdentifier: 'edit',
-            class: 'p-button-warning p-button-sm',
-            icon: 'pi pi-file-edit',
-            lable: 'Edit',
-          },
+        this.tableActionButton = [
+            {
+                buttonIdentifier: 'edit',
+                class: 'p-button-warning p-button-sm',
+                icon: 'pi pi-file-edit',
+                lable: 'Edit',
+            },
         ];
         this.tableQueryParameters = {
             pageSize: 10,
@@ -70,23 +70,23 @@ export class ChequeEntryComponent implements OnInit {
                 end: this.chequeEntryFrm.get('end')?.value,
             };
             this.chequeEntryService
-            .insertNewChequeEntry(this.newChequeEntryModel)
-            .subscribe((response) => {
-                if (response.apiResponseStatus == 1) {
-                    this.toastService.showAlert(
-                        response.message,
-                        response.apiResponseStatus
-                    );
-                    this.chequeEntryFrm.reset();
-                    this.displayModal = false;
-                    this.allCheques();
-                } else {
-                    this.toastService.showError(response.message);
-                }
-            });
+                .insertNewChequeEntry(this.newChequeEntryModel)
+                .subscribe((response) => {
+                    if (response.apiResponseStatus == 1) {
+                        this.toastService.showAlert(
+                            response.message,
+                            response.apiResponseStatus
+                        );
+                        this.chequeEntryFrm.reset();
+                        this.displayModal = false;
+                        this.allCheques();
+                    } else {
+                        this.toastService.showError(response.message);
+                    }
+                });
         }
         console.log(this.chequeEntryFrm.valid);
-        
+
     }
 
     showDialog() {
