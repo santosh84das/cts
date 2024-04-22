@@ -1,3 +1,4 @@
+<p-confirmDialog></p-confirmDialog>
 <div class="grid">
     <div class="col-12">
         <app-common-header [headerName]="'Cheque Indent & Invoice'" [imgSrc]="'assets/layout/images/icons/cheque-indent-invoice.png'">
@@ -9,10 +10,13 @@
     <div class="col-12">
         <div class="grid">
             <div class="col-12 lg:col-6 p-3">
-                <div class="transition-colors transition-duration-500 p-3 border-round border-2 cursor-pointer">
+                <div class="transition-colors transition-duration-500 p-3 border-round border-2 cursor-pointer" [ngClass]="{
+                    'hover:shadow-2 surface-card border-transparent hover:bg-primary-100 hover:border-primary':listType!== 'indent',
+                    'bg-primary-100 border-primary': listType=== 'indent'
+                  }" (click)="changeListType('indent')">
                     <div class="flex align-items-center justify-content-between">
                         <div>
-                            <p>Cheque Indent</p>
+                            <p class="mt-1 mb-0 text-600 text-xl">Cheque Indent</p>
                         </div>
                         <div>
                             <img src="assets/layout/images/icons/cheque-indent.png" height="60">
@@ -21,10 +25,13 @@
                 </div>
             </div>
             <div class="col-12 lg:col-6 p-3">
-                <div class="transition-colors transition-duration-500 p-3 border-round border-2 cursor-pointer">
+                <div class="transition-colors transition-duration-500 p-3 border-round border-2 cursor-pointer" [ngClass]="{
+                    'hover:shadow-2 surface-card border-transparent hover:bg-primary-100 hover:border-primary':listType!=='invoice',
+                    'bg-primary-100 border-primary': listType=== 'invoice'
+                  }" (click)="changeListType('invoice')">
                     <div class="flex align-items-center justify-content-between">
                         <div>
-                            <p>Cheque Invoice</p>
+                            <p class="mt-1 mb-0 text-600 text-xl">Cheque Invoice</p>
                         </div>
                         <div>
                             <img src="assets/layout/images/icons/cheque-invoice.png" height="60">
@@ -40,6 +47,7 @@
         rowSelectionMode="multiple"
         [rowsPerPageOptions]="[10,30,50]"
         [actionButtons]="tableActionButton"
+        (actionButtonClicked)="buttonHandler($event)"
         [headers]="tableData!.headers" 
         [data]="tableData.data" 
         [dataCount]="tableData.dataCount">

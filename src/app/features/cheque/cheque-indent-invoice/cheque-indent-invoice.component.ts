@@ -5,11 +5,13 @@ import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 's
 import { ToastService } from 'src/app/core/services/toast.service';
 import { tokenDetails } from 'src/app/core/models/token';
 import { ChequeIndentList } from 'src/app/core/models/cheque';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-cheque-indent-invoice',
   templateUrl: './cheque-indent-invoice.component.html',
-  styleUrls: ['./cheque-indent-invoice.component.scss']
+  styleUrls: ['./cheque-indent-invoice.component.scss'],
+  providers: [ConfirmationService]
 })
 export class ChequeIndentInvoiceComponent implements OnInit {
 
@@ -17,29 +19,129 @@ export class ChequeIndentInvoiceComponent implements OnInit {
   tableQueryParameters!: DynamicTableQueryParameters | any;
   tableData!: DynamicTable<ChequeIndentList>;
   tableActionButton: ActionButtonConfig[] = [];
-  constructor(private chequeIndentService: ChequeIndentService, private toastService: ToastService) { }
+  listType: string = 'indent';
+  constructor(private chequeIndentService: ChequeIndentService, private toastService: ToastService, private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
-    this.tableActionButton = [
-      {
-        buttonIdentifier: 'edit',
-        class: 'p-button-warning p-button-sm',
-        icon: 'pi pi-file-edit',
-        lable: 'Edit',
-      },
-    ];
-    this.tableQueryParameters = {
-      pageSize: 10,
-      pageIndex: 0,
-    };
-    this.chequeIndentList();
+    this.changeListType('indent');
   }
 
   callChequeIndent() {
+    this.addIndent
+  }
+  /**
+   * Handles the button click event and performs the appropriate action based on the button identifier.
+   *
+   * @param {any} event - The event object containing information about the button click.
+   */
+  buttonHandler(event: any) {
+    switch (event.buttonIdentifier) {
+      case 'indent-approve':
+        this.approveIndent(event.rowData.id);
+        break;
+      case 'indent-reject':
+        this.rejectIndent(event.rowData.id);
+        break;
+      case 'indent-edit':
+        this.toastService.showSuccess('Edit');
+        break;
+    }
+  }
+  approveIndent(indentId: number) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.chequeIndentService.approveChequeIndent(indentId).subscribe((response) => {
+          if (response.apiResponseStatus == 1) {
+            this.chequeIndentList();
+          }
+          this.toastService.showAlert(response.message, response.apiResponseStatus);
+        })
+      },
+    });
+  }
+  rejectIndent(indentId: number) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.chequeIndentService.rejectChequeIndent(indentId).subscribe((response) => {
+          if (response.apiResponseStatus == 1) {
+            this.chequeIndentList();
+          }
+          this.toastService.showAlert(response.message, response.apiResponseStatus);
+        })
+      },
+    });
+  }
+  /**
+   * Change the list type and update the table action buttons and query parameters accordingly.
+   *
+   * @param {string} type - The new list type.
+   */
+  changeListType(type: string) {
+    this.listType = type;
+    if (type == 'indent') {
+      this.tableActionButton = [
+        {
+          buttonIdentifier: 'indent-approve',
+          class: 'p-button-success p-button-sm',
+          icon: 'pi pi-check',
+          lable: 'Approve',
+        },
+        {
+          buttonIdentifier: 'indent-reject',
+          class: 'p-button-danger p-button-sm',
+          icon: 'pi pi-times',
+          lable: 'Reject',
+        },
+        {
+          buttonIdentifier: 'indent-edit',
+          class: 'p-button-warning p-button-sm',
+          icon: 'pi pi-file-edit',
+          lable: 'Edit',
+        },
+      ];
+      this.tableQueryParameters = {
+        pageSize: 10,
+        pageIndex: 0,
+      };
+      this.chequeIndentList();
+    }
+    if (type == 'invoice') {
+      this.tableActionButton = [
+        {
+          buttonIdentifier: 'invoice-approve',
+          class: 'p-button-success p-button-sm',
+          icon: 'pi pi-check',
+          lable: 'Approve',
+        },
+        {
+          buttonIdentifier: 'invoice-reject',
+          class: 'p-button-danger p-button-sm',
+          icon: 'pi pi-times',
+          lable: 'Reject',
+        },
+        {
+          buttonIdentifier: 'invoice-edit',
+          class: 'p-button-warning p-button-sm',
+          icon: 'pi pi-file-edit',
+          lable: 'Edit',
+        },
+      ];
+      this.tableQueryParameters = {
+        pageSize: 10,
+        pageIndex: 0,
+      };
+      this.chequeIndentInvoiceList();
+    }
 
-    this.addIndent;
-    console.log('hi');
-
+  }
+  chequeIndentInvoiceList() {
+    throw new Error('Method not implemented.');
   }
   chequeIndentList() {
     this.chequeIndentService.getChqueIndentList(this.tableQueryParameters).subscribe((responce) => {

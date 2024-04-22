@@ -48,18 +48,18 @@ import { DynamicTableComponent } from './shared/modules/dynamic-table/dynamic-ta
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         {provide: HTTP_INTERCEPTORS,useClass: ApiInterceptor,multi:true},
-        {
-            provide: APP_INITIALIZER,
-            useFactory: (authTokenService: AuthTokenService, rolesService: NgxRolesService ) => function() {return authTokenService.loadRolesAndPermissions().subscribe((roles) => {
-                if(roles!=null){
-                    roles.forEach(role => {
-                        rolesService.addRoleWithPermissions(role.Name, role.Permissions);
-                      });
-                }
-              })},
-            deps: [AuthTokenService, NgxRolesService],
-            multi: true
-        },
+        // {
+        //     provide: APP_INITIALIZER,
+        //     useFactory: (authTokenService: AuthTokenService, rolesService: NgxRolesService ) => function() {return authTokenService.loadRolesAndPermissions().subscribe((roles) => {
+        //         if(roles!=null){
+        //             roles.forEach(role => {
+        //                 rolesService.addRoleWithPermissions(role.Name, role.Permissions);
+        //               });
+        //         }
+        //       })},
+        //     deps: [AuthTokenService, NgxRolesService],
+        //     multi: true
+        // },
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, ProductService,MessageService,LoadingIndeterminateService, DatePipe,DividerModule,StepsModule
     ],
