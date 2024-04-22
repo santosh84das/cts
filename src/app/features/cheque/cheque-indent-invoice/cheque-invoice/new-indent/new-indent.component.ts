@@ -18,6 +18,7 @@ export class NewIndentComponent implements OnInit {
   indentFormApproval!: FormGroup;
   series!: Serieslist[];
   chequeIndentList!: ChequeIndentDeatil[];
+  isInvoiceNumberDisabled = false;
 
   constructor(private fb: FormBuilder) { }
 
@@ -33,8 +34,15 @@ export class NewIndentComponent implements OnInit {
       invoiceNumber: [''],
       indateId: [''],
       indateDate: [''],
-      chequelist: this.fb.array([this.createSeries()])
+      // chequelist: this.fb.array([this.createSeries()]),
+      // chequeIndentList: this.fb.array([]),
+      series: [''],
+      start: [''],
+      end: [''],
+      quantity: [''],
     });
+    (this.indentFormApproval.get('indateId') as FormControl).disable();
+    (this.indentFormApproval.get('indateDate') as FormControl).disable();
     // ___________________Patch form data__________________________
     // const sampleData = {
     //   invoiceDate: new Date(), // Sample date
@@ -49,9 +57,16 @@ export class NewIndentComponent implements OnInit {
     // this.patchFormData(sampleData)
   }
 
-  chequelist(index: number): FormArray {
-    const formGroup = this.indentFormApproval.controls[index] as FormGroup;
-    return formGroup.get('chequelist') as FormArray;
+  // chequelists(index: number): FormArray {
+  //   // const formGroup = this.indentFormApproval.controls[index] as FormGroup;
+  //   // return formGroup.get('chequelist') as FormArray;
+  //   return this.chequeIndentList()
+  //     .at(index)
+  //     .get('chequelist') as FormArray;
+  // }
+
+  get chequelists(): FormArray {
+    return this.indentFormApproval.get('chequelist') as FormArray;
   }
 
 
@@ -64,15 +79,15 @@ export class NewIndentComponent implements OnInit {
     });
   }
 
-  addSeries(index: number) {
-    this.chequelist(index).push(this.createSeries());
-    // console.log(this.chequelist.value);
+  // addSeries(index: number) {
+  //   this.chequelists(index).push(this.createSeries());
+  //   // console.log(this.chequelist.value);
 
-  }
+  // }
 
-  removeSeries(index: number, index2: number) {
-    this.chequelist(index2).removeAt(index);
-  }
+  // removeSeries(index: number) {
+  //   this.chequelists().removeAt(index);
+  // }
 
   // patchFormData(data: any) {
   //   this.indentFormApproval.patchValue({
@@ -98,6 +113,24 @@ export class NewIndentComponent implements OnInit {
   //   });
 
   // }
+
+
+  getSelectedResults() {
+
+    if (this.indentFormApproval) {
+      const series = this.indentFormApproval.get('series')?.value;
+      const start = this.indentFormApproval.get('start')?.value;
+      const end = this.indentFormApproval.get('end')?.value;
+      const quantity = this.indentFormApproval.get('quantity')?.value;
+
+      const selectedResults = {
+        series: series instanceof Array ? series.map(s => s.code) : series.code,
+        start,
+        end,
+        quantity
+      };
+    }
+  }
 
 
 
