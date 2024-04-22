@@ -17,7 +17,8 @@ export interface NewChequeEntry {
     end: number,
 }
 
-export interface newIndent {
+export interface chequeIndent {
+    indentId?: number;
     indentDate: string
     memoNumber: string
     memoDate: string
@@ -27,6 +28,7 @@ export interface newIndent {
   
   
   export interface ChequeIndentDeatil {
+    chequeIndentId?: number;
     chequeType: number
     micrCode: string
     quantity: number

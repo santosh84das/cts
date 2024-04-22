@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../toast.service';
 import { Observable, catchError } from 'rxjs';
 import { IapiResponce } from '../../models/iapi-responce';
-import { newIndent, ChequeIndentDeatil, ChequeIndentList } from '../../models/cheque';
+import { chequeIndent, ChequeIndentDeatil, ChequeIndentList } from '../../models/cheque';
 import { DynamicTable, DynamicTableQueryParameters } from '../../models/dynamic-table';
 
 
@@ -14,7 +14,7 @@ export class ChequeIndentService {
 
   constructor(private http: HttpClient, private toastService: ToastService) { }
 
-  chqueIndentEntry(payload: newIndent): Observable<IapiResponce> {
+  chqueIndentEntry(payload: chequeIndent): Observable<IapiResponce> {
     return this.http.post<IapiResponce>('v1/Cheque/cheque-indent', payload).pipe(
       catchError((error) => {
         throw this.toastService.showError(error.message);
@@ -47,7 +47,7 @@ export class ChequeIndentService {
   }
   approveChequeIndent(indentId: number): Observable<IapiResponce> {
     return this.http
-      .put<IapiResponce>('v1/Cheque/cheque-indent-approve', {indentId})
+      .put<IapiResponce>('v1/Cheque/cheque-indent-approve', { indentId })
       .pipe(
         catchError((error) => {
           throw this.toastService.showError(error.message);
@@ -56,11 +56,19 @@ export class ChequeIndentService {
   }
   rejectChequeIndent(indentId: number): Observable<IapiResponce> {
     return this.http
-      .put<IapiResponce>('v1/Cheque/cheque-indent-reject', {indentId})
+      .put<IapiResponce>('v1/Cheque/cheque-indent-reject', { indentId })
       .pipe(
         catchError((error) => {
           throw this.toastService.showError(error.message);
         })
+      );
+  }
+
+  approvedChequeIndentById(indentId: number): Observable<IapiResponce> {
+    return this.http.get<IapiResponce>('v1/Cheque/cheque-indent/'+ indentId )
+      .pipe(catchError((error) => {
+        throw this.toastService.showError(error.message)
+      })
       );
   }
 }

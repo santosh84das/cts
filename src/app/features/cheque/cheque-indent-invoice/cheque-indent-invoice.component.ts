@@ -6,6 +6,7 @@ import { ToastService } from 'src/app/core/services/toast.service';
 import { tokenDetails } from 'src/app/core/models/token';
 import { ChequeIndentList } from 'src/app/core/models/cheque';
 import { ConfirmationService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cheque-indent-invoice',
@@ -20,7 +21,7 @@ export class ChequeIndentInvoiceComponent implements OnInit {
   tableData!: DynamicTable<ChequeIndentList>;
   tableActionButton: ActionButtonConfig[] = [];
   listType: string = 'indent';
-  constructor(private chequeIndentService: ChequeIndentService, private toastService: ToastService, private confirmationService: ConfirmationService) { }
+  constructor(private chequeIndentService: ChequeIndentService, private toastService: ToastService, private confirmationService: ConfirmationService, private router: Router) { }
 
   ngOnInit(): void {
     this.changeListType('indent');
@@ -44,6 +45,9 @@ export class ChequeIndentInvoiceComponent implements OnInit {
         break;
       case 'indent-edit':
         this.toastService.showSuccess('Edit');
+        break;
+      case 'invoice-approve':
+        this.approvedChequeIndent(event.rowData.id)
         break;
     }
   }
@@ -158,6 +162,7 @@ export class ChequeIndentInvoiceComponent implements OnInit {
       this.toastService.showError(responce.message);
     });
   }
-
-
+  approvedChequeIndent(id:number){
+    this.router.navigate(['/cheque/approved-cheque-indent', id]);
+  }
 }

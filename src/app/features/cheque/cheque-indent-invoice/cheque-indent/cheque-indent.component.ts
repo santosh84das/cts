@@ -5,7 +5,7 @@ import { bankDetails } from 'src/app/core/models/bank';
 import { BankService } from 'src/app/core/services/Bank/bank.service';
 import { ChequeIndentService } from 'src/app/core/services/cheque/cheque-indent.service';
 import { ToastService } from 'src/app/core/services/toast.service';
-import { newIndent, ChequeIndentDeatil } from 'src/app/core/models/cheque';
+import { chequeIndent, ChequeIndentDeatil } from 'src/app/core/models/cheque';
 import { DatePipe } from '@angular/common';
 interface Chequetype {
   name: string;
@@ -31,7 +31,7 @@ export class ChequeIndentComponent implements OnInit {
   selectedBranch: any;
   bankDetails!: bankDetails | undefined;
   selectedIndex!: number;
-  chequeIndentFormDetails!: newIndent;
+  chequeIndentFormDetails!: chequeIndent;
   constructor(private _fb: FormBuilder, private bankServices: BankService, private toastService: ToastService, private chequeindentService: ChequeIndentService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {

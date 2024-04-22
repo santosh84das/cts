@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormData } from 'src/app/core/models/indentFormData';
-import { ChequeIndentDeatil, Serieslist } from 'src/app/core/models/cheque';
+import { ChequeIndentDeatil, Serieslist, chequeIndent } from 'src/app/core/models/cheque';
+import { ChequeIndentService } from 'src/app/core/services/cheque/cheque-indent.service';
+import { ToastService } from 'src/app/core/services/toast.service';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-indent',
@@ -18,11 +21,15 @@ export class NewIndentComponent implements OnInit {
   indentFormApproval!: FormGroup;
   series!: Serieslist[];
   chequeIndentList!: ChequeIndentDeatil[];
-  isInvoiceNumberDisabled = false;
+  chequeInvoiceDetails!: chequeIndent;
+  id?: number;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private chequeIndentService: ChequeIndentService, private toastService:ToastService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
+    console.log(this.id );
+    
     this.series = [{ name: 'list1', code: 1, }, { name: 'list2', code: 2, },];
     this.chequeIndentList = [
       { chequeType: 1, micrCode: '34545342', quantity: 30 },
@@ -43,18 +50,14 @@ export class NewIndentComponent implements OnInit {
     });
     (this.indentFormApproval.get('indateId') as FormControl).disable();
     (this.indentFormApproval.get('indateDate') as FormControl).disable();
-    // ___________________Patch form data__________________________
-    // const sampleData = {
-    //   invoiceDate: new Date(), // Sample date
-    //   invoiceNumber: '1234-1234-1234-1234',
-    //   indateId: '12345',
-    //   indateDate: new Date(), // Sample date
-    //   chequelist: [
-    //     { series: 'list 1', start: 100, end: 200 }
-    //     // Add more sample data as needed
-    //   ]
-    // };
-    // this.patchFormData(sampleData)
+    this.chequeIndentService.approvedChequeIndentById(this.id).subscribe((response) => {
+      if (response.apiResponseStatus == 1) {
+        this.chequeInvoiceDetails= response.result;
+        this.indentFormApproval.controls['indateId'].setValue(this.chequeInvoiceDetails.indentId);
+        this.indentFormApproval.controls['indateDate'].setValue(this.chequeInvoiceDetails.indentDate);
+      }
+      this.toastService.showError(response.message);
+    });
   }
 
   // chequelists(index: number): FormArray {
