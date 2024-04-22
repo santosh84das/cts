@@ -33,6 +33,18 @@ export class ChequeIndentService {
         })
       );
   }
+  getChqueInvoiceList(queryParameters: DynamicTableQueryParameters): Observable<IapiResponce<DynamicTable<ChequeIndentList>>> {
+    return this.http
+      .patch<IapiResponce<DynamicTable<ChequeIndentList>>>(
+        'v1/Cheque/cheque-invoice-list',
+        queryParameters
+      )
+      .pipe(
+        catchError((error) => {
+          throw this.toastService.showError(error.message);
+        })
+      );
+  }
   approveChequeIndent(indentId: number): Observable<IapiResponce> {
     return this.http
       .put<IapiResponce>('v1/Cheque/cheque-indent-approve', {indentId})

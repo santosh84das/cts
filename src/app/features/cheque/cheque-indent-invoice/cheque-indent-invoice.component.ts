@@ -141,7 +141,13 @@ export class ChequeIndentInvoiceComponent implements OnInit {
 
   }
   chequeIndentInvoiceList() {
-    throw new Error('Method not implemented.');
+    this.chequeIndentService.getChqueInvoiceList(this.tableQueryParameters).subscribe((responce) => {
+      if (responce.apiResponseStatus == 1) {
+        this.tableData = responce.result;
+        return;
+      }
+      this.toastService.showError(responce.message);
+    });
   }
   chequeIndentList() {
     this.chequeIndentService.getChqueIndentList(this.tableQueryParameters).subscribe((responce) => {
