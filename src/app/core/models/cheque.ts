@@ -15,6 +15,8 @@ export interface NewChequeEntry {
     series: string, 
     start: number, 
     end: number,
+    treasurieCode:string,
+    micrCode:string
 }
 
 export interface chequeIndent {

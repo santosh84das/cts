@@ -8,6 +8,7 @@ import {
 } from 'src/app/core/models/dynamic-table';
 import { tokenDetails } from 'src/app/core/models/token';
 import { ChequeEntryService } from 'src/app/core/services/cheque/cheque-entry.service';
+import { MasterService } from 'src/app/core/services/master/master.service';
 import { ToastService } from 'src/app/core/services/toast.service';
 
 @Component({
@@ -16,16 +17,21 @@ import { ToastService } from 'src/app/core/services/toast.service';
     styleUrls: ['./cheque-entry.component.scss'],
 })
 export class ChequeEntryComponent implements OnInit {
+
     displayModal: boolean | undefined;
     chequeEntryFrm!: FormGroup;
     tableData!: DynamicTable<tokenDetails>;
     tableQueryParameters!: DynamicTableQueryParameters | any;
     newChequeEntryModel!: NewChequeEntry;
     tableActionButton: ActionButtonConfig[] = [];
+    treasuryList: any[] = []; 
+    selectedMicrCodeValue!: number
+    selectedmicrCode!: string;
     constructor(
         private fb: FormBuilder,
         private chequeEntryService: ChequeEntryService,
-        private toastService: ToastService
+        private toastService: ToastService,
+        private masterService: MasterService
     ) { }
 
     ngOnInit(): void {
@@ -45,8 +51,10 @@ export class ChequeEntryComponent implements OnInit {
         this.chequeEntryFrm = this.fb.group({
             series: ['', Validators.required],
             start: ['', Validators.required],
+            treasury: ['', Validators.required],
             end: ['', [Validators.required, this.validateEnd]],
         });
+        this.allTreasuryList();
     }
     allCheques() {
         this.chequeEntryService
@@ -63,12 +71,17 @@ export class ChequeEntryComponent implements OnInit {
             });
     }
     addCheque() {
+
         if (this.chequeEntryFrm.valid) {
             this.newChequeEntryModel = {
                 series: this.chequeEntryFrm.get('series')?.value,
                 start: this.chequeEntryFrm.get('start')?.value,
                 end: this.chequeEntryFrm.get('end')?.value,
+                treasurieCode: this.chequeEntryFrm.get('treasury')?.value.name,
+                micrCode:  this.selectedmicrCode 
             };
+           console.log(this.newChequeEntryModel);
+           
             this.chequeEntryService
                 .insertNewChequeEntry(this.newChequeEntryModel)
                 .subscribe((response) => {
@@ -100,5 +113,21 @@ export class ChequeEntryComponent implements OnInit {
         return startValue && endValue && endValue <= startValue
             ? { invalidEnd: true }
             : null;
+    }
+
+    allTreasuryList(){
+        this.masterService.getTreasuries().subscribe((response)=>{
+            if(response.apiResponseStatus==1){
+                this.treasuryList = response.result
+                console.log(this.treasuryList);
+                
+            }else{
+                this.toastService.showError(response.message);
+            }
+        })
+    }
+
+    handelInputValueChange($event: string) {
+       this.selectedmicrCode = $event;
     }
 }

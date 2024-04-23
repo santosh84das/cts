@@ -12,6 +12,8 @@ import {InputTextModule} from 'primeng/inputtext';
 import {InputNumberModule} from 'primeng/inputnumber';
 import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic-table.module';
 import { FormsModule , ReactiveFormsModule} from '@angular/forms';
+import { MicrModule } from 'src/app/shared/modules/micr/micr.module';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 
@@ -30,7 +32,9 @@ import { FormsModule , ReactiveFormsModule} from '@angular/forms';
     InputNumberModule,
     DynamicTableModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MicrModule,
+    DropdownModule
   ]
 })
 export class ChequeEntryModule { }
