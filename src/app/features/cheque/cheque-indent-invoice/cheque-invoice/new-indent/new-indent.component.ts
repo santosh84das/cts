@@ -6,6 +6,7 @@ import { ChequeIndentService } from 'src/app/core/services/cheque/cheque-indent.
 import { ToastService } from 'src/app/core/services/toast.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-new-indent',
   templateUrl: './new-indent.component.html',
@@ -41,12 +42,11 @@ export class NewIndentComponent implements OnInit {
       invoiceNumber: [''],
       indateId: [''],
       indateDate: [''],
-      // chequelist: this.fb.array([this.createSeries()]),
-      // chequeIndentList: this.fb.array([]),
       series: [''],
       start: [''],
       end: [''],
       quantity: [''],
+      serieslist: this.fb.array([this.createSeries()]),
     });
     (this.indentFormApproval.get('indateId') as FormControl).disable();
     (this.indentFormApproval.get('indateDate') as FormControl).disable();
@@ -60,16 +60,9 @@ export class NewIndentComponent implements OnInit {
     });
   }
 
-  // chequelists(index: number): FormArray {
-  //   // const formGroup = this.indentFormApproval.controls[index] as FormGroup;
-  //   // return formGroup.get('chequelist') as FormArray;
-  //   return this.chequeIndentList()
-  //     .at(index)
-  //     .get('chequelist') as FormArray;
-  // }
 
-  get chequelists(): FormArray {
-    return this.indentFormApproval.get('chequelist') as FormArray;
+  get serieslist(): FormArray {
+    return this.indentFormApproval.get('serieslist') as FormArray;
   }
 
 
@@ -82,15 +75,14 @@ export class NewIndentComponent implements OnInit {
     });
   }
 
-  // addSeries(index: number) {
-  //   this.chequelists(index).push(this.createSeries());
-  //   // console.log(this.chequelist.value);
+  addSeries() {
+    this.serieslist.push(this.createSeries());
 
-  // }
+  }
 
-  // removeSeries(index: number) {
-  //   this.chequelists().removeAt(index);
-  // }
+  removeSeries(index: number) {
+    this.serieslist.removeAt(index);
+  }
 
   // patchFormData(data: any) {
   //   this.indentFormApproval.patchValue({

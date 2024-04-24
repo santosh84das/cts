@@ -22,6 +22,7 @@ export class ChequeIndentInvoiceComponent implements OnInit {
   tableData!: DynamicTable<ChequeIndentList>;
   tableActionButton: ActionButtonConfig<ChequeIndentList>[] = [];
   listType: string = 'indent';
+  displayModal: boolean | undefined;
   constructor(private ngxPermissionsService:NgxPermissionsService,private chequeIndentService: ChequeIndentService, private toastService: ToastService, private confirmationService: ConfirmationService, private router: Router) { }
 
   ngOnInit(): void {
@@ -175,4 +176,9 @@ export class ChequeIndentInvoiceComponent implements OnInit {
   approvedChequeIndent(id:number){
     this.router.navigate(['/cheque/approved-cheque-indent', id]);
   }
+
+  showModal() {
+    this.displayModal = true;
+    }
+    
 }
