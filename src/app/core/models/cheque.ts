@@ -5,11 +5,14 @@ export interface ChequeList {
     quantity: number 
 }
 export interface ChequeIndentList {
+  id:number,
   indentId:number,
   indentDate:string,
   memoNo:string,
   memoDate:string,
   remarks:string,
+  currentStatus:string,
+  currentStatusId:number
 }
 export interface NewChequeEntry {
     series: string, 

@@ -56,7 +56,7 @@
                         </p-columnFilter>
                     </div>
                 </th>
-                <th pResizableColumn *ngIf="actionButtons!=null">
+                <th pResizableColumn *ngIf="actionButtons!==null">
 
                 </th>
 
@@ -78,9 +78,12 @@
                         rowData[col.fieldName] }}</span>
                 </td>
                 <td>
-                    <button *ngFor="let actionButton of actionButtons" pButton type="button" [icon]="actionButton.icon"
-                        [label]="actionButton.lable" class="ml-2" [class]="actionButton.class"
-                        (click)="emitButtonClickEvent(rowData,actionButton.buttonIdentifier)"></button>
+                    <span *ngFor="let actionButton of actionButtons;trackBy: trackByFunc" >
+                        <button pButton type="button" [icon]="actionButton.icon" *ngIf="(actionButton.renderButton && actionButton.renderButton(rowData)) || !actionButton.renderButton"
+                            [label]="actionButton.lable" class="ml-2" [class]="actionButton.class"
+                            (click)="emitButtonClickEvent(rowData,actionButton.buttonIdentifier)">
+                        </button>
+                    </span>
                 </td>
             </tr>
 
