@@ -7,6 +7,7 @@ import { tokenDetails } from 'src/app/core/models/token';
 import { ChequeIndentList } from 'src/app/core/models/cheque';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { NgxRolesService,NgxPermissionsService } from 'ngx-permissions';
 
 @Component({
   selector: 'app-cheque-indent-invoice',
@@ -19,9 +20,9 @@ export class ChequeIndentInvoiceComponent implements OnInit {
   @ViewChild(ChequeIndentComponent) addIndent!: ChequeIndentComponent;
   tableQueryParameters!: DynamicTableQueryParameters | any;
   tableData!: DynamicTable<ChequeIndentList>;
-  tableActionButton: ActionButtonConfig[] = [];
+  tableActionButton: ActionButtonConfig<ChequeIndentList>[] = [];
   listType: string = 'indent';
-  constructor(private chequeIndentService: ChequeIndentService, private toastService: ToastService, private confirmationService: ConfirmationService, private router: Router) { }
+  constructor(private ngxPermissionsService:NgxPermissionsService,private chequeIndentService: ChequeIndentService, private toastService: ToastService, private confirmationService: ConfirmationService, private router: Router) { }
 
   ngOnInit(): void {
     this.changeListType('indent');
@@ -95,18 +96,27 @@ export class ChequeIndentInvoiceComponent implements OnInit {
           class: 'p-button-success p-button-sm',
           icon: 'pi pi-check',
           lable: 'Approve',
+          renderButton:(rowData) => {
+            return rowData.currentStatusId == 11 && this.ngxPermissionsService.getPermission('can-receive-bill1')!=undefined; 
+          }
         },
         {
           buttonIdentifier: 'indent-reject',
           class: 'p-button-danger p-button-sm',
           icon: 'pi pi-times',
           lable: 'Reject',
+          renderButton:(rowData) => {
+            return rowData.currentStatusId == 12; 
+          }
         },
         {
           buttonIdentifier: 'indent-edit',
           class: 'p-button-warning p-button-sm',
           icon: 'pi pi-file-edit',
           lable: 'Edit',
+          renderButton:(rowData) => {
+            return rowData.currentStatusId == 13; 
+          }
         },
       ];
       this.tableQueryParameters = {

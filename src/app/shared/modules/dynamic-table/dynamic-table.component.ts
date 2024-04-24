@@ -6,6 +6,7 @@ import {
     Input,
     OnInit,
     Output,
+    TrackByFunction,
     Type,
 } from '@angular/core';
 import { Message } from 'primeng/api/message';
@@ -47,7 +48,7 @@ export class DynamicTableComponent implements OnInit {
     @Input()
     rowsPerPageOptions: any[] = [10, 20, 30];
     @Input()
-    actionButtons: ActionButtonConfig[] = [];
+    actionButtons: ActionButtonConfig[]=[];
     /**
      * none
      * single 
@@ -314,5 +315,8 @@ export class DynamicTableComponent implements OnInit {
             this.saveAsExcelFile(excelBuffer, "data");
         });    
     }
+    trackByFunc: TrackByFunction<ActionButtonConfig> = (index, item) => {
+        return index; // Assuming each actionButton has a unique 'id' property
+    };
     //[Helper functions END]===================================================
 }
