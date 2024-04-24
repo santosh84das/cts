@@ -49,7 +49,7 @@ export class ChequeIndentComponent implements OnInit {
     });
     // this.getBanklist()
   }
-
+// ___________Fromarray____________
   get chequelist(): FormArray {
     return this.indentForm.get('chequelist') as FormArray;
   }
@@ -62,14 +62,14 @@ export class ChequeIndentComponent implements OnInit {
     });
   }
 
-
-  addCheque() {
-    this.chequelist.push(this.createCheque());
-    console.log(this.chequelist.value);
-  }
-  removeCheque(index: number) {
-    this.chequelist.removeAt(index);
-  }
+// __________add Button_________________
+  // addCheque() {
+  //   this.chequelist.push(this.createCheque());
+  //   console.log(this.chequelist.value);
+  // }
+  // removeCheque(index: number) {
+  //   this.chequelist.removeAt(index);
+  // }
 
   showBankDetails(index:number) {
     if(index!=this.selectedIndex){

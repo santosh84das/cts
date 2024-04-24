@@ -1,10 +1,10 @@
 <!-- <div class="grid"> -->
-<div class="col-12">
+<!-- <div class="col-12">
     <app-common-header [headerName]="'Cheque'" [imgSrc]="'assets/layout/images/icons/cheque.png'">
-        <!-- <button pButton pRipple type="button" icon="pi pi-plus" label="New Indent"
-                class="p-button-rounded p-button-raised"></button> -->
+        <button pButton pRipple type="button" icon="pi pi-plus" label="New Indent"
+                class="p-button-rounded p-button-raised"></button>
     </app-common-header>
-</div>
+</div> -->
 <form [formGroup]="indentForm">
     <div class="grid flex flex-wrap">
         <div class="col-6">
@@ -59,11 +59,11 @@
                                 class="p-inputtext p-component p-element w-full" placeholder="Quantity">
                         </div>
                     </div>
-                    <button pButton pRipple type="button" icon="pi pi-times"
+                    <!-- <button pButton pRipple type="button" icon="pi pi-times"
                         class="p-button-rounded p-button-danger minus_button" (click)="removeCheque(i)"
                         *ngIf="chequelist.length!=i+1"></button>
                     <button pButton pRipple type="button" icon="pi pi-plus" class="plus_button p-button-rounded"
-                        (click)="addCheque()" *ngIf="chequelist.length==i+1"></button>
+                        (click)="addCheque()" *ngIf="chequelist.length==i+1"></button> -->
                 </div>
             </div>
         </div>
