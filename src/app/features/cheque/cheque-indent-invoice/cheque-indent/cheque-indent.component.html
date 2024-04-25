@@ -12,7 +12,7 @@
                 <div class="flex flex-wrap gap-3 p-fluid">
                     <div class="flex-auto">
                         <label for="indent_date" class="block mb-1 text-color text-lg">Indent Date</label>
-                        <p-calendar [showIcon]="true" inputId="icon" formControlName="indent_date"></p-calendar>
+                        <p-calendar  appendTo="body"[showIcon]="true" inputId="icon" formControlName="indent_date"></p-calendar>
                     </div>
 
                     <div class="flex-auto">
@@ -24,7 +24,7 @@
                 <div class="flex flex-wrap gap-3 p-fluid">
                     <div class="flex-auto">
                         <label for="memo_date" class="block mb-1 text-color text-lg">Memo Date</label>
-                        <p-calendar [showIcon]="true" inputId="icon" class="w-full"
+                        <p-calendar appendTo="body" [showIcon]="true" inputId="icon" class="w-full"
                             formControlName="memo_date"></p-calendar>
                     </div>
 

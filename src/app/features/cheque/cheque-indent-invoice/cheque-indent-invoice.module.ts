@@ -17,14 +17,14 @@ import { ChequeRoutingModule } from '../cheque-routing.module';
 import { ChequeIndentInvoiceComponent } from './cheque-indent-invoice.component';
 import { ChequeIndentComponent } from './cheque-indent/cheque-indent.component';
 import { ChequeInvoiceComponent } from './cheque-invoice/cheque-invoice.component';
-import { NewIndentComponent } from './cheque-invoice/new-indent/new-indent.component';
+import { NewInvoiceComponent } from './cheque-invoice/new-invoice/new-invoice.component';
 import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic-table.module';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {DividerModule} from 'primeng/divider';
 import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
-  declarations: [ChequeIndentInvoiceComponent,ChequeIndentComponent,ChequeInvoiceComponent,NewIndentComponent],
+  declarations: [ChequeIndentInvoiceComponent,ChequeIndentComponent,ChequeInvoiceComponent,NewInvoiceComponent],
   imports: [
     CommonModule,
     ChequeIndentInvoiceRoutingModule,

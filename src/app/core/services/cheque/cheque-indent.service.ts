@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../toast.service';
 import { Observable, catchError } from 'rxjs';
 import { IapiResponce } from '../../models/iapi-responce';
-import { chequeIndent, ChequeIndentDeatil, ChequeIndentList } from '../../models/cheque';
+import { chequeIndent, ChequeIndentDeatil, ChequeIndentList, IndentInvoiceDetails } from '../../models/cheque';
 import { DynamicTable, DynamicTableQueryParameters } from '../../models/dynamic-table';
+import { error } from 'console';
 
 
 @Injectable({
@@ -73,11 +74,30 @@ export class ChequeIndentService {
       );
   }
 
-  approvedChequeIndentById(indentId: number): Observable<IapiResponce> {
-    return this.http.get<IapiResponce>('v1/Cheque/cheque-indent/'+ indentId )
+  indentDetailsById(indentId: number): Observable<IapiResponce> {
+    return this.http.get<IapiResponce>('v1/Cheque/cheque-indent/?Id=' + indentId)
       .pipe(catchError((error) => {
         throw this.toastService.showError(error.message)
       })
       );
+  }
+
+  getSeriesList(): Observable<IapiResponce> {
+    return this.http.get<IapiResponce>('v1/Cheque/series').pipe(catchError((error) => {
+      throw this.toastService.showError(error.message)
+    })
+    );
+  }
+
+  getSeriesDetails(code: number) {
+    return this.http.get<IapiResponce>('v1/Cheque/series-details?Id=' + code).pipe(catchError((error) => {
+      throw this.toastService.showError(error.message);
+    }));
+  }
+
+  saveChequeIndentInvoice(payload:IndentInvoiceDetails){
+    return this.http.post<IapiResponce>('v1/Cheque/cheque-indent-invoice',payload).pipe(catchError((error)=>{
+      throw this.toastService.showError(error.message);
+    }));
   }
 }

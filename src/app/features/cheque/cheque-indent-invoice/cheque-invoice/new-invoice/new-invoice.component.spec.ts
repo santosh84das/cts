@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewIndentComponent } from './new-indent.component';
+import { NewInvoiceComponent } from './new-invoice.component';
 
-describe('NewIndentComponent', () => {
-  let component: NewIndentComponent;
-  let fixture: ComponentFixture<NewIndentComponent>;
+describe('NewInvoiceComponent', () => {
+  let component: NewInvoiceComponent;
+  let fixture: ComponentFixture<NewInvoiceComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NewIndentComponent ]
+      declarations: [ NewInvoiceComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(NewIndentComponent);
+    fixture = TestBed.createComponent(NewInvoiceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
