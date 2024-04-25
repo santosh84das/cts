@@ -77,7 +77,7 @@ export class ChequeEntryComponent implements OnInit {
                 series: this.chequeEntryFrm.get('series')?.value,
                 start: this.chequeEntryFrm.get('start')?.value,
                 end: this.chequeEntryFrm.get('end')?.value,
-                treasurieCode: this.chequeEntryFrm.get('treasury')?.value.name,
+                treasurieCode: this.chequeEntryFrm.get('treasury')?.value.code,
                 micrCode:  this.selectedmicrCode 
             };
            console.log(this.newChequeEntryModel);
