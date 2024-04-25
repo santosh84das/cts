@@ -8,6 +8,7 @@ import { CommonHeaderModule } from 'src/app/shared/modules/common-header/common-
 import { ButtonModule } from 'primeng/button';
 import { DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         CommonHeaderModule,
         ButtonModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        NgxPermissionsModule.forChild() 
     ],
     providers: [DatePipe], 
 })

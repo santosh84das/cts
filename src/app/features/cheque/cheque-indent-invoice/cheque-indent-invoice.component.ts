@@ -49,6 +49,9 @@ export class ChequeIndentInvoiceComponent implements OnInit {
       case 'indent-edit':
         this.toastService.showSuccess('Edit');
         break;
+      case 'indent-forward':
+        this.frowardIndentTO(event.rowData.id);
+        break;
       case 'invoice-approve':
         this.approvedChequeIndent(event.rowData.id)
         break;
@@ -76,6 +79,21 @@ export class ChequeIndentInvoiceComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.chequeIndentService.rejectChequeIndent(indentId).subscribe((response) => {
+          if (response.apiResponseStatus == 1) {
+            this.chequeIndentList();
+          }
+          this.toastService.showAlert(response.message, response.apiResponseStatus);
+        })
+      },
+    });
+  }
+  frowardIndentTO(indentId: number) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.chequeIndentService.frowardChequeIndent(indentId).subscribe((response) => {
           if (response.apiResponseStatus == 1) {
             this.chequeIndentList();
           }
@@ -118,6 +136,15 @@ export class ChequeIndentInvoiceComponent implements OnInit {
           lable: 'Reject',
           renderButton:(rowData) => {
             return rowData.currentStatusId == indentStatusEnum.FrowardToTreasuryOfficer && this.ngxPermissionsService.getPermission('can-approve-reject-cheque-indent') !==undefined; 
+          }
+        },
+        {
+          buttonIdentifier: 'indent-invoice',
+          class: 'p-button-sm',
+          icon: 'pi pi-plus',
+          lable: 'Invoice',
+          renderButton:(rowData) => {
+            return rowData.currentStatusId == indentStatusEnum.ApproveByTreasuryOfficer&& this.ngxPermissionsService.getPermission('can-create-indent-invoice') !==undefined; 
           }
         },
         {

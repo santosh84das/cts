@@ -14,6 +14,7 @@ import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic
 import { FormsModule , ReactiveFormsModule} from '@angular/forms';
 import { MicrModule } from 'src/app/shared/modules/micr/micr.module';
 import { DropdownModule } from 'primeng/dropdown';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 
 
@@ -34,7 +35,8 @@ import { DropdownModule } from 'primeng/dropdown';
     FormsModule,
     ReactiveFormsModule,
     MicrModule,
-    DropdownModule
+    DropdownModule,
+    NgxPermissionsModule.forChild() 
   ]
 })
 export class ChequeEntryModule { }

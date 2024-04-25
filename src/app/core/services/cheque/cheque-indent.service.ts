@@ -45,6 +45,15 @@ export class ChequeIndentService {
         })
       );
   }
+  frowardChequeIndent(indentId: number): Observable<IapiResponce> {
+    return this.http
+      .put<IapiResponce>('v1/Cheque/cheque-indent-froward', { indentId })
+      .pipe(
+        catchError((error) => {
+          throw this.toastService.showError(error.message);
+        })
+      );
+  }
   approveChequeIndent(indentId: number): Observable<IapiResponce> {
     return this.http
       .put<IapiResponce>('v1/Cheque/cheque-indent-approve', { indentId })
