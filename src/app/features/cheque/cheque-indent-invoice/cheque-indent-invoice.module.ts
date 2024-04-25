@@ -21,6 +21,7 @@ import { NewIndentComponent } from './cheque-invoice/new-indent/new-indent.compo
 import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic-table.module';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {DividerModule} from 'primeng/divider';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
   declarations: [ChequeIndentInvoiceComponent,ChequeIndentComponent,ChequeInvoiceComponent,NewIndentComponent],
@@ -42,7 +43,8 @@ import {DividerModule} from 'primeng/divider';
     HttpClientModule,
     ConfirmDialogModule,
     DynamicTableModule,
-    DividerModule 
+    DividerModule ,
+    NgxPermissionsModule.forChild() 
   ]
 })
 export class ChequeIndentInvoiceModule { }

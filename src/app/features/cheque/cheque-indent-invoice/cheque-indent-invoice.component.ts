@@ -8,6 +8,7 @@ import { ChequeIndentList } from 'src/app/core/models/cheque';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { NgxRolesService,NgxPermissionsService } from 'ngx-permissions';
+import { indentStatusEnum } from 'src/app/core/enum/ChequeEnum';
 
 @Component({
   selector: 'app-cheque-indent-invoice',
@@ -93,12 +94,21 @@ export class ChequeIndentInvoiceComponent implements OnInit {
     if (type == 'indent') {
       this.tableActionButton = [
         {
+          buttonIdentifier: 'indent-forward',
+          class: ' p-button-sm',
+          icon: 'pi pi-check',
+          lable: 'Froward TO',
+          renderButton:(rowData) => {
+            return rowData.currentStatusId == indentStatusEnum.NewIndent && this.ngxPermissionsService.getPermission('can-create-cheque-indent') !==undefined; 
+          }
+        },
+        {
           buttonIdentifier: 'indent-approve',
           class: 'p-button-success p-button-sm',
           icon: 'pi pi-check',
           lable: 'Approve',
           renderButton:(rowData) => {
-            return rowData.currentStatusId == 11 && this.ngxPermissionsService.getPermission('can-receive-bill1')!=undefined; 
+            return rowData.currentStatusId == indentStatusEnum.FrowardToTreasuryOfficer && this.ngxPermissionsService.getPermission('can-approve-reject-cheque-indent') !==undefined; 
           }
         },
         {
@@ -107,7 +117,7 @@ export class ChequeIndentInvoiceComponent implements OnInit {
           icon: 'pi pi-times',
           lable: 'Reject',
           renderButton:(rowData) => {
-            return rowData.currentStatusId == 12; 
+            return rowData.currentStatusId == indentStatusEnum.FrowardToTreasuryOfficer && this.ngxPermissionsService.getPermission('can-approve-reject-cheque-indent') !==undefined; 
           }
         },
         {
@@ -116,7 +126,7 @@ export class ChequeIndentInvoiceComponent implements OnInit {
           icon: 'pi pi-file-edit',
           lable: 'Edit',
           renderButton:(rowData) => {
-            return rowData.currentStatusId == 13; 
+            return rowData.currentStatusId == indentStatusEnum.NewIndent&& this.ngxPermissionsService.getPermission('can-create-cheque-indent') !==undefined; 
           }
         },
       ];
