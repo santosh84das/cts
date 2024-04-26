@@ -25,7 +25,10 @@ export class NewInvoiceComponent implements OnInit {
   seriesDeatils: any;
   selectedIndex?: number;
   indentInvoiceDetails?: IndentInvoiceDetails;
-  chequeIndentDetailId?:number
+  chequeIndentDetailId?:number;
+  chequeType?:number;
+  micrCode?:string;
+  quantity?:number;
 
   constructor(private fb: FormBuilder, private chequeIndentService: ChequeIndentService, private toastService: ToastService, private route: ActivatedRoute, private date: DatePipe) { }
 
@@ -34,11 +37,11 @@ export class NewInvoiceComponent implements OnInit {
     console.log(this.id);
 
     // this.series = [{ name: 'list1', code: 1, }, { name: 'list2', code: 2, },];
-    this.chequeIndentList = [
-      { chequeType: 1, micrCode: '34545342', quantity: 30 },
-      { chequeType: 2, micrCode: '57777773', quantity: 20 },
+    // this.chequeIndentList = [
+    //   { chequeType: 1, micrCode: '34545342', quantity: 30 },
+    //   { chequeType: 2, micrCode: '57777773', quantity: 20 },
 
-    ]
+    // ]
     this.indentFormApproval = this.fb.group({
       invoiceDate: [''],
       invoiceNumber: [''],
@@ -57,6 +60,10 @@ export class NewInvoiceComponent implements OnInit {
     this.chequeIndentService.indentDetailsById(this.id).subscribe((response) => {
       if (response.apiResponseStatus == 1) {
         this.chequeIndentDetails = response.result; 
+        console.log('rrrr' , this.chequeIndentDetails);
+        this.chequeType = this.chequeIndentDetails.chequeIndentDeatils[0].chequeType;
+        this.micrCode = this.chequeIndentDetails.chequeIndentDeatils[0].micrCode;
+        this.quantity = this.chequeIndentDetails.chequeIndentDeatils[0].quantity;
         this.indentFormApproval.controls['indentId'].patchValue(this.chequeIndentDetails.indentId);
         this.indentFormApproval.controls['indentDate'].patchValue(this.chequeIndentDetails.indentDate);
          this.chequeIndentDetailId = this.chequeIndentDetails?.chequeIndentDeatils[0]?.indentDeatilsId;
