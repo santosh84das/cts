@@ -54,8 +54,8 @@ export interface IndentInvoiceDetails {
 export interface InvoiceDetails {
   chequeIndentDetailId: number | undefined,
   chequeEntryId: number,
-  start?: number,
-  end: number,
-  quantity?: number
+  availableQuantity: number,
+  // end: number,
+  quantity: number
 }
 
