@@ -7,7 +7,7 @@ import { tokenDetails } from 'src/app/core/models/token';
 import { ChequeIndentList } from 'src/app/core/models/cheque';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
-import { NgxRolesService,NgxPermissionsService } from 'ngx-permissions';
+import { NgxRolesService, NgxPermissionsService } from 'ngx-permissions';
 import { indentStatusEnum } from 'src/app/core/enum/ChequeEnum';
 
 @Component({
@@ -24,7 +24,7 @@ export class ChequeIndentInvoiceComponent implements OnInit {
   tableActionButton: ActionButtonConfig<ChequeIndentList>[] = [];
   listType: string = 'indent';
   displayModal: boolean | undefined;
-  constructor(private ngxPermissionsService:NgxPermissionsService,private chequeIndentService: ChequeIndentService, private toastService: ToastService, private confirmationService: ConfirmationService, private router: Router) { }
+  constructor(private ngxPermissionsService: NgxPermissionsService, private chequeIndentService: ChequeIndentService, private toastService: ToastService, private confirmationService: ConfirmationService, private router: Router) { }
 
   ngOnInit(): void {
     this.changeListType('indent');
@@ -54,6 +54,9 @@ export class ChequeIndentInvoiceComponent implements OnInit {
         break;
       case 'invoice-approve':
         this.approvedChequeIndent(event.rowData.id)
+        break;
+      case 'indent-invoice':
+        this.router.navigate(['cheque/cheque-indent-invoice/approved-cheque-indent', event.rowData.id]);
         break;
     }
   }
@@ -116,8 +119,8 @@ export class ChequeIndentInvoiceComponent implements OnInit {
           class: ' p-button-sm',
           icon: 'pi pi-check',
           lable: 'Froward TO',
-          renderButton:(rowData) => {
-            return rowData.currentStatusId == indentStatusEnum.NewIndent && this.ngxPermissionsService.getPermission('can-create-cheque-indent') !==undefined; 
+          renderButton: (rowData) => {
+            return rowData.currentStatusId == indentStatusEnum.NewIndent && this.ngxPermissionsService.getPermission('can-create-cheque-indent') !== undefined;
           }
         },
         {
@@ -125,8 +128,8 @@ export class ChequeIndentInvoiceComponent implements OnInit {
           class: 'p-button-success p-button-sm',
           icon: 'pi pi-check',
           lable: 'Approve',
-          renderButton:(rowData) => {
-            return rowData.currentStatusId == indentStatusEnum.FrowardToTreasuryOfficer && this.ngxPermissionsService.getPermission('can-approve-reject-cheque-indent') !==undefined; 
+          renderButton: (rowData) => {
+            return rowData.currentStatusId == indentStatusEnum.FrowardToTreasuryOfficer && this.ngxPermissionsService.getPermission('can-approve-reject-cheque-indent') !== undefined;
           }
         },
         {
@@ -134,8 +137,8 @@ export class ChequeIndentInvoiceComponent implements OnInit {
           class: 'p-button-danger p-button-sm',
           icon: 'pi pi-times',
           lable: 'Reject',
-          renderButton:(rowData) => {
-            return rowData.currentStatusId == indentStatusEnum.FrowardToTreasuryOfficer && this.ngxPermissionsService.getPermission('can-approve-reject-cheque-indent') !==undefined; 
+          renderButton: (rowData) => {
+            return rowData.currentStatusId == indentStatusEnum.FrowardToTreasuryOfficer && this.ngxPermissionsService.getPermission('can-approve-reject-cheque-indent') !== undefined;
           }
         },
         {
@@ -143,8 +146,8 @@ export class ChequeIndentInvoiceComponent implements OnInit {
           class: 'p-button-sm',
           icon: 'pi pi-plus',
           lable: 'Invoice',
-          renderButton:(rowData) => {
-            return rowData.currentStatusId == indentStatusEnum.ApproveByTreasuryOfficer&& this.ngxPermissionsService.getPermission('can-create-indent-invoice') !==undefined; 
+          renderButton: (rowData) => {
+            return rowData.currentStatusId == indentStatusEnum.ApproveByTreasuryOfficer && this.ngxPermissionsService.getPermission('can-create-indent-invoice') !== undefined;
           }
         },
         {
@@ -152,8 +155,8 @@ export class ChequeIndentInvoiceComponent implements OnInit {
           class: 'p-button-warning p-button-sm',
           icon: 'pi pi-file-edit',
           lable: 'Edit',
-          renderButton:(rowData) => {
-            return rowData.currentStatusId == indentStatusEnum.NewIndent&& this.ngxPermissionsService.getPermission('can-create-cheque-indent') !==undefined; 
+          renderButton: (rowData) => {
+            return rowData.currentStatusId == indentStatusEnum.NewIndent && this.ngxPermissionsService.getPermission('can-create-cheque-indent') !== undefined;
           }
         },
       ];
@@ -210,12 +213,12 @@ export class ChequeIndentInvoiceComponent implements OnInit {
       this.toastService.showError(responce.message);
     });
   }
-  approvedChequeIndent(id:number){
+  approvedChequeIndent(id: number) {
     this.router.navigate(['/cheque/approved-cheque-indent', id]);
   }
 
   showModal() {
     this.displayModal = true;
-    }
-    
+  }
+
 }

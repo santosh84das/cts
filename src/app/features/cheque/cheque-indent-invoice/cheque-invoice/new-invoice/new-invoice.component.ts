@@ -180,9 +180,9 @@ export class NewInvoiceComponent implements OnInit {
           return {
             chequeIndentDetailId:this.chequeIndentDetailId,
             chequeEntryId: formGroup.get("series")?.value.code,
-            start: formGroup.get("start")?.value,
+            // start: formGroup.get("start")?.value,
             end: formGroup.get("end")?.value,
-            quantity: formGroup.get("quantity")?.value,
+            // quantity: formGroup.get("quantity")?.value,
           }
         })
       }
