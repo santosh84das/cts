@@ -52,7 +52,7 @@ export interface IndentInvoiceDetails {
 
 }
 export interface InvoiceDetails {
-  chequeIndentDetailId: number,
+  chequeIndentDetailId: number | undefined,
   chequeEntryId: number,
   start: number,
   end: number,

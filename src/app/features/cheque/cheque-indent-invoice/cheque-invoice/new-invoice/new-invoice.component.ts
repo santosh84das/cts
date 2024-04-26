@@ -163,8 +163,6 @@ export class NewInvoiceComponent implements OnInit {
   }
 
   confirmInvoiceApproval() {
-    console.log('hi',this.chequeIndentDetailId);
- 
     if (this.indentFormApproval) {
       this.indentInvoiceDetails = {
         chequeIndentId:this.indentFormApproval.get('indentId')?.value,
@@ -173,7 +171,7 @@ export class NewInvoiceComponent implements OnInit {
         chequeInvoiceDeatils:this.serieslist.controls.map<InvoiceDetails>((fa) => {
           const formGroup = fa as FormGroup;
           return {
-            chequeIndentDetailId:0,
+            chequeIndentDetailId:this.chequeIndentDetailId,
             chequeEntryId: formGroup.get("series")?.value.code,
             start: formGroup.get("start")?.value,
             end: formGroup.get("end")?.value,
