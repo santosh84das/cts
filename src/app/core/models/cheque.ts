@@ -44,7 +44,6 @@ export interface Serieslist {
   code: Number;
 }
 export interface IndentInvoiceDetails {
-
   chequeIndentId: number,
   invoiceDate: string,
   invoiceNumber: string,

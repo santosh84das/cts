@@ -96,7 +96,7 @@ export class ChequeIndentService {
   }
 
   saveChequeIndentInvoice(payload:IndentInvoiceDetails){
-    return this.http.post<IapiResponce>('v1/Cheque/cheque-indent-invoice',payload).pipe(catchError((error)=>{
+    return this.http.post<IapiResponce>('v1/Cheque/new-cheque-invoice',payload).pipe(catchError((error)=>{
       throw this.toastService.showError(error.message);
     }));
   }

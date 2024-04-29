@@ -7,6 +7,7 @@ import { ToastService } from 'src/app/core/services/toast.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { DatePipe } from '@angular/common'
 import { log } from 'console';
+import { promises } from 'dns';
 
 
 @Component({
@@ -16,192 +17,109 @@ import { log } from 'console';
 })
 
 export class NewInvoiceComponent implements OnInit {
-  indentFormApproval!: FormGroup;
-  series!: Serieslist[];
-  chequeIndentList!: ChequeIndentDeatil[];
+  allSeries!: Serieslist[];
   chequeIndentDetails!: chequeIndent;
   id?: number;
-  selectedSeries: any;
-  seriesDeatils: any;
-  selectedIndex?: number;
   indentInvoiceDetails?: IndentInvoiceDetails;
-  chequeIndentDetailId?: number;
-  chequeType?: number;
-  micrCode?: string;
-  quantity?: number;
+  invoiceForm: FormGroup = this.createInvoiceForm();
 
   constructor(private fb: FormBuilder, private chequeIndentService: ChequeIndentService, private toastService: ToastService, private route: ActivatedRoute, private date: DatePipe) { }
 
   ngOnInit(): void {
     this.id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
-    console.log(this.id);
-
-    // this.series = [{ name: 'list1', code: 1, }, { name: 'list2', code: 2, },];
-    // this.chequeIndentList = [
-    //   { chequeType: 1, micrCode: '34545342', quantity: 30 },
-    //   { chequeType: 2, micrCode: '57777773', quantity: 20 },
-
-    // ]
-    this.indentFormApproval = this.fb.group({
+    this.getIndentDetails(this.id);
+    this.allSerieslist();
+  }
+  /* ------------------------------- FormGroup [START] ------------------------------ */
+  private createInvoiceForm(): FormGroup {
+    return this.fb.group({
       invoiceDate: [''],
       invoiceNumber: [''],
       indentId: [''],
       indentDate: [''],
-      series: [''],
-      availability: [''],
-      // end: [''],
-      quantity: [''],
-      serieslist: this.fb.array([this.createSeries()]),
-    });
-    (this.indentFormApproval.get('indentId') as FormControl).disable();
-    (this.indentFormApproval.get('indentDate') as FormControl).disable();
-    (this.indentFormApproval.get('availability') as FormControl).disable();
-    (this.indentFormApproval.get('quantity') as FormControl).disable();
-    this.chequeIndentService.indentDetailsById(this.id).subscribe((response) => {
-      if (response.apiResponseStatus == 1) {
-        this.chequeIndentDetails = response.result;
-        console.log('rrrr', this.chequeIndentDetails);
-        this.chequeType = this.chequeIndentDetails.chequeIndentDeatils[0].chequeType;
-        this.micrCode = this.chequeIndentDetails.chequeIndentDeatils[0].micrCode;
-        this.quantity = this.chequeIndentDetails.chequeIndentDeatils[0].quantity;
-        this.indentFormApproval.controls['indentId'].patchValue(this.chequeIndentDetails.indentId);
-        this.indentFormApproval.controls['indentDate'].patchValue(this.chequeIndentDetails.indentDate);
-        this.chequeIndentDetailId = this.chequeIndentDetails?.chequeIndentDeatils[0]?.indentDeatilsId;
-      }
-      this.toastService.showError(response.message);
-    });
-    this.allSerieslist();
+      // series: [''],
+      // availability: [''],
+      // quantity: [''],
+      seriesGroupArray: this.fb.array([this.newSeriesFormGroup()]),
+    })
+  }
+  /* ---------------------------- FormGroup [END] --------------------------- */
+  /* --------------------------- Form array [START] --------------------------- */
+  get seriesGroupArray(): FormArray {
+    return this.invoiceForm.get('seriesGroupArray') as FormArray
   }
 
-
-  get serieslist(): FormArray {
-    return this.indentFormApproval.get('serieslist') as FormArray;
-  }
-
-
-  createSeries(): FormGroup {
+  newSeriesFormGroup(): FormGroup {
     return this.fb.group({
-      series: [''],
-      availability: [''],
-      // end: [''],
-      quantity: [''],
+      series: new FormControl('', Validators.required),
+      availability: new FormControl('', Validators.required),
+      quantity: new FormControl('', Validators.required),
     });
   }
-
-  addSeries() {
-    this.serieslist.push(this.createSeries());
-
+  addNewSeries() {
+    this.seriesGroupArray.push(this.newSeriesFormGroup());
   }
 
   removeSeries(index: number) {
-    this.serieslist.removeAt(index);
+    this.seriesGroupArray.removeAt(index);
   }
-
-  // patchFormData(data: any) {
-  //   this.indentFormApproval.patchValue({
-  //     invoiceDate: data.invoiceDate,
-  //     invoiceNumber: data.invoiceNumber,
-  //     indateId: data.indateId,
-  //     indateDate: data.indateDate
-  //   });
-
-  //   // Clear existing chequelist FormArray
-  //   while (this.chequelist.length !== 0) {
-  //     this.chequelist.removeAt(0);
-  //   }
-
-  //   // Patch data into the chequelist FormArray
-  //   data.chequelist.forEach((item: any) => {
-  //     const group = this.fb.group({
-  //       series: [item.series],
-  //       start: [item.start],
-  //       end: [item.end]
-  //     });
-  //     this.chequelist.push(group);
-  //   });
-
-  // }
-
-
-  // getSelectedResults(seriesIndex: number) {
-
-  //   if (this.indentFormApproval) {
-  //     const series = this.indentFormApproval.get('series')?.value;
-  //     const start = this.indentFormApproval.get('start')?.value;
-  //     const end = this.indentFormApproval.get('end')?.value;
-  //     const quantity = this.indentFormApproval.get('quantity')?.value;
-
-  //     const selectedResults = {
-  //       series: series instanceof Array ? series.map(s => s.code) : series.code,
-  //       start,
-  //       end,
-  //       quantity
-  //     };
-  //   }
-  // }
-
+  /* --------------------------- Form array [END] --------------------------- */
   allSerieslist() {
     this.chequeIndentService.getSeriesList().subscribe((res) => {
       if (res.apiResponseStatus == 1) {
-        this.series = res.result;
-        console.log(this.series[0].code);
-
+        this.allSeries = res.result;
       } else {
         this.toastService.showError(res.message);
       }
 
     })
   }
-
-  seriesInfo(seriesIndex: number) {
-    this.selectedSeries = seriesIndex;
-    console.log('jj', this.selectedSeries);
-
-    this.getseriesDeatils(this.selectedSeries);
-  }
-
-  getseriesDeatils(selectedSeries: number) {
-    if (this.selectedSeries) {
-      this.chequeIndentService.getSeriesDetails(this.selectedSeries).subscribe((res) => {
-        if (res.apiResponseStatus == 1) {
-          this.seriesDeatils = res.result;
-          console.log(this.seriesDeatils);
-          this.indentFormApproval.controls['availability'].patchValue(this.seriesDeatils.availableQuantity);
-        } else {
-          this.toastService.showError(res.message);
+  getIndentDetails(id: number) {
+    this.chequeIndentService.indentDetailsById(id)
+      .subscribe(response => {
+        if (response.apiResponseStatus == 1) {
+          this.chequeIndentDetails = response.result;
+          this.invoiceForm.patchValue({
+            indentId: this.chequeIndentDetails.indentId,
+            indentDate: this.chequeIndentDetails.indentDate,
+          });
         }
-      })
-    }
+      });
+  }
+  getSeriesDeatils(seriesIndex: number) {
+    const selectedSeriesControl = this.seriesGroupArray.at(seriesIndex);
+    const selectedSeries = selectedSeriesControl.get('series')?.value;
+    this.chequeIndentService.getSeriesDetails(selectedSeries).subscribe((res) => {
+      if (res.apiResponseStatus == 1) {
+        selectedSeriesControl.patchValue({
+          availability: res.result.availableQuantity
+        })
+      } else {
+        this.toastService.showError(res.message);
+      }
+    })
   }
 
   confirmInvoiceApproval() {
-    if (this.indentFormApproval) {
-      this.indentInvoiceDetails = {
-        chequeIndentId: this.indentFormApproval.get('indentId')?.value,
-        invoiceDate: this.indentFormApproval.get('invoiceDate')?.value,
-        invoiceNumber: this.indentFormApproval.get('invoiceNumber')?.value,
-        chequeInvoiceDeatils: this.serieslist.controls.map<InvoiceDetails>((fa) => {
+    if (this.invoiceForm) {
+      const chequeIndentId = this.invoiceForm.get('indentId')!.value;
+      const invoiceDate = this.invoiceForm.get('invoiceDate')!.value;
+      const invoiceNumber = this.invoiceForm.get('invoiceNumber')!.value;
+      const chequeInvoiceDeatils: InvoiceDetails[] = this.seriesGroupArray.controls.map(
+        (fa) => {
           const formGroup = fa as FormGroup;
           return {
-            chequeIndentDetailId: this.chequeIndentDetailId,
-            chequeEntryId: formGroup.get("series")?.value.code,
-            availableQuantity: formGroup.get("availability")?.value,
-            // end: formGroup.get("end")?.value,
-            quantity: formGroup.get("quantity")?.value,
+            chequeIndentDetailId: this.chequeIndentDetails.chequeIndentDeatils[0].indentDeatilsId,
+            chequeEntryId: formGroup.get("series")!.value,
+            availableQuantity: formGroup.get("availability")!.value,
+            quantity: formGroup.get("quantity")!.value,
           }
-        })
-      }
+        });
+      this.indentInvoiceDetails = { chequeIndentId, invoiceDate, invoiceNumber, chequeInvoiceDeatils }
       console.log(this.indentInvoiceDetails);
 
-      this.chequeIndentService.saveChequeIndentInvoice(this.indentInvoiceDetails).subscribe((res) => {
-        if (res.apiResponseStatus == 1) {
-          this.toastService.showAlert(
-            res.message,
-            res.apiResponseStatus
-          );
-        } else {
-          this.toastService.showError(res.message);
-        }
+      this.chequeIndentService.saveChequeIndentInvoice(this.indentInvoiceDetails).subscribe(res => {
+        this.toastService.showAlert(res.message, res.apiResponseStatus);
       })
 
     }

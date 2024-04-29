@@ -3,7 +3,7 @@
     <app-common-header [headerName]="'New  Invoice'" [imgSrc]="'assets/layout/images/icons/cheque.png'">
     </app-common-header>
 </div>
-<form [formGroup]="indentFormApproval">
+<form [formGroup]="invoiceForm">
     <div class="grid flex flex-wrap">
         <div class="col-6">
             <div class="card">
@@ -45,7 +45,7 @@
                             Cheque Types:
                         </div>
                         <div class="text-900 text-lg text-primary-500 font-semibold text-center">
-                            {{(chequeType === 1) ? 'Treasury Cheque' : 'Others'}}
+                            {{chequeIndentDetails.chequeIndentDeatils && chequeIndentDetails.chequeIndentDeatils[0] ? (chequeIndentDetails.chequeIndentDeatils[0].chequeType===1) ? 'Treasury Cheque' : 'Others' : 'N/A'}}
                         </div>
                     </div>
                     <div class="col-5 flex">
@@ -53,7 +53,7 @@
                             MICR Code:
                         </div>
                         <div class="text-900 text-lg text-primary-500 font-semibold text-center">
-                          {{micrCode}}
+                          {{chequeIndentDetails.chequeIndentDeatils[0].micrCode}}
                         </div>
                     </div>
                     <div class="col-3 flex">
@@ -61,25 +61,23 @@
                             Quantity:
                         </div>
                         <div class="text-900 text-lg text-primary-500 font-semibold text-center">
-                            {{quantity}}
+                            {{chequeIndentDetails.chequeIndentDeatils[0].quantity}}
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- <div class="card">
-         
-            </div> -->
         </div>
         <div class="col-6">
-            <div fromArrayName="serieslist">
-                <div class="card relative" *ngFor="let item of serieslist.controls ; let seriesIndex = index">
-                    <div>
-                        <div class="flex flex-wrap gap-3 p-fluid">
-                            <div class="flex-auto">
-                                <label for="series" class="block mb-1 text-color text-lg">Series</label>
-                                <p-dropdown [options]="series" placeholder="Select series" optionLabel="name"
+            <div formArrayName="seriesGroupArray">
+                <div class="card relative" *ngFor="let series1 of seriesGroupArray.controls ; let i = index" [formGroupName]="i">
+                    <div >
+                        <!-- -------------------------- Series Card [Start] -------------------------- -->
+                        <div class="flex flex-wrap gap-3 p-fluid" >
+                            <div class="flex-auto gap-3">
+                                <label for="series" class="block mb-1 text-color text-lg">Series - MICR - Availability</label>
+                                <p-dropdown [options]="allSeries" placeholder="Select series" optionLabel="name"
                                     [showClear]="true" optionValue="code" formControlName="series"
-                                    (onChange)="seriesInfo(seriesIndex)" [(ngModel)]="selectedSeries"></p-dropdown>
+                                    (onChange)="getSeriesDeatils(i)"></p-dropdown>
                             </div>
                             <div class="flex-auto">
                                 <label for="Start" class="block mb-1 text-color text-lg">Availability</label>
@@ -98,20 +96,18 @@
                                     class="p-inputtext p-component p-element w-full" formControlName="quantity">
                             </div>
                         </div>
+                        <!-- ------------------------- Series Card [END] ------------------------- -->
+                        <!-- --------------------------- X Remove Button --------------------------- -->
                         <button pButton pRipple type="button" icon="pi pi-times"
-                            class="p-button-rounded p-button-danger minus_button" (click)="removeSeries(seriesIndex)"
-                            ></button>
+                            class="p-button-rounded p-button-danger minus_button" (click)="removeSeries(i)"
+                            *ngIf="seriesGroupArray.length>1"></button>
+                        <!-- ---------------------------- + Add Button ----------------------------- -->
+                        <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded plus_button"
+                            (click)="addNewSeries()" *ngIf="seriesGroupArray.length===i+1"></button>
                     </div>
-                    <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded plus_button"
-                        (click)="addSeries()" *ngIf="serieslist.length===seriesIndex+1"></button>
                 </div>
-
-
             </div>
-
         </div>
-
-
         <div class="flex justify-content-end pt-3">
             <button pbutton="" pripple="" label="Approved"
                 class="p-element p-ripple p-button-rounded p-button p-component" (click)="confirmInvoiceApproval()">
