@@ -22,6 +22,7 @@ export class NewInvoiceComponent implements OnInit {
   id?: number;
   indentInvoiceDetails?: IndentInvoiceDetails;
   invoiceForm: FormGroup = this.createInvoiceForm();
+  selectedSeries!: Serieslist;
 
   constructor(private fb: FormBuilder, private chequeIndentService: ChequeIndentService, private toastService: ToastService, private route: ActivatedRoute, private date: DatePipe) { }
 
@@ -29,19 +30,24 @@ export class NewInvoiceComponent implements OnInit {
     this.id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
     this.getIndentDetails(this.id);
     this.allSerieslist();
+    (this.invoiceForm.get('indentId') as FormControl).disable();
+    (this.invoiceForm.get('indentDate') as FormControl).disable();
+    // (this.invoiceForm.get('availability') as FormControl).disable();
+
   }
   /* ------------------------------- FormGroup [START] ------------------------------ */
   private createInvoiceForm(): FormGroup {
     return this.fb.group({
-      invoiceDate: [''],
-      invoiceNumber: [''],
+      invoiceDate: ['', Validators.required],
+      invoiceNumber: ['', Validators.required],
       indentId: [''],
       indentDate: [''],
       // series: [''],
       // availability: [''],
       // quantity: [''],
       seriesGroupArray: this.fb.array([this.newSeriesFormGroup()]),
-    })
+    });
+
   }
   /* ---------------------------- FormGroup [END] --------------------------- */
   /* --------------------------- Form array [START] --------------------------- */
@@ -51,9 +57,10 @@ export class NewInvoiceComponent implements OnInit {
 
   newSeriesFormGroup(): FormGroup {
     return this.fb.group({
-      series: new FormControl('', Validators.required),
-      availability: new FormControl('', Validators.required),
-      quantity: new FormControl('', Validators.required),
+      series:['', Validators.required],
+      availability:['', Validators.required,],
+      quantity: ['', [Validators.required, this.validateEnd]],
+
     });
   }
   addNewSeries() {
@@ -63,6 +70,13 @@ export class NewInvoiceComponent implements OnInit {
   removeSeries(index: number) {
     this.seriesGroupArray.removeAt(index);
   }
+
+  validateEnd(control: FormControl) {
+    const availability = control.parent?.get('availability')?.value;
+    const quantity = control.value;
+    return availability !== null && quantity !== null && availability < quantity ? { compareQuantities: true } : null;
+  }
+  
   /* --------------------------- Form array [END] --------------------------- */
   allSerieslist() {
     this.chequeIndentService.getSeriesList().subscribe((res) => {
@@ -97,7 +111,10 @@ export class NewInvoiceComponent implements OnInit {
       } else {
         this.toastService.showError(res.message);
       }
-    })
+    });
+    this.allSeries = this.allSeries.filter(series => series.code !== selectedSeries.code);
+    console.log('-->', this.allSeries);
+    
   }
 
   confirmInvoiceApproval() {

@@ -9,12 +9,14 @@
             <div class="card">
                 <div class="flex flex-wrap gap-3 p-fluid">
                     <div class="flex-auto">
-                        <label for="indent_date" class="block mb-1 text-color text-lg">Invoice Date</label>
+                        <label for="indent_date" class="block mb-1 text-color text-lg">Invoice Date <span
+                                class="text-red-500 text-lg font-bold">*</span></label>
                         <p-calendar [showIcon]="true" inputId="icon" formControlName="invoiceDate"></p-calendar>
                     </div>
 
                     <div class="flex-auto">
-                        <label for="memo_no" class="block mb-1 text-color text-lg">Invoice Number</label>
+                        <label for="memo_no" class="block mb-1 text-color text-lg">Invoice Number <span
+                                class="text-red-500 text-lg font-bold">*</span></label>
                         <input type="text" pinputtext="" placeholder="1234-1234-1234-1234"
                             class="p-inputtext p-component p-element w-full" formControlName="invoiceNumber">
                     </div>
@@ -28,8 +30,8 @@
 
                     <div class="flex-auto">
                         <label for="remarks" class="block mb-1 text-color text-lg">Indent Date</label>
-                        <p-calendar [showIcon]="true" inputId="icon" formControlName="indentDate"
-                            dateFormat="dd-mm-yy"></p-calendar>
+                        <p-calendar [showIcon]="true" inputId="icon" formControlName="indentDate" dateFormat="dd-mm-yy"
+                            disable></p-calendar>
                     </div>
                 </div>
                 <p-divider align="left">
@@ -39,13 +41,16 @@
                     </div>
                 </p-divider>
                 <!-- <div class="grid grid-nogutter static bg-primary-100 border-round border-primary border-solid text-gray-800 p-3" style="min-width: 300px; min-height: 60px;"> -->
-                    <div class="grid grid-nogutter surface-ground static border-2 border-round border-primary border-solid text-gray-800 p-3" style="min-width: 300px; min-height: 60px;">
+                <div class="grid grid-nogutter surface-ground static border-2 border-round border-primary border-solid text-gray-800 p-3"
+                    style="min-width: 300px; min-height: 60px;">
                     <div class="col-4  flex">
                         <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
                             Cheque Types:
                         </div>
                         <div class="text-900 text-lg text-primary-500 font-semibold text-center">
-                            {{chequeIndentDetails.chequeIndentDeatils && chequeIndentDetails.chequeIndentDeatils[0] ? (chequeIndentDetails.chequeIndentDeatils[0].chequeType===1) ? 'Treasury Cheque' : 'Others' : 'N/A'}}
+                            {{chequeIndentDetails.chequeIndentDeatils && chequeIndentDetails.chequeIndentDeatils[0] ?
+                            (chequeIndentDetails.chequeIndentDeatils[0].chequeType===1) ? 'Treasury Cheque' : 'Others' :
+                            'N/A'}}
                         </div>
                     </div>
                     <div class="col-5 flex">
@@ -53,7 +58,7 @@
                             MICR Code:
                         </div>
                         <div class="text-900 text-lg text-primary-500 font-semibold text-center">
-                          {{chequeIndentDetails.chequeIndentDeatils[0].micrCode}}
+                            {{chequeIndentDetails.chequeIndentDeatils[0].micrCode}}
                         </div>
                     </div>
                     <div class="col-3 flex">
@@ -69,12 +74,14 @@
         </div>
         <div class="col-6">
             <div formArrayName="seriesGroupArray">
-                <div class="card relative" *ngFor="let series1 of seriesGroupArray.controls ; let i = index" [formGroupName]="i">
-                    <div >
+                <div class="card relative" *ngFor="let series of seriesGroupArray.controls ; let i = index"
+                    [formGroupName]="i">
+                    <div>
                         <!-- -------------------------- Series Card [Start] -------------------------- -->
-                        <div class="flex flex-wrap gap-3 p-fluid" >
+                        <div class="flex flex-wrap gap-3 p-fluid">
                             <div class="flex-auto gap-3">
-                                <label for="series" class="block mb-1 text-color text-lg">Series - MICR - Availability</label>
+                                <label for="series" class="block mb-1 text-color text-lg">Series - MICR - Availability
+                                    <span class="text-red-500 text-lg font-bold">*</span></label>
                                 <p-dropdown [options]="allSeries" placeholder="Select series" optionLabel="name"
                                     [showClear]="true" optionValue="code" formControlName="series"
                                     (onChange)="getSeriesDeatils(i)"></p-dropdown>
@@ -84,6 +91,7 @@
                                 <input type="number" pinputtext="" placeholder="Availability"
                                     class="p-inputtext p-component p-element w-full" formControlName="availability"
                                     optionValue="code">
+
                             </div>
                             <!-- <div class="flex-auto">
                                 <label for="end" class="block mb-1 text-color text-lg">End</label>
@@ -91,9 +99,17 @@
                                     class="p-inputtext p-component p-element w-full" formControlName="end">
                             </div> -->
                             <div class="flex-auto">
-                                <label for="quantity" class="block mb-1 text-color text-lg">Quantity</label>
+                                <label for="quantity" class="block mb-1 text-color text-lg">Quantity <span
+                                        class="text-red-500 text-lg font-bold">*</span></label>
                                 <input type="number" pinputtext="" placeholder="Quantity"
-                                    class="p-inputtext p-component p-element w-full" formControlName="quantity">
+                                    class="p-inputtext p-component p-element w-full " formControlName="quantity"
+                                    aria-describedby="quantity-error">
+                                    <small id="quantity-error"
+                                    *ngIf="invoiceForm.get('quantity')?.hasError('compareQuantities') && invoiceForm.get('quantity')?.touched"
+                                    class="p-error">Quantity must be less than or equal to Availability</small>
+                                  
+                                  
+
                             </div>
                         </div>
                         <!-- ------------------------- Series Card [END] ------------------------- -->

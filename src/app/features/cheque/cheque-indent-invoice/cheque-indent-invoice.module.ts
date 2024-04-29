@@ -22,6 +22,7 @@ import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {DividerModule} from 'primeng/divider';
 import { NgxPermissionsModule } from 'ngx-permissions';
+import { MessageModule } from 'primeng/message';
 
 @NgModule({
   declarations: [ChequeIndentInvoiceComponent,ChequeIndentComponent,ChequeInvoiceComponent,NewInvoiceComponent],
@@ -44,6 +45,7 @@ import { NgxPermissionsModule } from 'ngx-permissions';
     ConfirmDialogModule,
     DynamicTableModule,
     DividerModule ,
+    MessageModule,
     NgxPermissionsModule.forChild() 
   ]
 })
