@@ -6,3 +6,8 @@ export enum indentStatusEnum{
     ApproveByDTA = 15,	
     RejectByDTA = 16,
 }
+export enum invoiceStatus
+{
+    NewInvoice = 17,
+    FrowardToTreasuryOfficer = 18
+}
