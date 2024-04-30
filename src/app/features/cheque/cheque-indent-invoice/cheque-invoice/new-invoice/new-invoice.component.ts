@@ -17,12 +17,18 @@ import { promises } from 'dns';
 })
 
 export class NewInvoiceComponent implements OnInit {
+showOBject(arg0: any) {
+console.log(arg0);
+
+}
   allSeries!: Serieslist[];
+  allSeriesCopy: Serieslist[] = [];
   chequeIndentDetails!: chequeIndent;
   id?: number;
   indentInvoiceDetails?: IndentInvoiceDetails;
   invoiceForm: FormGroup = this.createInvoiceForm();
-  selectedSeries!: Serieslist;
+  selectedOptions: any;
+
 
   constructor(private fb: FormBuilder, private chequeIndentService: ChequeIndentService, private toastService: ToastService, private route: ActivatedRoute, private date: DatePipe) { }
 
@@ -57,8 +63,8 @@ export class NewInvoiceComponent implements OnInit {
 
   newSeriesFormGroup(): FormGroup {
     return this.fb.group({
-      series:['', Validators.required],
-      availability:['', Validators.required,],
+      series: ['', Validators.required],
+      availability: ['', Validators.required,],
       quantity: ['', [Validators.required, this.validateEnd]],
 
     });
@@ -76,12 +82,13 @@ export class NewInvoiceComponent implements OnInit {
     const quantity = control.value;
     return availability !== null && quantity !== null && availability < quantity ? { compareQuantities: true } : null;
   }
-  
+
   /* --------------------------- Form array [END] --------------------------- */
   allSerieslist() {
     this.chequeIndentService.getSeriesList().subscribe((res) => {
       if (res.apiResponseStatus == 1) {
         this.allSeries = res.result;
+        this.allSeriesCopy = res.result;
       } else {
         this.toastService.showError(res.message);
       }
@@ -100,23 +107,20 @@ export class NewInvoiceComponent implements OnInit {
         }
       });
   }
-  getSeriesDeatils(seriesIndex: number) {
-    const selectedSeriesControl = this.seriesGroupArray.at(seriesIndex);
-    const selectedSeries = selectedSeriesControl.get('series')?.value;
+  getSeriesDeatils() {
+    const selectedSeries = this.invoiceForm.get('series')!.value;
+    console.log(selectedSeries);
+  
     this.chequeIndentService.getSeriesDetails(selectedSeries).subscribe((res) => {
       if (res.apiResponseStatus == 1) {
-        selectedSeriesControl.patchValue({
-          availability: res.result.availableQuantity
-        })
+        this.invoiceForm.get('availability')!.patchValue(res.result.availableQuantity);
       } else {
         this.toastService.showError(res.message);
       }
     });
-    this.allSeries = this.allSeries.filter(series => series.code !== selectedSeries.code);
-    console.log('-->', this.allSeries);
-    
+    // this.allSeriesCopy = this.allSeries.filter(series => series.code !== selectedSeries);
+    // console.log('Remaining Series:', this.allSeriesCopy);
   }
-
   confirmInvoiceApproval() {
     if (this.invoiceForm) {
       const chequeIndentId = this.invoiceForm.get('indentId')!.value;

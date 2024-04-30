@@ -73,55 +73,64 @@
             </div>
         </div>
         <div class="col-6">
-            <div formArrayName="seriesGroupArray">
-                <div class="card relative" *ngFor="let series of seriesGroupArray.controls ; let i = index"
-                    [formGroupName]="i">
-                    <div>
-                        <!-- -------------------------- Series Card [Start] -------------------------- -->
-                        <div class="flex flex-wrap gap-3 p-fluid">
-                            <div class="flex-auto gap-3">
-                                <label for="series" class="block mb-1 text-color text-lg">Series - MICR - Availability
-                                    <span class="text-red-500 text-lg font-bold">*</span></label>
-                                <p-dropdown [options]="allSeries" placeholder="Select series" optionLabel="name"
-                                    [showClear]="true" optionValue="code" formControlName="series"
-                                    (onChange)="getSeriesDeatils(i)"></p-dropdown>
-                            </div>
-                            <div class="flex-auto">
-                                <label for="Start" class="block mb-1 text-color text-lg">Availability</label>
-                                <input type="number" pinputtext="" placeholder="Availability"
-                                    class="p-inputtext p-component p-element w-full" formControlName="availability"
-                                    optionValue="code">
+            <!-- <div formArrayName="seriesGroupArray"> -->
+            <!-- <div class="card relative" *ngFor="let series of seriesGroupArray.controls ; let i = index"
+                    [formGroupName]="i"> -->
+            <div class="card ">
+                <!-- -------------------------- Series Card [Start] -------------------------- -->
+                <div class="flex flex-wrap gap-3 p-fluid">
+                    <div class="flex-auto gap-3">
+                        <label for="series" class="block mb-1 text-color text-lg">Series - MICR - Availability
+                            <span class="text-red-500 text-lg font-bold">*</span></label>
+                        <p-dropdown [options]="allSeriesCopy" placeholder="Select series" optionLabel="name"
+                            [showClear]="true" optionValue="code" formControlName="series"
+                            (onChange)="getSeriesDeatils()">
+                            <!-- <ng-template pTemplate="selectedItem">
+                                        <div class="country-item country-item-value" *ngIf="seriesGroupArray.value[i].series">
+                                            <div>aaa</div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-series pTemplate="item" *ngIf="seriesGroupArray.value[i].series != 14">
+                                        <div class="country-item" >
+                                            <div>{{series.name}}</div>
+                                        </div>
+                                    </ng-template> -->
+                        </p-dropdown>
+                    </div>
+                    <div class="flex-auto">
+                        <label for="Start" class="block mb-1 text-color text-lg">Availability</label>
+                        <input type="number" pinputtext="" placeholder="Availability"
+                            class="p-inputtext p-component p-element w-full" formControlName="availability"
+                            optionValue="code">
 
-                            </div>
-                            <!-- <div class="flex-auto">
+                    </div>
+                    <!-- <div class="flex-auto">
                                 <label for="end" class="block mb-1 text-color text-lg">End</label>
                                 <input type="number" pinputtext="" placeholder="End"
                                     class="p-inputtext p-component p-element w-full" formControlName="end">
                             </div> -->
-                            <div class="flex-auto">
-                                <label for="quantity" class="block mb-1 text-color text-lg">Quantity <span
-                                        class="text-red-500 text-lg font-bold">*</span></label>
-                                <input type="number" pinputtext="" placeholder="Quantity"
-                                    class="p-inputtext p-component p-element w-full " formControlName="quantity"
-                                    aria-describedby="quantity-error">
-                                    <small id="quantity-error"
-                                    *ngIf="invoiceForm.get('quantity')?.hasError('compareQuantities') && invoiceForm.get('quantity')?.touched"
-                                    class="p-error">Quantity must be less than or equal to Availability</small>
-                                  
-                                  
+                    <div class="flex-auto">
+                        <label for="quantity" class="block mb-1 text-color text-lg">Quantity <span
+                                class="text-red-500 text-lg font-bold">*</span></label>
+                        <input type="number" pinputtext="" placeholder="Quantity"
+                            class="p-inputtext p-component p-element w-full " formControlName="quantity"
+                            aria-describedby="quantity-error">
+                        <small id="quantity-error"
+                            *ngIf="invoiceForm.get('quantity')?.hasError('compareQuantities') && invoiceForm.get('quantity')?.touched"
+                            class="p-error">Quantity must be less than or equal to Availability</small>
 
-                            </div>
-                        </div>
-                        <!-- ------------------------- Series Card [END] ------------------------- -->
-                        <!-- --------------------------- X Remove Button --------------------------- -->
-                        <button pButton pRipple type="button" icon="pi pi-times"
-                            class="p-button-rounded p-button-danger minus_button" (click)="removeSeries(i)"
-                            *ngIf="seriesGroupArray.length>1"></button>
-                        <!-- ---------------------------- + Add Button ----------------------------- -->
-                        <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded plus_button"
-                            (click)="addNewSeries()" *ngIf="seriesGroupArray.length===i+1"></button>
+
+
                     </div>
                 </div>
+                <!-- ------------------------- Series Card [END] ------------------------- -->
+                <!-- --------------------------- X Remove Button --------------------------- -->
+                <!-- <button pButton pRipple type="button" icon="pi pi-times"
+                            class="p-button-rounded p-button-danger minus_button" (click)="removeSeries(i)"
+                            *ngIf="seriesGroupArray.length>1"></button> -->
+                <!-- ---------------------------- + Add Button ----------------------------- -->
+                <!-- <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded plus_button"
+                            (click)="addNewSeries()" *ngIf="seriesGroupArray.length===i+1"></button> -->
             </div>
         </div>
         <div class="flex justify-content-end pt-3">
