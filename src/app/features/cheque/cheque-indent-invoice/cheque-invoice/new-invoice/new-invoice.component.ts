@@ -17,10 +17,10 @@ import { promises } from 'dns';
 })
 
 export class NewInvoiceComponent implements OnInit {
-showOBject(arg0: any) {
-console.log(arg0);
+  showOBject(arg0: any) {
+    console.log(arg0);
 
-}
+  }
   allSeries!: Serieslist[];
   allSeriesCopy: Serieslist[] = [];
   chequeIndentDetails!: chequeIndent;
@@ -48,34 +48,34 @@ console.log(arg0);
       invoiceNumber: ['', Validators.required],
       indentId: [''],
       indentDate: [''],
-      // series: [''],
-      // availability: [''],
-      // quantity: [''],
-      seriesGroupArray: this.fb.array([this.newSeriesFormGroup()]),
+      series: ['', Validators.required],
+      availability: ['', Validators.required,],
+      quantity: ['', [Validators.required, this.validateEnd]],
+      // seriesGroupArray: this.fb.array([this.newSeriesFormGroup()]),
     });
 
   }
   /* ---------------------------- FormGroup [END] --------------------------- */
   /* --------------------------- Form array [START] --------------------------- */
-  get seriesGroupArray(): FormArray {
-    return this.invoiceForm.get('seriesGroupArray') as FormArray
-  }
+  // get seriesGroupArray(): FormArray {
+  //   return this.invoiceForm.get('seriesGroupArray') as FormArray
+  // }
 
-  newSeriesFormGroup(): FormGroup {
-    return this.fb.group({
-      series: ['', Validators.required],
-      availability: ['', Validators.required,],
-      quantity: ['', [Validators.required, this.validateEnd]],
+  // newSeriesFormGroup(): FormGroup {
+  //   return this.fb.group({
+  //     series: ['', Validators.required],
+  //     availability: ['', Validators.required,],
+  //     quantity: ['', [Validators.required, this.validateEnd]],
 
-    });
-  }
-  addNewSeries() {
-    this.seriesGroupArray.push(this.newSeriesFormGroup());
-  }
+  //   });
+  // }
+  // addNewSeries() {
+  //   this.seriesGroupArray.push(this.newSeriesFormGroup());
+  // }
 
-  removeSeries(index: number) {
-    this.seriesGroupArray.removeAt(index);
-  }
+  // removeSeries(index: number) {
+  //   this.seriesGroupArray.removeAt(index);
+  // }
 
   validateEnd(control: FormControl) {
     const availability = control.parent?.get('availability')?.value;
@@ -110,7 +110,7 @@ console.log(arg0);
   getSeriesDeatils() {
     const selectedSeries = this.invoiceForm.get('series')!.value;
     console.log(selectedSeries);
-  
+
     this.chequeIndentService.getSeriesDetails(selectedSeries).subscribe((res) => {
       if (res.apiResponseStatus == 1) {
         this.invoiceForm.get('availability')!.patchValue(res.result.availableQuantity);
@@ -121,28 +121,28 @@ console.log(arg0);
     // this.allSeriesCopy = this.allSeries.filter(series => series.code !== selectedSeries);
     // console.log('Remaining Series:', this.allSeriesCopy);
   }
-  confirmInvoiceApproval() {
-    if (this.invoiceForm) {
-      const chequeIndentId = this.invoiceForm.get('indentId')!.value;
-      const invoiceDate = this.invoiceForm.get('invoiceDate')!.value;
-      const invoiceNumber = this.invoiceForm.get('invoiceNumber')!.value;
-      const chequeInvoiceDeatils: InvoiceDetails[] = this.seriesGroupArray.controls.map(
-        (fa) => {
-          const formGroup = fa as FormGroup;
-          return {
-            chequeIndentDetailId: this.chequeIndentDetails.chequeIndentDeatils[0].indentDeatilsId,
-            chequeEntryId: formGroup.get("series")!.value,
-            availableQuantity: formGroup.get("availability")!.value,
-            quantity: formGroup.get("quantity")!.value,
-          }
-        });
-      this.indentInvoiceDetails = { chequeIndentId, invoiceDate, invoiceNumber, chequeInvoiceDeatils }
-      console.log(this.indentInvoiceDetails);
+  // confirmInvoiceApproval() {
+  //   if (this.invoiceForm) {
+  //     const chequeIndentId = this.invoiceForm.get('indentId')!.value;
+  //     const invoiceDate = this.invoiceForm.get('invoiceDate')!.value;
+  //     const invoiceNumber = this.invoiceForm.get('invoiceNumber')!.value;
+  //     const chequeInvoiceDeatils: InvoiceDetails[] = this.invoiceForm.controls.map(
+  //       (fa) => {
+  //         const formGroup = fa as FormGroup;
+  //         return {
+  //           chequeIndentDetailId: this.chequeIndentDetails.chequeIndentDeatils[0].indentDeatilsId,
+  //           chequeEntryId: formGroup.get("series")!.value,
+  //           availableQuantity: formGroup.get("availability")!.value,
+  //           quantity: formGroup.get("quantity")!.value,
+  //         }
+  //       });
+  //     this.indentInvoiceDetails = { chequeIndentId, invoiceDate, invoiceNumber, chequeInvoiceDeatils }
+  //     console.log(this.indentInvoiceDetails);
 
-      this.chequeIndentService.saveChequeIndentInvoice(this.indentInvoiceDetails).subscribe(res => {
-        this.toastService.showAlert(res.message, res.apiResponseStatus);
-      })
+  //     this.chequeIndentService.saveChequeIndentInvoice(this.indentInvoiceDetails).subscribe(res => {
+  //       this.toastService.showAlert(res.message, res.apiResponseStatus);
+  //     })
 
-    }
-  }
+  //   }
+  // }
 }

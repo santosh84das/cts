@@ -11,6 +11,7 @@
         <div class="grid fadein animation-duration-500">
             <app-option-card *ngxPermissionsOnly="['can-cheque-entry']" logo='cheque-entry' optionName="Cheque Entry" class="col-12 lg:col-6 xl:col-6" [routerLink]="['cheque-entry']"></app-option-card>
             <app-option-card  *ngxPermissionsOnly="['can-create-cheque-indent','can-approve-reject-cheque-indent','can-create-indent-invoice']" logo='cheque-indent-invoice'   optionName="Cheque Indent & Invoice" class="col-12 lg:col-6 xl:col-6" [routerLink]="['cheque-indent-invoice']"></app-option-card>
+            <app-option-card   logo='cheque-distribuion'   optionName="Cheque Distribution" class="col-12 lg:col-6 xl:col-6" [routerLink]="['cheque-distribution']"></app-option-card>
         </div>
     </div>
 </div>

@@ -117,10 +117,7 @@
                             aria-describedby="quantity-error">
                         <small id="quantity-error"
                             *ngIf="invoiceForm.get('quantity')?.hasError('compareQuantities') && invoiceForm.get('quantity')?.touched"
-                            class="p-error">Quantity must be less than or equal to Availability</small>
-
-
-
+                            class="p-error">Less than or equal to Availability</small>
                     </div>
                 </div>
                 <!-- ------------------------- Series Card [END] ------------------------- -->
@@ -135,11 +132,11 @@
         </div>
         <!-- </div> -->
     </div>
-    <div class="flex justify-content-end pt-3">
+    <!-- <div class="flex justify-content-end pt-3">
         <button pbutton="" pripple="" label="Approved" class="p-element p-ripple p-button-rounded p-button p-component"
             (click)="confirmInvoiceApproval()">
             <span class="p-button-label">Approved</span><span class="p-ink"></span>
         </button>
-    </div>
+    </div> -->
 </form>
 <!-- </div> -->
