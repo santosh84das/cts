@@ -20,7 +20,6 @@
                 tooltipPosition="top" (click)="clearFilters()"></p-button>
         </div>
     </p-toolbar>
-
 </div>
 <ng-container *ngIf="errors.length === 0; else error">
     <p-table id="myTable" [columns]="headers" [value]="data" [resizableColumns]="true" (onSort)="onSortChange($event)"

@@ -24,9 +24,10 @@ export class ChequeEntryComponent implements OnInit {
     tableQueryParameters!: DynamicTableQueryParameters | any;
     newChequeEntryModel!: NewChequeEntry;
     tableActionButton: ActionButtonConfig[] = [];
-    treasuryList: any[] = []; 
+    treasuryList: any[] = [];
     selectedMicrCodeValue!: number
     selectedmicrCode!: string;
+    selectedTreasury!: string;
     constructor(
         private fb: FormBuilder,
         private chequeEntryService: ChequeEntryService,
@@ -51,7 +52,6 @@ export class ChequeEntryComponent implements OnInit {
         this.chequeEntryFrm = this.fb.group({
             series: ['', Validators.required],
             start: ['', Validators.required],
-            treasury: ['', Validators.required],
             end: ['', [Validators.required, this.validateEnd]],
         });
         this.allTreasuryList();
@@ -77,11 +77,11 @@ export class ChequeEntryComponent implements OnInit {
                 series: this.chequeEntryFrm.get('series')?.value,
                 start: this.chequeEntryFrm.get('start')?.value,
                 end: this.chequeEntryFrm.get('end')?.value,
-                treasurieCode: this.chequeEntryFrm.get('treasury')?.value.code,
-                micrCode:  this.selectedmicrCode 
+                treasurieCode: this.selectedTreasury,
+                micrCode: this.selectedmicrCode
             };
-           console.log(this.newChequeEntryModel);
-           
+            console.log(this.newChequeEntryModel);
+
             this.chequeEntryService
                 .insertNewChequeEntry(this.newChequeEntryModel)
                 .subscribe((response) => {
@@ -115,19 +115,28 @@ export class ChequeEntryComponent implements OnInit {
             : null;
     }
 
-    allTreasuryList(){
-        this.masterService.getTreasuries().subscribe((response)=>{
-            if(response.apiResponseStatus==1){
+    allTreasuryList() {
+        this.masterService.getTreasuries().subscribe((response) => {
+            if (response.apiResponseStatus == 1) {
                 this.treasuryList = response.result
                 console.log(this.treasuryList);
-                
-            }else{
+
+            } else {
                 this.toastService.showError(response.message);
             }
         })
     }
 
     handelInputValueChange($event: string) {
-       this.selectedmicrCode = $event;
+        this.selectedmicrCode = $event;
+        console.log('Selected :', this.selectedmicrCode);
+
+    }
+
+    onTreasurySelected($event: string) {
+        console.log($event);
+
+        this.selectedTreasury = $event;
+        console.log('Selected treasury:', this.selectedTreasury);
     }
 }

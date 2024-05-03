@@ -88,6 +88,7 @@ export class NewInvoiceComponent implements OnInit {
     this.chequeIndentService.getSeriesList().subscribe((res) => {
       if (res.apiResponseStatus == 1) {
         this.allSeries = res.result;
+        console.log('--->',this.allSeries);
         this.allSeriesCopy = res.result;
       } else {
         this.toastService.showError(res.message);
@@ -100,6 +101,8 @@ export class NewInvoiceComponent implements OnInit {
       .subscribe(response => {
         if (response.apiResponseStatus == 1) {
           this.chequeIndentDetails = response.result;
+          console.log('check',this.chequeIndentDetails);
+          
           this.invoiceForm.patchValue({
             indentId: this.chequeIndentDetails.indentId,
             indentDate: this.chequeIndentDetails.indentDate,
@@ -113,6 +116,7 @@ export class NewInvoiceComponent implements OnInit {
 
     this.chequeIndentService.getSeriesDetails(selectedSeries).subscribe((res) => {
       if (res.apiResponseStatus == 1) {
+        console.log('--->>>',res.result);
         this.invoiceForm.get('availability')!.patchValue(res.result.availableQuantity);
       } else {
         this.toastService.showError(res.message);

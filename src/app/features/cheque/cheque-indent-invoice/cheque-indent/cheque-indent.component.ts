@@ -32,6 +32,8 @@ export class ChequeIndentComponent implements OnInit {
   bankDetails!: bankDetails | undefined;
   selectedIndex!: number;
   chequeIndentFormDetails!: chequeIndent;
+  selectedTreasury: any;
+  selectedmicrCode: any;
   constructor(private _fb: FormBuilder, private bankServices: BankService, private toastService: ToastService, private chequeindentService: ChequeIndentService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
@@ -49,7 +51,7 @@ export class ChequeIndentComponent implements OnInit {
     });
     // this.getBanklist()
   }
-// ___________Fromarray____________
+  // ___________Fromarray____________
   get chequelist(): FormArray {
     return this.indentForm.get('chequelist') as FormArray;
   }
@@ -57,12 +59,11 @@ export class ChequeIndentComponent implements OnInit {
   createCheque(): FormGroup {
     return this._fb.group({
       cheques_type: [''],
-      micr_code: [''],
       quantity: ['']
     });
   }
 
-// __________add Button_________________
+  // __________add Button_________________
   // addCheque() {
   //   this.chequelist.push(this.createCheque());
   //   console.log(this.chequelist.value);
@@ -71,65 +72,65 @@ export class ChequeIndentComponent implements OnInit {
   //   this.chequelist.removeAt(index);
   // }
 
-  showBankDetails(index:number) {
-    if(index!=this.selectedIndex){
-      this.resetMircFinderModal();
-    }
-    this.displayModal = true;
-    this.selectedIndex = index;
-    this.getBanklist();
-  }
+  // showBankDetails(index: number) {
+  //   if (index != this.selectedIndex) {
+  //     this.resetMircFinderModal();
+  //   }
+  //   this.displayModal = true;
+  //   this.selectedIndex = index;
+  //   this.getBanklist();
+  // }
 
-  getBanklist() {
-    this.bankServices.getBankList().subscribe((response) => {
-      if (response.apiResponseStatus == 1) {
-        this.bankList = response.result
-      } else {
-        this.toastService.showAlert(
-          response.message,
-          response.apiResponseStatus
-        )
-      }
-    })
-  }
-  getBranchList() {
-    this.bankServices.getBankBranches(this.selectedBank.code).subscribe((response) => {
-      if (response.apiResponseStatus == 1) {
-        this.branchlist = response.result
-      } else {
-        this.toastService.showAlert(
-          response.message,
-          response.apiResponseStatus
-        )
-      }
-    })
-  }
-  setMicrCodeInputField(micrCode: string | undefined) {
-    const group = this.chequelist.at(this.selectedIndex) as FormGroup;
-    group.patchValue({ micr_code: micrCode });
-    this.displayModal = false;
-    this.resetMircFinderModal();
-  }
-  resetMircFinderModal(){
-    this.selectedBank = 0;
-    this.selectedBranch = 0;
-    this.bankDetails = undefined;
-  }
-  getBranchDeatils() {
-    if (this.selectedBank) {
-      this.bankServices.getBranchDetail(this.selectedBranch.code).subscribe((response) => {
-        if (response.apiResponseStatus == 1) {
-          this.bankDetails = response.result
-        } else {
-          this.toastService.showAlert(
-            response.message,
-            response.apiResponseStatus
-          )
-        }
-      })
-    }
+  // getBanklist() {
+  //   this.bankServices.getBankList().subscribe((response) => {
+  //     if (response.apiResponseStatus == 1) {
+  //       this.bankList = response.result
+  //     } else {
+  //       this.toastService.showAlert(
+  //         response.message,
+  //         response.apiResponseStatus
+  //       )
+  //     }
+  //   })
+  // }
+  // getBranchList() {
+  //   this.bankServices.getBankBranches(this.selectedBank.code).subscribe((response) => {
+  //     if (response.apiResponseStatus == 1) {
+  //       this.branchlist = response.result
+  //     } else {
+  //       this.toastService.showAlert(
+  //         response.message,
+  //         response.apiResponseStatus
+  //       )
+  //     }
+  //   })
+  // }
+  // setMicrCodeInputField(micrCode: string | undefined) {
+  //   const group = this.chequelist.at(this.selectedIndex) as FormGroup;
+  //   group.patchValue({ micr_code: micrCode });
+  //   this.displayModal = false;
+  //   this.resetMircFinderModal();
+  // }
+  // resetMircFinderModal() {
+  //   this.selectedBank = 0;
+  //   this.selectedBranch = 0;
+  //   this.bankDetails = undefined;
+  // }
+  // getBranchDeatils() {
+  //   if (this.selectedBank) {
+  //     this.bankServices.getBranchDetail(this.selectedBranch.code).subscribe((response) => {
+  //       if (response.apiResponseStatus == 1) {
+  //         this.bankDetails = response.result
+  //       } else {
+  //         this.toastService.showAlert(
+  //           response.message,
+  //           response.apiResponseStatus
+  //         )
+  //       }
+  //     })
+  //   }
 
-  }
+  // }
 
   indentFormSubmit() {
     let formattedIndentDate: string | null = '';
@@ -149,23 +150,25 @@ export class ChequeIndentComponent implements OnInit {
         memoNumber: this.indentForm.get('memo_number')?.value,
         memoDate: memoDate as string,
         remarks: this.indentForm.get('remarks')?.value,
+        treasuryCode: this.selectedTreasury,
         chequeIndentDeatils: this.chequelist.controls.map<ChequeIndentDeatil>(fa => {
           const formGroup = fa as FormGroup;
           return {
             chequeType: formGroup.get("cheques_type")?.value,
-            micrCode: formGroup.get("micr_code")?.value,
+            micrCode: this.selectedmicrCode,
             quantity: formGroup.get("quantity")?.value,
           }
         })
       }
-
+      console.log('----->>>>',this.chequeIndentFormDetails);
+      
       this.chequeindentService.chqueIndentEntry(this.chequeIndentFormDetails).subscribe((response) => {
         if (response.apiResponseStatus == 1) {
           this.indentForm.reset();
           this.chequelist.reset();
           this.toastService.showAlert(
             response.message,
-            response.apiResponseStatus
+            response.apiResponseStatus,
           );
         } else {
           this.toastService.showError(response.message);
@@ -173,6 +176,15 @@ export class ChequeIndentComponent implements OnInit {
       })
     }
 
+
+  }
+
+  onTreasurySelected($event: string) {
+    this.selectedTreasury = $event;
+  }
+  handelInputValueChange($event: string) {
+    this.selectedmicrCode = $event;
+    console.log('Selected :', this.selectedmicrCode);
 
   }
 

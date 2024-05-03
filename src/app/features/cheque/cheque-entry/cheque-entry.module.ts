@@ -15,6 +15,7 @@ import { FormsModule , ReactiveFormsModule} from '@angular/forms';
 import { MicrModule } from 'src/app/shared/modules/micr/micr.module';
 import { DropdownModule } from 'primeng/dropdown';
 import { NgxPermissionsModule } from 'ngx-permissions';
+import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown/treasury-dropdown.module';
 
 
 
@@ -36,6 +37,7 @@ import { NgxPermissionsModule } from 'ngx-permissions';
     ReactiveFormsModule,
     MicrModule,
     DropdownModule,
+    TreasuryDropdownModule,
     NgxPermissionsModule.forChild() 
   ]
 })

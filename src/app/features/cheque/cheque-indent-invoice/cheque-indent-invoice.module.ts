@@ -23,6 +23,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import {DividerModule} from 'primeng/divider';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { MessageModule } from 'primeng/message';
+import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown/treasury-dropdown.module';
+import { MicrModule } from 'src/app/shared/modules/micr/micr.module';
 
 @NgModule({
   declarations: [ChequeIndentInvoiceComponent,ChequeIndentComponent,ChequeInvoiceComponent,NewInvoiceComponent],
@@ -46,6 +48,8 @@ import { MessageModule } from 'primeng/message';
     DynamicTableModule,
     DividerModule ,
     MessageModule,
+    TreasuryDropdownModule,
+    MicrModule,
     NgxPermissionsModule.forChild() 
   ]
 })

@@ -1,4 +1,4 @@
-<label for="micr" class="block mb-1 text-color text-lg">MICR</label>
+<!-- <label for="micr" class="block mb-1 text-color text-lg">MICR</label> -->
 <div class="p-inputgroup">
     <input type="number" pInputText placeholder="MICR Code"
         class="p-inputtext p-component p-element w-full" [(ngModel)]="selectedMicrCode" (change)="emitInputValueChange()">
@@ -8,7 +8,7 @@
 
 
 <p-dialog header="Find MICR Code" [(visible)]="displayModal" [modal]="true" [style]="{width: '40vw'}"
-    [baseZIndex]="10000">
+    [baseZIndex]="10000" [draggable]="false">
     <div class="flex flex-wrap gap-3 p-fluid">
         <div class="flex-auto">
             <p-dropdown appendTo="body" [filter]="true" filterBy="name" [options]="bankList " placeholder="Select Bank"
