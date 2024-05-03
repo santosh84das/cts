@@ -150,7 +150,7 @@ export class ChequeIndentComponent implements OnInit {
         memoNumber: this.indentForm.get('memo_number')?.value,
         memoDate: memoDate as string,
         remarks: this.indentForm.get('remarks')?.value,
-        treasuryCode: this.selectedTreasury,
+        treasurieCode: this.selectedTreasury,
         chequeIndentDeatils: this.chequelist.controls.map<ChequeIndentDeatil>(fa => {
           const formGroup = fa as FormGroup;
           return {

@@ -82,9 +82,9 @@
                     <div class="flex-auto gap-3">
                         <label for="series" class="block mb-1 text-color text-lg">Series - MICR - Availability
                             <span class="text-red-500 text-lg font-bold">*</span></label>
-                        <p-dropdown [options]="allSeriesCopy" placeholder="Select series" optionLabel="name"
-                            [showClear]="true" optionValue="code" formControlName="series"
-                            (onChange)="getSeriesDeatils()">
+                        <p-dropdown [options]="micrList" placeholder="Select series" optionLabel="name"
+                            [showClear]="true" optionValue="code" formControlName="micr_code"
+                            (onChange)="getMicrDetails()">
                             <!-- <ng-template pTemplate="selectedItem">
                                         <div class="country-item country-item-value" *ngIf="seriesGroupArray.value[i].series">
                                             <div>aaa</div>
@@ -129,7 +129,53 @@
                 <!-- <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded plus_button"
                             (click)="addNewSeries()" *ngIf="seriesGroupArray.length===i+1"></button> -->
             </div>
+
+            <div class="card mt-5">
+                <div class="grid grid-nogutter surface-ground static border-2 border-round border-primary border-solid text-gray-800 p-3"
+            style="min-width: 300px; min-height: 60px;">
+            <div class="col-4  flex">
+                <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                    treasurieCode
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+                </div>
+            </div>
+            <div class="col-5 flex">
+                <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                    MICR Code:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+
+                </div>
+            </div>
+            <div class="col-3 flex">
+                <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                    series
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+
+                </div>
+            </div>
+            <div class="col-4 flex">
+                <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                    Quantity:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+
+                </div>
+            </div>
+            <div class="col-5 flex">
+                <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                    Available Quantity:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+
+                </div>
+            </div>
         </div>
+            </div>
+        </div>
+        
         <!-- </div> -->
     </div>
     <!-- <div class="flex justify-content-end pt-3">

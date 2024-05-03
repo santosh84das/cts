@@ -8,6 +8,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { DatePipe } from '@angular/common'
 import { log } from 'console';
 import { promises } from 'dns';
+import { ChequeInvoiceService } from 'src/app/core/services/cheque/cheque-invoice.service';
 
 
 @Component({
@@ -28,9 +29,10 @@ export class NewInvoiceComponent implements OnInit {
   indentInvoiceDetails?: IndentInvoiceDetails;
   invoiceForm: FormGroup = this.createInvoiceForm();
   selectedOptions: any;
+  micrList!: [];
+  micrDetailsList:[]=[];
 
-
-  constructor(private fb: FormBuilder, private chequeIndentService: ChequeIndentService, private toastService: ToastService, private route: ActivatedRoute, private date: DatePipe) { }
+  constructor(private fb: FormBuilder, private chequeIndentService: ChequeIndentService, private toastService: ToastService, private route: ActivatedRoute, private date: DatePipe, private chequeinvoiceservice: ChequeInvoiceService) { }
 
   ngOnInit(): void {
     this.id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
@@ -39,7 +41,7 @@ export class NewInvoiceComponent implements OnInit {
     (this.invoiceForm.get('indentId') as FormControl).disable();
     (this.invoiceForm.get('indentDate') as FormControl).disable();
     // (this.invoiceForm.get('availability') as FormControl).disable();
-
+    this.getMicrList();
   }
   /* ------------------------------- FormGroup [START] ------------------------------ */
   private createInvoiceForm(): FormGroup {
@@ -48,7 +50,7 @@ export class NewInvoiceComponent implements OnInit {
       invoiceNumber: ['', Validators.required],
       indentId: [''],
       indentDate: [''],
-      series: ['', Validators.required],
+      micr_code: ['', Validators.required],
       availability: ['', Validators.required,],
       quantity: ['', [Validators.required, this.validateEnd]],
       // seriesGroupArray: this.fb.array([this.newSeriesFormGroup()]),
@@ -88,7 +90,6 @@ export class NewInvoiceComponent implements OnInit {
     this.chequeIndentService.getSeriesList().subscribe((res) => {
       if (res.apiResponseStatus == 1) {
         this.allSeries = res.result;
-        console.log('--->',this.allSeries);
         this.allSeriesCopy = res.result;
       } else {
         this.toastService.showError(res.message);
@@ -101,8 +102,6 @@ export class NewInvoiceComponent implements OnInit {
       .subscribe(response => {
         if (response.apiResponseStatus == 1) {
           this.chequeIndentDetails = response.result;
-          console.log('check',this.chequeIndentDetails);
-          
           this.invoiceForm.patchValue({
             indentId: this.chequeIndentDetails.indentId,
             indentDate: this.chequeIndentDetails.indentDate,
@@ -112,11 +111,8 @@ export class NewInvoiceComponent implements OnInit {
   }
   getSeriesDeatils() {
     const selectedSeries = this.invoiceForm.get('series')!.value;
-    console.log(selectedSeries);
-
     this.chequeIndentService.getSeriesDetails(selectedSeries).subscribe((res) => {
       if (res.apiResponseStatus == 1) {
-        console.log('--->>>',res.result);
         this.invoiceForm.get('availability')!.patchValue(res.result.availableQuantity);
       } else {
         this.toastService.showError(res.message);
@@ -125,6 +121,29 @@ export class NewInvoiceComponent implements OnInit {
     // this.allSeriesCopy = this.allSeries.filter(series => series.code !== selectedSeries);
     // console.log('Remaining Series:', this.allSeriesCopy);
   }
+
+  getMicrList() {
+    this.chequeinvoiceservice.getAvailableChequeMIcr('BAA').subscribe((res) => {
+      if (res.apiResponseStatus == 1) {
+        this.micrList = res.result;
+        console.log('ff', this.micrList);
+      } else {
+        this.toastService.showError(res.message);
+      }
+    });
+  }
+
+  getMicrDetails(){
+    this.chequeinvoiceservice.getMicrSeriesDeatils(this.invoiceForm.get('micr_code')!.value).subscribe((res) => {
+      if(res.apiResponseStatus == 1){
+        this.micrDetailsList=res.result;
+        console.log('--->', this.micrDetailsList);
+      }else{
+        this.toastService.showError(res.message);
+      }
+    })
+  }
+
   // confirmInvoiceApproval() {
   //   if (this.invoiceForm) {
   //     const chequeIndentId = this.invoiceForm.get('indentId')!.value;

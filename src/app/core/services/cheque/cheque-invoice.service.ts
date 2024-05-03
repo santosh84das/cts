@@ -19,6 +19,15 @@ export class ChequeInvoiceService {
         })
       );
   }
+  getAvailableChequeMIcr(treasurycode: string | undefined): Observable<IapiResponce> {
+    return this.http.get<IapiResponce>('v1/Cheque/available-cheque-micr?treasuryCode=' + treasurycode).pipe(catchError((error) => {
+      throw this.toastService.showError(error.message);
+    }));
+  }
 
-  
+  getMicrSeriesDeatils(micrcode: string): Observable<IapiResponce> {
+    return this.http.get<IapiResponce>('v1/Cheque/micr-series-details?MicrCode=' + micrcode).pipe(catchError((error) => {
+      throw this.toastService.showError(error.message);
+    }));
+  }
 }

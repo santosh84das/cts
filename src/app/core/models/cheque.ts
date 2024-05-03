@@ -28,7 +28,7 @@ export interface chequeIndent {
   memoNumber: string
   memoDate: string
   remarks: string
-  treasuryCode?: string
+  treasurieCode?: string
   chequeIndentDeatils: ChequeIndentDeatil[]
 }
 
