@@ -59,3 +59,12 @@ export interface InvoiceDetails {
   quantity: number
 }
 
+
+
+export interface micrDetails {
+  treasurieCode: string;
+  micrCode: string;
+  series: string;
+  quantity: number;
+  availableQuantity: number;
+}

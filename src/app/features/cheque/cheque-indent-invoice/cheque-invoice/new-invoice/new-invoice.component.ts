@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormData } from 'src/app/core/models/indentFormData';
-import { ChequeIndentDeatil, IndentInvoiceDetails, InvoiceDetails, Serieslist, chequeIndent } from 'src/app/core/models/cheque';
+import { ChequeIndentDeatil, IndentInvoiceDetails, InvoiceDetails, Serieslist, chequeIndent, micrDetails } from 'src/app/core/models/cheque';
 import { ChequeIndentService } from 'src/app/core/services/cheque/cheque-indent.service';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
@@ -30,7 +30,7 @@ export class NewInvoiceComponent implements OnInit {
   invoiceForm: FormGroup = this.createInvoiceForm();
   selectedOptions: any;
   micrList!: [];
-  micrDetailsList:[]=[];
+  micrDetailsList: micrDetails[] =[];
 
   constructor(private fb: FormBuilder, private chequeIndentService: ChequeIndentService, private toastService: ToastService, private route: ActivatedRoute, private date: DatePipe, private chequeinvoiceservice: ChequeInvoiceService) { }
 
@@ -41,7 +41,6 @@ export class NewInvoiceComponent implements OnInit {
     (this.invoiceForm.get('indentId') as FormControl).disable();
     (this.invoiceForm.get('indentDate') as FormControl).disable();
     // (this.invoiceForm.get('availability') as FormControl).disable();
-    this.getMicrList();
   }
   /* ------------------------------- FormGroup [START] ------------------------------ */
   private createInvoiceForm(): FormGroup {
@@ -106,6 +105,7 @@ export class NewInvoiceComponent implements OnInit {
             indentId: this.chequeIndentDetails.indentId,
             indentDate: this.chequeIndentDetails.indentDate,
           });
+          this.getMicrList(this.chequeIndentDetails?.treasurieCode as string);
         }
       });
   }
@@ -122,8 +122,8 @@ export class NewInvoiceComponent implements OnInit {
     // console.log('Remaining Series:', this.allSeriesCopy);
   }
 
-  getMicrList() {
-    this.chequeinvoiceservice.getAvailableChequeMIcr('BAA').subscribe((res) => {
+  getMicrList(treasurieCode:string) {
+    this.chequeinvoiceservice.getAvailableChequeMIcr(treasurieCode).subscribe((res) => {
       if (res.apiResponseStatus == 1) {
         this.micrList = res.result;
         console.log('ff', this.micrList);
@@ -133,15 +133,25 @@ export class NewInvoiceComponent implements OnInit {
     });
   }
 
-  getMicrDetails(){
+  getMicrDetails() {
     this.chequeinvoiceservice.getMicrSeriesDeatils(this.invoiceForm.get('micr_code')!.value).subscribe((res) => {
-      if(res.apiResponseStatus == 1){
-        this.micrDetailsList=res.result;
+      if (res.apiResponseStatus == 1) {
+        this.micrDetailsList = res.result;
+        this.calculateTotalAvailable();
         console.log('--->', this.micrDetailsList);
-      }else{
+      } else {
         this.toastService.showError(res.message);
       }
     })
+  }
+
+  calculateTotalAvailable(): void {
+    console.log('try');
+
+    const totalAvailable = this.micrDetailsList.reduce((total, item) => total + item.availableQuantity, 0);
+    console.log(totalAvailable);
+    
+    this.invoiceForm.get('availability')?.patchValue(totalAvailable);
   }
 
   // confirmInvoiceApproval() {

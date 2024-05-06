@@ -76,11 +76,11 @@
             <!-- <div formArrayName="seriesGroupArray"> -->
             <!-- <div class="card relative" *ngFor="let series of seriesGroupArray.controls ; let i = index"
                     [formGroupName]="i"> -->
-            <div class="card ">
+            <div class="card mb-2">
                 <!-- -------------------------- Series Card [Start] -------------------------- -->
                 <div class="flex flex-wrap gap-3 p-fluid">
                     <div class="flex-auto gap-3">
-                        <label for="series" class="block mb-1 text-color text-lg">Series - MICR - Availability
+                        <label for="series" class="block mb-1 text-color text-lg">Select MICR 
                             <span class="text-red-500 text-lg font-bold">*</span></label>
                         <p-dropdown [options]="micrList" placeholder="Select series" optionLabel="name"
                             [showClear]="true" optionValue="code" formControlName="micr_code"
@@ -130,52 +130,56 @@
                             (click)="addNewSeries()" *ngIf="seriesGroupArray.length===i+1"></button> -->
             </div>
 
-            <div class="card mt-5">
-                <div class="grid grid-nogutter surface-ground static border-2 border-round border-primary border-solid text-gray-800 p-3"
-            style="min-width: 300px; min-height: 60px;">
-            <div class="col-4  flex">
-                <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
-                    treasurieCode
+            <div class="card overflow-auto" *ngIf="micrDetailsList != null && micrDetailsList.length > 0">
+                <div style="height: 145px">
+                    <div class="grid grid-nogutter surface-ground static border-2 border-round border-primary border-solid text-gray-800 p-3 mb-3 "
+                        style="min-width: 300px; min-height: 60px;" *ngFor="let micrSeriesList of micrDetailsList">
+                        <div class="col-4  flex">
+                            <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                                treasurieCode
+                            </div>
+                            <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+                                {{micrSeriesList.treasurieCode}}
+                            </div>
+                        </div>
+                        <div class="col-5 flex">
+                            <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                                MICR Code:
+                            </div>
+                            <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+                                {{micrSeriesList.micrCode}}
+                            </div>
+                        </div>
+                        <div class="col-3 flex">
+                            <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                                series
+                            </div>
+                            <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+                                {{micrSeriesList.series}}
+                            </div>
+                        </div>
+                        <div class="col-4 flex">
+                            <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                                Quantity:
+                            </div>
+                            <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+                                {{micrSeriesList.quantity}}
+                            </div>
+                        </div>
+                        <div class="col-5 flex">
+                            <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                                Available Quantity:
+                            </div>
+                            <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+                                {{micrSeriesList.availableQuantity}}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="text-900 text-lg text-primary-500 font-semibold text-center">
-                </div>
-            </div>
-            <div class="col-5 flex">
-                <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
-                    MICR Code:
-                </div>
-                <div class="text-900 text-lg text-primary-500 font-semibold text-center">
 
-                </div>
-            </div>
-            <div class="col-3 flex">
-                <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
-                    series
-                </div>
-                <div class="text-900 text-lg text-primary-500 font-semibold text-center">
-
-                </div>
-            </div>
-            <div class="col-4 flex">
-                <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
-                    Quantity:
-                </div>
-                <div class="text-900 text-lg text-primary-500 font-semibold text-center">
-
-                </div>
-            </div>
-            <div class="col-5 flex">
-                <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
-                    Available Quantity:
-                </div>
-                <div class="text-900 text-lg text-primary-500 font-semibold text-center">
-
-                </div>
             </div>
         </div>
-            </div>
-        </div>
-        
+
         <!-- </div> -->
     </div>
     <!-- <div class="flex justify-content-end pt-3">
