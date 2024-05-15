@@ -63,6 +63,9 @@ export class ChequeIndentInvoiceComponent implements OnInit {
         this.changeListType('invoice');
         this.frowardInvoiceTO(event.rowData.id);
         break;
+      case 'invoice-received':
+        this.router.navigate(['cheque/cheque-indent-invoice/cheque-received', event.rowData.id]);
+        break;
     }
   }
   approveIndent(indentId: number) {
@@ -190,10 +193,10 @@ export class ChequeIndentInvoiceComponent implements OnInit {
       this.tableActionButton = [
         
         {
-          buttonIdentifier: 'invoice-distribute',
+          buttonIdentifier: 'invoice-received',
           class: ' p-button-sm',
           icon: 'pi pi-users',
-          lable: 'Distribute',
+          lable: 'Received',
           renderButton: (rowData) => {
             //TODO:: Change this permission to "can-distribute-cheque-invoice" if not exiest then create permission in UM
             return rowData.currentStatusId == invoiceStatus.FrowardToTreasuryOfficer && this.ngxPermissionsService.getPermission('can-approve-reject-cheque-indent') !== undefined;

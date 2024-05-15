@@ -1,0 +1,104 @@
+<div class="col-12">
+    <app-common-header [headerName]="'Cheque Received'" [imgSrc]="'assets/layout/images/icons/cheque-received.png'">
+    </app-common-header>
+</div>
+<form [formGroup]="receivedForm">
+    <div class="grid flex flex-wrap">
+        <div class="col-6">
+            <div class="card">
+                <div class="grid grid-nogutter surface-ground static border-2 border-round border-primary border-solid text-gray-800 p-3"
+                    style="min-width: 300px; min-height: 60px;">
+                    <div class="col-4  flex">
+                        <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                            Start:
+                        </div>
+                        <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+
+                        </div>
+                    </div>
+                    <div class="col-5 flex">
+                        <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                            End:
+                        </div>
+                        <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+
+                        </div>
+                    </div>
+                    <div class="col-3 flex">
+                        <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                            Quantity:
+                        </div>
+                        <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card">
+                <div class="grid grid-nogutter surface-ground static  text-gray-800 p-3"
+                    style="min-width: 300px; min-height: 60px;">
+                    <div class="col-4  flex">
+                        <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                            Treasury Code:
+                        </div>
+                        <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+
+                        </div>
+                    </div>
+                    <div class="col-5 flex">
+                        <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                            MICR Code:
+                        </div>
+                        <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+
+                        </div>
+                    </div>
+                    <div class="col-3 flex">
+                        <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                            Series:
+                        </div>
+                        <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+
+                        </div>
+                    </div>
+                    <div class="col-4 flex">
+                        <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                            Quantity:
+                        </div>
+                        <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+
+                        </div>
+                    </div>
+                    <div class="col-5 flex">
+                        <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                            Available Quantity:
+                        </div>
+                        <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5" *ngIf="isVisible">
+                    <div class="flex flex-wrap gap-3 p-fluid">
+                        <div class="flex-auto gap-3">
+                            <label for="series" class="block mb-1 text-color text-lg">Cheque Damage Type</label>
+                            <p-dropdown placeholder="Select Cheque Damage Type" optionLabel="name" [showClear]="true"
+                                optionValue="code">
+                            </p-dropdown>
+                        </div>
+                        <div class="flex-auto">
+                            <label for="Start" class="block mb-1 text-color text-lg">Cheque Series Range</label>
+                            <input type="number" pinputtext="" placeholder="Cheque Series Range"
+                                class="p-inputtext p-component p-element w-full">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button  *ngIf="!isVisible" pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded"
+                label="Damage Cheque" (click)="addDamagedChequeEntry()"></button>
+            <button *ngIf="isVisible" (click)="cancelDamagedChequeEntry()" pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"></button>
+        </div>
+    </div>
+</form>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormArray, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { FormData } from 'src/app/core/models/indentFormData';
 import { ChequeIndentDeatil, IndentInvoiceDetails, InvoiceDetails, Serieslist, chequeIndent, micrDetails } from 'src/app/core/models/cheque';
 import { ChequeIndentService } from 'src/app/core/services/cheque/cheque-indent.service';
@@ -58,18 +58,17 @@ export class NewInvoiceComponent implements OnInit {
   }
   /* ---------------------------- FormGroup [END] --------------------------- */
   /* --------------------------- Form array [START] --------------------------- */
-  // get seriesGroupArray(): FormArray {
-  //   return this.invoiceForm.get('seriesGroupArray') as FormArray
-  // }
+  get seriesGroupArray(): FormArray {
+    return this.invoiceForm.get('seriesGroupArray') as FormArray
+  }
 
-  // newSeriesFormGroup(): FormGroup {
-  //   return this.fb.group({
-  //     series: ['', Validators.required],
-  //     availability: ['', Validators.required,],
-  //     quantity: ['', [Validators.required, this.validateEnd]],
+  newSeriesFormGroup(): FormGroup {
+    return this.fb.group({
+      availability: ['', Validators.required,],
+      quantity: ['', [Validators.required, this.validateEnd]],
 
-  //   });
-  // }
+    });
+  }
   // addNewSeries() {
   //   this.seriesGroupArray.push(this.newSeriesFormGroup());
   // }
@@ -154,28 +153,44 @@ export class NewInvoiceComponent implements OnInit {
     this.invoiceForm.get('availability')?.patchValue(totalAvailable);
   }
 
-  // confirmInvoiceApproval() {
-  //   if (this.invoiceForm) {
-  //     const chequeIndentId = this.invoiceForm.get('indentId')!.value;
-  //     const invoiceDate = this.invoiceForm.get('invoiceDate')!.value;
-  //     const invoiceNumber = this.invoiceForm.get('invoiceNumber')!.value;
-  //     const chequeInvoiceDeatils: InvoiceDetails[] = this.invoiceForm.controls.map(
-  //       (fa) => {
-  //         const formGroup = fa as FormGroup;
-  //         return {
-  //           chequeIndentDetailId: this.chequeIndentDetails.chequeIndentDeatils[0].indentDeatilsId,
-  //           chequeEntryId: formGroup.get("series")!.value,
-  //           availableQuantity: formGroup.get("availability")!.value,
-  //           quantity: formGroup.get("quantity")!.value,
-  //         }
-  //       });
-  //     this.indentInvoiceDetails = { chequeIndentId, invoiceDate, invoiceNumber, chequeInvoiceDeatils }
-  //     console.log(this.indentInvoiceDetails);
+  confirmInvoiceApproval() {
+    console.log('enter the form');
+    console.log('dtdtdtd', this.invoiceForm);
+    
+    if (this.invoiceForm) {
+      const chequeIndentId = this.invoiceForm.get('indentId')!.value;
+      const invoiceDate = this.invoiceForm.get('invoiceDate')!.value;
+      const invoiceNumber = this.invoiceForm.get('invoiceNumber')!.value;
+      // const chequeInvoiceDeatils: InvoiceDetails[] = Object.values(this.invoiceForm.controls).map<InvoiceDetails>(
+      //   (fa: AbstractControl) => {
+      //     const formGroup = fa as FormGroup;
+      //     return {
+      //       chequeIndentDetailId: this.chequeIndentDetails.chequeIndentDeatils[0].indentDeatilsId,
+      //       chequeEntryId: 1,
+      //       availableQuantity: formGroup.get("availability")?.value,
+      //       quantity: formGroup.get("quantity")?.value,
+      //     }
+      //   }
+      // );
+      const chequeInvoiceDeatils: InvoiceDetails[] = [{micrCode: this.invoiceForm.get('micr_code')?.value, quantity: this.invoiceForm.get('quantity')?.value}];
+      console.log(chequeInvoiceDeatils);
+      
+      this.indentInvoiceDetails = { chequeIndentId, invoiceDate, invoiceNumber, chequeInvoiceDeatils }
+      console.log(this.indentInvoiceDetails);
 
-  //     this.chequeIndentService.saveChequeIndentInvoice(this.indentInvoiceDetails).subscribe(res => {
-  //       this.toastService.showAlert(res.message, res.apiResponseStatus);
-  //     })
+      this.chequeIndentService.saveChequeIndentInvoice(this.indentInvoiceDetails).subscribe(res => {
+        if (res.apiResponseStatus == 1) {
+          this.invoiceForm.reset();
+          this.toastService.showAlert(
+            res.message,
+            res.apiResponseStatus,
+          );
+        } else {
+          this.toastService.showError(res.message);
+        }
 
-  //   }
-  // }
+      })
+
+    }
+  }
 }

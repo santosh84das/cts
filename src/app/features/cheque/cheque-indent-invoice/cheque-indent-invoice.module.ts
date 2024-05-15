@@ -25,9 +25,10 @@ import { NgxPermissionsModule } from 'ngx-permissions';
 import { MessageModule } from 'primeng/message';
 import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown/treasury-dropdown.module';
 import { MicrModule } from 'src/app/shared/modules/micr/micr.module';
+import { ChequeReceivedComponent } from './cheque-received/cheque-received.component';
 
 @NgModule({
-  declarations: [ChequeIndentInvoiceComponent,ChequeIndentComponent,ChequeInvoiceComponent,NewInvoiceComponent],
+  declarations: [ChequeIndentInvoiceComponent,ChequeIndentComponent,ChequeInvoiceComponent,NewInvoiceComponent, ChequeReceivedComponent],
   imports: [
     CommonModule,
     ChequeIndentInvoiceRoutingModule,

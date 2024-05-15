@@ -52,10 +52,7 @@ export interface IndentInvoiceDetails {
 
 }
 export interface InvoiceDetails {
-  chequeIndentDetailId: number | undefined,
-  chequeEntryId: number,
-  availableQuantity: number,
-  // end: number,
+  micrCode: string,
   quantity: number
 }
 
