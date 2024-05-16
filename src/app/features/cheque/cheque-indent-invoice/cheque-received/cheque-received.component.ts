@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { invoiceDetailsList } from 'src/app/core/models/cheque';
+import { ChequeInvoiceService } from 'src/app/core/services/cheque/cheque-invoice.service';
+import { ToastService } from 'src/app/core/services/toast.service';
+
+interface chequeDamageType{
+  name: string;
+  code: Number;
+}
 
 @Component({
   selector: 'app-cheque-received',
@@ -12,21 +20,38 @@ export class ChequeReceivedComponent implements OnInit {
   receivedForm!: FormGroup;
   isVisible = false;
   invoiceId?: number;
-  constructor( private route: ActivatedRoute) { }
+  invoiceDetailsList!: invoiceDetailsList;
+  chequesDamageType!: chequeDamageType[];
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private chequeinvoiceservice: ChequeInvoiceService, private toastService: ToastService,) { }
 
   ngOnInit(): void {
+    this.chequesDamageType = [
+      { name: 'Tron', code: 1 },
+      { name: 'Printing Missing', code: 2 },
+    ];
     this.invoiceId = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
-    this.getInvoiceDetails(this.invoiceId)
+    this.getInvoiceDetails(this.invoiceId);
+    this.receivedForm = this.fb.group({
+      damage_type:[''],
+      series_range:[''],
+    })
   }
 
-  getInvoiceDetails(id:number){
-    console.log(id);
+  getInvoiceDetails(id: number) {
+    this.chequeinvoiceservice.getInvoiceDetails(id).subscribe((res) => {
+      if (res.apiResponseStatus == 1) {
+        this.invoiceDetailsList = res.result;
+        console.log('ff', this.invoiceDetailsList);
+      } else {
+        this.toastService.showError(res.message);
+      }
+    });
   }
 
-  addDamagedChequeEntry(){
+  addDamagedChequeEntry() {
     this.isVisible = true;
   }
-  cancelDamagedChequeEntry(){
+  cancelDamagedChequeEntry() {
     this.isVisible = false;
   }
 }

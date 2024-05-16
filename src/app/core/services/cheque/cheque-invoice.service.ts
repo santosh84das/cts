@@ -30,4 +30,10 @@ export class ChequeInvoiceService {
       throw this.toastService.showError(error.message);
     }));
   }
+
+  getInvoiceDetails(invoiceId: number): Observable<IapiResponce> {
+    return this.http.get<IapiResponce>('v1/Cheque/getChequeInvoiceDetails?invoiceId=' + invoiceId).pipe(catchError((error) => {
+      throw this.toastService.showError(error.message);
+    }));
+  }
 }

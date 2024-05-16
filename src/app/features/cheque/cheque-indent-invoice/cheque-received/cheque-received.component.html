@@ -3,12 +3,12 @@
     </app-common-header>
 </div>
 <form [formGroup]="receivedForm">
-    <div class="grid flex flex-wrap">
+    <div class="grid flex flex-wrap" *ngIf="invoiceDetailsList != undefined">
         <div class="col-6">
             <div class="card">
                 <div class="grid grid-nogutter surface-ground static border-2 border-round border-primary border-solid text-gray-800 p-3"
                     style="min-width: 300px; min-height: 60px;">
-                    <div class="col-4  flex">
+                    <!-- <div class="col-4  flex">
                         <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
                             Start:
                         </div>
@@ -23,19 +23,20 @@
                         <div class="text-900 text-lg text-primary-500 font-semibold text-center">
 
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-3 flex">
                         <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
                             Quantity:
                         </div>
                         <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+                            {{invoiceDetailsList.quantity}}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-6">
-            <div class="card">
+        <div class="col-6" >
+            <div class="card" *ngFor="let item of invoiceDetailsList.chequeInvoiceSeries">
                 <div class="grid grid-nogutter surface-ground static  text-gray-800 p-3"
                     style="min-width: 300px; min-height: 60px;">
                     <div class="col-4  flex">
@@ -43,7 +44,7 @@
                             Treasury Code:
                         </div>
                         <div class="text-900 text-lg text-primary-500 font-semibold text-center">
-
+                            {{item.treasuryCode}}
                         </div>
                     </div>
                     <div class="col-5 flex">
@@ -51,7 +52,7 @@
                             MICR Code:
                         </div>
                         <div class="text-900 text-lg text-primary-500 font-semibold text-center">
-
+                            {{item.micrCode}}
                         </div>
                     </div>
                     <div class="col-3 flex">
@@ -59,7 +60,7 @@
                             Series:
                         </div>
                         <div class="text-900 text-lg text-primary-500 font-semibold text-center">
-
+                            {{item.series}}
                         </div>
                     </div>
                     <div class="col-4 flex">
@@ -67,15 +68,7 @@
                             Quantity:
                         </div>
                         <div class="text-900 text-lg text-primary-500 font-semibold text-center">
-
-                        </div>
-                    </div>
-                    <div class="col-5 flex">
-                        <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
-                            Available Quantity:
-                        </div>
-                        <div class="text-900 text-lg text-primary-500 font-semibold text-center">
-
+                            {{item.quantity}}
                         </div>
                     </div>
                 </div>
@@ -83,14 +76,14 @@
                     <div class="flex flex-wrap gap-3 p-fluid">
                         <div class="flex-auto gap-3">
                             <label for="series" class="block mb-1 text-color text-lg">Cheque Damage Type</label>
-                            <p-dropdown placeholder="Select Cheque Damage Type" optionLabel="name" [showClear]="true"
-                                optionValue="code">
+                            <p-dropdown [options]="chequesDamageType" placeholder="Select Cheque Damage Type" optionLabel="name" [showClear]="true"
+                                optionValue="code" formControlName="damage_type">
                             </p-dropdown>
                         </div>
                         <div class="flex-auto">
                             <label for="Start" class="block mb-1 text-color text-lg">Cheque Series Range</label>
                             <input type="number" pinputtext="" placeholder="Cheque Series Range"
-                                class="p-inputtext p-component p-element w-full">
+                                class="p-inputtext p-component p-element w-full" formControlName="series_range">
 
                         </div>
                     </div>
