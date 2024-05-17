@@ -80,8 +80,6 @@ export class BillReceiveListComponent implements OnInit {
   }
 
   confirm(event: Event | any, billId: any) {
-  alert('h')
-    
     this.confirmationService.confirm({      
       target: event.target,
       message: 'Are you sure that you want to proceed?',

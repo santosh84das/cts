@@ -75,12 +75,11 @@ export class PayMandateShortlistComponent implements OnInit {
       this.paymandateservice.saveNewPaymandateShortlist(payloadArray).subscribe((response) => {
         console.log('ht');
         if (response.apiResponseStatus == 1) {
-          console.log('hi');
-          
           this.toastService.showAlert(
             response.message,
             response.apiResponseStatus
           );
+          this.allpaymandateShortlist();
         } else {
           this.toastService.showError(response.message);
         }
