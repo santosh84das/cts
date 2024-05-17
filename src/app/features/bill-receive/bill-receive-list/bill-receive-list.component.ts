@@ -110,7 +110,7 @@ export class BillReceiveListComponent implements OnInit {
       if (res.result) {
         this.onlineBillReceiveService.selectedBillId = 0;
         this.onlineBillReceiveService.selectedBillRefNo = 0;
-        this.tokenPrint(Number(res.result));
+        this.tokenPrint(res.result.tokenId);
         // this.notificationService.success(res.message, "Your Token No is: " + res.result);
         this.displayMaximizable = true;
         // this.router.navigate(['/bill-receive']);

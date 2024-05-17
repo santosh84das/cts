@@ -10,6 +10,7 @@ import {ButtonModule} from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
 import { CommonHeaderModule } from 'src/app/shared/modules/common-header/common-header.module';
+import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic-table.module';
 
 @NgModule({
   declarations: [ReturnMemoComponent, GenerateReturnMemoComponent],
@@ -21,7 +22,8 @@ import { CommonHeaderModule } from 'src/app/shared/modules/common-header/common-
     ButtonModule,
     DialogModule,
     DividerModule,
-    CommonHeaderModule
+    CommonHeaderModule,
+    DynamicTableModule
   ]
 })
 export class ReturnMemoModule { }

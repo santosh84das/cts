@@ -3,7 +3,7 @@ import { Observable, Subject, catchError, retry } from 'rxjs';
 import { IapiResponce } from '../../models/iapi-responce';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../toast.service';
-import { tokenDetails, tokenPrint } from '../../models/token';
+import { GeneratedToken, tokenDetails, tokenPrint } from '../../models/token';
 import { DynamicTable, DynamicTableQueryParameters } from '../../models/dynamic-table';
 
 @Injectable({
@@ -48,7 +48,7 @@ export class TokenService {
             })
         );
     }
-    generateToken(payload: any): Observable<IapiResponce> {
+    generateToken(payload: any): Observable<IapiResponce<GeneratedToken>> {
         return this.http
             .post<IapiResponce>('v1/token/GenerateToken', payload)
             .pipe(

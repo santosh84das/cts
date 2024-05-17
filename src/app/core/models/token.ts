@@ -5,7 +5,10 @@ export interface newToken{
     physicalBillDate : string,
     remarks: string
 }
-
+export interface GeneratedToken{
+    tokenId : number
+    tokenNumber : number
+}
 export interface tokenDetails{
     tokenId:number,
     tokenNumberr: Number,

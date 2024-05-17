@@ -24,7 +24,7 @@ export class BillService {
     getBillDetails(token_id: number): Observable<IapiResponce<IBillDetails>> {
         return this.http
             .get<IapiResponce<IBillDetails>>(
-                'v1/BillChecking/GetBillDetails/' + token_id
+                'v1/BillChecking/get-bill-details?tokenId=' + token_id
             )
             .pipe(
                 catchError((error) => {

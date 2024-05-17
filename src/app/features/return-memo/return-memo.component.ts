@@ -10,6 +10,7 @@ import { ToastService } from 'src/app/core/services/toast.service';
 import { StatusType, TokenStatusSlug } from 'src/app/core/enum/common';
 import { ObjectionService } from 'src/app/core/services/objection.service';
 import { TokenWithObjections } from 'src/app/core/models/objection';
+import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'src/app/core/models/dynamic-table';
 
 @Component({
   selector: 'app-return-memo',
@@ -29,24 +30,30 @@ export class ReturnMemoComponent implements OnInit {
   private subscription: Subscription | any;
   isActive: boolean = false;
   memoType: string = TokenStatusSlug.ObjectedByTreasuryOfficer;
+  // ===========
+  tableQueryParameters!: DynamicTableQueryParameters | any;
+  tableData!: DynamicTable<tokenDetails>;
+  tableActionButton: ActionButtonConfig<tokenDetails>[] = [];
+  listType: string = 'awating-return-memo';
   constructor(public tokenServices: TokenService, private objectionService: ObjectionService, public billservice: BillService, private toastservice: ToastService, private notify: NotificationService, private router: Router,) { }
 
   ngOnInit(): void {
-    this.subscription = this.tokenServices.getActionButtonObservable().subscribe((data) => {
-      this.setToGenerateReturnMemo();
-    });
+    // this.subscription = this.tokenServices.getActionButtonObservable().subscribe((data) => {
+    //   this.setToGenerateReturnMemo();
+    // });
     this.countReturnMemo();
+    this.changeListType('awating-return-memo');
   }
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-  setToGenerateReturnMemo() {
+  // ngOnDestroy() {
+  //   this.subscription.unsubscribe();
+  // }
+  returnMemoBillDetails(id:number) {
     this.showReturnMemoModal = true;
-    this.billservice.getReturnMemoBillDetails(this.tokenServices.selectedId).subscribe((responese) => {
+    this.billservice.getReturnMemoBillDetails(id).subscribe((responese) => {
       if (responese.apiResponseStatus == 1) {
         this.billDetails = responese.result;
 
-        this.tokenObjection(this.tokenServices.selectedId);
+        this.tokenObjection(id);
       }
     });
   }
@@ -57,9 +64,6 @@ export class ReturnMemoComponent implements OnInit {
 
       }
     });
-  }
-  test() {
-    this.notify.successfulReload('aaaa');
   }
   tokenObjection(tokenId: number) {
     this.objectionService.getTokenObjections(tokenId).subscribe((response) => {
@@ -108,7 +112,58 @@ export class ReturnMemoComponent implements OnInit {
       this.toastservice.showAlert(response.message, response.apiResponseStatus);
     });
   }
+  handQueryParameterChange(event: any) {
+    this.tableQueryParameters = event;
+    this.getTableData();
+  }
+  buttonHandler(event: any) {
+    switch (event.buttonIdentifier) {
+      case 'generate':
+        this.tokenServices.selectedId = event.rowData.tokenId;
+        this.tokenServices.selectedTokenRef = event.rowData.referenceNo;
+        this.returnMemoBillDetails(event.rowData.tokenId);
+        break;
+      case 'indent-reject':
+        // this.rejectIndent(event.rowData.id);
+        break;
+    }
+  }
+  getTableData() {
+    this.tokenServices.getTokens('Token/GetTokens?listType='+this.listType, this.tableQueryParameters).subscribe((response) => {
+      if (response.apiResponseStatus == 1) {
+        this.tableData = response.result;
+      }
+    });
+  }
 
+  changeListType(type: string) {
+    this.listType = type;
+    if (type == 'awating-return-memo') {
+      this.tableActionButton = [
+        {
+          buttonIdentifier: 'generate',
+          class: ' p-button-sm',
+          icon: 'pi pi-file',
+          lable: 'Generate',
+        },
+      ];
+    }
+    if (type == 'generated-return-memo') {
+      this.tableActionButton = [
+        {
+          buttonIdentifier: 'download-pdf',
+          class: 'p-button-danger p-button-sm',
+          icon: 'pi pi-file-pdf',
+          lable: 'Download PDF',
+        },
+      ];
+    }
+    this.tableQueryParameters = {
+      pageSize: 10,
+      pageIndex: 0,
+    };
+    this.getTableData();
+  }
   closeButton(event: any) {
     this.router.navigate(["/"]);
   }

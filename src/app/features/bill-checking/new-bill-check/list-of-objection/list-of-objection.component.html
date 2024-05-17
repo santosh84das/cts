@@ -26,7 +26,7 @@
             </p-overlayPanel>
         </p-divider>
         <!-- ============================================================ -->
-        <div class="surface-section" *ngIf="selectedObjections.length > 0">
+        <div *ngIf="selectedObjections.length > 0">
             <div class="font-medium text-3xl text-900 mb-3">Selected Objections</div>
             <!-- <div class="text-500 mb-5">Morbi tristique blandit turpis. In viverra ligula id nulla hendrerit rutrum.</div> -->
             <ul class="list-none p-0 m-0">
@@ -37,11 +37,11 @@
                     <div class="text-900 flex-1  md:w-1">Raised By</div>
                     <div class="flex-initial flex md:w-2">Objection Type</div>
                 </li>
-                <li class="flex bg-indigo-50 align-items-center px-4 py-3 mb-3 shadow-2 border-round  flex-wrap "
+                <li class="flex surface-ground bg-indigo-50 align-items-center px-4 py-3 mb-3 shadow-2 border-round  flex-wrap "
                     [ngClass]="{'bg-red-200': selectedObjection.isOverruled}"
                     *ngFor="let selectedObjection of selectedObjections;index as i">
                     <div class="text-500 flex  pr-5 font-medium">{{i+1}}</div>
-                    <div class="text-900 flex md:w-5" [ngClass]="{'line-through': selectedObjection.isOverruled}">
+                    <div class="text-900 flex md:w-5" [ngClass]="{'line-through text-red-600': selectedObjection.isOverruled}">
                         {{selectedObjection.description}}</div>
                     <div class="text-900 flex-1 md:w-2" style="padding-left: 15px;">
                         <!-- {{typeof(selectedObjection.overruledRemark)}} -->

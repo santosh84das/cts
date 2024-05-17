@@ -10,9 +10,9 @@
             <div class="col-12 lg:col-6 p-3">
                 <div class="transition-colors transition-duration-500 p-3 border-round border-2 cursor-pointer"
                 [ngClass]="{
-                  'hover:shadow-2 surface-card border-transparent hover:bg-primary-100 hover:border-primary':memoType!== TokenStatusSlug.ObjectedByTreasuryOfficer,
-                  'bg-primary-100 border-primary': memoType=== TokenStatusSlug.ObjectedByTreasuryOfficer
-                }" (click)="memoType=TokenStatusSlug.ObjectedByTreasuryOfficer">
+                  'hover:shadow-2 surface-card border-transparent hover:bg-primary-100 hover:border-primary':listType!== 'awating-return-memo',
+                  'bg-primary-100 border-primary': listType=== 'awating-return-memo'
+                }" (click)="changeListType('awating-return-memo')">
                     <div class="flex align-items-center justify-content-between">
                         <div>
                             <span class="text-3xl text-900 font-bold">{{memoCont.awatingReturnMemo}}</span>
@@ -27,9 +27,9 @@
             <div class="col-12 lg:col-6 p-3">
                 <div class="transition-colors transition-duration-500 p-3 border-round border-2 cursor-pointer"
                 [ngClass]="{
-                  'hover:shadow-2 surface-card border-transparent hover:bg-primary-100 hover:border-primary':memoType!== TokenStatusSlug.ReturnMemoGenerated,
-                  'bg-primary-100 border-primary': memoType=== TokenStatusSlug.ReturnMemoGenerated
-                }" (click)="memoType=TokenStatusSlug.ReturnMemoGenerated">
+                  'hover:shadow-2 surface-card border-transparent hover:bg-primary-100 hover:border-primary':listType!== 'generated-return-memo',
+                  'bg-primary-100 border-primary': listType=== 'generated-return-memo'
+                }" (click)="changeListType('generated-return-memo')">
                     <div class="flex align-items-center justify-content-between">
                         <div>
                             <span class="text-3xl text-900 font-bold">{{memoCont.generatedReturnMemo}}</span>
@@ -44,9 +44,22 @@
         </div>
     </div>
     <div class="col-12">
-        <app-token-list *ngIf="memoType===TokenStatusSlug.ObjectedByTreasuryOfficer" apiPath="Token/GetTokens" actionLable="Generate" actionIcon="pi pi-file" listType="awating-return-memo"></app-token-list>
+        <!-- <app-token-list *ngIf="memoType===TokenStatusSlug.ObjectedByTreasuryOfficer" apiPath="Token/GetTokens" actionLable="Generate" actionIcon="pi pi-file" listType="awating-return-memo"></app-token-list> -->
         <!-- <app-token-list  apiPath="Token/GetTokens" actionLable="Generate" actionIcon="pi pi-file"  listType="generated-return-memo"></app-token-list> -->
-        <app-token-list *ngIf="memoType===TokenStatusSlug.ReturnMemoGenerated" apiPath="Token/GetTokens"  actionLable="Download PDF" actionIcon="pi pi-file-pdf" actionButtonClass="p-button-danger" listType="generated-return-memo"></app-token-list>
+        <!-- <app-token-list *ngIf="memoType===TokenStatusSlug.ReturnMemoGenerated" apiPath="Token/GetTokens"  actionLable="Download PDF" actionIcon="pi pi-file-pdf" actionButtonClass="p-button-danger" listType="generated-return-memo"></app-token-list> -->
+        
+        <app-dynamic-table
+        size="small"
+            [numberRowsShown]="10"
+            rowSelectionMode="multiple"
+            [rowsPerPageOptions]="[10,30,50]"
+            [headers]="tableData.headers" 
+            [data]="tableData.data" 
+            [dataCount]="1"
+            [actionButtons]="tableActionButton"
+            (actionButtonClicked)="buttonHandler($event)"
+            (queryParameterChange)="handQueryParameterChange($event)">
+        </app-dynamic-table>
     </div>
     <p-dialog header="Objection Token Details" [(visible)]="showReturnMemoModal" [style]="{width: '70vw'}" [modal]="true"  [maximizable]="true">
         <div class="bg-cyan-50">
