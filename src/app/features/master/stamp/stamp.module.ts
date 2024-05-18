@@ -11,6 +11,7 @@ import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic
 import { CategoryComponent } from './category/category.component';
 import { TypeComponent } from './type/type.component';
 import { VendorComponent } from './vendor/vendor.component';
+import { DiscountDetailsComponent } from './discount-details/discount-details.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { VendorComponent } from './vendor/vendor.component';
     LabelComponent,
     CategoryComponent,
     TypeComponent,
-    VendorComponent
+    VendorComponent,
+    DiscountDetailsComponent
   ],
   imports: [
     CommonModule,
