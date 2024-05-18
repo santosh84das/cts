@@ -34,4 +34,12 @@ export class VendorService {
       })
     );
   }
+  deleteStampVendor(id: Number): Observable<IapiResponce> {
+    return this.http.delete<IapiResponce>('v1/StampMaster/DeleteStampVendorsById?id='+ id).pipe(
+      catchError((error) => {
+        throw this.toastService.showError(error.message);
+      })
+    );
+  }
 }
+// DeleteStampVendorsById

@@ -3,6 +3,7 @@ import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 's
 import { tokenDetails } from 'src/app/core/models/token';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { LabelService } from 'src/app/core/services/stamp/label.service';
+import { convertDate } from 'src/utils/dateConversion';
 
 @Component({
   selector: 'app-label',
@@ -21,16 +22,16 @@ export class LabelComponent implements OnInit {
 
   ngOnInit(): void {
     this.tableActionButton = [
-      {
-        buttonIdentifier: 'edit',
-        class: 'p-button-warning p-button-sm',
-        icon: 'pi pi-file-edit',
-        lable: 'Edit',
-      },
+      // {
+      //   buttonIdentifier: 'edit',
+      //   class: 'p-button-warning p-button-sm',
+      //   icon: 'pi pi-file-edit',
+      //   lable: 'Edit',
+      // },
       {
         buttonIdentifier: 'delete',
         class: 'p-button-danger p-button-sm',
-        icon: 'pi pi-file-delete',
+        icon: 'pi pi-trash',
         lable: 'Delete',
       },
     ];
@@ -45,6 +46,10 @@ export class LabelComponent implements OnInit {
       .getStampLabelList(this.tableQueryParameters)
       .subscribe((response) => {
         if (response.apiResponseStatus == 1) {
+          response.result.data.map((item: any) => {
+            item.isActive = item.isActive ? "Yes" : "No"
+            item.createdAt = convertDate(item.createdAt)
+          })
           this.tableData = response.result;
         } else {
           this.toastService.showAlert(
@@ -52,6 +57,17 @@ export class LabelComponent implements OnInit {
             response.apiResponseStatus
           );
         }
+      });
+  }
+
+  handleButtonClick($event: any) {
+    this.LabelService.deleteStampLabel($event.rowData.labelId)
+      .subscribe((response) => {
+        response.apiResponseStatus == 1 ? this.getAllStampLabels() : this.toastService.showAlert(
+          response.message,
+          response.apiResponseStatus
+        );
+
       });
   }
 }

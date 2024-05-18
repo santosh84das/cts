@@ -3,6 +3,7 @@ import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 's
 import { tokenDetails } from 'src/app/core/models/token';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { CategoryService } from 'src/app/core/services/stamp/category.service';
+import { convertDate } from 'src/utils/dateConversion';
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
@@ -20,19 +21,20 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.tableActionButton = [
-      {
-        buttonIdentifier: 'edit',
-        class: 'p-button-warning p-button-sm',
-        icon: 'pi pi-file-edit',
-        lable: 'Edit',
-      },
+      // {
+      //   buttonIdentifier: 'edit',
+      //   class: 'p-button-warning p-button-sm',
+      //   icon: 'pi pi-file-edit',
+      //   lable: 'Edit',
+      // },
       {
         buttonIdentifier: 'delete',
         class: 'p-button-danger p-button-sm',
-        icon: 'pi pi-file-delete',
+        icon: 'pi pi-trash',
         lable: 'Delete',
       },
     ];
+
     this.tableQueryParameters = {
       pageSize: 10,
       pageIndex: 0,
@@ -41,9 +43,13 @@ export class CategoryComponent implements OnInit {
   }
   getAllStampCategories() {
     this.CategoryService
-      .getStampLabelCategoris(this.tableQueryParameters)
+      .getStampLabelCategories(this.tableQueryParameters)
       .subscribe((response) => {
         if (response.apiResponseStatus == 1) {
+          response.result.data.map((item: any) => {
+            item.isActive = item.isActive ? "Yes" : "No"
+            item.createdAt = convertDate(item.createdAt)
+          })
           this.tableData = response.result;
         } else {
           this.toastService.showAlert(
@@ -51,6 +57,17 @@ export class CategoryComponent implements OnInit {
             response.apiResponseStatus
           );
         }
+      });
+  }
+
+  handleButtonClick($event: any) {
+    this.CategoryService.deleteStampCategory($event.rowData.stampCategoryId)
+      .subscribe((response) => {
+        response.apiResponseStatus == 1 ? this.getAllStampCategories() : this.toastService.showAlert(
+          response.message,
+          response.apiResponseStatus
+        );
+
       });
   }
 

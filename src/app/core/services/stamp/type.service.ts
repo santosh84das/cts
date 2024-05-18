@@ -35,5 +35,13 @@ export class TypeService {
       })
     );
   }
+
+  deleteStampType(id: Number): Observable<IapiResponce> {
+    return this.http.delete<IapiResponce>('v1/StampMaster/DeleteStampTypesById?id='+id).pipe(
+      catchError((error) => {
+        throw this.toastService.showError(error.message);
+      })
+    );
+  }
 }
 

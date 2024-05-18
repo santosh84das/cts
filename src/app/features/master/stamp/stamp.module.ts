@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { StampRoutingModule } from './stamp-routing.module';
 import { StampComponent } from './stamp.component';
@@ -12,7 +12,13 @@ import { CategoryComponent } from './category/category.component';
 import { TypeComponent } from './type/type.component';
 import { VendorComponent } from './vendor/vendor.component';
 import { DiscountDetailsComponent } from './discount-details/discount-details.component';
-
+import { NgxPermissionsModule } from 'ngx-permissions';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { VendorTypeDropdownComponent } from '../../../shared/modules/vendor-type-dropdown/vendor-type-dropdown.component';
+import { StampCategoryTypeDropdownComponent } from 'src/app/shared/modules/stamp-category-type-dropdown/stamp-category-type-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -21,15 +27,25 @@ import { DiscountDetailsComponent } from './discount-details/discount-details.co
     CategoryComponent,
     TypeComponent,
     VendorComponent,
-    DiscountDetailsComponent
+    DiscountDetailsComponent,
+    VendorTypeDropdownComponent,
+    StampCategoryTypeDropdownComponent
   ],
   imports: [
+    InputTextModule,
+    DialogModule,
     CommonModule,
     StampRoutingModule,
     OptionCardModule,
     ButtonModule,
+    DropdownModule,
+    CommonHeaderModule,
     DynamicTableModule,
-    CommonHeaderModule
-  ]
+    ReactiveFormsModule,
+    FormsModule,
+    NgxPermissionsModule.forChild()
+
+  ],
+  providers: [DatePipe]
 })
 export class StampModule { }

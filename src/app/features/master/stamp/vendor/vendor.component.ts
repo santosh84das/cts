@@ -3,6 +3,7 @@ import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 's
 import { tokenDetails } from 'src/app/core/models/token';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { VendorService } from 'src/app/core/services/stamp/vendor.service';
+import { convertDate } from 'src/utils/dateConversion';
 
 @Component({
   selector: 'app-vendor',
@@ -21,16 +22,16 @@ export class VendorComponent implements OnInit {
 
   ngOnInit(): void {
     this.tableActionButton = [
-      {
-        buttonIdentifier: 'edit',
-        class: 'p-button-warning p-button-sm',
-        icon: 'pi pi-file-edit',
-        lable: 'Edit',
-      },
+      // {
+      //   buttonIdentifier: 'edit',
+      //   class: 'p-button-warning p-button-sm',
+      //   icon: 'pi pi-file-edit',
+      //   lable: 'Edit',
+      // },
       {
         buttonIdentifier: 'delete',
         class: 'p-button-danger p-button-sm',
-        icon: 'pi pi-file-delete',
+        icon: 'pi pi-trash',
         lable: 'Delete',
       },
     ];
@@ -45,6 +46,10 @@ export class VendorComponent implements OnInit {
       .getStampVendorList(this.tableQueryParameters)
       .subscribe((response) => {
         if (response.apiResponseStatus == 1) {
+            response.result.data.map((item:any) => {
+            item.isActive = item.isActive ? "Yes" : "No"
+            item.createdAt = convertDate(item.createdAt)
+          })
           this.tableData = response.result;
         } else {
           this.toastService.showAlert(
@@ -55,5 +60,14 @@ export class VendorComponent implements OnInit {
       });
   }
 
+  handleButtonClick($event: any) {
+    this.VendorService.deleteStampVendor($event.rowData.stampVendorId)
+      .subscribe((response) => {
+        response.apiResponseStatus == 1 ? this.getAllStampVendors() : this.toastService.showAlert(
+          response.message,
+          response.apiResponseStatus
+        );
 
+      });
+  }
 }

@@ -3,23 +3,24 @@ import { Injectable } from '@angular/core';
 import { ToastService } from '../toast.service';
 import { DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
 import { IapiResponce } from '../../models/iapi-responce';
-import { AddStampLabel, GetStampLabels } from '../../models/stamp';
+import { AddStampDiscountDetails, GetStampDiscountDetails } from '../../models/stamp';
 import { Observable, catchError } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class LabelService {
+
+
+export class DiscountDetailsService {
 
   constructor(private http: HttpClient, private toastService: ToastService) { }
-
-
-  getStampLabelList(
+  getStampDiscountDetailsList(
     queryParameters: DynamicTableQueryParameters
-  ): Observable<IapiResponce<GetStampLabels>> {
+  ): Observable<IapiResponce<GetStampDiscountDetails>> {
     return this.http
-      .patch<IapiResponce<GetStampLabels>>(
-        'v1/StampMaster/StampLabelList',
+      .patch<IapiResponce<GetStampDiscountDetails>>(
+        'v1/StampMaster/StampDiscountDetailsList',
         queryParameters
       )
       .pipe(
@@ -29,18 +30,22 @@ export class LabelService {
       );
   }
 
-  addNewStampLabel(payload: AddStampLabel): Observable<IapiResponce> {
-    return this.http.post<IapiResponce>('v1/StampMaster/CreateStampLabel', payload).pipe(
+
+  addNewStampDiscountDetail(payload: AddStampDiscountDetails): Observable<IapiResponce> {
+    return this.http.post<IapiResponce>('v1/StampMaster/CreateStampDiscountDetail', payload).pipe(
       catchError((error) => {
         throw this.toastService.showError(error.message);
       })
     );
   }
-  deleteStampLabel(id: Number): Observable<IapiResponce> {
-    return this.http.delete<IapiResponce>('v1/StampMaster/DeleteStampLabelsById?id='+ id).pipe(
+
+  // TODO
+  deleteStampDiscountDetail(id: Number): Observable<IapiResponce> {
+    return this.http.delete<IapiResponce>('v1/StampMaster/DeleteStampDiscountDetailById?id='+ id).pipe(
       catchError((error) => {
         throw this.toastService.showError(error.message);
       })
     );
   }
+
 }

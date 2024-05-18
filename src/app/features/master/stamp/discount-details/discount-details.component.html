@@ -1,13 +1,44 @@
 <div class="grid">
     <div class="col-12">
         <app-common-header [headerName]="'Discount Details'" [imgSrc]="'assets/layout/images/icons/discount-entry.png'">
-            <button pButton pRipple type="button" icon="pi pi-plus" label="New Entry"
-                class="p-button-rounded p-button-raised"></button></app-common-header>
+            <div class="flex gap-4">
+                <button pButton pRipple type="button" (click)="showDialog()" icon="pi pi-calculator"
+                    label="Calculate Discount" class="p-button-rounded p-button-raised"></button>
+                <button pButton pRipple type="button" icon="pi pi-plus" label="New Entry"
+                    class="p-button-rounded p-button-raised"></button>
+            </div>
+        </app-common-header>
     </div>
     <div class="col-12">
-        <!-- <app-dynamic-table [numberRowsShown]="10" rowSelectionMode="multiple" [rowsPerPageOptions]="[10,30,50]"
+        <app-dynamic-table (actionButtonClicked)="handleButtonClick($event)"
+        [numberRowsShown]="10" rowSelectionMode="multiple" [rowsPerPageOptions]="[10,30,50]"
             [actionButtons]="tableActionButton" [headers]="tableData!.headers" [data]="tableData.data"
             [dataCount]="tableData.dataCount">
-        </app-dynamic-table> -->
+        </app-dynamic-table>
     </div>
 </div>
+
+<p-dialog [style]="{width: '30rem'}" header="Calculate Discount" [modal]="true" [(visible)]="displayModal">
+    <div class="px-4">
+        <div class="flex align-items-center gap-3 mb-3 mt-2">
+            <label for="Vendor Type" class="font-semibold w-8rem">Vendor Type</label>
+           <app-vendor-type-dropdown class="flex-auto"></app-vendor-type-dropdown>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="Stamp Category" class="font-semibold w-8rem">Stamp Category</label>
+            <app-stamp-category-type-dropdown (stampCategoryTypeSelected)="onStampCategorySelected($event)"  class="flex-auto"></app-stamp-category-type-dropdown>
+        </div>
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="Amount" class="font-semibold w-8rem">Amount</label>
+            <input pInputText id="amount" type="number" class="flex-auto" autocomplete="off" />
+        </div>
+        <div class="flex align-items-center gap-3 mb-5">
+            <label for="Discount" class="font-semibold w-8rem">Discount</label>
+            <input pInputText id="discount" readonly value="0" class="flex-auto" autocomplete="off" />
+        </div>
+        <div class="flex justify-content-end gap-2">
+            <p-button label="Calculate" (click)="calculateDiscount()"></p-button>
+            <p-button label="Cancel" severity="secondary" (click)="displayModal = false"></p-button>
+        </div>
+    </div>
+</p-dialog>

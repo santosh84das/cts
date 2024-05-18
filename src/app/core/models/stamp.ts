@@ -64,3 +64,22 @@ export interface AddStampVendors {
     isActive?: boolean;
     activeAtGrips?: boolean;
 }
+
+export interface GetStampDiscountDetails {
+    discountId?: number;
+    denominationFrom?: number;
+    denominationTo?: number;
+    discount?: number;
+    vendorType?: string;
+    stampCategory?: string;
+    isActive?: boolean;
+    createdAt?: null;
+    createdBy?: null;
+}
+export interface AddStampDiscountDetails {
+    denominationFrom?: number;
+    denominationTo?: number;
+    discount?: number;
+    vendorType?: string;
+    stampCategory?: string;
+}

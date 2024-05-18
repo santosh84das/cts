@@ -12,7 +12,7 @@ export class CategoryService {
 
   constructor(private http: HttpClient, private toastService: ToastService) { }
 
-  getStampLabelCategoris(
+  getStampLabelCategories(
     queryParameters: DynamicTableQueryParameters
   ): Observable<IapiResponce<GetStampCategories>> {
     return this.http
@@ -27,8 +27,15 @@ export class CategoryService {
       );
   }
 
-  addNewStampCategory(paylod: AddStampCategory): Observable<IapiResponce> {
-    return this.http.post<IapiResponce>('v1/StampMaster/CreateStampCategory', paylod).pipe(
+  addNewStampCategory(payload: AddStampCategory): Observable<IapiResponce> {
+    return this.http.post<IapiResponce>('v1/StampMaster/CreateStampCategory', payload).pipe(
+      catchError((error) => {
+        throw this.toastService.showError(error.message);
+      })
+    );
+  }
+  deleteStampCategory(id: Number): Observable<IapiResponce> {
+    return this.http.delete<IapiResponce>('v1/StampMaster/DeleteStampCategoryById?id='+id).pipe(
       catchError((error) => {
         throw this.toastService.showError(error.message);
       })

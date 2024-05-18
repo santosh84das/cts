@@ -3,6 +3,7 @@ import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 's
 import { tokenDetails } from 'src/app/core/models/token';
 import { TypeService } from 'src/app/core/services/stamp/type.service';
 import { ToastService } from 'src/app/core/services/toast.service';
+import { convertDate } from 'src/utils/dateConversion';
 
 @Component({
   selector: 'app-type',
@@ -21,16 +22,16 @@ export class TypeComponent implements OnInit {
 
   ngOnInit(): void {
     this.tableActionButton = [
-      {
-        buttonIdentifier: 'edit',
-        class: 'p-button-warning p-button-sm',
-        icon: 'pi pi-file-edit',
-        lable: 'Edit',
-      },
+      // {
+      //   buttonIdentifier: 'edit',
+      //   class: 'p-button-warning p-button-sm',
+      //   icon: 'pi pi-file-edit',
+      //   lable: 'Edit',
+      // },
       {
         buttonIdentifier: 'delete',
         class: 'p-button-danger p-button-sm',
-        icon: 'pi pi-file-delete',
+        icon: 'pi pi-trash',
         lable: 'Delete',
       },
     ];
@@ -46,6 +47,10 @@ export class TypeComponent implements OnInit {
       .getStampTypeList(this.tableQueryParameters)
       .subscribe((response) => {
         if (response.apiResponseStatus == 1) {
+            response.result.data.map((item:any) => {
+            item.isActive = item.isActive ? "Yes" : "No"
+            item.createdAt = convertDate(item.createdAt)
+          })
           this.tableData = response.result;
         } else {
           this.toastService.showAlert(
@@ -56,4 +61,14 @@ export class TypeComponent implements OnInit {
       });
   }
 
+  handleButtonClick($event: any) {
+    this.TypeService.deleteStampType($event.rowData.denominationId)
+      .subscribe((response) => {
+        response.apiResponseStatus == 1 ? this.getAllStampTypes() : this.toastService.showAlert(
+          response.message,
+          response.apiResponseStatus
+        );
+
+      });
+  }
 }
