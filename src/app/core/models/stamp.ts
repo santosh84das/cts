@@ -1,24 +1,24 @@
 export interface GetStampTypes {
-    denomination?: number;
+    denomination: number;
     isActive?: boolean;
     createdAt?: string;
     createdBy?: number;
 }
 
 export interface AddStampType {
-    denomination?: number;
+    denomination: number;
     isActive?: boolean;
 }
 
 export interface GetStampLabels {
-    noLabelPerSheet?: number;
+    noLabelPerSheet: number;
     isActive?: boolean;
     createdAt?: string;
     createdBy?: number;
 }
 
 export interface AddStampLabel {
-    noLabelPerSheet?: number;
+    noLabelPerSheet: number;
     isActive?: boolean;
 }
 
@@ -33,20 +33,18 @@ export interface GetStampCategories {
 export interface AddStampCategory {
     stampCategory1: string;
     description: string;
-    isActive: boolean;
-    createdAt: string;
-    createdBy: number;
+    isActive?: boolean;
 }
 
 export interface GetStampVendors {
     stampVendorId?: number;
-    vendorType?: number;
-    licenseNo?: string;
-    address?: string;
-    phoneNumber?: number;
-    effectiveFrom?: string;
-    validUpto?: string;
-    panNumber?: string;
+    vendorType: number;
+    licenseNo: string;
+    address: string;
+    phoneNumber: number;
+    effectiveFrom: string;
+    validUpto: string;
+    panNumber: string;
     isActive?: boolean;
     activeAtGrips?: boolean;
     createdAt?: string;
@@ -54,13 +52,13 @@ export interface GetStampVendors {
 }
 
 export interface AddStampVendors {
-    vendorType?: number;
-    licenseNo?: string;
-    address?: string;
-    phoneNumber?: number;
-    effectiveFrom?: string;
-    validUpto?: string;
-    panNumber?: string;
+    vendorType: string;
+    licenseNo: string;
+    address: string;
+    phoneNumber: number;
+    effectiveFrom: string;
+    validUpto: string;
+    panNumber: string;
     isActive?: boolean;
     activeAtGrips?: boolean;
 }
@@ -70,22 +68,16 @@ export interface GetStampDiscountDetails {
     denominationFrom: number;
     denominationTo: number;
     discount: number;
-    vendorType?: string;
-    stampCategory?: string;
+    vendorType: string;
+    stampCategory: string;
     isActive?: boolean;
     createdAt?: null;
     createdBy?: null;
 }
 export interface AddStampDiscountDetails {
-    denominationFrom?: number;
-    denominationTo?: number;
-    discount?: number;
-    vendorType?: string;
-    stampCategory?: string;
+    denominationFrom: number;
+    denominationTo: number;
+    discount: number;
+    vendorType: string;
+    stampCategory: string;
 }
-
-export interface discountCalculateData {
-    vendorType: string,
-    stampCategory: string,
-    amount: number
-  }

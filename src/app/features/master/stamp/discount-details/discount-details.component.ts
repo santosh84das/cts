@@ -2,7 +2,6 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'src/app/core/models/dynamic-table';
 import { GetStampDiscountDetails, AddStampDiscountDetails } from 'src/app/core/models/stamp';
-import { tokenDetails } from 'src/app/core/models/token';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { DiscountDetailsService } from 'src/app/core/services/stamp/discount-details.service';
 import { convertDate } from 'src/utils/dateConversion';
@@ -24,8 +23,7 @@ export class DiscountDetailsComponent implements OnInit {
   discountDetailsEntryForm!: FormGroup;
   calculateDiscountForm!: FormGroup;
   amount!: number;
-  selectedCategoryType: any;
-  discount: number = 0;
+  discount: string = '0';
   discountDetailsEntryPayload!: AddStampDiscountDetails;
 
   constructor(
@@ -98,7 +96,14 @@ export class DiscountDetailsComponent implements OnInit {
   }
 
   handleButtonClick($event: any) {
-    console.log($event);
+    this.DiscountDetailsService.deleteStampDiscountDetail($event.rowData.stampVendorId)
+      .subscribe((response) => {
+        response.apiResponseStatus == 1 ? this.getAllStampDiscountDetails() : this.toastService.showAlert(
+          response.message,
+          response.apiResponseStatus
+        );
+
+      });
   }
 
   onStampCategorySelected($event: any) {
@@ -115,13 +120,12 @@ export class DiscountDetailsComponent implements OnInit {
       return item.stampCategory == this.stampCategory && item.vendorType == this.vendorType && this.amount >= item.denominationFrom && this.amount <= item.denominationTo;
     });
     if (res.length > 0) {
-      this.discount = res[0].discount;
+      this.discount = res[0].discount + '%';
     }
   }
 
-  addDiscountDetails() {  
-    console.log(this.discountDetailsEntryForm);
-    
+  addDiscountDetails() {
+
     if (this.discountDetailsEntryForm.valid) {
       this.discountDetailsEntryPayload = {
         stampCategory: this.stampCategory,

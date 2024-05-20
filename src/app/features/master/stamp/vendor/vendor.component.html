@@ -19,13 +19,13 @@
     <form [formGroup]="VendorDetailsEntryForm" class="flex flex-column gap-4 mt-3">
         <div class="flex gap-2">
             <div class="col-6 p-0">
-                <label for="Vendor Type" class="block mb-1 text-color text-lg">Pan No:</label>
-                <input formControlName="VendorTypeName" type="text" pinputtext="" placeholder="Eg: ABCDE1234F"
+                <label for="Pan Number" class="block mb-1 text-color text-lg">Pan No:</label>
+                <input formControlName="panNumber" type="text" pinputtext="" placeholder="Eg: ABCDE1234F"
                     class="p-inputtext p-component p-element w-full">
             </div>
             <div class="col-6 p-0">
                 <label for="License Number" class="block mb-1 text-color text-lg">License Number</label>
-                <input formControlName="LicenseNumber" type="text" pinputtext="" placeholder="Eg: LIC123457"
+                <input formControlName="licenseNo" type="text" pinputtext="" placeholder="Eg: LIC123457"
                     class="p-inputtext p-component p-element w-full">
             </div>
         </div>
@@ -33,47 +33,42 @@
         <div class="flex gap-2">
             <div class="col-6 p-0">
                 <label for="Phone" class="block mb-1 text-color text-lg">Phone</label>
-                <input formControlName="PhoneNumber" type="text" pinputtext="" placeholder="Eg: 1234567891"
+                <input formControlName="phoneNumber" type="text" pinputtext="" placeholder="Eg: 1234567891"
                     class="p-inputtext p-component p-element w-full">
             </div>
             <div class="col-6 p-0">
                 <label for="Address" class="block mb-1 text-color text-lg">Address</label>
-                <input formControlName="Address" type="text" pinputtext="" placeholder="Eg: 20, ABC Road. New Delhi."
+                <input formControlName="address" type="text" pinputtext="" placeholder="Eg: 20, ABC Road. New Delhi."
                     class="p-inputtext p-component p-element w-full">
             </div>
         </div>
         <div class="flex gap-2">
             <div class="col-6 p-0">
-                <label for="From" class="block mb-1 text-color text-lg">Valid From</label>
+                <label for="Effective From" class="block mb-1 text-color text-lg">Effective From</label>
                 <span class="p-input-icon-left w-full"><i class="pi pi-angle-double-right"></i>
-                    <input formControlName="from" type="date" pinputtext=""
+                    <input formControlName="effectiveFrom" type="date" pinputtext=""
                         class="p-inputtext p-component p-element w-full">
                 </span>
             </div>
             <div class="col-6 p-0">
                 <label for="To" class="block mb-1 text-color text-lg">Valid upto</label>
                 <span class="p-input-icon-left w-full"><i class="pi pi-stop-circle"></i>
-                    <input formControlName="to" type="date" pinputtext=""
+                    <input formControlName="validUpto" type="date" pinputtext=""
                         class="p-inputtext p-component p-element w-full">
                 </span>
             </div>
         </div>
         <div class="flex gap-2">
-            <div class="col-6 p-0">
+            <div class="col-12 p-0">
                 <label for="Vendor Type" class="block mb-1 text-color text-lg">Vendor Type</label>
-                <app-vendor-type-dropdown class="flex-auto"></app-vendor-type-dropdown>
-            </div>
-            <div class="col-6 p-0">
-                <label for="Stamp Category" class="block mb-1 text-color text-lg">Stamp Category</label>
-                <app-stamp-category-type-dropdown  class="flex-auto"></app-stamp-category-type-dropdown>
+                <app-vendor-type-dropdown class="flex-auto" (vendorTypeSelected)="onVendorTypeSelected($event)"></app-vendor-type-dropdown>
             </div>
         </div>
         <!-- TODO -->
         <!-- <p-button label="Submit" (click)="addDiscountDetails()" class="justify-content-center"></p-button> -->
     </form>
     <div class="flex gap-2 justify-content-end pt-3">
-        <!-- TODO: (click)="addDiscountDetails()" -->
-        <button pbutton="" pripple="" label="Submit" class="p-element p-ripple p-button-rounded p-button p-component">
+        <button pbutton="" (click)="addVendors()" pripple="" label="Submit" class="p-element p-ripple p-button-rounded p-button p-component">
             <span class="p-button-label">Submit</span><span class="p-ink"></span>
         </button>
     </div>

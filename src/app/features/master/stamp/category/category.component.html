@@ -19,12 +19,12 @@
         <div class="flex gap-2">
             <div class="col-6 p-0">
                 <label for="Description" class="block mb-1 text-color text-lg">Description</label>
-                <input formControlName="sescriptionName" type="text" pinputtext="" placeholder="Eg: Special Adhesive"
+                <input formControlName="description" type="text" pinputtext="" placeholder="Eg: Special Adhesive"
                     class="p-inputtext p-component p-element w-full">
             </div>
             <div class="col-6 p-0">
                 <label for="Stamp Category" class="block mb-1 text-color text-lg">Stamp Category</label>
-                <app-stamp-category-type-dropdown (onChange)="onStampCategorySelected()"
+                <app-stamp-category-type-dropdown (CategoryTypeSelected)="onStampCategorySelected($event)"
                     class="flex-auto"></app-stamp-category-type-dropdown>
             </div>
         </div>
@@ -32,8 +32,7 @@
         <!-- <p-button label="Submit" (click)="addDiscountDetails()" class="justify-content-center"></p-button> -->
     </form>
     <div class="flex gap-2 justify-content-end pt-3">
-        <!-- TODO: (click)="addDiscountDetails()" -->
-        <button pbutton="" pripple="" label="Submit" class="p-element p-ripple p-button-rounded p-button p-component">
+        <button pbutton="" pripple="" label="Submit" (click)="addCategory()" class="p-element p-ripple p-button-rounded p-button p-component">
             <span class="p-button-label">Submit</span><span class="p-ink"></span>
         </button>
     </div>

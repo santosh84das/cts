@@ -19,6 +19,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { VendorTypeDropdownComponent } from '../../../shared/modules/vendor-type-dropdown/vendor-type-dropdown.component';
 import { StampCategoryTypeDropdownComponent } from 'src/app/shared/modules/stamp-category-type-dropdown/stamp-category-type-dropdown.component';
+import { CombinationComponent } from './combination/combination.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { StampCategoryTypeDropdownComponent } from 'src/app/shared/modules/stamp
     VendorComponent,
     DiscountDetailsComponent,
     VendorTypeDropdownComponent,
-    StampCategoryTypeDropdownComponent
+    StampCategoryTypeDropdownComponent,
+    CombinationComponent
   ],
   imports: [
     InputTextModule,

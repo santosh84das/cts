@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'src/app/core/models/dynamic-table';
-import { tokenDetails } from 'src/app/core/models/token';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { CategoryService } from 'src/app/core/services/stamp/category.service';
 import { convertDate } from 'src/utils/dateConversion';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { AddStampCategory, GetStampCategories } from 'src/app/core/models/stamp';
 
 @Component({
   selector: 'app-category',
@@ -13,11 +13,13 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 })
 export class CategoryComponent implements OnInit {
 
+  stampCategory!: string;
   categoryEntryForm!: FormGroup;
   displayInsertModal: boolean | undefined;
   tableActionButton: ActionButtonConfig[] = [];
-  tableData!: DynamicTable<tokenDetails>;
+  tableData!: DynamicTable<GetStampCategories>;
   tableQueryParameters!: DynamicTableQueryParameters | any;
+  categoryEntryPayload!: AddStampCategory
 
   constructor(
     private categoryService: CategoryService,
@@ -26,6 +28,7 @@ export class CategoryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.initializeForm()
     this.tableActionButton = [
       {
         buttonIdentifier: 'delete',
@@ -40,15 +43,12 @@ export class CategoryComponent implements OnInit {
       pageIndex: 0,
     };
 
-    this.initializeForm();
     this.getAllStampCategories();
   }
 
   initializeForm(): void {
     this.categoryEntryForm = this.fb.group({
-      // Define form controls and their initial values
-      categoryName: new FormControl(''),
-      // Add more form controls as needed
+      description: ['', Validators.required]
     });
   }
 
@@ -85,7 +85,29 @@ export class CategoryComponent implements OnInit {
     this.displayInsertModal = true;
   }
 
-  onStampCategorySelected() {
-    
+  onStampCategorySelected($event: any) {
+    this.stampCategory = $event;
+  }
+
+  addCategory() {
+    if (this.categoryEntryForm.valid) {
+      this.categoryEntryPayload = {
+        description: this.categoryEntryForm.value.description,
+        stampCategory1: this.stampCategory
+      };
+      console.log(this.categoryEntryPayload);
+
+      // this.categoryService.addNewStampCategory(this.categoryEntryPayload).subscribe((response) => {
+      //   if (response.apiResponseStatus == 1) {
+      //     this.toastService.showAlert('Stamp Category added successfully', 1);
+      //     this.displayInsertModal = false;
+      //     this.getAllStampCategories();
+      //   } else {
+      //     this.toastService.showAlert(response.message, response.apiResponseStatus);
+      //   }
+      // });
+    } else {
+      this.toastService.showAlert('Please fill all the required fields', 0);
+    }
   }
 }

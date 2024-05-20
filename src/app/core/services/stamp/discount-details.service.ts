@@ -32,7 +32,7 @@ export class DiscountDetailsService {
 
 
   addNewStampDiscountDetail(payload: AddStampDiscountDetails): Observable<IapiResponce> {
-    return this.http.post<IapiResponce>('v1/StampMaster/CreateStampDiscountDetail', payload).pipe(
+    return this.http.post<IapiResponce>('v1/StampMaster/CreateStampDiscountDetails', payload).pipe(
       catchError((error) => {
         throw this.toastService.showError(error.message);
       })

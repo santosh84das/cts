@@ -18,16 +18,13 @@ export class StampCategoryTypeDropdownComponent implements OnInit {
     this.masterService.getCategoryTypes().subscribe((response) => {
       if (response.apiResponseStatus == 1) {
         this.CategoryTypeList = response.result
-        console.log(this.CategoryTypeList);
       } else {
         this.toastService.showError(response.message);
       }
     })
   }
 
-  onStampCategorySelected() {
-    console.log(this.selectedCategoryType.stampCategory1);
-    
+  onStampCategorySelected() {    
     this.CategoryTypeSelected.emit(this.selectedCategoryType.stampCategory1);
   }
 }

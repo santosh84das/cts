@@ -17,16 +17,13 @@ export class VendorTypeDropdownComponent implements OnInit {
     this.masterService.getVendorTypes().subscribe((response) => {
       if (response.apiResponseStatus == 1) {
         this.VendorTypeList = response.result
-        console.log(this.VendorTypeList);
       } else {
         this.toastService.showError(response.message);
       }
     })
   }
 
-  onVendorTypeSelected() {
-    console.log(this.selectedVendorType);
-    
+  onVendorTypeSelected() {    
     this.vendorTypeSelected.emit(this.selectedVendorType.vendorType);
   }
 }
