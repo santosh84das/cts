@@ -26,7 +26,7 @@ export class ChequeReceivedComponent implements OnInit {
 
   ngOnInit(): void {
     this.chequesDamageType = [
-      { name: 'Tron', code: 1 },
+      { name: 'Torn', code: 1 },
       { name: 'Printing Missing', code: 2 },
     ];
     this.invoiceId = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
