@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DiscountDetailsRoutingModule } from './discount-details-routing.module';
 import { DiscountDetailsComponent } from './discount-details.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { FormGroup } from '@angular/forms';
 
 @NgModule({
   declarations: [DiscountDetailsComponent],
@@ -10,7 +11,7 @@ import { DropdownModule } from 'primeng/dropdown';
     CommonModule,
     DropdownModule,
     DiscountDetailsRoutingModule,
-
+    FormGroup
   ]
 })
 export class DiscountDetailsModule { }

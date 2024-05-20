@@ -4,6 +4,7 @@ import { tokenDetails } from 'src/app/core/models/token';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { LabelService } from 'src/app/core/services/stamp/label.service';
 import { convertDate } from 'src/utils/dateConversion';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-label',
@@ -12,6 +13,8 @@ import { convertDate } from 'src/utils/dateConversion';
 })
 export class LabelComponent implements OnInit {
 
+  labelEntryForm!: FormGroup;
+  displayInsertModal: boolean | undefined;
   tableActionButton: ActionButtonConfig[] = [];
   tableData!: DynamicTable<tokenDetails>;
   tableQueryParameters!: DynamicTableQueryParameters | any;
@@ -69,5 +72,9 @@ export class LabelComponent implements OnInit {
         );
 
       });
+  }
+
+  showInsertDialog() {
+    this.displayInsertModal = true
   }
 }

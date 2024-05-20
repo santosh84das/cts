@@ -28,7 +28,6 @@ export class StampCategoryTypeDropdownComponent implements OnInit {
   onStampCategorySelected() {
     console.log(this.selectedCategoryType.stampCategory1);
     
-    this.CategoryTypeSelected.emit(this.selectedCategoryType.CategoryType);
+    this.CategoryTypeSelected.emit(this.selectedCategoryType.stampCategory1);
   }
-
 }

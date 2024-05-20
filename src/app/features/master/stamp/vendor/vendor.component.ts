@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'src/app/core/models/dynamic-table';
 import { tokenDetails } from 'src/app/core/models/token';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { VendorService } from 'src/app/core/services/stamp/vendor.service';
 import { convertDate } from 'src/utils/dateConversion';
@@ -12,6 +13,8 @@ import { convertDate } from 'src/utils/dateConversion';
 })
 export class VendorComponent implements OnInit {
 
+  VendorDetailsEntryForm! : FormGroup
+  displayInsertModal : boolean | undefined
   tableActionButton: ActionButtonConfig[] = [];
   tableData!: DynamicTable<tokenDetails>;
   tableQueryParameters!: DynamicTableQueryParameters | any;
@@ -48,6 +51,7 @@ export class VendorComponent implements OnInit {
         if (response.apiResponseStatus == 1) {
             response.result.data.map((item:any) => {
             item.isActive = item.isActive ? "Yes" : "No"
+            item.activeAtGrips = item.activeAtGrips ? "Yes" : "No"
             item.createdAt = convertDate(item.createdAt)
           })
           this.tableData = response.result;
@@ -70,4 +74,13 @@ export class VendorComponent implements OnInit {
 
       });
   }
+
+  showInsertDialog() {
+    this.displayInsertModal = true;
+  }
+
+  onStampCategorySelected() {
+
+  }
+  
 }

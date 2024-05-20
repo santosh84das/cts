@@ -67,9 +67,9 @@ export interface AddStampVendors {
 
 export interface GetStampDiscountDetails {
     discountId?: number;
-    denominationFrom?: number;
-    denominationTo?: number;
-    discount?: number;
+    denominationFrom: number;
+    denominationTo: number;
+    discount: number;
     vendorType?: string;
     stampCategory?: string;
     isActive?: boolean;
@@ -83,3 +83,9 @@ export interface AddStampDiscountDetails {
     vendorType?: string;
     stampCategory?: string;
 }
+
+export interface discountCalculateData {
+    vendorType: string,
+    stampCategory: string,
+    amount: number
+  }

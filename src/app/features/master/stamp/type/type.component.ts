@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'src/app/core/models/dynamic-table';
 import { tokenDetails } from 'src/app/core/models/token';
 import { TypeService } from 'src/app/core/services/stamp/type.service';
@@ -12,6 +13,8 @@ import { convertDate } from 'src/utils/dateConversion';
 })
 export class TypeComponent implements OnInit {
 
+  TypeEntryForm!: FormGroup
+  displayInsertModal: boolean | undefined;
   tableActionButton: ActionButtonConfig[] = [];
   tableData!: DynamicTable<tokenDetails>;
   tableQueryParameters!: DynamicTableQueryParameters | any;
@@ -70,5 +73,9 @@ export class TypeComponent implements OnInit {
         );
 
       });
+  }
+
+  showInsertDialog() {
+    this.displayInsertModal = true;
   }
 }

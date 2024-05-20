@@ -4,6 +4,8 @@ import { tokenDetails } from 'src/app/core/models/token';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { CategoryService } from 'src/app/core/services/stamp/category.service';
 import { convertDate } from 'src/utils/dateConversion';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
@@ -11,22 +13,20 @@ import { convertDate } from 'src/utils/dateConversion';
 })
 export class CategoryComponent implements OnInit {
 
+  categoryEntryForm!: FormGroup;
+  displayInsertModal: boolean | undefined;
   tableActionButton: ActionButtonConfig[] = [];
   tableData!: DynamicTable<tokenDetails>;
   tableQueryParameters!: DynamicTableQueryParameters | any;
+
   constructor(
-    private CategoryService: CategoryService,
+    private categoryService: CategoryService,
     private toastService: ToastService,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
     this.tableActionButton = [
-      // {
-      //   buttonIdentifier: 'edit',
-      //   class: 'p-button-warning p-button-sm',
-      //   icon: 'pi pi-file-edit',
-      //   lable: 'Edit',
-      // },
       {
         buttonIdentifier: 'delete',
         class: 'p-button-danger p-button-sm',
@@ -39,17 +39,28 @@ export class CategoryComponent implements OnInit {
       pageSize: 10,
       pageIndex: 0,
     };
+
+    this.initializeForm();
     this.getAllStampCategories();
   }
+
+  initializeForm(): void {
+    this.categoryEntryForm = this.fb.group({
+      // Define form controls and their initial values
+      categoryName: new FormControl(''),
+      // Add more form controls as needed
+    });
+  }
+
   getAllStampCategories() {
-    this.CategoryService
+    this.categoryService
       .getStampLabelCategories(this.tableQueryParameters)
       .subscribe((response) => {
         if (response.apiResponseStatus == 1) {
           response.result.data.map((item: any) => {
-            item.isActive = item.isActive ? "Yes" : "No"
-            item.createdAt = convertDate(item.createdAt)
-          })
+            item.isActive = item.isActive ? "Yes" : "No";
+            item.createdAt = convertDate(item.createdAt);
+          });
           this.tableData = response.result;
         } else {
           this.toastService.showAlert(
@@ -61,14 +72,20 @@ export class CategoryComponent implements OnInit {
   }
 
   handleButtonClick($event: any) {
-    this.CategoryService.deleteStampCategory($event.rowData.stampCategoryId)
+    this.categoryService.deleteStampCategory($event.rowData.stampCategoryId)
       .subscribe((response) => {
         response.apiResponseStatus == 1 ? this.getAllStampCategories() : this.toastService.showAlert(
           response.message,
           response.apiResponseStatus
         );
-
       });
   }
 
+  showInsertDialog() {
+    this.displayInsertModal = true;
+  }
+
+  onStampCategorySelected() {
+    
+  }
 }
