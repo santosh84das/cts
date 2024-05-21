@@ -66,17 +66,27 @@ export interface micrDetails {
   availableQuantity: number;
 }
 
-export interface invoiceDetailsList{
+export interface invoiceDetailsList {
   id: number,
   quantity: number;
   chequeInvoiceSeries: ChequeInvoiceSeries[];
 }
 
-export interface ChequeInvoiceSeries{
-  
-invoiceDeatilsId : number,
-quantity : number ,
-series: string,
-treasuryCode: string,
-micrCode: string
+export interface ChequeInvoiceSeries {
+  isVisible: boolean;
+  invoiceDeatilsId: number,
+  quantity: number,
+  series: string,
+  treasuryCode: string,
+  micrCode: string
+}
+
+export interface ChequeReceive{
+  invoiceId:number;
+  chequeReceivedDamagedDetails: chequeReceivedDamagedDetails[];
+}
+export interface chequeReceivedDamagedDetails{
+  chequeEntryId: number;
+  damageIndex: string ;
+  damageType: number; 
 }
