@@ -13,7 +13,6 @@ import { AddStampCategory, GetStampCategories } from 'src/app/core/models/stamp'
 })
 export class CategoryComponent implements OnInit {
 
-  stampCategory!: string;
   categoryEntryForm!: FormGroup;
   displayInsertModal: boolean | undefined;
   tableActionButton: ActionButtonConfig[] = [];
@@ -48,7 +47,8 @@ export class CategoryComponent implements OnInit {
 
   initializeForm(): void {
     this.categoryEntryForm = this.fb.group({
-      description: ['', Validators.required]
+      description: ['', Validators.required],
+      stampCategory1: ['', Validators.required]
     });
   }
 
@@ -85,27 +85,24 @@ export class CategoryComponent implements OnInit {
     this.displayInsertModal = true;
   }
 
-  onStampCategorySelected($event: any) {
-    this.stampCategory = $event;
-  }
 
   addCategory() {
     if (this.categoryEntryForm.valid) {
       this.categoryEntryPayload = {
         description: this.categoryEntryForm.value.description,
-        stampCategory1: this.stampCategory
+        stampCategory1: this.categoryEntryForm.value.stampCategory1
       };
       console.log(this.categoryEntryPayload);
 
-      // this.categoryService.addNewStampCategory(this.categoryEntryPayload).subscribe((response) => {
-      //   if (response.apiResponseStatus == 1) {
-      //     this.toastService.showAlert('Stamp Category added successfully', 1);
-      //     this.displayInsertModal = false;
-      //     this.getAllStampCategories();
-      //   } else {
-      //     this.toastService.showAlert(response.message, response.apiResponseStatus);
-      //   }
-      // });
+      this.categoryService.addNewStampCategory(this.categoryEntryPayload).subscribe((response) => {
+        if (response.apiResponseStatus == 1) {
+          this.toastService.showAlert(response.message, 1);
+          this.displayInsertModal = false;
+          this.getAllStampCategories();
+        } else {
+          this.toastService.showAlert(response.message, response.apiResponseStatus);
+        }
+      });
     } else {
       this.toastService.showAlert('Please fill all the required fields', 0);
     }

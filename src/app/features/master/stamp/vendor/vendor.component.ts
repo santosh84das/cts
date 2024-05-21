@@ -99,15 +99,15 @@ export class VendorComponent implements OnInit {
       };
       console.log(this.vendorEntryPayload);
 
-      // this.VendorService.addNewStampVendor(this.vendorEntryPayload).subscribe((response) => {
-      //   if (response.apiResponseStatus == 1) {
-      //     this.toastService.showAlert('Vendor details added successfully', 1);
-      //     this.displayInsertModal = false;
-      //     this.getAllStampVendors();
-      //   } else {
-      //     this.toastService.showAlert(response.message, response.apiResponseStatus);
-      //   }
-      // });
+      this.VendorService.addNewStampVendor(this.vendorEntryPayload).subscribe((response) => {
+        if (response.apiResponseStatus == 1) {
+          this.toastService.showAlert('Vendor details added successfully', 1);
+          this.displayInsertModal = false;
+          this.getAllStampVendors();
+        } else {
+          this.toastService.showAlert(response.message, response.apiResponseStatus);
+        }
+      });
     } else {
       this.toastService.showAlert('Please fill all the required fields', 0);
     }

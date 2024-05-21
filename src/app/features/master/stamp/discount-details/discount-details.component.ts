@@ -136,15 +136,15 @@ export class DiscountDetailsComponent implements OnInit {
       };
       console.log(this.discountDetailsEntryPayload);
 
-      // this.DiscountDetailsService.addNewStampDiscountDetail(this.discountDetailsEntryPayload).subscribe((response) => {
-      //   if (response.apiResponseStatus == 1) {
-      //     this.toastService.showAlert('Discount details added successfully', 1);
-      //     this.displayInsertModal = false;
-      //     this.getAllStampDiscountDetails();
-      //   } else {
-      //     this.toastService.showAlert(response.message, response.apiResponseStatus);
-      //   }
-      // });
+      this.DiscountDetailsService.addNewStampDiscountDetail(this.discountDetailsEntryPayload).subscribe((response) => {
+        if (response.apiResponseStatus == 1) {
+          this.toastService.showAlert('Discount details added successfully', 1);
+          this.displayInsertModal = false;
+          this.getAllStampDiscountDetails();
+        } else {
+          this.toastService.showAlert(response.message, response.apiResponseStatus);
+        }
+      });
     } else {
       this.toastService.showAlert('Please fill all the required fields', 0);
     }

@@ -95,15 +95,15 @@ export class TypeComponent implements OnInit {
       };
       console.log(this.typeEntryPayload);
 
-      // this.TypeService.addNewStampType(this.typeEntryPayload).subscribe((response) => {
-      //   if (response.apiResponseStatus == 1) {
-      //     this.toastService.showAlert('Stamp Type added successfully', 1);
-      //     this.displayInsertModal = false;
-      //     this.getAllStampTypes();
-      //   } else {
-      //     this.toastService.showAlert(response.message, response.apiResponseStatus);
-      //   }
-      // });
+      this.TypeService.addNewStampType(this.typeEntryPayload).subscribe((response) => {
+        if (response.apiResponseStatus == 1) {
+          this.toastService.showAlert('Stamp Type added successfully', 1);
+          this.displayInsertModal = false;
+          this.getAllStampTypes();
+        } else {
+          this.toastService.showAlert(response.message, response.apiResponseStatus);
+        }
+      });
     } else {
       this.toastService.showAlert('Please fill all the required fields', 0);
     }

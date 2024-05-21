@@ -71,8 +71,8 @@ export interface GetStampDiscountDetails {
     vendorType: string;
     stampCategory: string;
     isActive?: boolean;
-    createdAt?: null;
-    createdBy?: null;
+    createdAt?: string;
+    createdBy?: number;
 }
 export interface AddStampDiscountDetails {
     denominationFrom: number;
@@ -80,4 +80,17 @@ export interface AddStampDiscountDetails {
     discount: number;
     vendorType: string;
     stampCategory: string;
+}
+
+export interface StampCombination {
+        stampCombinationId: number,
+        stampCategory1: string,
+        description: string,
+        denomination: number,
+        stampDenominationId: number,
+        noLabelPerSheet: number,
+        stampLabelId: number,
+        isActive: true,
+        createdAt?: string;
+        createdBy?: number;
 }

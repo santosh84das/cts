@@ -96,15 +96,15 @@ export class LabelComponent implements OnInit {
       };
       console.log(this.labelEntryPayload);
 
-      // this.LabelService.addNewStampLabel(this.labelEntryPayload).subscribe((response) => {
-      //   if (response.apiResponseStatus == 1) {
-      //     this.toastService.showAlert('Stamp Label added successfully', 1);
-      //     this.displayInsertModal = false;
-      //     this.getAllStampLabels();
-      //   } else {
-      //     this.toastService.showAlert(response.message, response.apiResponseStatus);
-      //   }
-      // });
+      this.LabelService.addNewStampLabel(this.labelEntryPayload).subscribe((response) => {
+        if (response.apiResponseStatus == 1) {
+          this.toastService.showAlert('Stamp Label added successfully', 1);
+          this.displayInsertModal = false;
+          this.getAllStampLabels();
+        } else {
+          this.toastService.showAlert(response.message, response.apiResponseStatus);
+        }
+      });
     } else {
       this.toastService.showAlert('Please fill all the required fields', 0);
     }
