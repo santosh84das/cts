@@ -6,6 +6,8 @@ import { StampsComponent } from './stamps.component';
 import { IndentCaptureComponent } from './indent-capture/indent-capture.component';
 import { OptionCardModule } from 'src/app/shared/modules/option-card/option-card.module';
 import { InvoiceCaptureComponent } from './invoice-capture/invoice-capture.component';
+import { CommonHeaderModule } from 'src/app/shared/modules/common-header/common-header.module';
+import { ButtonModule } from 'primeng/button';
 
 
 @NgModule({
@@ -16,8 +18,10 @@ import { InvoiceCaptureComponent } from './invoice-capture/invoice-capture.compo
   ],
   imports: [
     CommonModule,
+    StampsRoutingModule,
     OptionCardModule,
-    StampsRoutingModule
+    ButtonModule,
+    CommonHeaderModule
   ]
 })
 export class StampsModule { }
