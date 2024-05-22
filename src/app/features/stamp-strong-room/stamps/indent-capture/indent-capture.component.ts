@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndentCaptureComponent implements OnInit {
 
+  displayInsertModal?: boolean;
   constructor() { }
 
   ngOnInit(): void {
   }
 
+
+  showInsertDialog() {
+    this.displayInsertModal = true;
+  }
+
+
+  addStampIndent() {
+    
+  }
 }
