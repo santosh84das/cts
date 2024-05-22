@@ -86,7 +86,7 @@ export interface ChequeReceive{
   chequeReceivedDamagedDetails: chequeReceivedDamagedDetails[];
 }
 export interface chequeReceivedDamagedDetails{
-  chequeEntryId: number;
+  invoiceDeatilsId: number;
   damageIndex: string ;
   damageType: number; 
 }

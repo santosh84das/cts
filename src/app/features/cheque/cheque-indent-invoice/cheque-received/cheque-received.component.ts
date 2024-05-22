@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ChequeInvoiceSeries, chequeReceivedDamagedDetails, invoiceDetailsList } from 'src/app/core/models/cheque';
 import { ChequeInvoiceService } from 'src/app/core/services/cheque/cheque-invoice.service';
 import { ChequeReceiveService } from 'src/app/core/services/cheque/cheque-receive.service';
@@ -24,7 +24,7 @@ export class ChequeReceivedComponent implements OnInit {
   invoiceDetailsList!: invoiceDetailsList;
   chequesDamageType!: chequeDamageType[];
   chequesDamageType1: chequeReceivedDamagedDetails[]=[];
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private chequeinvoiceservice: ChequeInvoiceService, private toastService: ToastService, private chequeReceiveService: ChequeReceiveService) { }
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private chequeinvoiceservice: ChequeInvoiceService, private toastService: ToastService, private chequeReceiveService: ChequeReceiveService , private router: Router) { }
 
   ngOnInit(): void {
     this.chequesDamageType = [
@@ -33,14 +33,14 @@ export class ChequeReceivedComponent implements OnInit {
     ];
     this.invoiceId = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
     this.getInvoiceDetails(this.invoiceId);
-    this.receivedForm = this.fb.group({
-      chequeDamage: this.fb.array([])
-    })
-    this.initForm();
+    // this.receivedForm = this.fb.group({
+    //   chequeDamage: this.fb.array([])
+    // })
+    // this.initForm();
 
   }
   initDamagedChequeEntry(item:ChequeInvoiceSeries,index:number) {
-    this.chequesDamageType1[index] = {chequeEntryId:item.invoiceDeatilsId,damageType:0,damageIndex:''};
+    this.chequesDamageType1[index] = {invoiceDeatilsId:item.invoiceDeatilsId,damageType:0,damageIndex:''};
     console.log(this.chequesDamageType1);
     
   }
@@ -54,18 +54,18 @@ export class ChequeReceivedComponent implements OnInit {
       }
     });
   }
-  get chequeDamage(): FormArray {
-    return this.receivedForm.get('chequeDamage') as FormArray;
-  }
+  // get chequeDamage(): FormArray {
+  //   return this.receivedForm.get('chequeDamage') as FormArray;
+  // }
 
-  initForm(): void {
-    this.invoiceDetailsList.chequeInvoiceSeries.forEach(item => {
-      this.chequeDamage.push(this.fb.group({
-        damage_type: new FormControl(''),
-        series_range: new FormControl('')
-      }));
-    });
-  }
+  // initForm(): void {
+  //   this.invoiceDetailsList.chequeInvoiceSeries.forEach(item => {
+  //     this.chequeDamage.push(this.fb.group({
+  //       damage_type: new FormControl(''),
+  //       series_range: new FormControl('')
+  //     }));
+  //   });
+  // }
 
 
   addDamagedChequeEntry(item: any, i: number) {
@@ -78,26 +78,23 @@ export class ChequeReceivedComponent implements OnInit {
   }
 
   rcvFormsubmit() {
-    console.log('-nnn', this.chequesDamageType1);
-    // return;
-    
-    if (this.receivedForm.valid) {
-      const payload : any = this.chequesDamageType1;
+    const payload = {
+      invoiceId: this.invoiceId || 0,
+      chequeReceivedDamagedDetails: this.chequesDamageType1
+    };
       console.log('----->', payload);
-      // return;
       this.chequeReceiveService.saveChequeReceive(payload).subscribe(res => {
         if (res.apiResponseStatus == 1) {
-          this.receivedForm.reset();
           this.toastService.showAlert(
             res.message,
             res.apiResponseStatus,
           );
+          this.router.navigate(['cheque/cheque-indent-invoice']);
         } else {
           this.toastService.showError(res.message);
         }
 
       })
-    }
   }
 }
 
