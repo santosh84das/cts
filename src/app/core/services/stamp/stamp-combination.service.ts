@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
 import { Observable, catchError } from 'rxjs';
 import { IapiResponce } from '../../models/iapi-responce';
-import { StampCombination } from '../../models/stamp';
+import { GetStampCombinations } from '../../models/stamp';
 import { ToastService } from '../toast.service';
 
 @Injectable({
@@ -15,9 +15,9 @@ export class StampCombinationService {
 
   getStampCombinationList(
     queryParameters: DynamicTableQueryParameters
-  ): Observable<IapiResponce<StampCombination>> {
+  ): Observable<IapiResponce<GetStampCombinations>> {
     return this.http
-      .patch<IapiResponce<StampCombination>>(
+      .patch<IapiResponce<GetStampCombinations>>(
         'v1/StampMaster/StampCombinationList',
         queryParameters
       )

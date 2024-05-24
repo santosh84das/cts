@@ -82,7 +82,7 @@ export interface AddStampDiscountDetails {
     stampCategory: string;
 }
 
-export interface StampCombination {
+export interface GetStampCombinations {
         stampCombinationId: number,
         stampCategory1: string,
         description: string,
@@ -94,3 +94,39 @@ export interface StampCombination {
         createdAt?: string;
         createdBy?: number;
 }
+
+
+export interface GetStampIndents {
+    stampIndentId: number;
+    memoNumber: string;
+    memoDate: string;
+    remarks: string;
+    raisedByTreasury: number;
+    raisedToTreasury: number;
+    stmapCategory: string;
+    description: string;
+    denomination: number;
+    labelPerSheet: number;
+    sheet: number;
+    label: number;
+    quantity: number;
+    amount: number;
+    status: string;
+    createdAt: string;
+  }
+
+  export interface AddStampIndent {
+    memoNumber: string;
+    memoDate: string;
+    remarks: string;
+    raisedByTreasury: number;
+    raisedToTreasury: number;
+    stmapCategory: string;
+    description: string;
+    denomination: number;
+    labelPerSheet: number;
+    sheet: number;
+    label: number;
+    quantity: number;
+    amount: number;
+  }

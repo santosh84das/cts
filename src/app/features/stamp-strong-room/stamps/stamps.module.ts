@@ -9,21 +9,30 @@ import { InvoiceCaptureComponent } from './invoice-capture/invoice-capture.compo
 import { CommonHeaderModule } from 'src/app/shared/modules/common-header/common-header.module';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic-table.module';
+import { StampCombinationDropdownComponent } from 'src/app/shared/modules/stamp-combination-dropdown/stamp-combination-dropdown.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 @NgModule({
   declarations: [
     StampsComponent,
     IndentCaptureComponent,
-    InvoiceCaptureComponent
+    InvoiceCaptureComponent,
+    StampCombinationDropdownComponent
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     StampsRoutingModule,
+    DynamicTableModule,
     OptionCardModule,
     ButtonModule,
     CommonHeaderModule,
-    DialogModule
-  ]
+    DropdownModule,
+    DialogModule,
+    FormsModule
+   ]
 })
 export class StampsModule { }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
-import { GetStampCategories, StampCombination } from 'src/app/core/models/stamp';
+import { GetStampCombinations } from 'src/app/core/models/stamp';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { convertDate } from 'src/utils/dateConversion';
 import { StampCombinationService } from 'src/app/core/services/stamp/stamp-combination.service';
@@ -13,7 +13,7 @@ import { StampCombinationService } from 'src/app/core/services/stamp/stamp-combi
 export class CombinationComponent implements OnInit {
 
   tableActionButton: ActionButtonConfig[] = [];
-  tableData!: DynamicTable<GetStampCategories>;
+  tableData!: DynamicTable<GetStampCombinations>;
   tableQueryParameters!: DynamicTableQueryParameters | any;
 
   constructor(
@@ -41,6 +41,8 @@ export class CombinationComponent implements OnInit {
   }
 
   getAllStampCombination() {
+    console.log(this.tableQueryParameters);
+    
     this.stampCombinationService
       .getStampCombinationList(this.tableQueryParameters)
       .subscribe((response) => {
@@ -67,5 +69,5 @@ export class CombinationComponent implements OnInit {
           response.apiResponseStatus
         );
       });
-    }
+  }
 }
