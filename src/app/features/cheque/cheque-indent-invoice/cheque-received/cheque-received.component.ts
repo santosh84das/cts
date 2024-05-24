@@ -42,6 +42,7 @@ export class ChequeReceivedComponent implements OnInit {
   initDamagedChequeEntry(item:ChequeInvoiceSeries,index:number) {
     this.chequesDamageType1[index] = {invoiceDeatilsId:item.invoiceDeatilsId,damageType:0,damageIndex:''};
     console.log(this.chequesDamageType1);
+    item.isVisible = true;
     
   }
   getInvoiceDetails(id: number) {
@@ -73,7 +74,11 @@ export class ChequeReceivedComponent implements OnInit {
   
   }
   cancelDamagedChequeEntry(item: any, index:number) {
+    if (this.chequesDamageType1[index]) {
+      this.chequesDamageType1.splice(index, 1);
+    }
     item.isVisible = false;
+    // item.isVisible = false;
     // (this.receivedForm.get('chequeDamage') as FormArray).removeAt(index);
   }
 

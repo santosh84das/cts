@@ -154,9 +154,6 @@ export class NewInvoiceComponent implements OnInit {
   }
 
   confirmInvoiceApproval() {
-    console.log('enter the form');
-    console.log('dtdtdtd', this.invoiceForm);
-    
     if (this.invoiceForm) {
       const chequeIndentId = this.invoiceForm.get('indentId')!.value;
       const invoiceDate = this.invoiceForm.get('invoiceDate')!.value;
@@ -173,11 +170,7 @@ export class NewInvoiceComponent implements OnInit {
       //   }
       // );
       const chequeInvoiceDeatils: InvoiceDetails[] = [{micrCode: this.invoiceForm.get('micr_code')?.value, quantity: this.invoiceForm.get('quantity')?.value}];
-      console.log(chequeInvoiceDeatils);
-      
       this.indentInvoiceDetails = { chequeIndentId, invoiceDate, invoiceNumber, chequeInvoiceDeatils }
-      console.log(this.indentInvoiceDetails);
-
       this.chequeIndentService.saveChequeIndentInvoice(this.indentInvoiceDetails).subscribe(res => {
         if (res.apiResponseStatus == 1) {
           this.invoiceForm.reset();
