@@ -1,8 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
 import { StampCombinationService } from 'src/app/core/services/stamp/stamp-combination.service';
 import { ToastService } from 'src/app/core/services/toast.service';
-import { convertDate } from 'src/utils/dateConversion';
 
 @Component({
   selector: 'app-stamp-combination-dropdown',
@@ -12,28 +10,31 @@ import { convertDate } from 'src/utils/dateConversion';
 export class StampCombinationDropdownComponent implements OnInit {
 
   CombinationTypeList: any[] = [];
-  selectedCombinationType:any;
-  tableQueryParameters : any = {};
-  @Output() StampCombinationSelected = new EventEmitter<string>();
+  selectedCombinationType: any;
+  data: any[] = [];
+  @Output() StampCombinationSelected = new EventEmitter<any>();
 
   constructor(private toastService: ToastService, private stampCombinationService: StampCombinationService) { }
   ngOnInit(): void {
     this.getAllStampCombination()
   }
 
+  formatResultItem(item: any): any {
+    // return { combination: `${item.stampCombinationId}-${item.stampCategory1}-${item.description}-${item.denomination}-${item.noLabelPerSheet}` };
+    return { combination: `${item.stampCombinationId} | Category: ${item.stampCategory1} | Description: ${item.description} | Denomination: ${item.denomination} | No of Labels per Sheet: ${item.noLabelPerSheet}` }
+  }
   getAllStampCombination() {
-    
-    console.log(this.tableQueryParameters);
+
     this.stampCombinationService
-    .getStampCombinationList(this.tableQueryParameters)
-    .subscribe((response) => {
-        console.log(response)
+      .getAllStampCombinations()
+      .subscribe((response) => {
         if (response.apiResponseStatus == 1) {
-          response.result.data.map((item: any) => {
-            item.isActive = item.isActive ? "Yes" : "No";
-            item.createdAt && (item.createdAt = convertDate(item.createdAt));
+          this.data = response.result;
+          response.result.map((item: any) => {
+
+            this.CombinationTypeList.push(this.formatResultItem(item))
+
           });
-          this.CombinationTypeList = response.result.data;
         } else {
           this.toastService.showAlert(
             response.message,
@@ -42,9 +43,17 @@ export class StampCombinationDropdownComponent implements OnInit {
         }
       });
   }
-  
-  onStampCombinationSelected() {    
-    this.StampCombinationSelected.emit(this.selectedCombinationType.stampCombinationId);
+
+  extractFirstNumber(input: string): number | null {
+    const match = input.match(/^\d+/);
+    return match ? parseInt(match[0], 10) : null;
+  }
+
+  onStampCombinationSelected() {
+    const val = this.data.filter((item) => {
+      return item.stampCombinationId == this.extractFirstNumber(this.selectedCombinationType.combination)
+    })    
+    this.StampCombinationSelected.emit(val[0]);
   }
 
 }

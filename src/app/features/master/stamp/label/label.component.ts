@@ -60,7 +60,7 @@ export class LabelComponent implements OnInit {
     this.LabelService
       .getStampLabelList(this.tableQueryParameters)
       .subscribe((response) => {
-        if (response.apiResponseStatus == 1) {
+        if (response.apiResponseStatus == 1 || response.apiResponseStatus == 3) {
           response.result.data.map((item: any) => {
             item.isActive = item.isActive ? "Yes" : "No"
             item.createdAt = convertDate(item.createdAt)

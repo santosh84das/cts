@@ -46,7 +46,7 @@ export class CombinationComponent implements OnInit {
     this.stampCombinationService
       .getStampCombinationList(this.tableQueryParameters)
       .subscribe((response) => {
-        if (response.apiResponseStatus == 1) {
+        if (response.apiResponseStatus == 1 || response.apiResponseStatus == 3) {
           response.result.data.map((item: any) => {
             item.isActive = item.isActive ? "Yes" : "No";
             item.createdAt && (item.createdAt = convertDate(item.createdAt));

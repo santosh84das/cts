@@ -59,7 +59,7 @@ export class VendorComponent implements OnInit {
 
   getAllStampVendors() {
     this.VendorService.getStampVendorList(this.tableQueryParameters).subscribe((response) => {
-      if (response.apiResponseStatus == 1) {
+      if (response.apiResponseStatus == 1 || response.apiResponseStatus == 3) {
         response.result.data.map((item: any) => {
           item.isActive = item.isActive ? "Yes" : "No";
           item.activeAtGrips = item.activeAtGrips ? "Yes" : "No";

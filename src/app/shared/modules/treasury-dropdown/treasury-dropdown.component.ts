@@ -19,16 +19,14 @@ export class TreasuryDropdownComponent implements OnInit {
     this.masterService.getTreasuries().subscribe((response) => {
       if (response.apiResponseStatus == 1) {
         this.treasuryList = response.result
-        console.log(this.treasuryList);
+        // console.log(this.treasuryList);
       } else {
         this.toastService.showError(response.message);
       }
     })
   }
 
-  onTreasurySelected() {
-    console.log(this.selectedTreasuryCode);
-    
+  onTreasurySelected() {    
     this.treasurySelected.emit(this.selectedTreasuryCode.code);
   }
 

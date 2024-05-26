@@ -47,14 +47,14 @@
     [baseZIndex]="10000">
     <form [formGroup]="discountDetailsEntryForm" class="flex flex-column gap-4 mt-3">
         <div class="flex gap-2">
-            <div class="col-6 p-0">
+            <div class="col-6 p-0 flex-auto">
                 <label for="From" class="block mb-1 text-color text-lg">From</label>
                 <span class="p-input-icon-left w-full"><i class="pi pi-angle-double-right"></i>
                     <input formControlName="denominationFrom" type="number" pinputtext=""
                         class="p-inputtext p-component p-element w-full">
                 </span>
             </div>
-            <div class="col-6 p-0">
+            <div class="col-6 p-0 flex-auto">
                 <label for="To" class="block mb-1 text-color text-lg">To</label>
                 <span class="p-input-icon-left w-full"><i class="pi pi-stop-circle"></i>
                     <input formControlName="denominationTo" type="number" pinputtext=""
@@ -63,18 +63,18 @@
             </div>
         </div>
         <div class="flex gap-2">
-            <div class="col-6 p-0">
+            <div class="col-6 p-0 flex-auto">
                 <label for="Vendor Type" class="block mb-1 text-color text-lg">Vendor Type</label>
                 <app-vendor-type-dropdown class="flex-auto" (vendorTypeSelected)="onVendorTypeSelected($event)"></app-vendor-type-dropdown>
             </div>
-            <div class="col-6 p-0">
+            <div class="col-6 p-0 flex-auto">
                 <label for="Stamp Category" class="block mb-1 text-color text-lg">Stamp Category</label>
                 <app-stamp-category-type-dropdown (CategoryTypeSelected)="onStampCategorySelected($event)"
                     class="flex-auto"></app-stamp-category-type-dropdown>
             </div>
         </div>
         <div class="flex gap-2">
-            <div class="col-12 p-0">
+            <div class="col-12 p-0 flex-auto">
                 <label for="Discount" class="block mb-1 text-color text-lg">Discount</label>
                 <input formControlName="discount" type="number" pinputtext="" placeholder="Eg: 20"
                     class="p-inputtext p-component p-element w-full">

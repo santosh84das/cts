@@ -119,14 +119,33 @@ export interface GetStampIndents {
     memoNumber: string;
     memoDate: string;
     remarks: string;
-    raisedByTreasury: number;
-    raisedToTreasury: number;
-    stmapCategory: string;
-    description: string;
-    denomination: number;
-    labelPerSheet: number;
+    stampCombinationId: number;
+    raisedToTreasuryCode: string
     sheet: number;
     label: number;
     quantity: number;
     amount: number;
+  }
+
+  export interface GetStampInvoices {
+    stampIndentId: number;
+    memoNumber: string;
+    memoDate: string;
+    remarks: string;
+    raisedToTreasuryCode: string;
+    stmapCategory: string;
+    description: string;
+    denomination: number;
+    labelPerSheet: number;
+    indentedSheet: number;
+    indentedLabel: number;
+    sheet: number;
+    label: number;
+    quantity: number;
+    amount: number;
+    status: number;
+    stampInvoiceId: number;
+    invoiceNumber: string;
+    invoiceDate: string;
+    createdBy: number;
   }

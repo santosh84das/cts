@@ -28,6 +28,17 @@ export class StampCombinationService {
       );
   }
 
+  getAllStampCombinations(): Observable<IapiResponce<GetStampCombinations>> {
+    return this.http
+      .get<IapiResponce<GetStampCombinations>>(
+        'v1/StampMaster/GetALLStampCombinations')
+      .pipe(
+        catchError((error) => {
+          throw this.toastService.showError(error.message);
+        })
+      );
+  }
+
   deleteStampCombination(id: Number): Observable<IapiResponce> {
     return this.http.delete<IapiResponce>('v1/StampMaster/DeleteStampCombinationById?id='+id).pipe(
       catchError((error) => {

@@ -1,1 +1,50 @@
-<p>invoice-capture works!</p>
+<div class="grid">
+    <div class="col-12">
+        <app-common-header [headerName]="'Invoice Capture'" [imgSrc]="'assets/layout/images/icons/invoice-entry.png'">
+        </app-common-header>
+    </div>
+    <div class="col-12">
+        <div class="grid">
+            <div class="col-12 lg:col-6 p-3">
+                <div class="transition-colors transition-duration-500 p-3 border-round border-2 cursor-pointer"
+                [ngClass]="{
+                    'hover:shadow-2 surface-card border-transparent hover:bg-primary-100 hover:border-primary':listType!== 'indent',
+                    'bg-primary-100 border-primary': listType == 'indent'
+                  }" (click)="changeDynamicTable('indent')">
+                    <!--  -->
+                    <div class="flex align-items-center justify-content-between">
+                        <div>
+                            <p class="mt-1 mb-0 text-600 text-xl">Incoming Indents</p>
+                        </div>
+                        <div>
+                            <img src="assets/layout/images/icons/cheque-indent.png" height="60">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 lg:col-6 p-3">
+                <div class="transition-colors transition-duration-500 p-3 border-round border-2 cursor-pointer"
+                [ngClass]="{
+                    'hover:shadow-2 surface-card border-transparent hover:bg-primary-100 hover:border-primary':listType!=='invoice',
+                    'bg-primary-100 border-primary': listType=== 'invoice'
+                  }" (click)="changeDynamicTable('invoice')" >
+                    <!--  -->
+                    <div class="flex align-items-center justify-content-between">
+                        <div>
+                            <p class="mt-1 mb-0 text-600 text-xl">Invoice History</p>
+                        </div>
+                        <div>
+                            <img src="assets/layout/images/icons/invoice-history.png" height="60">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <app-dynamic-table (actionButtonClicked)="handleButtonClick($event)" [numberRowsShown]="10"
+            rowSelectionMode="multiple" [rowsPerPageOptions]="[10,30,50]" [actionButtons]="tableActionButton"
+            [headers]="tableData!.headers" [data]="tableData.data" [dataCount]="tableData.dataCount">
+        </app-dynamic-table>
+    </div>
+</div>

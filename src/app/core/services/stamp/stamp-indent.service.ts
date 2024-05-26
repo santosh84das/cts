@@ -4,7 +4,7 @@ import { ToastService } from '../toast.service';
 import { DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
 import { IapiResponce } from '../../models/iapi-responce';
 import { Observable, catchError } from 'rxjs';
-import { AddStampIndent, GetStampCategories } from '../../models/stamp';
+import { AddStampIndent, GetStampIndents } from '../../models/stamp';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,9 +14,9 @@ export class StampIndentService {
 
   getAllStampIndents(
     queryParameters: DynamicTableQueryParameters
-  ): Observable<IapiResponce<GetStampCategories>> {
+  ): Observable<IapiResponce<GetStampIndents>> {
     return this.http
-      .patch<IapiResponce<GetStampCategories>>(
+      .patch<IapiResponce<GetStampIndents>>(
         'v1/Stamp/StampIndentList',
         queryParameters
       )
@@ -34,8 +34,8 @@ export class StampIndentService {
       })
     );
   }
-  deleteStampIndent(id: Number): Observable<IapiResponce> {
-    return this.http.delete<IapiResponce>('v1/Stamp/DeleteStampIndentById?id=' + id).pipe(
+  getStampIndentDetails(id: number): Observable<IapiResponce<GetStampIndents>> {
+    return this.http.get<IapiResponce>('v1/Stamp/GetStampIndentById?id=' + id).pipe(
       catchError((error) => {
         throw this.toastService.showError(error.message);
       })

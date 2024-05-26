@@ -13,84 +13,89 @@
     </div>
 </div>
 
-<p-dialog header="Stamp Indent" [(visible)]="displayInsertModal" [modal]="true" [style]="{width: '30vw'}"
+<p-dialog header="Stamp Indent" [(visible)]="displayInsertModal" [modal]="true" [style]="{width: '40vw'}"
     [baseZIndex]="10000">
-    <form  class="flex flex-column gap-4 mt-3">
+    <form [formGroup]="stampIndentForm" class="flex flex-column gap-4 mt-3">
         <div class="flex gap-2">
-            <div class="col-6 p-0">
+            <div class="col-6 p-0 flex-auto">
                 <label for="Memo No:" class="block mb-1 text-color text-lg">Memo No:</label>
-                <input  type="text" pinputtext="" class="p-inputtext p-component p-element w-full">
+                <input type="text" pinputtext="" formControlName="memoNo" placeholder="Eg: MEMO5256"
+                    class="p-inputtext p-component p-element w-full">
             </div>
-            <div class="col-6 p-0">
+            <div class="col-6 p-0 flex-auto">
                 <label for="Memo Date" class="block mb-1 text-color text-lg">Memo Date</label>
-                <input  type="date" pinputtext="" class="p-inputtext p-component p-element w-full">
+                <p-calendar class="p-component p-element w-full" formControlName="memoDate" placeholder="dd/mm/yyyy"
+                    appendTo="body" [showIcon]="true" inputId="icon"></p-calendar>
             </div>
         </div>
         <div class="flex gap-2">
-            <div class="col-6 p-0">
-                <label for="Category" class="block mb-1 text-color text-lg">Category</label>
-                <!-- <input  type="text" pinputtext="" class="p-inputtext p-component p-element w-full"> -->
-        <app-stamp-combination-dropdown (StampCombinationSelected)="onStampCombinationSelected($event)"></app-stamp-combination-dropdown>
+            <div class="col-6 p-0 flex-auto">
+                <label for="To Treasury" class="block mb-1 text-color text-lg">To Treasury (Default: SUPERINTENDENT)</label>
+                <app-treasury-dropdown (treasurySelected)="onTreasurySelected($event)"></app-treasury-dropdown>
             </div>
-            <div class="col-6 p-0">
+            <div class="col-6 p-0 flex-auto">
                 <label for="Description" class="block mb-1 text-color text-lg">Description</label>
-                <input  type="text" pinputtext="" class="p-inputtext p-component p-element w-full">
+                <input type="text" pinputtext="" [value]="description" readonly
+                class="p-inputtext p-component p-element w-full">
             </div>
         </div>
         <div class="flex gap-2">
-            <div class="col-6 p-0">
+            <div class="col-12 p-0 flex-auto">
+                <label for="Category" class="block mb-1 text-color text-lg">Category</label>
+                <app-stamp-combination-dropdown
+                    (StampCombinationSelected)="onStampCombinationSelected($event)"></app-stamp-combination-dropdown>
+            </div>    
+        </div>
+        <div class="flex gap-2">
+            <div class="col-6 p-0 flex-auto">
                 <label for="Denomination (Rs.)" class="block mb-1 text-color text-lg">Denomination (Rs.)</label>
-                <input  type="text" pinputtext="" class="p-inputtext p-component p-element w-full">
+                <input type="number" pinputtext="" [value]="denomination" readonly
+                    class="p-inputtext p-component p-element w-full">
             </div>
-            <div class="col-6 p-0">
+            <div class="col-6 p-0 flex-auto">
                 <label for="Label/Sheet" class="block mb-1 text-color text-lg">Label/Sheet</label>
-                <input  type="text" pinputtext="" class="p-inputtext p-component p-element w-full">
+                <input type="text" pinputtext="" [value]="labelPerSheet" readonly
+                    class="p-inputtext p-component p-element w-full">
             </div>
         </div>
         <div class="flex gap-2">
-            <div class="col-6 p-0">
+            <div class="col-6 p-0 flex-auto">
                 <label for="No: of Sheets" class="block mb-1 text-color text-lg">No: of Sheets</label>
-                <input  type="text" pinputtext="" placeholder="Eg: 10" class="p-inputtext p-component p-element w-full">
+                <input type="number" pinputtext="" formControlName="noOfSheets" [(ngModel)]="sheet" (ngModelChange)="sheetSelected($event)" placeholder="Eg: 10"
+                    class="p-inputtext p-component p-element w-full">
             </div>
-            <div class="col-6 p-0">
+            <div class="col-6 p-0 flex-auto">
                 <label for="No: of Labels" class="block mb-1 text-color text-lg">No: of Labels</label>
-                <input  type="text" pinputtext="" placeholder="Eg: 10" class="p-inputtext p-component p-element w-full">
+                <input type="number" pinputtext="" formControlName="noOfLabels" [(ngModel)]="label" (ngModelChange)="labelSelected($event)" placeholder="Eg: 10"
+                    class="p-inputtext p-component p-element w-full">
             </div>
         </div>
         <div class="flex gap-2">
-            <div class="col-6 p-0">
+            <div class="col-6 p-0 flex-auto">
                 <label for="Quantity" class="block mb-1 text-color text-lg">Quantity</label>
-                <input  type="text" pinputtext="" class="p-inputtext p-component p-element w-full">
+                <input type="text" pinputtext="" readonly [value]="quantity"
+                    class="p-inputtext p-component p-element w-full">
             </div>
-            <div class="col-6 p-0">
+            <div class="col-6 p-0 flex-auto">
                 <label for="Amount (Rs.)" class="block mb-1 text-color text-lg">Amount (Rs.)</label>
-                <input  type="text" pinputtext="" class="p-inputtext p-component p-element w-full">
+                <input type="text" pinputtext="" readonly [value]="amount"
+                    class="p-inputtext p-component p-element w-full">
             </div>
         </div>
         <div class="flex gap-2">
-            <div class="col-12 p-0">
+            <div class="col-12 p-0 flex-auto">
                 <label for="Remarks" class="block mb-1 text-color text-lg">Remarks</label>
-                <textarea  type="text" pinputtext="" placeholder="Eg: Court Fees." class="p-inputtext p-component p-element w-full"></textarea>
+                <textarea type="text" pinputtext="" formControlName="remarks" placeholder="Eg: Indent for Kolkata treasury."
+                    class="p-inputtext p-component p-element w-full"></textarea>
             </div>
         </div>
     </form>
     <div class="flex gap-2 justify-content-end pt-3">
-        <button pbutton="" pripple="" label="Submit" (click)="addStampIndent()" class="p-element p-ripple p-button-rounded p-button p-component">
+        <button pbutton="" pripple="" label="Submit" (click)="addStampIndent()"
+            class="p-element p-ripple p-button-rounded p-button p-component">
             <span class="p-button-label">Submit</span><span class="p-ink"></span>
         </button>
     </div>
 </p-dialog>
 
 
-
-<!-- formControlName="memoNo"
-formControlName="memoDate"
-formControlName="category"
-formControlName="description"
-formControlName="denomination"
-formControlName="labelPerSheet"
-formControlName="noOfSheets"
-formControlName="noOfLabels"
-formControlName="quantity"
-formControlName="amount"
-formControlName="remarks" -->

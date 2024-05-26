@@ -1,19 +1,13 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
 import { AddStampIndent, GetStampIndents } from 'src/app/core/models/stamp';
 import { StampIndentService } from 'src/app/core/services/stamp/stamp-indent.service';
 import { ToastService } from 'src/app/core/services/toast.service';
+import { Status } from 'src/constants/stampIndentStatusEnum';
 import { convertDate } from 'src/utils/dateConversion';
 
-enum Status {
-  "FORWARDED TO SUPERINTENDENT" = 10,
-  "FORWARDED TO TREASURY OFFICER" = 11,
-  "REJECTED BY TREASURY OFFICER" = 12,
-  "APPROVED BY TREASURY OFFICER" = 13,
-  "APPROVED BY SUPERINTENDENT" = 15,
-  "REJECTED BY SUPERINTENDENT" = 16
-}
+
 @Component({
   selector: 'app-indent-capture',
   templateUrl: './indent-capture.component.html',
@@ -21,7 +15,15 @@ enum Status {
 })
 export class IndentCaptureComponent implements OnInit {
 
-  CombinationTypeList: any[] = [];
+  labelPerSheet: number = 0
+  denomination: number = 0
+  description: string = "Eg: Court fees."
+  sheet: number = 0
+  label: number = 0
+  raisedToTreasuryCode!: string
+  quantity: number = (this.labelPerSheet * this.sheet) + this.label
+  amount: number = this.quantity * this.denomination
+  stamCombinationId!: number
   displayInsertModal?: boolean;
   stampIndentForm!: FormGroup
   tableActionButton: ActionButtonConfig[] = [];
@@ -34,13 +36,13 @@ export class IndentCaptureComponent implements OnInit {
     private fb: FormBuilder
   ) { }
 
-  @Output() StampCombinationSelected = new EventEmitter<string>();
-  
+  @Output() StampCombinationSelected = new EventEmitter<any>();
+
   ngOnInit(): void {
-    // this.initializeForm()
+    this.initializeForm()
     this.tableActionButton = [
       {
-        buttonIdentifier: 'dedetails',
+        buttonIdentifier: 'details',
         class: 'p-button-info p-button-sm',
         icon: 'pi pi-info-circle',
         lable: 'Details',
@@ -55,24 +57,25 @@ export class IndentCaptureComponent implements OnInit {
     this.getAllStampIndents();
   }
 
+
   initializeForm(): void {
     this.stampIndentForm = this.fb.group({
-      // description: ['', Validators.required],
-      // stampCategory1: ['', Validators.required]
+      memoNo: ['', Validators.required],
+      memoDate: ['', [Validators.required]],
+      noOfSheets: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Validates integer
+      noOfLabels: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Validates integer
+      remarks: ['']
     });
   }
-
-
 
   getAllStampIndents() {
     this.stampIndentService
       .getAllStampIndents(this.tableQueryParameters)
       .subscribe((response) => {
-        if (response.apiResponseStatus == 1) {
-          // console.log(response.result);
-
+        if (response.apiResponseStatus == 1 || response.apiResponseStatus == 3) {
           response.result.data.map((item: any) => {
             item.createdAt = convertDate(item.createdAt);
+            item.memoDate = convertDate(item.memoDate);
             item.status = Status[item.status]
           });
           this.tableData = response.result;
@@ -92,14 +95,23 @@ export class IndentCaptureComponent implements OnInit {
 
   addStampIndent() {
     if (this.stampIndentForm.valid) {
-      // this.stampIndentPayload = {
-
-      // };
+      this.stampIndentPayload = {
+        stampCombinationId: this.stamCombinationId,
+        amount: this.amount,
+        label: this.label,
+        sheet: this.sheet,
+        memoDate: this.stampIndentForm.value.memoDate,
+        memoNumber: this.stampIndentForm.value.memoNo,
+        quantity: this.quantity,
+        remarks: this.stampIndentForm.value.remarks,
+        raisedToTreasuryCode: this.raisedToTreasuryCode
+      };
       console.log(this.stampIndentPayload);
 
       this.stampIndentService.addNewStampIndent(this.stampIndentPayload).subscribe((response) => {
         if (response.apiResponseStatus == 1) {
           this.toastService.showAlert(response.message, 1);
+          this.stampIndentForm.reset()
           this.displayInsertModal = false;
           this.getAllStampIndents();
         } else {
@@ -112,7 +124,9 @@ export class IndentCaptureComponent implements OnInit {
   }
 
   handleButtonClick($event: any) {
-    this.stampIndentService.deleteStampIndent($event.rowData.stampCategoryId)
+    console.log($event.rowData.stampIndentId);
+
+    this.stampIndentService.getStampIndentDetails($event.rowData.stampIndentId)
       .subscribe((response) => {
         response.apiResponseStatus == 1 ? this.getAllStampIndents() : this.toastService.showAlert(
           response.message,
@@ -121,9 +135,33 @@ export class IndentCaptureComponent implements OnInit {
       });
   }
 
-  onStampCombinationSelected($event: any) {    
+
+  calcAmountQuantity() {
+    this.quantity = (this.labelPerSheet * this.sheet) + this.label
+    this.amount = this.quantity * this.denomination
+  }
+
+  sheetSelected($event: any) {
+    this.sheet = $event
+    this.calcAmountQuantity()
+  }
+
+  labelSelected($event: any) {
+    this.label = $event
+    this.calcAmountQuantity()
+  }
+
+  onTreasurySelected($event: any) {
     console.log($event);
     
+    this.raisedToTreasuryCode = $event;
   }
-  
+
+  onStampCombinationSelected($event: any) {
+    this.stamCombinationId = $event.stampCombinationId
+    this.description = $event.description
+    this.denomination = $event.denomination
+    this.labelPerSheet = $event.noLabelPerSheet
+  }
+
 }

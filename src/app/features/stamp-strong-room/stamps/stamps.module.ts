@@ -13,6 +13,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic-table.module';
 import { StampCombinationDropdownComponent } from 'src/app/shared/modules/stamp-combination-dropdown/stamp-combination-dropdown.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown/treasury-dropdown.module';
 
 
 @NgModule({
@@ -20,7 +22,7 @@ import { DropdownModule } from 'primeng/dropdown';
     StampsComponent,
     IndentCaptureComponent,
     InvoiceCaptureComponent,
-    StampCombinationDropdownComponent
+    StampCombinationDropdownComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +34,9 @@ import { DropdownModule } from 'primeng/dropdown';
     CommonHeaderModule,
     DropdownModule,
     DialogModule,
+    CalendarModule,
+    ReactiveFormsModule,
+    TreasuryDropdownModule,
     FormsModule
    ]
 })
