@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
-import { GetStampInvoices } from 'src/app/core/models/stamp';
+import { AddStampInvoice, GetStampInvoices } from 'src/app/core/models/stamp';
 import { StampIndentService } from 'src/app/core/services/stamp/stamp-indent.service';
 import { StampInvoiceService } from 'src/app/core/services/stamp/stamp-invoice.service';
 import { ToastService } from 'src/app/core/services/toast.service';
@@ -14,57 +14,70 @@ import { convertDate } from 'src/utils/dateConversion';
   styleUrls: ['./invoice-capture.component.scss']
 })
 export class InvoiceCaptureComponent implements OnInit {
-  labelPerSheet: number = 0
-  denomination: number = 0
-  description: string = "Eg: Court fees."
-  sheet: number = 0
-  label: number = 0
-  raisedToTreasuryCode!: string
-  quantity: number = (this.labelPerSheet * this.sheet) + this.label
-  amount: number = this.quantity * this.denomination
-  stamCombinationId!: number
+  labelPerSheet: number = 0;
+  denomination: number = 0;
+  description: string = "Eg: Court fees.";
+  sheet: number = 0;
+  label: number = 0;
+  combination: string = "";
+  treasury: string = "";
+  quantity: number = 0;
+  amount: number = 0;
+  memoNumber: string = "";
+  memoDate!: Date;
+  remarks: string = "";
+  stampIndentId: number = -1;
+  stamCombinationId!: number;
   listType: string = 'indent';
-  stampIndentForm!: FormGroup
-  displayModifyModal!: boolean
+  stampInvoiceForm!: FormGroup;
+  displayModifyModal!: boolean;
   tableActionButton: ActionButtonConfig[] = [];
   tableData!: DynamicTable<GetStampInvoices>;
   tableQueryParameters!: DynamicTableQueryParameters | any;
-  constructor(private stampInvoiceService: StampInvoiceService,
-    private toastService: ToastService,
+  stampInvoiceEntryPayload!: AddStampInvoice 
+
+  constructor(
+    private stampInvoiceService: StampInvoiceService,
     private stampIndentService: StampIndentService,
+    private toastService: ToastService,
     private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
-
     this.tableQueryParameters = {
       pageSize: 10,
       pageIndex: 0,
     };
 
     this.getAllStampIndents();
-    this.changeDynamicTable(this.listType)
+    this.changeDynamicTable(this.listType);
+
+    this.initializeForm();
   }
 
   initializeForm(): void {
-    this.stampIndentForm = this.fb.group({
-      memoNo: ['', Validators.required],
-      memoDate: ['', [Validators.required]],
+    this.stampInvoiceForm = this.fb.group({
       noOfSheets: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Validates integer
       noOfLabels: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Validates integer
-      remarks: ['']
+      invoiceNumber: ['', [Validators.required]],// Validates integer
+      invoiceDate: ['', [Validators.required]] // Validates integer
+    });
+
+    this.stampInvoiceForm.setValue({
+      noOfSheets: this.sheet,
+      noOfLabels: this.label
     });
   }
 
   changeDynamicTable(type: string) {
     this.listType = type;
-    if (type == 'indent') {
+    if (type === 'indent') {
       this.tableActionButton = [
         {
           buttonIdentifier: 'indent-forward',
-          class: ' p-button-sm',
+          class: 'p-button-sm',
           icon: 'pi pi-check',
-          lable: 'Froward TO',
+          lable: 'Forward TO',
         },
         {
           buttonIdentifier: 'indent-approve',
@@ -81,7 +94,7 @@ export class InvoiceCaptureComponent implements OnInit {
         {
           buttonIdentifier: 'indent-invoice',
           class: 'p-button-sm',
-          icon: 'pi pi-plus',
+          icon: 'pi pi-arrow-right',
           lable: 'Invoice',
         },
         {
@@ -96,13 +109,11 @@ export class InvoiceCaptureComponent implements OnInit {
         pageIndex: 0,
       };
       this.getAllStampIndents();
-    }
-    if (type == 'invoice') {
+    } else if (type === 'invoice') {
       this.tableActionButton = [
-
         {
           buttonIdentifier: 'invoice-received',
-          class: ' p-button-sm',
+          class: 'p-button-sm',
           icon: 'pi pi-users',
           lable: 'Received',
         },
@@ -128,49 +139,63 @@ export class InvoiceCaptureComponent implements OnInit {
   }
 
   getAllStampInvoices() {
-    this.stampInvoiceService
-      .getAllStampInvoice(this.tableQueryParameters)
-      .subscribe((response) => {
-        console.log(response);
-        if (response.apiResponseStatus == 1 || response.apiResponseStatus == 3) {
-
-          response.result.data.map((item: any) => {
-            // item.createdAt = convertDate(item.createdAt);
-            // item.memoDate = convertDate(item.memoDate);
-          });
-          this.tableData = response.result;
-        } else {
-          this.toastService.showAlert(
-            response.message,
-            response.apiResponseStatus
-          );
-        }
-      });
+    this.stampInvoiceService.getAllStampInvoice(this.tableQueryParameters).subscribe((response) => {
+      console.log(response);
+      if (response.apiResponseStatus === 1 || response.apiResponseStatus === 3) {
+        response.result.data.map((item: any) => {
+          item.createdAt = convertDate(item.createdAt);
+          item.memoDate = convertDate(item.memoDate);
+        });
+        this.tableData = response.result;
+      } else {
+        this.toastService.showAlert(response.message, response.apiResponseStatus);
+      }
+    });
   }
 
   getAllStampIndents() {
-    this.stampIndentService
-      .getAllStampIndents(this.tableQueryParameters)
-      .subscribe((response) => {
-        if (response.apiResponseStatus == 1 || response.apiResponseStatus == 3) {
-          response.result.data.map((item: any) => {
-            item.createdAt = convertDate(item.createdAt);
-            item.memoDate = convertDate(item.memoDate);
-            item.status = Status[item.status]
-          });
-          this.tableData = response.result;
+    this.stampIndentService.getAllStampIndents(this.tableQueryParameters).subscribe((response) => {
+      if (response.apiResponseStatus === 1 || response.apiResponseStatus === 3) {
+        response.result.data.map((item: any) => {
+          item.createdAt = convertDate(item.createdAt);
+          item.memoDate = convertDate(item.memoDate);
+          item.status = Status[item.status];
+        });
+        this.tableData = response.result;
+      } else {
+        this.toastService.showAlert(response.message, response.apiResponseStatus);
+      }
+    });
+  }
+
+  addStampInvoice() {
+    if (this.stampInvoiceForm.valid) {
+      this.stampInvoiceEntryPayload = {
+        amount: this.amount,
+        label: this.label,
+        quantity: this.quantity,
+        sheet: this.sheet,
+        stampIndentId: this.stampIndentId,
+        invoiceDate: this.stampInvoiceForm.value.invoiceDate,
+        invoiceNumber: this.stampInvoiceForm.value.invoiceNumber        
+      };
+      console.log(this.stampInvoiceEntryPayload);
+
+      this.stampInvoiceService.addNewStampInvoice(this.stampInvoiceEntryPayload).subscribe((response) => {
+        if (response.apiResponseStatus == 1) {
+          this.toastService.showAlert(response.message, 1);
+          this.stampInvoiceForm.reset()
+          this.displayModifyModal = false;
+          this.getAllStampIndents();
         } else {
-          this.toastService.showAlert(
-            response.message,
-            response.apiResponseStatus
-          );
+          this.toastService.showAlert(response.message, response.apiResponseStatus);
         }
       });
+    } else {
+      this.toastService.showAlert('Please fill all the required fields', 0);
+    }
   }
 
-  modifyStampIndent() {
-
-  }
   handleButtonClick($event: any) {
     switch ($event.buttonIdentifier) {
       case 'indent-approve':
@@ -180,39 +205,38 @@ export class InvoiceCaptureComponent implements OnInit {
         // this.rejectIndent($event.rowData.id);
         break;
       case 'indent-edit':
-        this.displayModifyModal = true
+        this.displayModifyModal = true;
+        this.denomination = $event.rowData.denomination;
+        this.memoNumber = $event.rowData.memoNumber;
+        this.memoDate = $event.rowData.memoDate;
+        this.label = $event.rowData.label;
+        this.labelPerSheet = $event.rowData.labelPerSheet;
+        this.description = $event.rowData.description;
+        this.treasury = $event.rowData.raisedToTreasuryCode;
+        this.sheet = $event.rowData.sheet;
+        this.remarks = $event.rowData.remarks;
+        this.stampIndentId = $event.rowData.stampIndentId;
+        this.combination = `Category: ${$event.rowData.stmapCategory} | Description: ${$event.rowData.description} | Denomination: ${$event.rowData.denomination} | No of Labels per Sheet: ${$event.rowData.labelPerSheet}`;
+        this.calcAmountQuantity();
         break;
       case 'indent-forward':
-        // this.frowardIndentTO($event.rowData.id);
+        // this.forwardIndentTo($event.rowData.id);
         break;
     }
   }
 
   calcAmountQuantity() {
-    this.quantity = (this.labelPerSheet * this.sheet) + this.label
-    this.amount = this.quantity * this.denomination
+    this.quantity = (this.labelPerSheet * this.sheet) + this.label;
+    this.amount = this.quantity * this.denomination;
   }
 
   sheetSelected($event: any) {
-    this.sheet = $event
-    this.calcAmountQuantity()
+    this.sheet = $event;
+    this.calcAmountQuantity();
   }
 
   labelSelected($event: any) {
-    this.label = $event
-    this.calcAmountQuantity()
-  }
-
-  onTreasurySelected($event: any) {
-    console.log($event);
-
-    this.raisedToTreasuryCode = $event;
-  }
-
-  onStampCombinationSelected($event: any) {
-    this.stamCombinationId = $event.stampCombinationId
-    this.description = $event.description
-    this.denomination = $event.denomination
-    this.labelPerSheet = $event.noLabelPerSheet
+    this.label = $event;
+    this.calcAmountQuantity();
   }
 }

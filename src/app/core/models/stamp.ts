@@ -149,3 +149,13 @@ export interface GetStampIndents {
     invoiceDate: string;
     createdBy: number;
   }
+
+  export interface AddStampInvoice {
+    stampIndentId: number;
+    sheet: number;
+    label: number;
+    invoiceNumber: string;
+    invoiceDate: string;
+    amount: number;
+    quantity: number;
+  }

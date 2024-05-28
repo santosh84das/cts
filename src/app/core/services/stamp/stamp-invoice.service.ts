@@ -4,7 +4,7 @@ import { ToastService } from '../toast.service';
 import { DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
 import { IapiResponce } from '../../models/iapi-responce';
 import { Observable, catchError } from 'rxjs';
-import { GetStampInvoices } from '../../models/stamp';
+import { AddStampInvoice, GetStampInvoices } from '../../models/stamp';
 @Injectable({
   providedIn: 'root'
 })
@@ -35,6 +35,14 @@ export class StampInvoiceService {
   //     })
   //   );
   // }
+
+  addNewStampInvoice(payload: AddStampInvoice): Observable<IapiResponce> {
+    return this.http.post<IapiResponce>('v1/Stamp/CreateStampInvoice', payload).pipe(
+      catchError((error) => {
+        throw this.toastService.showError(error.message);
+      })
+    );
+  }
 }
 
 
