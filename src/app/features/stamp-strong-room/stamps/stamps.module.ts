@@ -26,6 +26,7 @@ import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown
   ],
   imports: [
     CommonModule,
+    ButtonModule,
     ReactiveFormsModule,
     StampsRoutingModule,
     DynamicTableModule,

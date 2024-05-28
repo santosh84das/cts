@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
 import { GetStampInvoices } from 'src/app/core/models/stamp';
 import { StampIndentService } from 'src/app/core/services/stamp/stamp-indent.service';
@@ -13,25 +14,28 @@ import { convertDate } from 'src/utils/dateConversion';
   styleUrls: ['./invoice-capture.component.scss']
 })
 export class InvoiceCaptureComponent implements OnInit {
+  labelPerSheet: number = 0
+  denomination: number = 0
+  description: string = "Eg: Court fees."
+  sheet: number = 0
+  label: number = 0
+  raisedToTreasuryCode!: string
+  quantity: number = (this.labelPerSheet * this.sheet) + this.label
+  amount: number = this.quantity * this.denomination
+  stamCombinationId!: number
   listType: string = 'indent';
+  stampIndentForm!: FormGroup
+  displayModifyModal!: boolean
   tableActionButton: ActionButtonConfig[] = [];
   tableData!: DynamicTable<GetStampInvoices>;
   tableQueryParameters!: DynamicTableQueryParameters | any;
   constructor(private stampInvoiceService: StampInvoiceService,
     private toastService: ToastService,
     private stampIndentService: StampIndentService,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
-    
-    this.tableActionButton = [
-      {
-        buttonIdentifier: 'details',
-        class: 'p-button-info p-button-sm',
-        icon: 'pi pi-info-circle',
-        lable: 'Details',
-      },
-    ];
 
     this.tableQueryParameters = {
       pageSize: 10,
@@ -42,7 +46,15 @@ export class InvoiceCaptureComponent implements OnInit {
     this.changeDynamicTable(this.listType)
   }
 
-
+  initializeForm(): void {
+    this.stampIndentForm = this.fb.group({
+      memoNo: ['', Validators.required],
+      memoDate: ['', [Validators.required]],
+      noOfSheets: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Validates integer
+      noOfLabels: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Validates integer
+      remarks: ['']
+    });
+  }
 
   changeDynamicTable(type: string) {
     this.listType = type;
@@ -95,12 +107,6 @@ export class InvoiceCaptureComponent implements OnInit {
           lable: 'Received',
         },
         {
-          buttonIdentifier: 'invoice-forward',
-          class: ' p-button-sm',
-          icon: 'pi pi-check',
-          lable: 'Froward TO',
-        },
-        {
           buttonIdentifier: 'invoice-edit',
           class: 'p-button-warning p-button-sm',
           icon: 'pi pi-file-edit',
@@ -119,7 +125,6 @@ export class InvoiceCaptureComponent implements OnInit {
       };
       this.getAllStampInvoices();
     }
-
   }
 
   getAllStampInvoices() {
@@ -163,7 +168,51 @@ export class InvoiceCaptureComponent implements OnInit {
       });
   }
 
-  handleButtonClick($event: any) {
+  modifyStampIndent() {
 
+  }
+  handleButtonClick($event: any) {
+    switch ($event.buttonIdentifier) {
+      case 'indent-approve':
+        // this.approveIndent($event.rowData.id);
+        break;
+      case 'indent-reject':
+        // this.rejectIndent($event.rowData.id);
+        break;
+      case 'indent-edit':
+        this.displayModifyModal = true
+        break;
+      case 'indent-forward':
+        // this.frowardIndentTO($event.rowData.id);
+        break;
+    }
+  }
+
+  calcAmountQuantity() {
+    this.quantity = (this.labelPerSheet * this.sheet) + this.label
+    this.amount = this.quantity * this.denomination
+  }
+
+  sheetSelected($event: any) {
+    this.sheet = $event
+    this.calcAmountQuantity()
+  }
+
+  labelSelected($event: any) {
+    this.label = $event
+    this.calcAmountQuantity()
+  }
+
+  onTreasurySelected($event: any) {
+    console.log($event);
+
+    this.raisedToTreasuryCode = $event;
+  }
+
+  onStampCombinationSelected($event: any) {
+    this.stamCombinationId = $event.stampCombinationId
+    this.description = $event.description
+    this.denomination = $event.denomination
+    this.labelPerSheet = $event.noLabelPerSheet
   }
 }
