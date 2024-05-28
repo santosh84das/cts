@@ -11,3 +11,7 @@ export enum invoiceStatus
     NewInvoice = 17,
     FrowardToTreasuryOfficer = 18
 }
+
+export enum chequeReceived{
+    Received = 20
+}

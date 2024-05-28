@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NewChequeEntry } from 'src/app/core/models/cheque';
+import { ChequeReceive, NewChequeEntry } from 'src/app/core/models/cheque';
 import {
   ActionButtonConfig,
   DynamicTable,
   DynamicTableQueryParameters,
 } from 'src/app/core/models/dynamic-table';
-import { tokenDetails } from 'src/app/core/models/token';
+import { ChequeDistributionService } from 'src/app/core/services/cheque/cheque-distribution.service';
 
 @Component({
   selector: 'app-cheque-distribution',
@@ -14,18 +14,39 @@ import { tokenDetails } from 'src/app/core/models/token';
 })
 export class ChequeDistributionComponent implements OnInit {
   displayModal: boolean | undefined;
-  tableData!: DynamicTable<tokenDetails>;
+  tableData!: DynamicTable<ChequeReceive>;
   tableQueryParameters!: DynamicTableQueryParameters | any;
-  newChequeEntryModel!: NewChequeEntry;
-  tableActionButton: ActionButtonConfig[] = [];
+  tableActionButton: ActionButtonConfig<ChequeReceive>[] = [];;
 
-  constructor() { }
+  constructor(private chequedistributionService: ChequeDistributionService) { }
 
   ngOnInit(): void {
+    this.tableActionButton = [
+      {
+        buttonIdentifier: 'cheque_distribute',
+        class: '"p-button-raised p-button-rounded',
+        icon: 'pi pi-check-circle',
+        lable: 'Cheque Distribute',
+      },
+    ];
+
+    this.tableQueryParameters = {
+      pageSize: 10,
+      pageIndex: 0,
+    };
+    this.getTableData();
   }
 
-  showModal(){
+  showModal() {
     this.displayModal = true;
+  }
+
+  getTableData() {
+    this.chequedistributionService.getChqueListForDistribution(this.tableQueryParameters).subscribe((response) => {
+      if (response.apiResponseStatus == 1) {
+        this.tableData = response.result;
+      }
+    });
   }
 
 }

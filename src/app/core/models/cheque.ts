@@ -90,3 +90,9 @@ export interface chequeReceivedDamagedDetails{
   damageIndex: string ;
   damageType: number; 
 }
+
+export interface chequeDistributionList{
+  id: number;
+  invoiceDeatilsId: number;
+  quantity: number;
+}
