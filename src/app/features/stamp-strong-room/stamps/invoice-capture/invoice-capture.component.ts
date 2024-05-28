@@ -5,7 +5,7 @@ import { GetStampInvoices } from 'src/app/core/models/stamp';
 import { StampIndentService } from 'src/app/core/services/stamp/stamp-indent.service';
 import { StampInvoiceService } from 'src/app/core/services/stamp/stamp-invoice.service';
 import { ToastService } from 'src/app/core/services/toast.service';
-import { Status } from 'src/constants/stampIndentStatusEnum';
+import { Status } from 'src/app/core/enum/stampIndentStatusEnum';
 import { convertDate } from 'src/utils/dateConversion';
 
 @Component({

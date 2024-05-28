@@ -4,7 +4,7 @@ import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'm
 import { AddStampIndent, GetStampIndents } from 'src/app/core/models/stamp';
 import { StampIndentService } from 'src/app/core/services/stamp/stamp-indent.service';
 import { ToastService } from 'src/app/core/services/toast.service';
-import { Status } from 'src/constants/stampIndentStatusEnum';
+import { Status } from 'src/app/core/enum/stampIndentStatusEnum';
 import { convertDate } from 'src/utils/dateConversion';
 
 
@@ -40,6 +40,13 @@ export class IndentCaptureComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm()
+    
+    this.tableQueryParameters = {
+      pageSize: 10,
+      pageIndex: 0,
+    };
+    
+    this.getAllStampIndents();
     this.tableActionButton = [
       {
         buttonIdentifier: 'details',
@@ -48,15 +55,8 @@ export class IndentCaptureComponent implements OnInit {
         lable: 'Details',
       },
     ];
-
-    this.tableQueryParameters = {
-      pageSize: 10,
-      pageIndex: 0,
-    };
-
-    this.getAllStampIndents();
   }
-
+  
 
   initializeForm(): void {
     this.stampIndentForm = this.fb.group({
