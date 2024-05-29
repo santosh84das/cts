@@ -74,34 +74,16 @@ export class InvoiceCaptureComponent implements OnInit {
     if (type === 'indent') {
       this.tableActionButton = [
         {
-          buttonIdentifier: 'indent-forward',
-          class: 'p-button-sm',
-          icon: 'pi pi-check',
-          lable: 'Forward TO',
-        },
-        {
-          buttonIdentifier: 'indent-approve',
-          class: 'p-button-success p-button-sm',
-          icon: 'pi pi-check',
-          lable: 'Approve',
-        },
-        {
           buttonIdentifier: 'indent-reject',
           class: 'p-button-danger p-button-sm',
           icon: 'pi pi-times',
           lable: 'Reject',
         },
         {
-          buttonIdentifier: 'indent-invoice',
-          class: 'p-button-sm',
-          icon: 'pi pi-arrow-right',
-          lable: 'Invoice',
-        },
-        {
           buttonIdentifier: 'indent-edit',
           class: 'p-button-warning p-button-sm',
           icon: 'pi pi-file-edit',
-          lable: 'Edit',
+          lable: 'Edit & Approve',
         },
       ];
       this.tableQueryParameters = {

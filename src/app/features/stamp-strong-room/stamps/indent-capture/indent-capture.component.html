@@ -13,7 +13,7 @@
     </div>
 </div>
 
-<p-dialog header="Stamp Indent" [(visible)]="displayInsertModal" [modal]="true" [style]="{width: '40vw'}"
+<p-dialog header="Stamp Indent" [(visible)]="displayInsertModal" [modal]="true" [style]="{width: '50vw'}"
     [baseZIndex]="10000">
     <form [formGroup]="stampIndentForm" class="flex flex-column gap-4 mt-3">
         <div class="flex gap-2">
@@ -36,11 +36,11 @@
             </div>    
         </div>
         <div class="flex gap-2">
-            <div class="flex-auto">
+            <div class="flex-1">
                 <label for="To Treasury" class="block mb-1 text-color text-lg">To Treasury (<span class="font-medium text-gray-900">Default: </span> <span class="font-medium text-green-400">SUPERINTENDENT</span>)</label>
                 <app-treasury-dropdown (treasurySelected)="onTreasurySelected($event)"></app-treasury-dropdown>
             </div>
-            <div class="flex-auto">
+            <div class="flex-1">
                 <label for="Description" class="block mb-1 text-color text-lg">Description</label>
                 <input type="text" pinputtext="" [value]="description" readonly
                 class="p-inputtext p-component p-element w-full">
