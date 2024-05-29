@@ -47,14 +47,14 @@ export class IndentCaptureComponent implements OnInit {
     };
     
     this.getAllStampIndents();
-    this.tableActionButton = [
-      {
-        buttonIdentifier: 'details',
-        class: 'p-button-info p-button-sm',
-        icon: 'pi pi-info-circle',
-        lable: 'Details',
-      },
-    ];
+    // this.tableActionButton = [
+    //   {
+    //     buttonIdentifier: 'details',
+    //     class: 'p-button-info p-button-sm',
+    //     icon: 'pi pi-info-circle',
+    //     lable: 'Details',
+    //   },
+    // ];
   }
   
 
@@ -70,7 +70,7 @@ export class IndentCaptureComponent implements OnInit {
 
   getAllStampIndents() {
     this.stampIndentService
-      .getAllStampIndents(this.tableQueryParameters)
+      .getAllStampIndentsProcessing(this.tableQueryParameters)
       .subscribe((response) => {
         if (response.apiResponseStatus == 1 || response.apiResponseStatus == 3) {
           response.result.data.map((item: any) => {

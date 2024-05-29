@@ -96,14 +96,8 @@ export class InvoiceCaptureComponent implements OnInit {
         {
           buttonIdentifier: 'invoice-received',
           class: 'p-button-sm',
-          icon: 'pi pi-users',
-          lable: 'Received',
-        },
-        {
-          buttonIdentifier: 'invoice-edit',
-          class: 'p-button-warning p-button-sm',
-          icon: 'pi pi-file-edit',
-          lable: 'Edit',
+          icon: 'pi pi-inbox',
+          lable: 'Receive',
         },
         {
           buttonIdentifier: 'invoice-details',
@@ -136,7 +130,7 @@ export class InvoiceCaptureComponent implements OnInit {
   }
 
   getAllStampIndents() {
-    this.stampIndentService.getAllStampIndents(this.tableQueryParameters).subscribe((response) => {
+    this.stampIndentService.getAllStampIndentsProcessing(this.tableQueryParameters).subscribe((response) => {
       if (response.apiResponseStatus === 1 || response.apiResponseStatus === 3) {
         response.result.data.map((item: any) => {
           item.createdAt = convertDate(item.createdAt);

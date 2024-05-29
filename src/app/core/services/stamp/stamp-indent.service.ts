@@ -12,12 +12,26 @@ export class StampIndentService {
 
   constructor(private http: HttpClient, private toastService: ToastService) { }
 
-  getAllStampIndents(
+  getAllStampIndentsProcessing(
     queryParameters: DynamicTableQueryParameters
   ): Observable<IapiResponce<GetStampIndents>> {
     return this.http
       .patch<IapiResponce<GetStampIndents>>(
-        'v1/Stamp/StampIndentList',
+        'v1/Stamp/StampIndentListProcessing',
+        queryParameters
+      )
+      .pipe(
+        catchError((error) => {
+          throw this.toastService.showError(error.message);
+        })
+      );
+  }
+  getAllStampIndentsProcessed(
+    queryParameters: DynamicTableQueryParameters
+  ): Observable<IapiResponce<GetStampIndents>> {
+    return this.http
+      .patch<IapiResponce<GetStampIndents>>(
+        'v1/Stamp/StampIndentListProcessed',
         queryParameters
       )
       .pipe(
