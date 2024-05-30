@@ -5,6 +5,7 @@ import { DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
 import { IapiResponce } from '../../models/iapi-responce';
 import { Observable, catchError } from 'rxjs';
 import { AddStampIndent, GetStampIndents } from '../../models/stamp';
+import { error } from 'console';
 @Injectable({
   providedIn: 'root'
 })
@@ -49,10 +50,19 @@ export class StampIndentService {
     );
   }
   getStampIndentDetails(id: number): Observable<IapiResponce<GetStampIndents>> {
-    return this.http.get<IapiResponce>('v1/Stamp/GetStampIndentById?id=' + id).pipe(
+    return this.http.get<IapiResponce>('v1/Stamp/IndentDetailsById?id=' + id).pipe(
       catchError((error) => {
         throw this.toastService.showError(error.message);
       })
     );
+  }
+
+ rejectIndentByIndentId(id: number): Observable<IapiResponce<boolean>> {
+
+      return this.http.get<IapiResponce<boolean>>(`v1/Stamp/RejectStampIndent?stampIndentId=${id}`).pipe(
+        catchError((error) => {
+          throw this.toastService.showError(error.message)
+        })
+      )
   }
 }

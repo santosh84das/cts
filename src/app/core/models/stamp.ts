@@ -136,18 +136,18 @@ export interface GetStampIndents {
     stmapCategory: string;
     description: string;
     denomination: number;
-    labelPerSheet: number;
-    indentedSheet: number;
-    indentedLabel: number;
+    // labelPerSheet: number;
+    // indentedSheet: number;
+    // indentedLabel: number;
     sheet: number;
     label: number;
     quantity: number;
     amount: number;
-    status: number;
+    status: string;
     stampInvoiceId: number;
     invoiceNumber: string;
     invoiceDate: string;
-    createdBy: number;
+    // createdBy: number;
   }
 
   export interface AddStampInvoice {

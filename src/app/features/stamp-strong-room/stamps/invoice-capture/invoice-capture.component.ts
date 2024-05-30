@@ -14,6 +14,11 @@ import { convertDate } from 'src/utils/dateConversion';
   styleUrls: ['./invoice-capture.component.scss']
 })
 export class InvoiceCaptureComponent implements OnInit {
+  tcode: string = ""
+  sheetAsked: number = 0
+  sheetGiven: number = 0
+  labelAsked: number = 0
+  labelGiven: number = 0
   labelPerSheet: number = 0;
   denomination: number = 0;
   description: string = "Eg: Court fees.";
@@ -31,10 +36,11 @@ export class InvoiceCaptureComponent implements OnInit {
   listType: string = 'indent';
   stampInvoiceForm!: FormGroup;
   displayModifyModal!: boolean;
+  displayDetailsModal!: boolean;
   tableActionButton: ActionButtonConfig[] = [];
   tableData!: DynamicTable<GetStampInvoices>;
   tableQueryParameters!: DynamicTableQueryParameters | any;
-  stampInvoiceEntryPayload!: AddStampInvoice 
+  stampInvoiceEntryPayload!: AddStampInvoice
 
   constructor(
     private stampInvoiceService: StampInvoiceService,
@@ -49,7 +55,7 @@ export class InvoiceCaptureComponent implements OnInit {
       pageIndex: 0,
     };
 
-    this.getAllStampIndents();
+    // this.getAllStampIndents();
     this.changeDynamicTable(this.listType);
 
     this.initializeForm();
@@ -93,12 +99,12 @@ export class InvoiceCaptureComponent implements OnInit {
       this.getAllStampIndents();
     } else if (type === 'invoice') {
       this.tableActionButton = [
-        {
-          buttonIdentifier: 'invoice-received',
-          class: 'p-button-sm',
-          icon: 'pi pi-inbox',
-          lable: 'Receive',
-        },
+        // {
+        //   buttonIdentifier: 'invoice-received',
+        //   class: 'p-button-sm',
+        //   icon: 'pi pi-inbox',
+        //   lable: 'Receive',
+        // },
         {
           buttonIdentifier: 'invoice-details',
           class: 'p-button-info p-button-sm',
@@ -121,21 +127,8 @@ export class InvoiceCaptureComponent implements OnInit {
         response.result.data.map((item: any) => {
           item.createdAt = convertDate(item.createdAt);
           item.memoDate = convertDate(item.memoDate);
-        });
-        this.tableData = response.result;
-      } else {
-        this.toastService.showAlert(response.message, response.apiResponseStatus);
-      }
-    });
-  }
-
-  getAllStampIndents() {
-    this.stampIndentService.getAllStampIndentsProcessing(this.tableQueryParameters).subscribe((response) => {
-      if (response.apiResponseStatus === 1 || response.apiResponseStatus === 3) {
-        response.result.data.map((item: any) => {
-          item.createdAt = convertDate(item.createdAt);
-          item.memoDate = convertDate(item.memoDate);
-          item.status = Status[item.status];
+          item.invoiceDate = convertDate(item.invoiceDate)
+          item.status = Status[item.status]
         });
         this.tableData = response.result;
       } else {
@@ -153,7 +146,7 @@ export class InvoiceCaptureComponent implements OnInit {
         sheet: this.sheet,
         stampIndentId: this.stampIndentId,
         invoiceDate: this.stampInvoiceForm.value.invoiceDate,
-        invoiceNumber: this.stampInvoiceForm.value.invoiceNumber        
+        invoiceNumber: this.stampInvoiceForm.value.invoiceNumber
       };
       console.log(this.stampInvoiceEntryPayload);
 
@@ -172,13 +165,51 @@ export class InvoiceCaptureComponent implements OnInit {
     }
   }
 
+  rejectIndent(id: number) {
+    this.stampIndentService.rejectIndentByIndentId(id).subscribe((response) => {
+      if (response.apiResponseStatus === 1) {
+        this.toastService.showSuccess(response.message);
+        this.changeDynamicTable('indent')
+      } else {
+        this.toastService.showAlert(response.message, response.apiResponseStatus);
+      }
+    })
+  }
+
+  getAllStampIndents() {
+    this.stampIndentService.getAllStampIndentsProcessing(this.tableQueryParameters).subscribe((response) => {
+      if (response.apiResponseStatus === 1 || response.apiResponseStatus === 3) {
+        response.result.data.map((item: any) => {
+          item.createdAt = convertDate(item.createdAt);
+          item.memoDate = convertDate(item.memoDate);
+          item.status = Status[item.status];
+        });
+        this.tableData = response.result;
+      } else {
+        this.toastService.showAlert(response.message, response.apiResponseStatus);
+      }
+    });
+  }
+
+  getIndentDetailsById(id: number) {
+    this.stampIndentService.getStampIndentDetails(id).subscribe((response) => {
+      if (response.apiResponseStatus === 1) {
+        console.log(response.result);
+        this.labelAsked = response.result.label
+        // this.labelGiven = this.tableData.data.label
+        this.sheetAsked = response.result.sheet
+        this.sheetGiven = this.sheet
+        this.tcode = this.treasury
+      } else {
+        this.toastService.showAlert(response.message, response.apiResponseStatus);
+      }
+    })
+  }
+
   handleButtonClick($event: any) {
     switch ($event.buttonIdentifier) {
-      case 'indent-approve':
-        // this.approveIndent($event.rowData.id);
-        break;
       case 'indent-reject':
-        // this.rejectIndent($event.rowData.id);
+        this.rejectIndent($event.rowData.stampIndentId)
         break;
       case 'indent-edit':
         this.displayModifyModal = true;
@@ -195,8 +226,9 @@ export class InvoiceCaptureComponent implements OnInit {
         this.combination = `Category: ${$event.rowData.stmapCategory} | Description: ${$event.rowData.description} | Denomination: ${$event.rowData.denomination} | No of Labels per Sheet: ${$event.rowData.labelPerSheet}`;
         this.calcAmountQuantity();
         break;
-      case 'indent-forward':
-        // this.forwardIndentTo($event.rowData.id);
+      case 'invoice-details':
+        this.displayDetailsModal = true
+        this.getIndentDetailsById($event.rowData.stampIndentId)
         break;
     }
   }

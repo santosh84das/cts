@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
+import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'src/app/core/models/dynamic-table';
 import { Status } from 'src/app/core/enum/stampIndentStatusEnum';
 import { GetStampIndents } from 'src/app/core/models/stamp';
 import { StampIndentService } from 'src/app/core/services/stamp/stamp-indent.service';
@@ -13,7 +13,7 @@ import { convertDate } from 'src/utils/dateConversion';
 })
 export class InvoiceReceiveComponent implements OnInit {
 
-  tableActionButton: ActionButtonConfig[] = [];
+  tableActionButton: ActionButtonConfig<GetStampIndents>[] = [];
   tableData!: DynamicTable<GetStampIndents>;
   tableQueryParameters!: DynamicTableQueryParameters | any;
   constructor(
@@ -32,6 +32,27 @@ export class InvoiceReceiveComponent implements OnInit {
         class: 'p-button-info p-button-sm',
         icon: 'pi pi-inbox',
         lable: 'Receive',
+        renderButton: (rowData) => {          
+          return (rowData.status === Status[15] || rowData.status === Status[12]);
+        }
+      },
+      {
+        buttonIdentifier: 'rejected',
+        class: 'p-button-danger p-button-sm',
+        icon: 'pi pi-times',
+        lable: 'Rejected',
+        renderButton: (rowData) => {          
+          return (rowData.status === Status[13] || rowData.status === Status[16]);
+        }
+      },
+      {
+        buttonIdentifier: 'Recieved',
+        class: 'p-button-success p-button-sm',
+        icon: 'pi pi-check',
+        lable: 'Recieved',
+        renderButton: (rowData) => {          
+          return (rowData.status === Status[14]);
+        }
       },
     ];
     this.getAllStampIndents()

@@ -140,3 +140,31 @@
         </p-button>
     </div>
 </p-dialog>
+
+<p-dialog header="Invoice Details" [(visible)]="displayDetailsModal" [modal]="true" [style]="{width: '50vw'}"
+    [baseZIndex]="10000" [draggable]="false">
+    <hr class="mb-4" />
+
+<div class="asked w-full flex flex-column gap-2">
+    <div class="treasury-code flex gap-4 align-items-center w-full">
+        <label class="w-12rem font-semibold" for="Treasury Code: ">Treasury Code: </label>
+        <input type="text" [value]="tcode" class="p-inputtext p-component p-element" readonly>
+    </div>
+    <div class="no-of-sheet flex gap-4 align-items-center w-full">
+        <label class="w-12rem font-semibold" for=">No: Of sheet asked: ">No: Of sheet asked: </label>
+        <input type="text" [value]="sheetAsked" class="p-inputtext p-component p-element" readonly>
+    </div>
+    <div class="no-of-sheet flex gap-4 align-items-center w-full">
+        <label class="w-12rem font-semibold" for=">No: Of sheet given: ">No: Of sheet given: </label>
+        <input type="text" [value]="sheetGiven" class="p-inputtext p-component p-element" readonly>
+    </div>
+    <div class="no-of-sheet flex gap-4 align-items-center w-full">
+        <label class="w-12rem font-semibold" for=">No: Of sheet asked: ">No: Of label asked: </label>
+        <input type="text" [value]="labelAsked" class="p-inputtext p-component p-element" readonly>
+    </div>
+    <div class="no-of-sheet flex gap-4 align-items-center w-full">
+        <label class="w-12rem font-semibold" for=">No: Of sheet given: ">No: Of label given: </label>
+        <input type="text" [value]="labelGiven" class="p-inputtext p-component p-element" readonly>
+    </div>
+</div>
+</p-dialog>

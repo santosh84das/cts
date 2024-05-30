@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 import { NgxRolesService, NgxPermissionsService } from 'ngx-permissions';
 import { indentStatusEnum, invoiceStatus } from 'src/app/core/enum/ChequeEnum';
 import { ChequeInvoiceService } from 'src/app/core/services/cheque/cheque-invoice.service';
-import { log } from 'console';
 
 @Component({
   selector: 'app-cheque-indent-invoice',
