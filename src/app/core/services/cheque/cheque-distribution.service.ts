@@ -25,4 +25,12 @@ export class ChequeDistributionService {
         })
       );
   }
+
+  getUserList(): Observable<IapiResponce> {
+    return this.http.get<IapiResponce>('v1/Cheque/user-list').pipe(
+      catchError((error) => {
+        throw this.toastService.showError(error.message);
+      })
+    );
+  }
 }

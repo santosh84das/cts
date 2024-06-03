@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ChequeDistributionService } from 'src/app/core/services/cheque/cheque-distribution.service';
+import { ToastService } from 'src/app/core/services/toast.service';
 interface Chequetype {
   name: string;
   code: Number;
@@ -26,10 +28,10 @@ export class NewDistributionComponent implements OnInit {
   selectedMicrCode?: string;
   isVisible: boolean = false;
   isShowUserList: boolean = false;
-  userList!: users[];
+  userList: []=[];
   selectedUser?: string;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private toastService: ToastService, private chequeDistributionService: ChequeDistributionService) { }
 
   ngOnInit(): void {
     this.cheques = [
@@ -40,16 +42,18 @@ export class NewDistributionComponent implements OnInit {
       {name:'1234-1234-1234-1234',code:'1'},
       {name:'2341-3422-44434-2345',code:'1'},
     ]
-    this.userList= [
-      {name:'User 1',code:'1'},
-      {name:'User 2',code:'2'},
-      {name:'User 3',code:'3'},
-    ]
+    // this.userList= [
+    //   {name:'User 1',code:'1'},
+    //   {name:'User 2',code:'2'},
+    //   {name:'User 3',code:'3'},
+    // ]
     this.distributionForm = this.fb.group({
       cheques_type: [''],
       // micr_code: [''],
-      user_list: ['']
+      user_list: [''],
+      user_name:['']	
     })
+    this.getAllUsers();
   }
 
   showMicrList(){
@@ -58,6 +62,15 @@ export class NewDistributionComponent implements OnInit {
 
   showUserList(){
     this.isShowUserList = !this.isShowUserList
+  }
+
+  getAllUsers(){
+    this.chequeDistributionService.getUserList().subscribe((response) => {
+      if (response.apiResponseStatus == 1) {        
+        this.userList = response.result;
+        console.log('---->',this.userList);
+      }
+    })
   }
 
 }

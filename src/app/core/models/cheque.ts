@@ -96,3 +96,8 @@ export interface chequeDistributionList{
   invoiceDeatilsId: number;
   quantity: number;
 }
+
+export interface AllUserList{
+  userName: string;
+  userId: number;
+}
