@@ -27,8 +27,10 @@ export class NewDistributionComponent implements OnInit {
   micrCodeList!: micrcode[];
   selectedMicrCode?: string;
   isVisible: boolean = false;
+  isVisibleDetails: boolean = false;
   isShowUserList: boolean = false;
   userList: []=[];
+  receivedDetails:any[]=[];
   selectedUser?: string;
 
   constructor(private fb: FormBuilder, private toastService: ToastService, private chequeDistributionService: ChequeDistributionService) { }
@@ -54,6 +56,7 @@ export class NewDistributionComponent implements OnInit {
       user_name:['']	
     })
     this.getAllUsers();
+    this.getAllReceivedList();
   }
 
   showMicrList(){
@@ -68,9 +71,22 @@ export class NewDistributionComponent implements OnInit {
     this.chequeDistributionService.getUserList().subscribe((response) => {
       if (response.apiResponseStatus == 1) {        
         this.userList = response.result;
-        console.log('---->',this.userList);
       }
     })
+  }
+
+  getAllReceivedList(){
+    this.chequeDistributionService.getReceivedList().subscribe((response)=>{
+      if(response.apiResponseStatus == 1){
+        this.receivedDetails = response.result;
+        console.log('---->',this.receivedDetails);
+        
+      }
+    })
+  }
+
+  showDetails(){
+    this.isVisibleDetails = true;
   }
 
 }

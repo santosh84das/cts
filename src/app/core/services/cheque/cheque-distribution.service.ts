@@ -33,4 +33,12 @@ export class ChequeDistributionService {
       })
     );
   }
+
+  getReceivedList():Observable<IapiResponce>{
+    return this.http.get<IapiResponce>('v1/Cheque/getChequeReceivedDetails').pipe(
+      catchError((error)=>{
+        throw this.toastService.showError(error.message);
+      })
+    );
+  }
 }

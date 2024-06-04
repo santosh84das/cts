@@ -5,12 +5,13 @@
                 <div class="flex flex-wrap gap-3 p-fluid">
                     <div class="flex-auto">
                         <label for="cheques_type" class="block mb-1 text-color text-lg">Cheque Type</label>
-                        <p-dropdown appendTo="body"  [options]="cheques" placeholder="Select a Cheque Type" optionLabel="name"
-                            [showClear]="true" optionValue="code" formControlName="cheques_type"></p-dropdown>
+                        <p-dropdown appendTo="body" [options]="cheques" placeholder="Select a Cheque Type"
+                            optionLabel="name" [showClear]="true" optionValue="code"
+                            formControlName="cheques_type"></p-dropdown>
                     </div>
                     <div class="flex-auto">
                         <label for="micr_code" class="block mb-1 text-color text-lg">Series</label>
-                        <button type="button" pButton pRipple label="Series"></button>
+                        <button type="button" pButton pRipple label="Series" (click)="showDetails()"></button>
                     </div>
                     <!-- <div class="flex-auto">
                         <label for="micr_code" class="block mb-1 text-color text-lg">MICR Code</label>
@@ -23,6 +24,41 @@
                     [showClear]="true" optionValue="code" formControlName="user_name"></p-dropdown>
                 </div> -->
 
+                <div class="card overflow-auto" *ngIf="isVisibleDetails">
+                    <div style="height: 145px">
+                        <div class="grid grid-nogutter surface-ground static border-2 border-round border-primary border-solid text-gray-800 p-3 mb-3 "
+                            style="min-width: 300px; min-height: 60px;"
+                            *ngFor=" let receivedDetailsItem of receivedDetails">
+                            <!-- {{receivedDetailsItem}} -->
+                            <div class="col-5 flex">
+                                <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                                    MICR Code:
+                                </div>
+                                <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+                                    {{ receivedDetailsItem.micrCode }}
+                                </div>
+                            </div>
+                            <div class="col-3 flex">
+                                <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                                    Start
+                                </div>
+                                <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+                                    {{ receivedDetailsItem.start }}
+                                </div>
+                            </div>
+                            <div class="col-3 flex">
+                                <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                                    Quantity
+                                </div>
+                                <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+                                    {{ receivedDetailsItem.quantity }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
         </div>
     </div>
@@ -32,7 +68,7 @@
         [metaKeySelection]="false" [checkbox]="true" [filter]="true" [multiple]="true"></p-listbox>
 </div>
 
-<div *ngIf="isShowUserList" class="mt-5" >
-    <p-listbox  [options]="userList" [(ngModel)]="selectedUser" optionLabel="name"
-        optionValue="code" [metaKeySelection]="false" [checkbox]="true" [filter]="true" [multiple]="true"></p-listbox>
+<div *ngIf="isShowUserList" class="mt-5">
+    <p-listbox [options]="userList" [(ngModel)]="selectedUser" optionLabel="name" optionValue="code"
+        [metaKeySelection]="false" [checkbox]="true" [filter]="true" [multiple]="true"></p-listbox>
 </div>
