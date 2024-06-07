@@ -101,3 +101,11 @@ export interface AllUserList{
   userName: string;
   userId: number;
 }
+
+export interface ChequeReceiveListWithMICR{
+  InvoiceId: number;
+  MICRCode: string;
+  Quantity: number;
+  Start: number;
+  End: number;
+}

@@ -171,6 +171,7 @@ export class NewInvoiceComponent implements OnInit {
       // );
       const chequeInvoiceDeatils: InvoiceDetails[] = [{micrCode: this.invoiceForm.get('micr_code')?.value, quantity: this.invoiceForm.get('quantity')?.value}];
       this.indentInvoiceDetails = { chequeIndentId, invoiceDate, invoiceNumber, chequeInvoiceDeatils }
+      console.log('mere ko chaye',this.indentInvoiceDetails);
       this.chequeIndentService.saveChequeIndentInvoice(this.indentInvoiceDetails).subscribe(res => {
         if (res.apiResponseStatus == 1) {
           this.invoiceForm.reset();

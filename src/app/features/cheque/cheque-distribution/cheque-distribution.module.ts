@@ -10,6 +10,8 @@ import { CommonHeaderModule } from 'src/app/shared/modules/common-header/common-
 import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic-table.module';
 import { NewDistributionComponent } from './new-distribution/new-distribution.component';
 import {ListboxModule} from 'primeng/listbox';
+import { TableModule } from 'primeng/table';
+import { CalendarModule } from 'primeng/calendar';
 
 
 @NgModule({
@@ -24,7 +26,10 @@ import {ListboxModule} from 'primeng/listbox';
     DialogModule,
     CommonHeaderModule,
     DynamicTableModule,
-    ListboxModule
+    ListboxModule,
+    TableModule,
+    CalendarModule
+
   ]
 })
 export class ChequeDistributionModule { }

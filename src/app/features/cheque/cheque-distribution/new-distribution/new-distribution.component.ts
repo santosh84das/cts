@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ChequeReceiveListWithMICR } from 'src/app/core/models/cheque';
 import { ChequeDistributionService } from 'src/app/core/services/cheque/cheque-distribution.service';
 import { ToastService } from 'src/app/core/services/toast.service';
 interface Chequetype {
@@ -30,8 +31,9 @@ export class NewDistributionComponent implements OnInit {
   isVisibleDetails: boolean = false;
   isShowUserList: boolean = false;
   userList: []=[];
-  receivedDetails:any[]=[];
+  receivedDetails:ChequeReceiveListWithMICR[]=[];
   selectedUser?: string;
+  selectedSeries?: ChequeReceiveListWithMICR;
 
   constructor(private fb: FormBuilder, private toastService: ToastService, private chequeDistributionService: ChequeDistributionService) { }
 
