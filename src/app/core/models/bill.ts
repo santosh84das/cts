@@ -7,6 +7,7 @@ export interface IBills {
     billDate?: Date | null;
     grossAmount: number,
     netAmount: number,
+    hoaChain: HoaChain
 }
 
 export interface IOnlineBillDetailsRefNo{
@@ -35,7 +36,7 @@ export interface HoaChain {
     schemeHead: string;
     votedCharged: string;
     detailHead: string;
-    // subDetailHead: string;
+    subDetailHead: string;
   }
  export interface subDeatilsHead {
     subDeatils: string;

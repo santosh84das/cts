@@ -42,7 +42,7 @@ export class BillReceiveListComponent implements OnInit {
       RsinAmount: 'Two Hundred Fifty Only.'
     },];
   @ViewChild('myDialog') myDialog: any;
-  constructor(private elementRef: ElementRef, public billService: BillService, private toastService: ToastService, private onlineBillReceiveService: OnlineBillReceiveService, private router: Router, private confirmationService: ConfirmationService, private tokenService: TokenService, private notificationService: NotificationService, private datePipe: DatePipe) { }
+  constructor(private elementRef: ElementRef, public billService: BillService, private toastService: ToastService, private onlineBillReceiveService: OnlineBillReceiveService, private router: Router, private confirmationService: ConfirmationService, private tokenService: TokenService, private notificationService: NotificationService, private datePipe: DatePipe,public billservice: BillService) { }
 
   ngOnInit(): void {
     // this.products  = [
