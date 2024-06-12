@@ -41,4 +41,14 @@ export class ChequeDistributionService {
       })
     );
   }
+
+  saveChequeDistribution(data: any): Observable<IapiResponce> {
+    return this.http
+      .post<IapiResponce>('v1/Cheque/save-Cheque-Distribution', data)
+      .pipe(
+        catchError((error) => {
+          throw this.toastService.showError(error.message);
+        })
+      );
+  }
 }

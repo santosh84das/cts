@@ -28,23 +28,29 @@
                                 <label for="micr_code" class="block mb-1 text-color text-lg">Series</label>
                                 <button type="button" pButton pRipple label="Series" (click)="showDetails()"></button>
                             </div>
-                            <!-- <div class="flex-auto">
-                                <label for="micr_code" class="block mb-1 text-color text-lg">MICR Code</label>
-                                <button type="button" pButton pRipple label="MICR CODE" (click)="showMicrList()"></button>
-                            </div> -->
+                            <div class="flex-auto">
+                                <label for="micr_code" class="block mb-1 text-color text-lg">Select MICR No</label>
+                                <p-dropdown [options]="micrList" placeholder="Select series" optionLabel="name"
+                                [showClear]="true" optionValue="code" formControlName="micr_code">
+                            </p-dropdown>
+                            </div>
                         </div>
                         <p-table *ngIf="isVisibleDetails" [value]="receivedDetails" selectionMode="single"
-                            [(selection)]="selectedSeries" dataKey="code">
-                            <ng-template pTemplate="header">
+                            [(selection)]="selectedSeries" dataKey="i">
+                            <ng-template pTemplate="header" >
                                 <tr>
+                                    <th>ID</th>
+                                    <th>Series No</th>
                                     <th>MICR Code</th>
                                     <th>Start</th>
                                     <th>End</th>
                                     <th>Quantity</th>
                                 </tr>
                             </ng-template>
-                            <ng-template pTemplate="body" let-item>
+                            <ng-template pTemplate="body" let-item let-i="rowIndex + 1">
                                 <tr [pSelectableRow]="item">
+                                    <td>{{item.invoiceId}}</td>
+                                    <td>{{item.series}}</td>
                                     <td>{{item.micrCode}}</td>
                                     <td>{{item.start}}</td>
                                     <td>{{item.end}}</td>
@@ -87,7 +93,7 @@
                     <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded" (click)="addUserList()"></button>
                 </div>
             </div>
-            <button pButton pRipple label="Submit" class="p-button-raised p-button-rounded" (click)="submitDistributionFrm()"></button>
+            <button pButton pRipple label="Distribute" class="p-button-raised p-button-rounded" (click)="submitDistributionFrm()"></button>
         </form>
         <div *ngIf="isVisible">
             <p-listbox [options]="micrCodeList" [(ngModel)]="selectedMicrCode" optionLabel="name" optionValue="code"

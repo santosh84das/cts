@@ -7,6 +7,8 @@ import {
   DynamicTableQueryParameters,
 } from 'src/app/core/models/dynamic-table';
 import { ChequeDistributionService } from 'src/app/core/services/cheque/cheque-distribution.service';
+import { ChequeInvoiceService } from 'src/app/core/services/cheque/cheque-invoice.service';
+import { ToastService } from 'src/app/core/services/toast.service';
 
 
 interface Chequetype {
@@ -43,9 +45,10 @@ export class ChequeDistributionComponent implements OnInit {
   userList: [] = [];
   receivedDetails: ChequeReceiveListWithMICR[] = [];
   selectedUser?: string;
-  selectedSeries?: ChequeReceiveListWithMICR;
+  selectedSeries: ChequeReceiveListWithMICR[]=[];
+  micrList!: [];
 
-  constructor(private chequedistributionService: ChequeDistributionService, private fb: FormBuilder) { }
+  constructor(private chequedistributionService: ChequeDistributionService, private fb: FormBuilder, private chequeinvoiceservice: ChequeInvoiceService,  private toastService: ToastService,) { }
 
   ngOnInit(): void {
     this.cheques = [
@@ -69,10 +72,12 @@ export class ChequeDistributionComponent implements OnInit {
 
     this.distributionForm = this.fb.group({
       cheques_type: [''],
+      micr_code:[''],
       userListDetails: this.fb.array([this.createUserListDetail()]),
     });
     this.getAllUsers();
     this.getAllReceivedList();
+    this.getMicrList('BAA');
 
   }
 
@@ -96,6 +101,8 @@ export class ChequeDistributionComponent implements OnInit {
     this.chequedistributionService.getUserList().subscribe((response) => {
       if (response.apiResponseStatus == 1) {
         this.userList = response.result;
+        console.log(this.userList);
+        
       }
     })
   }
@@ -104,10 +111,21 @@ export class ChequeDistributionComponent implements OnInit {
     this.chequedistributionService.getReceivedList().subscribe((response) => {
       if (response.apiResponseStatus == 1) {
         this.receivedDetails = response.result;
-        console.log('---->', this.receivedDetails);
 
       }
     })
+  }
+
+  getMicrList(treasurieCode: string) {
+    console.log(treasurieCode);
+    
+    this.chequeinvoiceservice.getAvailableChequeMIcr(treasurieCode).subscribe((res) => {
+      if (res.apiResponseStatus == 1) {
+        this.micrList = res.result;
+      } else {
+        this.toastService.showError(res.message);
+      }
+    });
   }
 
   showDetails() {
@@ -133,8 +151,21 @@ export class ChequeDistributionComponent implements OnInit {
   removeUserList(index:number){
     this.userListDetailsFormArray.removeAt(index);
   }
+
+  calculateQuantity(): void {
+    const start = this.distributionForm.get('start')?.value;
+    const end = this.distributionForm.get('end')?.value;
+    console.log('my-start-end',start, end);
+    
+    // if (start && end && !isNaN(start) && !isNaN(end)) {
+    //   const quantity = (parseInt(end, 10) - parseInt(start, 10)) + 1;
+    //   this.distributionForm.get('quantity')?.setValue(quantity > 0 ? quantity : 0);
+    // } else {
+    //   this.distributionForm.get('quantity')?.setValue(0);
+    // }
+  }
   submitDistributionFrm() {
-    console.log(this.distributionForm.value);
+    console.log('hi form',this.distributionForm.value);
   }
 
 
