@@ -29,6 +29,11 @@
                                 <button type="button" pButton pRipple label="Series" (click)="showDetails()"></button>
                             </div>
                             <div class="flex-auto">
+                                <label for="" class="block mb-1 text-color text-lg">Series</label>
+                                <input formControlName="series" type="text" pinputtext=""
+                                class="p-inputtext p-component p-element w-full" placeholder="Series No">
+                            </div>
+                            <div class="flex-auto">
                                 <label for="micr_code" class="block mb-1 text-color text-lg">Select MICR No</label>
                                 <p-dropdown [options]="micrList" placeholder="Select series" optionLabel="name"
                                 [showClear]="true" optionValue="code" formControlName="micr_code">
@@ -36,7 +41,7 @@
                             </div>
                         </div>
                         <p-table *ngIf="isVisibleDetails" [value]="receivedDetails" selectionMode="single"
-                            [(selection)]="selectedSeries" dataKey="i">
+                            [(selection)]="selectedSeries" dataKey="id">
                             <ng-template pTemplate="header" >
                                 <tr>
                                     <th>ID</th>
@@ -49,7 +54,7 @@
                             </ng-template>
                             <ng-template pTemplate="body" let-item let-i="rowIndex + 1">
                                 <tr [pSelectableRow]="item">
-                                    <td>{{item.invoiceId}}</td>
+                                    <td>{{item.id}}</td>
                                     <td>{{item.series}}</td>
                                     <td>{{item.micrCode}}</td>
                                     <td>{{item.start}}</td>
@@ -66,8 +71,8 @@
                             <div class="flex-auto">
                                 <label for="user_list" class="block mb-1 text-color text-lg">User List</label>
                                 <p-dropdown appendTo="body" [options]="userList" placeholder="Select User"
-                                    optionLabel="userName" [showClear]="true" optionValue="code"
-                                    formControlName="user_name"></p-dropdown>
+                                    optionLabel="userName" [showClear]="true" optionValue="userId"
+                                    formControlName="userId"></p-dropdown>
                             </div>
                             <div class="flex-auto">
                                 <label for="cheques_type" class="block mb-1 text-color text-lg">Start</label>

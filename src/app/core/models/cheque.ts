@@ -103,9 +103,26 @@ export interface AllUserList{
 }
 
 export interface ChequeReceiveListWithMICR{
+  id: number;
   InvoiceId: number;
   MICRCode: string;
   Quantity: number;
   Start: number;
   End: number;
+}
+
+export interface saveChequeDistributionData
+  {
+    micrCode: string,
+    series: string,
+    distributor: string,
+    chequeDistributeToUse: chequeDistributeToUse[];
+}
+
+export interface chequeDistributeToUse
+  {
+      start: number,
+      end: number,
+      quantity: number,
+      userId: number
 }

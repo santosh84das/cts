@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { ChequeReceive, ChequeReceiveListWithMICR, NewChequeEntry } from 'src/app/core/models/cheque';
+import { ChequeReceive, ChequeReceiveListWithMICR, NewChequeEntry, saveChequeDistributionData } from 'src/app/core/models/cheque';
 import {
   ActionButtonConfig,
   DynamicTable,
@@ -47,6 +47,7 @@ export class ChequeDistributionComponent implements OnInit {
   selectedUser?: string;
   selectedSeries: ChequeReceiveListWithMICR[]=[];
   micrList!: [];
+  distributeFormDetailsData!:saveChequeDistributionData;
 
   constructor(private chequedistributionService: ChequeDistributionService, private fb: FormBuilder, private chequeinvoiceservice: ChequeInvoiceService,  private toastService: ToastService,) { }
 
@@ -73,6 +74,7 @@ export class ChequeDistributionComponent implements OnInit {
     this.distributionForm = this.fb.group({
       cheques_type: [''],
       micr_code:[''],
+      series: [''],
       userListDetails: this.fb.array([this.createUserListDetail()]),
     });
     this.getAllUsers();
@@ -101,7 +103,7 @@ export class ChequeDistributionComponent implements OnInit {
     this.chequedistributionService.getUserList().subscribe((response) => {
       if (response.apiResponseStatus == 1) {
         this.userList = response.result;
-        console.log(this.userList);
+        console.log('--->>>',this.userList);
         
       }
     })
@@ -137,7 +139,7 @@ export class ChequeDistributionComponent implements OnInit {
 
   createUserListDetail(): FormGroup {
     return this.fb.group({
-      user_name: [''],
+      userId: [''],
       start: [''],
       end: [''],
       quantity: ['']
@@ -165,6 +167,17 @@ export class ChequeDistributionComponent implements OnInit {
     // }
   }
   submitDistributionFrm() {
+    this.distributeFormDetailsData ={
+      micrCode: this.distributionForm.value.micr_code,
+      series: this.distributionForm.value.series,
+      distributor: "BAA",
+      chequeDistributeToUse: this.distributionForm.value.userListDetails
+    }
+    this.chequedistributionService.saveChequeDistribution(this.distributeFormDetailsData).subscribe((response) => {
+      if (response.apiResponseStatus == 1) {
+        this.toastService.showSuccess(response.message);
+      }
+    })
     console.log('hi form',this.distributionForm.value);
   }
 
