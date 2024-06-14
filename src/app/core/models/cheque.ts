@@ -116,13 +116,14 @@ export interface saveChequeDistributionData
     micrCode: string,
     series: string,
     distributor: string,
+    chequeInvoiceDetailsid: number,
     chequeDistributeToUse: chequeDistributeToUse[];
 }
 
 export interface chequeDistributeToUse
   {
-      start: number,
-      end: number,
+      // start: number,
+      // end: number,
       quantity: number,
       userId: number
 }

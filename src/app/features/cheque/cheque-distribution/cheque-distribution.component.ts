@@ -140,8 +140,8 @@ export class ChequeDistributionComponent implements OnInit {
   createUserListDetail(): FormGroup {
     return this.fb.group({
       userId: [''],
-      start: [''],
-      end: [''],
+      // start: [''],
+      // end: [''],
       quantity: ['']
     });
   }
@@ -171,6 +171,7 @@ export class ChequeDistributionComponent implements OnInit {
       micrCode: this.distributionForm.value.micr_code,
       series: this.distributionForm.value.series,
       distributor: "BAA",
+      chequeInvoiceDetailsid: 135,
       chequeDistributeToUse: this.distributionForm.value.userListDetails
     }
     this.chequedistributionService.saveChequeDistribution(this.distributeFormDetailsData).subscribe((response) => {
