@@ -5,7 +5,6 @@ import { DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
 import { IapiResponce } from '../../models/iapi-responce';
 import { Observable, catchError } from 'rxjs';
 import { AddStampIndent, GetStampIndents } from '../../models/stamp';
-import { error } from 'console';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,6 +12,20 @@ export class StampIndentService {
 
   constructor(private http: HttpClient, private toastService: ToastService) { }
 
+  getAllStampIndents(
+    queryParameters: DynamicTableQueryParameters
+  ): Observable<IapiResponce<GetStampIndents>> {
+    return this.http
+      .patch<IapiResponce<GetStampIndents>>(
+        'v1/Stamp/StampIndentList',
+        queryParameters
+      )
+      .pipe(
+        catchError((error) => {
+          throw this.toastService.showError(error.message);
+        })
+      );
+  }
   getAllStampIndentsProcessing(
     queryParameters: DynamicTableQueryParameters
   ): Observable<IapiResponce<GetStampIndents>> {
@@ -51,6 +64,14 @@ export class StampIndentService {
   }
   getStampIndentDetails(id: number): Observable<IapiResponce<GetStampIndents>> {
     return this.http.get<IapiResponce>('v1/Stamp/IndentDetailsById?id=' + id).pipe(
+      catchError((error) => {
+        throw this.toastService.showError(error.message);
+      })
+    );
+  }
+
+  receiveIndent(id: number): Observable<IapiResponce<GetStampIndents>> {
+    return this.http.get<IapiResponce>('v1/Stamp/ReceiveStampIndent?stampIndentId=' + id).pipe(
       catchError((error) => {
         throw this.toastService.showError(error.message);
       })

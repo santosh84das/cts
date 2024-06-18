@@ -6,6 +6,7 @@ import { StampIndentService } from 'src/app/core/services/stamp/stamp-indent.ser
 import { ToastService } from 'src/app/core/services/toast.service';
 import { Status } from 'src/app/core/enum/stampIndentStatusEnum';
 import { convertDate } from 'src/utils/dateConversion';
+import { error } from 'console';
 
 
 @Component({
@@ -70,9 +71,9 @@ export class IndentCaptureComponent implements OnInit {
 
   getAllStampIndents() {
     this.stampIndentService
-      .getAllStampIndentsProcessing(this.tableQueryParameters)
+      .getAllStampIndents(this.tableQueryParameters)
       .subscribe((response) => {
-        if (response.apiResponseStatus == 1 || response.apiResponseStatus == 3) {
+        if (response.apiResponseStatus == 1) {
           response.result.data.map((item: any) => {
             item.createdAt = convertDate(item.createdAt);
             item.memoDate = convertDate(item.memoDate);
@@ -93,7 +94,7 @@ export class IndentCaptureComponent implements OnInit {
   }
 
 
-  addStampIndent() {
+   addStampIndent() {
     if (this.stampIndentForm.valid) {
       this.stampIndentPayload = {
         stampCombinationId: this.stamCombinationId,
@@ -110,7 +111,7 @@ export class IndentCaptureComponent implements OnInit {
 
       this.stampIndentService.addNewStampIndent(this.stampIndentPayload).subscribe((response) => {
         if (response.apiResponseStatus == 1) {
-          this.toastService.showAlert(response.message, 1);
+          this.toastService.showSuccess(response.message);
           this.stampIndentForm.reset()
           this.displayInsertModal = false;
           this.getAllStampIndents();
@@ -151,9 +152,7 @@ export class IndentCaptureComponent implements OnInit {
     this.calcAmountQuantity()
   }
 
-  onTreasurySelected($event: any) {
-    console.log($event);
-    
+  onTreasurySelected($event: any) {    
     this.raisedToTreasuryCode = $event;
   }
 

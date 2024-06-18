@@ -59,9 +59,11 @@ export interface AddStampVendors {
     effectiveFrom: string;
     validUpto: string;
     panNumber: string;
-    isActive?: boolean;
-    activeAtGrips?: boolean;
+    vendorPhoto: File;
+    vendorPanPhoto: File;
+    vendorLicencePhoto: File;
 }
+
 
 export interface GetStampDiscountDetails {
     discountId?: number;
@@ -101,8 +103,8 @@ export interface GetStampIndents {
     memoNumber: string;
     memoDate: string;
     remarks: string;
-    raisedByTreasury: number;
-    raisedToTreasury: number;
+    raisedByTreasuryCode: string;
+    raisedToTreasuryCode: string;
     stmapCategory: string;
     description: string;
     denomination: number;
@@ -158,4 +160,11 @@ export interface GetStampIndents {
     invoiceDate: string;
     amount: number;
     quantity: number;
+  }
+  export interface StampWalletGet {
+    clearBalance: number
+  }
+  export interface StampWalletRefill {
+    treasuryCode: string,
+    clearBalance: number
   }

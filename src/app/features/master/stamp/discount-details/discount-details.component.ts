@@ -72,7 +72,7 @@ export class DiscountDetailsComponent implements OnInit {
     this.DiscountDetailsService
       .getStampDiscountDetailsList(this.tableQueryParameters)
       .subscribe((response) => {
-        if (response.apiResponseStatus == 1 || response.apiResponseStatus == 3) {
+        if (response.apiResponseStatus == 1) {
           response.result.data.map((item: any) => {
             item.isActive = item.isActive ? "Yes" : "No"
             item.createdAt = convertDate(item.createdAt);
@@ -121,6 +121,8 @@ export class DiscountDetailsComponent implements OnInit {
     });
     if (res.length > 0) {
       this.discount = res[0].discount + '%';
+    } else {
+      this.discount = "No Discount";
     }
   }
 

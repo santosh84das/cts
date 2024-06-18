@@ -16,6 +16,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown/treasury-dropdown.module';
 import { InvoiceReceiveComponent } from './invoice-receive/invoice-receive.component';
+import { StampWalletRefillComponent } from './stamp-wallet-refill/stamp-wallet-refill.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { InvoiceReceiveComponent } from './invoice-receive/invoice-receive.compo
     InvoiceCaptureComponent,
     InvoiceReceiveComponent,
     StampCombinationDropdownComponent,
+    StampWalletRefillComponent,
   ],
   imports: [
     CommonModule,

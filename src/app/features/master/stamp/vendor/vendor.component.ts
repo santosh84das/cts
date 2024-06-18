@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'src/app/core/models/dynamic-table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { VendorService } from 'src/app/core/services/stamp/vendor.service';
 import { convertDate } from 'src/utils/dateConversion';
 import { AddStampVendors, GetStampVendors } from 'src/app/core/models/stamp';
+import { DynamicTable, DynamicTableQueryParameters } from 'src/app/core/models/dynamic-table';
 
 @Component({
   selector: 'app-vendor',
@@ -15,10 +15,14 @@ export class VendorComponent implements OnInit {
   vendorType!: string;
   VendorDetailsEntryForm!: FormGroup;
   displayInsertModal: boolean | undefined;
-  tableActionButton: ActionButtonConfig[] = [];
+  tableActionButton: any[] = [];
   tableData!: DynamicTable<GetStampVendors>;
-  tableQueryParameters!: DynamicTableQueryParameters | any;
+  tableQueryParameters!: DynamicTableQueryParameters | any;;
   vendorEntryPayload!: AddStampVendors;
+
+  vendorPhotoFile!: File;
+  vendorPanPhotoFile!: File;
+  vendorLicencePhotoFile!: File;
 
   constructor(
     private fb: FormBuilder,
@@ -48,8 +52,11 @@ export class VendorComponent implements OnInit {
 
   initializeForms() {
     this.VendorDetailsEntryForm = this.fb.group({
+      vendorPhoto: ['', Validators.required],
       panNumber: ['', [Validators.required, Validators.pattern('[A-Z]{5}[0-9]{4}[A-Z]{1}')]],
       licenseNo: ['', Validators.required],
+      vendorPanPhoto: ['', Validators.required],
+      vendorLicencePhoto: ['', Validators.required],
       phoneNumber: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
       address: ['', Validators.required],
       effectiveFrom: ['', Validators.required],
@@ -59,7 +66,7 @@ export class VendorComponent implements OnInit {
 
   getAllStampVendors() {
     this.VendorService.getStampVendorList(this.tableQueryParameters).subscribe((response) => {
-      if (response.apiResponseStatus == 1 || response.apiResponseStatus == 3) {
+      if (response.apiResponseStatus == 1) {
         response.result.data.map((item: any) => {
           item.isActive = item.isActive ? "Yes" : "No";
           item.activeAtGrips = item.activeAtGrips ? "Yes" : "No";
@@ -86,25 +93,37 @@ export class VendorComponent implements OnInit {
     this.vendorType = $event;
   }
 
+  handleFileInput(event: any, controlName: string) {
+    const file = event.target.files[0];
+    if (controlName === 'vendorPhoto') {
+      this.vendorPhotoFile = file;
+    } else if (controlName === 'vendorPanPhoto') {
+      this.vendorPanPhotoFile = file;
+    } else if (controlName === 'vendorLicencePhoto') {
+      this.vendorLicencePhotoFile = file;
+    }
+  }
+
   addVendors() {
     if (this.VendorDetailsEntryForm.valid) {
-      this.vendorEntryPayload = {
-        vendorType: this.vendorType,
-        panNumber: this.VendorDetailsEntryForm.value.panNumber,
-        licenseNo: this.VendorDetailsEntryForm.value.licenseNo,
-        address: this.VendorDetailsEntryForm.value.address,
-        phoneNumber: this.VendorDetailsEntryForm.value.phoneNumber,
-        effectiveFrom: this.VendorDetailsEntryForm.value.effectiveFrom,
-        validUpto: this.VendorDetailsEntryForm.value.validUpto
-      };
-      console.log(this.vendorEntryPayload);
-
-      this.VendorService.addNewStampVendor(this.vendorEntryPayload).subscribe((response) => {
+      const formData = new FormData();
+      formData.append('vendorType', this.vendorType);
+      formData.append('panNumber', this.VendorDetailsEntryForm.value?.panNumber);
+      formData.append('licenseNo', this.VendorDetailsEntryForm.value?.licenseNo);
+      formData.append('address', this.VendorDetailsEntryForm.value?.address);
+      formData.append('phoneNumber', this.VendorDetailsEntryForm.value?.phoneNumber);
+      formData.append('effectiveFrom', this.VendorDetailsEntryForm.value?.effectiveFrom);
+      formData.append('validUpto', this.VendorDetailsEntryForm.value?.validUpto);
+      formData.append('vendorPhoto', this.vendorPhotoFile);
+      formData.append('vendorPanPhoto', this.vendorPanPhotoFile);
+      formData.append('vendorLicencePhoto', this.vendorLicencePhotoFile);
+      this.VendorService.addNewStampVendor(formData).subscribe((response) => {
         if (response.apiResponseStatus == 1) {
           this.toastService.showAlert('Vendor details added successfully', 1);
           this.displayInsertModal = false;
           this.getAllStampVendors();
         } else {
+          console.log(response.result);
           this.toastService.showAlert(response.message, response.apiResponseStatus);
         }
       });

@@ -58,7 +58,7 @@ export class TypeComponent implements OnInit {
     this.TypeService
       .getStampTypeList(this.tableQueryParameters)
       .subscribe((response) => {
-        if (response.apiResponseStatus == 1 || response.apiResponseStatus == 3) {
+        if (response.apiResponseStatus == 1) {
             response.result.data.map((item:any) => {
             item.isActive = item.isActive ? "Yes" : "No"
             item.createdAt = convertDate(item.createdAt)

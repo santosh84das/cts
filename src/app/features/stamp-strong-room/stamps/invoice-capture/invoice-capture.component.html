@@ -141,13 +141,13 @@
     </div>
 </p-dialog>
 
-<p-dialog header="Invoice Details" [(visible)]="displayDetailsModal" [modal]="true" [style]="{width: '50vw'}"
+<p-dialog header="Invoice Details" [(visible)]="displayDetailsModal" [modal]="true" [style]="{width: 'max-content'}"
     [baseZIndex]="10000" [draggable]="false">
     <hr class="mb-4" />
 
 <div class="asked w-full flex flex-column gap-2">
     <div class="treasury-code flex gap-4 align-items-center w-full">
-        <label class="w-12rem font-semibold" for="Treasury Code: ">Treasury Code: </label>
+        <label class="w-12rem font-semibold" for="Treasury Code: ">By Treasury Code: </label>
         <input type="text" [value]="tcode" class="p-inputtext p-component p-element" readonly>
     </div>
     <div class="no-of-sheet flex gap-4 align-items-center w-full">

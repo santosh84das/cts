@@ -5,6 +5,7 @@ import { GetStampIndents } from 'src/app/core/models/stamp';
 import { StampIndentService } from 'src/app/core/services/stamp/stamp-indent.service';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { convertDate } from 'src/utils/dateConversion';
+import { StampInvoiceService } from 'src/app/core/services/stamp/stamp-invoice.service';
 
 @Component({
   selector: 'app-invoice-receive',
@@ -18,6 +19,7 @@ export class InvoiceReceiveComponent implements OnInit {
   tableQueryParameters!: DynamicTableQueryParameters | any;
   constructor(
     private stampIndentService: StampIndentService,
+    private stampInvoiceService: StampInvoiceService,
     private toastService: ToastService,) { }
 
   ngOnInit(): void {
@@ -32,25 +34,25 @@ export class InvoiceReceiveComponent implements OnInit {
         class: 'p-button-info p-button-sm',
         icon: 'pi pi-inbox',
         lable: 'Receive',
-        renderButton: (rowData) => {          
+        renderButton: (rowData) => {
           return (rowData.status === Status[15] || rowData.status === Status[12]);
         }
       },
-      {
-        buttonIdentifier: 'rejected',
-        class: 'p-button-danger p-button-sm',
-        icon: 'pi pi-times',
-        lable: 'Rejected',
-        renderButton: (rowData) => {          
-          return (rowData.status === Status[13] || rowData.status === Status[16]);
-        }
-      },
+      // {
+      //   buttonIdentifier: 'rejected',
+      //   class: 'p-button-danger p-button-sm',
+      //   icon: 'pi pi-times',
+      //   lable: 'Rejected',
+      //   renderButton: (rowData) => {          
+      //     return (rowData.status === Status[13] || rowData.status === Status[16]);
+      //   }
+      // },
       {
         buttonIdentifier: 'Recieved',
         class: 'p-button-success p-button-sm',
         icon: 'pi pi-check',
         lable: 'Recieved',
-        renderButton: (rowData) => {          
+        renderButton: (rowData) => {
           return (rowData.status === Status[14]);
         }
       },
@@ -62,9 +64,9 @@ export class InvoiceReceiveComponent implements OnInit {
     this.stampIndentService
       .getAllStampIndentsProcessed(this.tableQueryParameters)
       .subscribe((response) => {
-        if (response.apiResponseStatus == 1 || response.apiResponseStatus == 3) {
+        if (response.apiResponseStatus == 1) {
           console.log(response);
-          
+
           response.result.data.map((item: any) => {
             item.createdAt = convertDate(item.createdAt);
             item.memoDate = convertDate(item.memoDate);
@@ -80,6 +82,19 @@ export class InvoiceReceiveComponent implements OnInit {
       });
   }
   handleButtonClick($event: any) {
+    this.stampIndentService.receiveIndent($event.rowData.stampIndentId).subscribe((response) => {
+      if (response.apiResponseStatus == 1) {
 
+        this.toastService.showSuccess(
+          response.message,
+        );
+        this.getAllStampIndents()
+      } else {
+        this.toastService.showAlert(
+          response.message,
+          response.apiResponseStatus
+        );
+      }
+    })
   }
 }

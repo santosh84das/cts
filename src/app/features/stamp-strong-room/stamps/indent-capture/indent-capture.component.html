@@ -13,10 +13,10 @@
     </div>
 </div>
 
-<p-dialog header="Stamp Indent" [(visible)]="displayInsertModal" [modal]="true" [style]="{width: '50vw'}"
+<p-dialog header="Stamp Indent" [(visible)]="displayInsertModal" [modal]="true" [style]="{width: '45vw'}"
     [baseZIndex]="10000">
     <form [formGroup]="stampIndentForm" class="flex flex-column gap-4 mt-3">
-        <div class="flex gap-2">
+        <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
                 <label for="Memo No:" class="block mb-1 text-color text-lg">Memo No:</label>
                 <input type="text" pinputtext="" formControlName="memoNo" placeholder="Eg: MEMO5256"
@@ -28,14 +28,14 @@
                     appendTo="body" [showIcon]="true" inputId="icon"></p-calendar>
             </div>
         </div>
-        <div class="flex gap-2">
+        <div class="flex gap-2 xl:flex-row flex-column">
             <div class="col-12 p-0 flex-auto">
                 <label for="Category" class="block mb-1 text-color text-lg">Combination</label>
                 <app-stamp-combination-dropdown
                     (StampCombinationSelected)="onStampCombinationSelected($event)"></app-stamp-combination-dropdown>
             </div>    
         </div>
-        <div class="flex gap-2">
+        <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-1">
                 <label for="To Treasury" class="block mb-1 text-color text-lg">To Treasury (<span class="font-medium text-gray-900">Default: </span> <span class="font-medium text-green-400">SUPERINTENDENT</span>)</label>
                 <app-treasury-dropdown (treasurySelected)="onTreasurySelected($event)"></app-treasury-dropdown>
@@ -46,7 +46,7 @@
                 class="p-inputtext p-component p-element w-full">
             </div>
         </div>
-        <div class="flex gap-2">
+        <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
                 <label for="Denomination (Rs.)" class="block mb-1 text-color text-lg">Denomination (Rs.)</label>
                 <input type="number" pinputtext="" [value]="denomination" readonly
@@ -58,7 +58,7 @@
                     class="p-inputtext p-component p-element w-full">
             </div>
         </div>
-        <div class="flex gap-2">
+        <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
                 <label for="No: of Sheets" class="block mb-1 text-color text-lg">No: of Sheets</label>
                 <input type="number" pinputtext="" formControlName="noOfSheets" [(ngModel)]="sheet" (ngModelChange)="sheetSelected($event)" placeholder="Eg: 10"
@@ -70,7 +70,7 @@
                     class="p-inputtext p-component p-element w-full">
             </div>
         </div>
-        <div class="flex gap-2">
+        <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
                 <label for="Quantity" class="block mb-1 text-color text-lg">Quantity</label>
                 <input type="text" pinputtext="" readonly [value]="quantity"
@@ -82,7 +82,7 @@
                     class="p-inputtext p-component p-element w-full">
             </div>
         </div>
-        <div class="flex gap-2">
+        <div class="flex gap-2 xl:flex-row flex-column">
             <div class="col-12 p-0 flex-auto">
                 <label for="Remarks" class="block mb-1 text-color text-lg">Remarks</label>
                 <textarea type="text" pinputtext="" formControlName="remarks" placeholder="Eg: Indent for Kolkata treasury."

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastService } from '../toast.service';
 import { DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
@@ -27,9 +27,14 @@ export class VendorService {
       );
   }
 
-  addNewStampVendor(paylod: AddStampVendors): Observable<IapiResponce> {
-    return this.http.post<IapiResponce>('v1/StampMaster/CreateStampVendor', paylod).pipe(
+  addNewStampVendor(paylod: FormData): Observable<IapiResponce> {
+    const headers = new HttpHeaders({
+      'enctype': 'multipart/form-data'
+    });
+    return this.http.post<IapiResponce>('v1/StampMaster/CreateStampVendor', paylod, {headers}).pipe(
       catchError((error) => {
+        console.log(error.message, error);
+        
         throw this.toastService.showError(error.message);
       })
     );

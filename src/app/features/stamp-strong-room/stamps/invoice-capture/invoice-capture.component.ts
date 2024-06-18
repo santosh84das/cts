@@ -191,15 +191,15 @@ export class InvoiceCaptureComponent implements OnInit {
     });
   }
 
-  getIndentDetailsById(id: number) {
-    this.stampIndentService.getStampIndentDetails(id).subscribe((response) => {
+  getIndentDetailsById(rowData: any) {
+    this.stampIndentService.getStampIndentDetails(rowData.stampIndentId).subscribe((response) => {
       if (response.apiResponseStatus === 1) {
         console.log(response.result);
         this.labelAsked = response.result.label
-        // this.labelGiven = this.tableData.data.label
+        this.labelGiven = rowData.label
         this.sheetAsked = response.result.sheet
-        this.sheetGiven = this.sheet
-        this.tcode = this.treasury
+        this.sheetGiven = rowData.sheet
+        this.tcode = response.result.raisedByTreasuryCode
       } else {
         this.toastService.showAlert(response.message, response.apiResponseStatus);
       }
@@ -228,7 +228,7 @@ export class InvoiceCaptureComponent implements OnInit {
         break;
       case 'invoice-details':
         this.displayDetailsModal = true
-        this.getIndentDetailsById($event.rowData.stampIndentId)
+        this.getIndentDetailsById($event.rowData)
         break;
     }
   }
