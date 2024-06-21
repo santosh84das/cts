@@ -85,21 +85,24 @@ export class ChequeReceivedComponent implements OnInit {
   rcvFormsubmit() {
     const payload = {
       invoiceId: this.invoiceId || 0,
+      series: this.invoiceDetailsList.chequeInvoiceSeries[0].series,
+      treasuryCode: this.invoiceDetailsList.chequeInvoiceSeries[0].treasuryCode,
+      micrCode: this.invoiceDetailsList.chequeInvoiceSeries[0].micrCode,
       chequeReceivedDamagedDetails: this.chequesDamageType1
     };
       console.log('----->', payload);
-      this.chequeReceiveService.saveChequeReceive(payload).subscribe(res => {
-        if (res.apiResponseStatus == 1) {
-          this.toastService.showAlert(
-            res.message,
-            res.apiResponseStatus,
-          );
-          this.router.navigate(['cheque/cheque-indent-invoice']);
-        } else {
-          this.toastService.showError(res.message);
-        }
+      // this.chequeReceiveService.saveChequeReceive(payload).subscribe(res => {
+      //   if (res.apiResponseStatus == 1) {
+      //     this.toastService.showAlert(
+      //       res.message,
+      //       res.apiResponseStatus,
+      //     );
+      //     this.router.navigate(['cheque/cheque-indent-invoice']);
+      //   } else {
+      //     this.toastService.showError(res.message);
+      //   }
 
-      })
+      // })
   }
 }
 

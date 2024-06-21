@@ -196,7 +196,7 @@ export class ChequeIndentInvoiceComponent implements OnInit {
           buttonIdentifier: 'invoice-received',
           class: ' p-button-sm',
           icon: 'pi pi-users',
-          lable: 'Received',
+          lable: 'Receive',
           renderButton: (rowData) => {
             //TODO:: Change this permission to "can-distribute-cheque-invoice" if not exiest then create permission in UM
             return rowData.currentStatusId == invoiceStatus.FrowardToTreasuryOfficer && this.ngxPermissionsService.getPermission('can-approve-reject-cheque-indent') !== undefined;

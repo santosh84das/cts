@@ -82,6 +82,9 @@ export interface ChequeInvoiceSeries {
 }
 
 export interface ChequeReceive{
+  series: string,
+  treasuryCode: string,
+  micrCode: string
   invoiceId:number;
   chequeReceivedDamagedDetails: chequeReceivedDamagedDetails[];
 }
