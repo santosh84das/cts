@@ -239,6 +239,7 @@ export class ChequeIndentInvoiceComponent implements OnInit {
     this.chequeIndentService.getChqueInvoiceList(this.tableQueryParameters).subscribe((responce) => {
       if (responce.apiResponseStatus == 1) {
         this.tableData = responce.result;
+        console.log(responce.result);
         return;
       }
       this.toastService.showError(responce.message);
@@ -248,6 +249,7 @@ export class ChequeIndentInvoiceComponent implements OnInit {
     this.chequeIndentService.getChqueIndentList(this.tableQueryParameters).subscribe((responce) => {
       if (responce.apiResponseStatus == 1) {
         this.tableData = responce.result;
+        
         return;
       }
       this.toastService.showError(responce.message);

@@ -18,4 +18,18 @@ export class MasterService {
       })
     )
   }
+  getVendorTypes():Observable<IapiResponce>{
+    return this.http.get<IapiResponce>('v1/StampMaster/GetALLStampVendorTypes').pipe(
+      catchError((error)=>{
+        throw this.toastservice.showError(error.message);
+      })
+    )
+  }
+  getCategoryTypes():Observable<IapiResponce>{
+    return this.http.get<IapiResponce>('v1/StampMaster/GetALLStampCategoryTypes').pipe(
+      catchError((error)=>{
+        throw this.toastservice.showError(error.message);
+      })
+    )
+  }
 }

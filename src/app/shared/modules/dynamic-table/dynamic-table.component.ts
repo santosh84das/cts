@@ -79,7 +79,7 @@ export class DynamicTableComponent implements OnInit {
     cols!: any[];
     exportColumns!: any[];
     ngOnInit(): void {
-        console.log('header', this.headers);
+        // console.log('header', this.headers);
         console.log('header', this.data);
         this.exportColumns = this.headers.map(col => ({ title: col.name, dataKey: col.fieldName }));
         if (this.headers.length == 0) {
@@ -88,7 +88,7 @@ export class DynamicTableComponent implements OnInit {
         if (this.dataCount == 0) {
             this.errors.push({ severity: 'error', summary: 'Data Count mesing', detail: 'Message Content' });
         }
-        console.log(this.errors);
+        // console.log(this.errors);
 
         this.sizes = [
             { name: 'small', class: 'p-datatable-sm' },
