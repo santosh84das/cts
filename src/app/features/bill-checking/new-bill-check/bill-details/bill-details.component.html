@@ -147,7 +147,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 p-3">
+        <div class="col-12 p-3" *ngIf="subHeadDetails && subHeadDetails.length > 0">
             <!-- <div class="text-700 font-medium mb-3">Files</div> -->
 
             <p-table class="pb-5" [value]="subHeadDetails">
@@ -174,8 +174,8 @@
                     <app-allotment></app-allotment>
                 </p-dialog>
             </p-divider> -->
-            <div *ngIf="subHeadDetails">
-                <p-fieldset legend="Allotment" [toggleable]="true">
+            <div>
+                <p-fieldset legend="Allotment" [toggleable]="true" [collapsed]="true">
                     <app-allotment [subHeadDetails]="subHeadDetails"></app-allotment>
                 </p-fieldset>
             </div>

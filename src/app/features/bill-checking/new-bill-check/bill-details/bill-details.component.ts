@@ -36,10 +36,7 @@ export class BillDetailsComponent implements OnInit {
             if (responese.apiResponseStatus == 1) {
                 this.billDetails = responese.result;
                 this.billservice.billDetails = responese.result;
-                this.subHeadDetails =
-                    this.billDetails?.billDetailsDetails.subDeatilsHead;
-                    console.log('bill-chk',this.billservice.billDetails);
-                    
+                this.subHeadDetails = this.billDetails?.billDetailsDetails.subDeatilsHead;
                 return;
             }
             this.toastservice.showAlert(responese.message,responese.apiResponseStatus);
