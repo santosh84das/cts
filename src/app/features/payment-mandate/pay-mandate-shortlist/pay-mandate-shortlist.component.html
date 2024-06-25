@@ -1,6 +1,8 @@
 <div class="grid">
     <div class="col-12">
-        <app-common-header [headerName]="'Pay Mandate shortlist'"
+        <!-- <app-common-header [headerName]="'Pay Mandate shortlist'"
+            [imgSrc]="'assets/layout/images/icons/payment-mandate.png'"></app-common-header> -->
+            <app-common-header [headerName]="'Pay Mandate '"
             [imgSrc]="'assets/layout/images/icons/payment-mandate.png'"></app-common-header>
         <p-toolbar>
             <div class="p-toolbar-group-left">
@@ -160,7 +162,8 @@
                 </ng-template>
             </p-table>
             <div class="grid grid-nogutter justify-content-end">
-                <p-button label="Shortlisted" (click)="dataSave()" icon="pi pi-save" class="p-button-success align-items-end"></p-button>
+                <!-- <p-button label="Shortlisted" (click)="dataSave()" icon="pi pi-save" class="p-button-success align-items-end"></p-button> -->
+                <p-button label="Pay Mandate" (click)="dataSave()" icon="pi pi-save" class="p-button-success align-items-end"></p-button>
 
             </div>
         </div>
