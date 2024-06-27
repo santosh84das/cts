@@ -23,8 +23,8 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ButtonModule } from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';
-import { FirstLetterPipe } from '../core/pipe/first-letter.pipe';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { SharedModule } from '../shared/modules/shared.module';
 @NgModule({
     declarations: [
         AppMenuitemComponent,
@@ -35,7 +35,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
         AppLayoutComponent,
         BreadcrumbComponent,
         LoadingIndeterminateComponent,
-        FirstLetterPipe  
     ],
     imports: [
         BrowserModule,
@@ -55,6 +54,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
         ButtonModule,
         AvatarModule,
         ConfirmDialogModule,
+        SharedModule
     ],
     exports: [AppLayoutComponent]
 })

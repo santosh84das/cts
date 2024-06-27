@@ -7,6 +7,7 @@ import { LoginComponent } from './features/login/login.component';
 import { AuthGuard } from './core/guard/auth.guard';
 import { NgxPermissionsGuard } from 'ngx-permissions';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { StaticLoginComponent } from './features/static-login/static-login.component';
 
 @NgModule({
     imports: [
@@ -26,9 +27,15 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
                     { path: 'option', loadChildren: () => import('./features/options/options.module').then(m => m.OptionsModule) },
                     {path:'bill-checking', canActivate: [NgxPermissionsGuard],data: {permissions: {only: 'can-bill-check',redirectTo: '/notfound'}},loadChildren: () => import('./features/bill-checking/bill-checking.module').then(m => m.BillCheckingModule)},
                     {path:'return-memo',canActivate: [NgxPermissionsGuard],data: {permissions: {only: 'can-generate-return-memo',redirectTo: '/notfound'}},loadChildren: () => import('./features/return-memo/return-memo.module').then(m => m.ReturnMemoModule)},
+                    {path:'payment-mandate',loadChildren:()=>import('./features/payment-mandate/payment-mandate.module').then(m=>m.PaymentMandateModule)},
+                    {path:'cheque',loadChildren: () => import('./features/cheque/cheque.module').then(m => m.ChequeModule)},
+                    {path:'master',loadChildren: () => import('./features/master/master.module').then(m => m.MasterModule)},
+                    {path:'stamp-strong-room',loadChildren: () => import('./features/stamp-strong-room/stamp-strong-room.module').then(m => m.StampStrongRoomModule)},
+
                 ]
             },
             {path:'login',component:LoginComponent},
+            {path:'static-login',component:StaticLoginComponent},
             { path: 'auth', loadChildren: () => import('./demo/components/auth/auth.module').then(m => m.AuthModule) },
             { path: 'landing', loadChildren: () => import('./demo/components/landing/landing.module').then(m => m.LandingModule) },
             { path: 'notfound', component: NotFoundComponent },

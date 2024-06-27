@@ -19,7 +19,7 @@ import { MessageService } from 'primeng/api';
 import { DatePipe } from '@angular/common';
 import { DividerModule } from 'primeng/divider';
 import { OptionCardComponent } from './shared/modules/option-card/option-card.component';
-import {StepsModule} from 'primeng/steps';
+import { StepsModule } from 'primeng/steps';
 import { TokenListComponent } from './shared/modules/token-list/token-list.component';
 import { ServerDownComponent } from './shared/components/server-down/server-down.component';
 import { LoginComponent } from './features/login/login.component';
@@ -27,13 +27,15 @@ import { HasRoleDirective } from './core/directive/has-role.directive';
 import { NgxPermissionsModule, NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
 import { AuthTokenService } from './core/services/auth/auth-token.service';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
-import { FirstLetterPipe } from './core/pipe/first-letter.pipe';
 import { ReturnMemoComponent } from './features/return-memo/return-memo.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
-
+import { StaticLoginComponent } from './features/static-login/static-login.component';
+import { PaymentMandateComponent } from './features/payment-mandate/payment-mandate.component';
+import { CommonHeaderComponent } from './shared/modules/common-header/common-header.component';
+import { DynamicTableComponent } from './shared/modules/dynamic-table/dynamic-table.component';
 @NgModule({
     declarations: [
-        AppComponent, NotfoundComponent, ServerDownComponent, LoginComponent, NotFoundComponent
+        AppComponent, NotfoundComponent, ServerDownComponent, LoginComponent, NotFoundComponent, StaticLoginComponent,
     ],
     imports: [
         AppRoutingModule,
@@ -44,21 +46,23 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        {provide: HTTP_INTERCEPTORS,useClass: ApiInterceptor,multi:true},
+        { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
         {
             provide: APP_INITIALIZER,
-            useFactory: (authTokenService: AuthTokenService, rolesService: NgxRolesService ) => function() {return authTokenService.loadRolesAndPermissions().subscribe((roles) => {
-                if(roles!=null){
-                    roles.forEach(role => {
-                        rolesService.addRoleWithPermissions(role.Name, role.Permissions);
-                      });
-                }
-              })},
+            useFactory: (authTokenService: AuthTokenService, rolesService: NgxRolesService) => function () {
+                return authTokenService.loadRolesAndPermissions().subscribe((roles) => {
+                    if (roles != null) {
+                        roles.forEach(role => {
+                            rolesService.addRoleWithPermissions(role.Name, role.Permissions);
+                        });
+                    }
+                })
+            },
             deps: [AuthTokenService, NgxRolesService],
             multi: true
         },
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService,MessageService,LoadingIndeterminateService, DatePipe,DividerModule,StepsModule
+        PhotoService, ProductService, MessageService, LoadingIndeterminateService, DatePipe, DividerModule, StepsModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     bootstrap: [AppComponent]

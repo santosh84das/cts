@@ -4,7 +4,7 @@ import { Observable, catchError } from 'rxjs';
 import { IapiResponce } from '../../models/iapi-responce';
 import { HttpClient } from '@angular/common/http';
 import { error } from 'console';
-import { HoaChain, IBillCheck, IBillDetails, IBills } from '../../models/bill';
+import { HoaChain, IBillCheck, IBillDetails, IBills, IRetunMemoBillDetils, IReturnMemoCount } from '../../models/bill';
 import { IObjection } from '../../models/objection';
 
 @Injectable({
@@ -24,7 +24,18 @@ export class BillService {
     getBillDetails(token_id: number): Observable<IapiResponce<IBillDetails>> {
         return this.http
             .get<IapiResponce<IBillDetails>>(
-                'v1/BillChecking/GetBillDetails/' + token_id
+                'v1/BillChecking/get-bill-details?tokenId=' + token_id
+            )
+            .pipe(
+                catchError((error) => {
+                    throw this.toastService.showError(error.message);
+                })
+            );
+    }
+    getReturnMemoBillDetails(token_id: number): Observable<IapiResponce<IRetunMemoBillDetils>> {
+        return this.http
+            .get<IapiResponce<IRetunMemoBillDetils>>(
+                'v1/ReturnMemo/ReturnMemoBillDetails/' + token_id
             )
             .pipe(
                 catchError((error) => {
@@ -66,6 +77,14 @@ export class BillService {
                 throw this.toastService.showError(error.message);
             })
         )
+    }
+
+    getReturnMemoCount():Observable<IapiResponce>{
+        return this.http.get<IapiResponce<IReturnMemoCount>>("v1/ReturnMemo/ReturnMemoCount").pipe(
+            catchError((error) => {
+                throw this.toastService.showError(error.message);
+            })
+        );
     }
 
 }

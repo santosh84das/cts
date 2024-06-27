@@ -13,6 +13,7 @@ export class AuthTokenService {
     jwtToken: IJwtToken | any;
     constructor() {}
     getToken(): string {
+        // console.log('****->',window.localStorage['jwtToken']);
         return window.localStorage['jwtToken'];
     }
 
@@ -25,6 +26,7 @@ export class AuthTokenService {
     }
     getDecodeToken(): Application|any {
         this.jwtToken = this.jwtHelper.decodeToken(this.getToken());
+        // console.log('->jwt',this.jwtToken);
         if(this.jwtToken!=null){
             this.decodedToken = JSON.parse(this.jwtToken.application);
             return this.decodedToken;

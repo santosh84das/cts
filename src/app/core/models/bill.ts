@@ -5,6 +5,9 @@ export interface IBills {
     ddoDesignation?: string | null;
     billNo?: string | null;
     billDate?: Date | null;
+    grossAmount: number,
+    netAmount: number,
+    hoaChain: HoaChain
 }
 
 export interface IOnlineBillDetailsRefNo{
@@ -33,7 +36,7 @@ export interface HoaChain {
     schemeHead: string;
     votedCharged: string;
     detailHead: string;
-    // subDetailHead: string;
+    subDetailHead: string;
   }
  export interface subDeatilsHead {
     subDeatils: string;
@@ -115,4 +118,20 @@ export interface ISelectedObjection{
   overruledRemark?:string,
   objectionType?:string,
   objectionBy?:string,
+}
+
+export interface IRetunMemoBillDetils{
+  tokenId :number,
+  tokenNumber :number,
+  tokenDate :string,
+  billNo :string,
+  billDate :string,
+  ddoCode :string,
+  hoaChain  :HoaChain,
+  grossAmount :number,
+  netAmount :number
+}
+export interface IReturnMemoCount{
+  generatedReturnMemo: number,
+  awatingReturnMemo: number
 }

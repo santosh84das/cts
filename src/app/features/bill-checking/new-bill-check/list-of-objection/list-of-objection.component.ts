@@ -7,6 +7,7 @@ import { IBillCheck, ISelectedObjection, ISelectedObjectionsForOverrule } from '
 import { IObjection, ISetNewObjection, TokenWithObjections } from 'src/app/core/models/objection';
 import { BillService } from 'src/app/core/services/Bill/bill.service';
 import { TokenService } from 'src/app/core/services/Token/token.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { ObjectionService } from 'src/app/core/services/objection.service';
 import { ToastService } from 'src/app/core/services/toast.service';
@@ -36,6 +37,7 @@ export class ListOfObjectionComponent implements OnInit {
     currentIndex!: number;
     currentEvent!: any;
     submitButtonLabel: string = "Object";
+    isRevertButton: boolean = false;
     constructor(
         private billService: BillService,
         private objectionService: ObjectionService,
@@ -44,10 +46,12 @@ export class ListOfObjectionComponent implements OnInit {
         private router: Router,
         private confirmationService: ConfirmationService,
         private notificationService: NotificationService,
+        private authService: AuthService,
     ) { }
     ngOnInit(): void {
         this.gobalObjection();
         this.tokenObjection(this.tokenServce.selectedId);
+        this.isTrasuryOfficerLoggedIn()
     }
     private gobalObjection() {
         this.objectionService.getGobalObjection().subscribe((response) => {
@@ -86,18 +90,17 @@ export class ListOfObjectionComponent implements OnInit {
             remark: this.selectedObjections[this.currentIndex].overruledRemark
         }
         this.selectedObjectionsForOverrule.push(a)
-        this.overruleRemarks = this.overruleRemarks || "";
+        this.overruleRemarks = undefined;
         this.overruleRemarkPanel.toggle(this.currentEvent);
         this.setSubmitButtonLabel();
     }
     public undoObjectionOverrule(index: number) {
         this.selectedObjections[index].isOverruled = false;
-        this.selectedObjections[index].overruledRemark = "";
+        this.selectedObjections[index].overruledRemark = undefined;
         const objectionId = this.selectedObjections[index].exiestObjectionId;
         this.selectedObjectionsForOverrule = this.selectedObjectionsForOverrule.filter(obj => obj.tokenObjectionId !== objectionId);
         console.log(this.selectedObjectionsForOverrule);
         this.setSubmitButtonLabel();
-
     }
     public addLocalObjection() {
         const localObjection: ISelectedObjection = {
@@ -132,14 +135,14 @@ export class ListOfObjectionComponent implements OnInit {
                         description: tokenObjections.objectionDescription,
                         remark: tokenObjections.objectionRemark,
                         exiestObjectionId: tokenObjections.id,
-                        objectionType:tokenObjections.objectionType,
-                        objectionBy:tokenObjections.objectionBy,
-                        isOverruled:tokenObjections.isOverruled,
-                        OverruledBy:tokenObjections.objectionBy,
+                        objectionType: tokenObjections.objectionType,
+                        objectionBy: tokenObjections.objectionBy,
+                        isOverruled: tokenObjections.isOverruled,
+                        OverruledBy: tokenObjections.objectionBy,
                     }
                 });
-                console.log('null',this.selectedObjections);
-                
+                console.log('null', this.selectedObjections);
+
                 const currentlySlectedGobalObjections: IObjection[] = response.result.filter((r: { objectionType: string; }) => r.objectionType == "Global").map((tokenObjections: TokenWithObjections) => {
                     return {
                         id: tokenObjections.objectionId,
@@ -164,7 +167,6 @@ export class ListOfObjectionComponent implements OnInit {
     }
 
     billCheck() {
-        console.log('hello',this.selectedObjections);
         this.billCheckDetails = {
             tokenId: this.tokenServce.selectedId,
             referenceNo: this.tokenServce.selectedTokenRef,
@@ -174,7 +176,7 @@ export class ListOfObjectionComponent implements OnInit {
             },
             overruledObjections: this.selectedObjectionsForOverrule,
         }
-        console.log('hi',this.billCheckDetails);
+        console.log('hi', this.billCheckDetails);
 
         this.billService.billCheck(this.billCheckDetails).subscribe((response) => {
             if (response.apiResponseStatus == 1) {
@@ -216,4 +218,37 @@ export class ListOfObjectionComponent implements OnInit {
     prevStep() {
         this.router.navigate(['/bill-checking/new-bill-check/bill-details']);
     }
+
+    isTrasuryOfficerLoggedIn() {
+        if (this.authService.getUserDetails().Role == 'treasury-officer') {
+            this.isRevertButton = true;
+        }
+
+    }
+    confirmRevert(event: Event, index:number) {
+        this.confirmationService.confirm({
+            target: event.target as EventTarget,
+            message: 'Are you sure that you want to revert?',
+            header: 'Confirmation',
+            icon: 'pi pi-exclamation-triangle',
+            acceptIcon: "none",
+            rejectIcon: "none",
+            rejectButtonStyleClass: "p-button-text",
+            accept: () => {
+                this.revertObjectionOverruled(index);
+            },
+            reject: () => {
+
+            }
+        });
+    }
+    revertObjectionOverruled(index: number) {
+        this.selectedObjections[index].isOverruled = false;
+        this.selectedObjections[index].overruledRemark = undefined;
+        const objectionId = this.selectedObjections[index].exiestObjectionId;
+        this.selectedObjectionsForOverrule = this.selectedObjectionsForOverrule.filter(obj => obj.tokenObjectionId !== objectionId);
+        console.log(this.selectedObjectionsForOverrule);
+        this.setSubmitButtonLabel();
+    }
+
 }

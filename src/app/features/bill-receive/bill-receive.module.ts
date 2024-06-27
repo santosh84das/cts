@@ -22,7 +22,10 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { BillReceiveListComponent } from './bill-receive-list/bill-receive-list.component';
 import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
-
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import {DialogModule} from 'primeng/dialog';
+import { MessagesModule } from 'primeng/messages';
+import { SharedModule } from 'src/app/shared/modules/shared.module';
 @NgModule({
   declarations: [BillReceiveComponent, BillReceiveListComponent],
   imports: [
@@ -30,7 +33,11 @@ import { CardModule } from 'primeng/card';
     BillReceiveRoutingModule,
     ButtonModule,
     TableModule,
-    CardModule
+    CardModule,
+    ConfirmPopupModule,
+    DialogModule,
+    MessagesModule,
+    SharedModule
   ]
 })
 export class BillReceiveModule { }

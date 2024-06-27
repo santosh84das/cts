@@ -27,42 +27,81 @@ $gutter: 1rem; //for primeflex grid system
 
 .customer-badge {
     &.status-bill_received {
-        background: #B3E5FC !important;
-        color: #23547B !important;
+        background: #b3e5fc !important;
+        color: #23547b !important;
     }
 
     &.status-retrun_memo_generated {
-        background: #FFCDD2;
+        background: #ffcdd2;
         color: #c63737;
     }
 
     &.status-da_froward {
-        background: #C8E6C9;
+        background: #c8e6c9;
         color: #256029;
     }
 
     &.status-da_objected {
-        background: #FFD8B2;
+        background: #ffd8b2;
         color: #805b36;
     }
 
     &.status-ac_froward {
-        background: #C8E6C9;
+        background: #c8e6c9;
         color: #256029;
     }
 
     &.status-ac_objected {
-        background: #FFD8B2;
+        background: #ffd8b2;
         color: #805b36;
     }
 
     &.status-to_froward {
-        background: #C8E6C9;
+        background: #c8e6c9;
         color: #256029;
     }
-
+    &.status-to_objected {
+        background: #ffd8b2;
+        color: #805b36;
+    }
     &.status-bill_clear {
-        background: #C8E6C9;
+        background: #c8e6c9;
         color: #256029;
     }
+    &.status-bill_clear {
+        background: #c8e6c9;
+        color: #256029;
+    }
+    &.status-Global {
+        background: #eccfff;
+        color: #694382;
+    }
+    &.status-Local {
+        background: #b3e5fc;
+        color: #23547b;
+    }
+}
+
+// Scroll-Bar
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    border-radius: 12px;
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 12px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #797979;
+}
+.p-calendar {
+    width: 100% !important;
+}
+.file::-webkit-file-upload-button {
+    background: transparent;
+    border: none;
 }

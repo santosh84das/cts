@@ -107,6 +107,22 @@ export class NotificationService {
                 confirmButtonText: 'Yes',
             })
             .then((result) => {
+                console.log(result);
+                
+                return result.value === true ? true : false;
+            });
+    }
+    successfulReload(msg: string) {
+        return swal
+            .fire({
+                title: 'Success',
+                icon: 'success',
+                html: msg,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Ok',
+            })
+            .then((result) => {
+                window.location.reload();
                 return result.value === true ? true : false;
             });
     }

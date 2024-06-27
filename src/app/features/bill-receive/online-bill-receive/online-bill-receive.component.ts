@@ -109,6 +109,7 @@ export class OnlineBillReceiveComponent implements OnInit {
           // this.toastService.showSuccess(res.message+' /n Your Token No is->' +res.result);
           this.notificationService.success(res.message,"Your Token No is: " +res.result);
           this.router.navigate(['/bill-receive']);
+          return;
         }
         this.notificationService.error(res.message);
       });

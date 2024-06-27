@@ -15,15 +15,15 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCount();
-    this.newBillCount();
+    // this.newBillCount();
   }
-  newBillCount(){
-    this.dashbordService.getBillsCountByStatus(3).subscribe((response)=>{
-      if(response.apiResponseStatus==1){
-          this.newBills = response.result;
-      }
-    });
-  }
+  // newBillCount(){
+  //   this.dashbordService.getBillsCountByStatus(3).subscribe((response)=>{
+  //     if(response.apiResponseStatus==1){
+  //         this.newBills = response.result;
+  //     }
+  //   });
+  // }
   
   getCount(){
     this.dashbordService.getNoOfToken().subscribe((response)=>{
