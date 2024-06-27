@@ -105,3 +105,6 @@ export class CategoryComponent implements OnInit {
       });
     } else {
       this.toastService.showAlert('Please fill all the required fields', 0);
+    }
+  }
+}
