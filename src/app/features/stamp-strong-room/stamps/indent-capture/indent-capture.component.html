@@ -42,19 +42,19 @@
             </div>
             <div class="flex-1">
                 <label for="Description" class="block mb-1 text-color text-lg">Description</label>
-                <input type="text" pinputtext="" [value]="description" readonly
+                <input type="text" pinputtext="" [value]="description" readonly disabled
                 class="p-inputtext p-component p-element w-full">
             </div>
         </div>
         <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
                 <label for="Denomination (Rs.)" class="block mb-1 text-color text-lg">Denomination (Rs.)</label>
-                <input type="number" pinputtext="" [value]="denomination" readonly
+                <input type="number" pinputtext="" [value]="denomination" readonly disabled
                     class="p-inputtext p-component p-element w-full">
             </div>
             <div class="flex-auto">
                 <label for="Label/Sheet" class="block mb-1 text-color text-lg">Label/Sheet</label>
-                <input type="text" pinputtext="" [value]="labelPerSheet" readonly
+                <input type="text" pinputtext="" [value]="labelPerSheet" readonly disabled
                     class="p-inputtext p-component p-element w-full">
             </div>
         </div>
@@ -73,12 +73,12 @@
         <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
                 <label for="Quantity" class="block mb-1 text-color text-lg">Quantity</label>
-                <input type="text" pinputtext="" readonly [value]="quantity"
+                <input type="text" pinputtext="" readonly disabled [value]="quantity"
                     class="p-inputtext p-component p-element w-full">
             </div>
             <div class="flex-auto">
                 <label for="Amount (Rs.)" class="block mb-1 text-color text-lg">Amount (Rs.)</label>
-                <input type="text" pinputtext="" readonly [value]="amount"
+                <input type="text" pinputtext="" readonly disabled [value]="amount"
                     class="p-inputtext p-component p-element w-full">
             </div>
         </div>

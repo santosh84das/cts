@@ -56,17 +56,17 @@
         <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
                 <label for="Memo No:" class="block mb-1 text-color text-lg">Memo No:</label>
-                <input type="text" pinputtext="" readonly [value]="memoNumber" placeholder="Eg: MEMO5256" class="p-inputtext p-component p-element w-full">
+                <input type="text" pinputtext="" readonly disabled [value]="memoNumber" placeholder="Eg: MEMO5256" class="p-inputtext p-component p-element w-full">
             </div>
             <div class="flex-auto">
                 <label for="Memo Date" class="block mb-1 text-color text-lg">Memo Date</label>
-                <input class="p-inputtext p-component p-element w-full" readonly [value]="memoDate" placeholder="dd/mm/yyyy"/>
+                <input class="p-inputtext p-component p-element w-full" readonly disabled [value]="memoDate" placeholder="dd/mm/yyyy"/>
             </div>
         </div>
         <div class="flex gap-2 xl:flex-row flex-column">
             <div class="col-12 p-0 flex-auto">
                 <label for="Combination" class="block mb-1 text-color text-lg">Combination</label>
-                <input type="text" pinputtext="" [value]="combination" readonly  class="p-inputtext p-component p-element w-full">
+                <input type="text" pinputtext="" [value]="combination" readonly disabled  class="p-inputtext p-component p-element w-full">
             </div>
         </div>
         <div class="flex gap-2 xl:flex-row flex-column">
@@ -74,22 +74,22 @@
                 <label for="Treasury/Superintendent" class="block mb-1 text-color text-lg">Treasury/Superintendent
                     (<span class="font-medium text-gray-900">Default: </span> <span
                         class="font-medium text-green-400">SUPERINTENDENT</span>)</label>
-                <input class="p-inputtext p-component p-element w-full" [value]="treasury" readonly />
+                <input class="p-inputtext p-component p-element w-full" [value]="treasury" readonly disabled />
             </div>
             <div class="flex-1">
                 <label for="Description" class="block mb-1 text-color text-lg">Description</label>
-                <input type="text" pinputtext="" [value]="description" readonly
+                <input type="text" pinputtext="" [value]="description" readonly disabled
                     class="p-inputtext p-component p-element w-full">
             </div>
         </div>
         <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
                 <label for="Denomination (Rs.)" class="block mb-1 text-color text-lg">Denomination (Rs.)</label>
-                <input type="number" pinputtext="" [value]="denomination" readonly class="p-inputtext p-component p-element w-full">
+                <input type="number" pinputtext="" [value]="denomination" readonly disabled class="p-inputtext p-component p-element w-full">
             </div>
             <div class="flex-auto">
                 <label for="Label/Sheet" class="block mb-1 text-color text-lg">Label/Sheet</label>
-                <input type="text" pinputtext="" [value]="labelPerSheet" readonly class="p-inputtext p-component p-element w-full">
+                <input type="text" pinputtext="" [value]="labelPerSheet" readonly disabled class="p-inputtext p-component p-element w-full">
             </div>
         </div>
         <div class="flex gap-2 xl:flex-row flex-column">
@@ -109,11 +109,11 @@
         <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
                 <label for="Quantity" class="block mb-1 text-color text-lg">Quantity</label>
-                <input type="text" pinputtext="" readonly [value]="quantity" class="p-inputtext p-component p-element w-full">
+                <input type="text" pinputtext="" readonly disabled [value]="quantity" class="p-inputtext p-component p-element w-full">
             </div>
             <div class="flex-auto">
                 <label for="Amount (Rs.)" class="block mb-1 text-color text-lg">Amount (Rs.)</label>
-                <input type="text" pinputtext="" readonly [value]="amount" class="p-inputtext p-component p-element w-full">
+                <input type="text" pinputtext="" readonly disabled [value]="amount" class="p-inputtext p-component p-element w-full">
             </div>
         </div>
         <div class="flex gap-2 xl:flex-row flex-column">
@@ -130,7 +130,7 @@
         <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
                 <label for="Remarks" class="block mb-1 text-color text-lg">Remarks</label>
-                <textarea type="text" pinputtext="" [value]="remarks" placeholder="Eg: Indent for Kolkata treasury." readonly class="p-inputtext p-component p-element w-full"></textarea>
+                <textarea type="text" pinputtext="" [value]="remarks" placeholder="Eg: Indent for Kolkata treasury." readonly disabled class="p-inputtext p-component p-element w-full"></textarea>
             </div>
         </div>
     </form>
@@ -148,23 +148,23 @@
 <div class="asked w-full flex flex-column gap-2">
     <div class="treasury-code flex gap-4 align-items-center w-full">
         <label class="w-12rem font-semibold" for="Treasury Code: ">By Treasury Code: </label>
-        <input type="text" [value]="tcode" class="p-inputtext p-component p-element" readonly>
+        <input type="text" [value]="tcode" class="p-inputtext p-component p-element" readonly disabled>
     </div>
     <div class="no-of-sheet flex gap-4 align-items-center w-full">
         <label class="w-12rem font-semibold" for=">No: Of sheet asked: ">No: Of sheet asked: </label>
-        <input type="text" [value]="sheetAsked" class="p-inputtext p-component p-element" readonly>
+        <input type="text" [value]="sheetAsked" class="p-inputtext p-component p-element" readonly disabled>
     </div>
     <div class="no-of-sheet flex gap-4 align-items-center w-full">
         <label class="w-12rem font-semibold" for=">No: Of sheet given: ">No: Of sheet given: </label>
-        <input type="text" [value]="sheetGiven" class="p-inputtext p-component p-element" readonly>
+        <input type="text" [value]="sheetGiven" class="p-inputtext p-component p-element" readonly disabled>
     </div>
     <div class="no-of-sheet flex gap-4 align-items-center w-full">
         <label class="w-12rem font-semibold" for=">No: Of sheet asked: ">No: Of label asked: </label>
-        <input type="text" [value]="labelAsked" class="p-inputtext p-component p-element" readonly>
+        <input type="text" [value]="labelAsked" class="p-inputtext p-component p-element" readonly disabled>
     </div>
     <div class="no-of-sheet flex gap-4 align-items-center w-full">
         <label class="w-12rem font-semibold" for=">No: Of sheet given: ">No: Of label given: </label>
-        <input type="text" [value]="labelGiven" class="p-inputtext p-component p-element" readonly>
+        <input type="text" [value]="labelGiven" class="p-inputtext p-component p-element" readonly disabled>
     </div>
 </div>
 </p-dialog>

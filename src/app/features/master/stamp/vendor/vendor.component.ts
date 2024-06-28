@@ -71,6 +71,9 @@ export class VendorComponent implements OnInit {
           item.isActive = item.isActive ? "Yes" : "No";
           item.activeAtGrips = item.activeAtGrips ? "Yes" : "No";
           item.createdAt = convertDate(item.createdAt);
+          item.vendorLicencePhoto = `<a href=${item.vendorLicencePhoto} style="text-decoration:none">Click</a>`
+          item.vendorPanPhoto = `<a href=${item.vendorPanPhoto} style="text-decoration:none">Click</a>`
+          item.vendorPhoto = `<a href=${item.vendorPhoto} style="text-decoration:none">Click</a>`
         });
         this.tableData = response.result;
       } else {
