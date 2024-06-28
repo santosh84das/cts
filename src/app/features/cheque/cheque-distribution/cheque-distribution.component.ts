@@ -170,8 +170,8 @@ export class ChequeDistributionComponent implements OnInit {
     this.distributeFormDetailsData ={
       micrCode: this.distributionForm.value.micr_code,
       series: this.distributionForm.value.series,
-      distributor: "BAA",
-      chequeInvoiceDetailsid: 135,
+      distributor: "BAA", //Todo need to change in dynamic
+      chequeInvoiceDetailsid: 1, //Todo need to change in dynamic
       chequeDistributeToUse: this.distributionForm.value.userListDetails
     }
     this.chequedistributionService.saveChequeDistribution(this.distributeFormDetailsData).subscribe((response) => {

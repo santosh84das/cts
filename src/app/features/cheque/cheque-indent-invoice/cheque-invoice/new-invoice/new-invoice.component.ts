@@ -32,7 +32,7 @@ export class NewInvoiceComponent implements OnInit {
   micrList!: [];
   micrDetailsList: micrDetails[] =[];
 
-  constructor(private fb: FormBuilder, private chequeIndentService: ChequeIndentService, private toastService: ToastService, private route: ActivatedRoute, private date: DatePipe, private chequeinvoiceservice: ChequeInvoiceService) { }
+  constructor(private fb: FormBuilder, private chequeIndentService: ChequeIndentService, private toastService: ToastService, private route: ActivatedRoute, private date: DatePipe, private chequeinvoiceservice: ChequeInvoiceService, private router: Router) { }
 
   ngOnInit(): void {
     this.id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
@@ -179,6 +179,7 @@ export class NewInvoiceComponent implements OnInit {
             res.message,
             res.apiResponseStatus,
           );
+          this.router.navigate(['cheque/cheque-indent-invoice']);
         } else {
           this.toastService.showError(res.message);
         }
