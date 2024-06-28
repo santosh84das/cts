@@ -5,6 +5,7 @@ import { VendorService } from 'src/app/core/services/stamp/vendor.service';
 import { convertDate } from 'src/utils/dateConversion';
 import { AddStampVendors, GetStampVendors } from 'src/app/core/models/stamp';
 import { DynamicTable, DynamicTableQueryParameters } from 'src/app/core/models/dynamic-table';
+import { formatDate } from 'src/utils/dateToString';
 
 @Component({
   selector: 'app-vendor',
@@ -109,17 +110,20 @@ export class VendorComponent implements OnInit {
 
   addVendors() {
     if (this.VendorDetailsEntryForm.valid) {
+      
       const formData = new FormData();
       formData.append('vendorType', this.vendorType);
       formData.append('panNumber', this.VendorDetailsEntryForm.value?.panNumber);
       formData.append('licenseNo', this.VendorDetailsEntryForm.value?.licenseNo);
       formData.append('address', this.VendorDetailsEntryForm.value?.address);
       formData.append('phoneNumber', this.VendorDetailsEntryForm.value?.phoneNumber);
-      formData.append('effectiveFrom', this.VendorDetailsEntryForm.value?.effectiveFrom);
-      formData.append('validUpto', this.VendorDetailsEntryForm.value?.validUpto);
+      formData.append('effectiveFrom', formatDate(this.VendorDetailsEntryForm.value?.effectiveFrom));
+      formData.append('validUpto', formatDate(this.VendorDetailsEntryForm.value?.validUpto) );
       formData.append('vendorPhoto', this.vendorPhotoFile);
       formData.append('vendorPanPhoto', this.vendorPanPhotoFile);
       formData.append('vendorLicencePhoto', this.vendorLicencePhotoFile);
+      console.log(formatDate(this.VendorDetailsEntryForm.value?.effectiveFrom));
+      
       this.VendorService.addNewStampVendor(formData).subscribe((response) => {
         if (response.apiResponseStatus == 1) {
           this.toastService.showAlert('Vendor details added successfully', 1);
