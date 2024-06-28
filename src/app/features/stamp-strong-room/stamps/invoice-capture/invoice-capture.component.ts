@@ -128,7 +128,7 @@ export class InvoiceCaptureComponent implements OnInit {
           item.createdAt = convertDate(item.createdAt);
           item.memoDate = convertDate(item.memoDate);
           item.invoiceDate = convertDate(item.invoiceDate)
-          item.status = Status[item.status]
+          // item.status = Status[item.status]
         });
         this.tableData = response.result;
       } else {
@@ -182,7 +182,7 @@ export class InvoiceCaptureComponent implements OnInit {
         response.result.data.map((item: any) => {
           item.createdAt = convertDate(item.createdAt);
           item.memoDate = convertDate(item.memoDate);
-          item.status = Status[item.status];
+          // item.status = Status[item.status];
         });
         this.tableData = response.result;
       } else {

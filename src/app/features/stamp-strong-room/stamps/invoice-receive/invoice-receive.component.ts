@@ -70,7 +70,7 @@ export class InvoiceReceiveComponent implements OnInit {
           response.result.data.map((item: any) => {
             item.createdAt = convertDate(item.createdAt);
             item.memoDate = convertDate(item.memoDate);
-            item.status = Status[item.status]
+            // item.status = Status[item.status]
           });
           this.tableData = response.result;
         } else {
