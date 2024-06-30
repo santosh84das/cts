@@ -34,9 +34,9 @@ export class InvoiceReceiveComponent implements OnInit {
         class: 'p-button-info p-button-sm',
         icon: 'pi pi-inbox',
         lable: 'Receive',
-        renderButton: (rowData) => {
-          return (rowData.status === Status[15] || rowData.status === Status[12]);
-        }
+        // renderButton: (rowData) => {
+        //   return (rowData.status === Status[24] || rowData.status === Status[27]);
+        // }
       },
       // {
       //   buttonIdentifier: 'rejected',

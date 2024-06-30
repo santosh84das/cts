@@ -20,7 +20,6 @@ export class VendorComponent implements OnInit {
   tableData!: DynamicTable<GetStampVendors>;
   tableQueryParameters!: DynamicTableQueryParameters | any;;
   vendorEntryPayload!: AddStampVendors;
-
   vendorPhotoFile!: File;
   vendorPanPhotoFile!: File;
   vendorLicencePhotoFile!: File;
@@ -53,11 +52,11 @@ export class VendorComponent implements OnInit {
 
   initializeForms() {
     this.VendorDetailsEntryForm = this.fb.group({
-      vendorPhoto: ['', Validators.required],
+      vendorPhoto: [null, Validators.required],
       panNumber: ['', [Validators.required, Validators.pattern('[A-Z]{5}[0-9]{4}[A-Z]{1}')]],
       licenseNo: ['', Validators.required],
-      vendorPanPhoto: ['', Validators.required],
-      vendorLicencePhoto: ['', Validators.required],
+      vendorPanPhoto: [null, Validators.required],
+      vendorLicencePhoto: [null, Validators.required],
       phoneNumber: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
       address: ['', Validators.required],
       effectiveFrom: ['', Validators.required],
@@ -113,16 +112,16 @@ export class VendorComponent implements OnInit {
       
       const formData = new FormData();
       formData.append('vendorType', this.vendorType);
-      formData.append('panNumber', this.VendorDetailsEntryForm.value?.panNumber);
-      formData.append('licenseNo', this.VendorDetailsEntryForm.value?.licenseNo);
-      formData.append('address', this.VendorDetailsEntryForm.value?.address);
-      formData.append('phoneNumber', this.VendorDetailsEntryForm.value?.phoneNumber);
-      formData.append('effectiveFrom', formatDate(this.VendorDetailsEntryForm.value?.effectiveFrom));
-      formData.append('validUpto', formatDate(this.VendorDetailsEntryForm.value?.validUpto) );
+      formData.append('panNumber', this.VendorDetailsEntryForm.value.panNumber);
+      formData.append('licenseNo', this.VendorDetailsEntryForm.value.licenseNo);
+      formData.append('address', this.VendorDetailsEntryForm.value.address);
+      formData.append('phoneNumber', this.VendorDetailsEntryForm.value.phoneNumber);
+      formData.append('effectiveFrom', formatDate(this.VendorDetailsEntryForm.value.effectiveFrom));
+      formData.append('validUpto', formatDate(this.VendorDetailsEntryForm.value.validUpto) );
       formData.append('vendorPhoto', this.vendorPhotoFile);
       formData.append('vendorPanPhoto', this.vendorPanPhotoFile);
       formData.append('vendorLicencePhoto', this.vendorLicencePhotoFile);
-      console.log(formatDate(this.VendorDetailsEntryForm.value?.effectiveFrom));
+      console.log(formatDate(this.VendorDetailsEntryForm.value.effectiveFrom));
       
       this.VendorService.addNewStampVendor(formData).subscribe((response) => {
         if (response.apiResponseStatus == 1) {
@@ -135,7 +134,7 @@ export class VendorComponent implements OnInit {
         }
       });
     } else {
-      this.toastService.showAlert('Please fill all the required fields', 0);
+      this.toastService.showWarning('Please fill all the required fields');
     }
   }
 }

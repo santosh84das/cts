@@ -16,6 +16,7 @@ import { error } from 'console';
 })
 export class IndentCaptureComponent implements OnInit {
 
+  loading: boolean = false
   labelPerSheet: number = 0
   denomination: number = 0
   description: string = "Eg: Court fees."
@@ -25,7 +26,7 @@ export class IndentCaptureComponent implements OnInit {
   quantity: number = (this.labelPerSheet * this.sheet) + this.label
   amount: number = this.quantity * this.denomination
   stamCombinationId!: number
-  displayInsertModal?: boolean;
+  displayInsertModal: boolean = false;
   stampIndentForm!: FormGroup
   tableActionButton: ActionButtonConfig[] = [];
   tableData!: DynamicTable<GetStampIndents>;
@@ -48,14 +49,6 @@ export class IndentCaptureComponent implements OnInit {
     };
     
     this.getAllStampIndents();
-    // this.tableActionButton = [
-    //   {
-    //     buttonIdentifier: 'details',
-    //     class: 'p-button-info p-button-sm',
-    //     icon: 'pi pi-info-circle',
-    //     lable: 'Details',
-    //   },
-    // ];
   }
   
 
@@ -65,7 +58,7 @@ export class IndentCaptureComponent implements OnInit {
       memoDate: ['', [Validators.required]],
       noOfSheets: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Validates integer
       noOfLabels: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Validates integer
-      remarks: ['']
+      remarks: ['', Validators.required, Validators.maxLength(10)]
     });
   }
 
@@ -77,7 +70,6 @@ export class IndentCaptureComponent implements OnInit {
           response.result.data.map((item: any) => {
             item.createdAt = convertDate(item.createdAt);
             item.memoDate = convertDate(item.memoDate);
-            // item.status = Status[item.status]
           });
           this.tableData = response.result;
         } else {
@@ -95,7 +87,9 @@ export class IndentCaptureComponent implements OnInit {
 
 
    addStampIndent() {
+     console.log(this.stampIndentForm.valid);
     if (this.stampIndentForm.valid) {
+      
       this.stampIndentPayload = {
         stampCombinationId: this.stamCombinationId,
         amount: this.amount,
@@ -120,7 +114,7 @@ export class IndentCaptureComponent implements OnInit {
         }
       });
     } else {
-      this.toastService.showAlert('Please fill all the required fields', 0);
+      this.toastService.showWarning('Please fill all the required fields');
     }
   }
 
