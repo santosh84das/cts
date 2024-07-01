@@ -91,17 +91,18 @@ export class ChequeReceivedComponent implements OnInit {
       chequeReceivedDamagedDetails: this.chequesDamageType1
     };
       console.log('----->', payload);
-      this.chequeReceiveService.saveChequeReceive(payload).subscribe(res => {
-        if (res.apiResponseStatus == 1) {
-          this.toastService.showAlert(
-            res.message,
-            res.apiResponseStatus,
-          );
-          this.router.navigate(['cheque/cheque-indent-invoice']);
-        } else {
-          this.toastService.showError(res.message);
-        }
-      })
+      // this.chequeReceiveService.saveChequeReceive(payload).subscribe(res => {
+      //   if (res.apiResponseStatus == 1) {
+      //     this.toastService.showAlert(
+      //       res.message,
+      //       res.apiResponseStatus,
+      //     );
+      //     this.router.navigate(['cheque/cheque-indent-invoice']);
+      //   } else {
+      //     this.toastService.showError(res.message);
+      //   }
+
+      // })
   }
 }
 
