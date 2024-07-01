@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  BaseURL:'https://localhost:7249/api/'
+  BaseURL:'https://localhost:7249/api/',
+  // authURL:'http://ifmswbuat.nic.in/cts/#/',
+  authURL:'http://localhost:4203/#/'
 };
 
 /*
