@@ -31,6 +31,7 @@ import { StaticLoginComponent } from './features/static-login/static-login.compo
                     {path:'cheque',loadChildren: () => import('./features/cheque/cheque.module').then(m => m.ChequeModule)},
                     {path:'master',loadChildren: () => import('./features/master/master.module').then(m => m.MasterModule)},
                     {path:'stamp-strong-room',loadChildren: () => import('./features/stamp-strong-room/stamp-strong-room.module').then(m => m.StampStrongRoomModule)},
+                    {path:'pension',loadChildren: () => import('./features/pension-dashboard/pension-dashboard.module').then(m => m.PensionDashboardModule)},
 
                 ]
             },
