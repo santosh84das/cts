@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'src/app/core/models/dynamic-table';
 import { GetStampDiscountDetails, AddStampDiscountDetails } from 'src/app/core/models/stamp';
 import { ToastService } from 'src/app/core/services/toast.service';
@@ -17,12 +17,12 @@ export class DiscountDetailsComponent implements OnInit {
   tableActionButton: ActionButtonConfig[] = [];
   tableData!: DynamicTable<GetStampDiscountDetails>;
   tableQueryParameters!: DynamicTableQueryParameters | any;
-  displayCalculateModal: boolean | undefined;
-  displayInsertModal: boolean | undefined;
+  displayCalculateModal: boolean = false;
+  displayInsertModal: boolean = false;
   CategoryTypeList: any[] = [];
   discountDetailsEntryForm!: FormGroup;
   calculateDiscountForm!: FormGroup;
-  amount!: number;
+  amount: number = 0;
   discount: string = '0';
   discountDetailsEntryPayload!: AddStampDiscountDetails;
 
@@ -62,12 +62,46 @@ export class DiscountDetailsComponent implements OnInit {
     });
 
     this.discountDetailsEntryForm = this.fb.group({
-      denominationFrom: [0, Validators.required],
-      denominationTo: [0, Validators.required],
-      discount: [0, Validators.required]
+      denominationFrom: [0, [Validators.required, Validators.min(0)]],
+      denominationTo: [0, [Validators.required]],
+      discount: [null, [Validators.required, this.greaterThanZeroValidator()]]
+    }, {
+      validators: this.greaterThanValidator('denominationFrom', 'denominationTo')
     });
   }
 
+
+  greaterThanValidator(fromControlName: string, toControlName: string): ValidatorFn {
+    return (formGroup: AbstractControl): ValidationErrors | null => {
+      const formGroupControl = formGroup as FormGroup;
+      const fromControl = formGroupControl.get(fromControlName);
+      const toControl = formGroupControl.get(toControlName);
+
+      if (!fromControl || !toControl) {
+        return null; 
+      }
+
+      const fromValue = fromControl.value;
+      const toValue = toControl.value;
+      
+      if (fromValue != null && toValue != null && toValue <= fromValue) {
+        console.log("Hi=====>");
+        
+        return { greaterThan: true }; 
+      }
+
+      return null; 
+    };
+  }
+  greaterThanZeroValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      if (value !== null && value !== undefined && value <= 0) {
+        return { greaterThanZero: true };
+      }
+      return null;
+    };
+  }
   getAllStampDiscountDetails() {
     this.DiscountDetailsService
       .getStampDiscountDetailsList(this.tableQueryParameters)
@@ -148,7 +182,7 @@ export class DiscountDetailsComponent implements OnInit {
         }
       });
     } else {
-      this.toastService.showAlert('Please fill all the required fields', 0);
+      this.toastService.showWarning('Please fill all the required fields');
     }
   }
 }

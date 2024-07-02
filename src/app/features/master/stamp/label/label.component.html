@@ -22,10 +22,12 @@
                 <label for="No: of label/sheet" class="block mb-1 text-color text-lg">No: of label/sheet</label>
                 <input formControlName="noLabelPerSheet" type="number" pinputtext="" placeholder="Eg: 20"
                     class="p-inputtext p-component p-element w-full">
+                <div *ngIf="labelEntryForm.controls['noLabelPerSheet'].errors && (labelEntryForm.controls['noLabelPerSheet'].dirty || labelEntryForm.controls['noLabelPerSheet'].touched)">
+                    <small class="p-error" *ngIf="labelEntryForm.controls['noLabelPerSheet'].errors['required']">Number of labels per sheet is required.</small>
+                    <small class="p-error" *ngIf="labelEntryForm.controls['noLabelPerSheet'].errors['min']">Number of labels per sheet must be at least 1.</small>
+                </div>
             </div>
         </div>
-        <!-- TODO -->
-        <!-- <p-button label="Submit" (click)="addDiscountDetails()" class="justify-content-center"></p-button> -->
     </form>
     <div class="flex gap-2 justify-content-end pt-3">
         <button pbutton="" pripple="" label="Submit" (click)="addLabel()" class="p-element p-ripple p-button-rounded p-button p-component">

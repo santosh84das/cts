@@ -154,7 +154,7 @@
             <div class="flex-1">
                 <label for="Effective From" class="block mb-1 text-color text-lg">Effective From</label>
                 <span class="p-input-icon-left w-full">
-                    <i class="pi pi-angle-double-right"></i>
+                    <i class="pi pi-angle-double-right z-3"></i>
                     <p-calendar appendTo="body" [showIcon]="true" inputId="effectiveFrom" formControlName="effectiveFrom"></p-calendar>
                 </span>
                 <div *ngIf="VendorDetailsEntryForm.controls['effectiveFrom'].errors && (VendorDetailsEntryForm.controls['effectiveFrom'].dirty || VendorDetailsEntryForm.controls['effectiveFrom'].touched)">
@@ -165,7 +165,7 @@
             <div class="flex-1">
                 <label for="Valid Upto" class="block mb-1 text-color text-lg">Valid Upto</label>
                 <span class="p-input-icon-left w-full">
-                    <i class="pi pi-stop-circle"></i>
+                    <i class="pi pi-stop-circle z-3"></i>
                     <p-calendar appendTo="body" [showIcon]="true" inputId="validUpto" formControlName="validUpto"></p-calendar>
                 </span>
                 <div *ngIf="VendorDetailsEntryForm.controls['validUpto'].errors && (VendorDetailsEntryForm.controls['validUpto'].dirty || VendorDetailsEntryForm.controls['validUpto'].touched)">

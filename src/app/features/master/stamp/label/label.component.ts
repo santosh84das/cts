@@ -13,8 +13,8 @@ import { AddStampLabel, GetStampLabels } from 'src/app/core/models/stamp';
 })
 export class LabelComponent implements OnInit {
 
-  labelEntryForm!: FormGroup;
-  displayInsertModal: boolean | undefined;
+  labelEntryForm!: FormGroup
+  displayInsertModal: boolean = false;
   tableActionButton: ActionButtonConfig[] = [];
   tableData!: DynamicTable<GetStampLabels>;
   tableQueryParameters!: DynamicTableQueryParameters | any;
@@ -52,7 +52,7 @@ export class LabelComponent implements OnInit {
 
   initializeForms() {
     this.labelEntryForm = this.fb.group({
-      noLabelPerSheet: [0, Validators.required],
+      noLabelPerSheet: [1, [Validators.required, Validators.min(1)]],
     });
   }
 
@@ -106,7 +106,7 @@ export class LabelComponent implements OnInit {
         }
       });
     } else {
-      this.toastService.showAlert('Please fill all the required fields', 0);
+      this.toastService.showWarning('Please fill all the required fields');
     }
   }
 

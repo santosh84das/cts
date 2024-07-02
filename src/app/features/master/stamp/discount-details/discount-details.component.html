@@ -21,7 +21,8 @@
     <form [formGroup]="calculateDiscountForm" class="px-4">
         <div class="flex align-items-center gap-3 mb-3 mt-2">
             <label for="Vendor Type" class="font-semibold w-8rem">Vendor Type</label>
-            <app-vendor-type-dropdown class="flex-auto" (vendorTypeSelected)="onVendorTypeSelected($event)"></app-vendor-type-dropdown>
+            <app-vendor-type-dropdown class="flex-auto"
+                (vendorTypeSelected)="onVendorTypeSelected($event)"></app-vendor-type-dropdown>
         </div>
         <div class="flex align-items-center gap-3 mb-3">
             <label for="Stamp Category" class="font-semibold w-8rem">Stamp Category</label>
@@ -46,26 +47,47 @@
 <p-dialog header="Discount Details Entry" [(visible)]="displayInsertModal" [modal]="true" [style]="{width: '30vw'}"
     [baseZIndex]="10000">
     <form [formGroup]="discountDetailsEntryForm" class="flex flex-column gap-4 mt-3">
-        <div class="flex gap-2">
+        <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
                 <label for="From" class="block mb-1 text-color text-lg">From</label>
-                <span class="p-input-icon-left w-full"><i class="pi pi-angle-double-right"></i>
+                <span class="p-input-icon-left w-full">
+                    <i class="pi pi-angle-double-right"></i>
                     <input formControlName="denominationFrom" type="number" pinputtext=""
                         class="p-inputtext p-component p-element w-full">
                 </span>
+                <div
+                    *ngIf="discountDetailsEntryForm.controls['denominationFrom'].errors && (discountDetailsEntryForm.controls['denominationFrom'].dirty || discountDetailsEntryForm.controls['denominationFrom'].touched)">
+                    <small class="p-error"
+                        *ngIf="discountDetailsEntryForm.controls['denominationFrom'].errors['required']">Denomination
+                        From is required.</small>
+                    <small class="p-error"
+                        *ngIf="discountDetailsEntryForm.controls['denominationFrom'].errors['min']">Denomination From
+                        must be greater than or equal to 0.</small>
+                </div>
             </div>
             <div class="flex-auto">
                 <label for="To" class="block mb-1 text-color text-lg">To</label>
-                <span class="p-input-icon-left w-full"><i class="pi pi-stop-circle"></i>
+                <span class="p-input-icon-left w-full">
+                    <i class="pi pi-stop-circle"></i>
                     <input formControlName="denominationTo" type="number" pinputtext=""
                         class="p-inputtext p-component p-element w-full">
                 </span>
+                <div
+                    *ngIf="discountDetailsEntryForm.controls['denominationTo'].errors && (discountDetailsEntryForm.controls['denominationTo'].dirty || discountDetailsEntryForm.controls['denominationTo'].touched)">
+                    <small class="p-error"
+                        *ngIf="discountDetailsEntryForm.controls['denominationTo'].errors['required']">Denomination To
+                        is required.</small>
+                    <small class="p-error"
+                        *ngIf="discountDetailsEntryForm.errors?.['greaterThan']">Denomination
+                        To must be greater than Denomination From.</small>
+                </div>
             </div>
         </div>
-        <div class="flex gap-2">
+        <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
                 <label for="Vendor Type" class="block mb-1 text-color text-lg">Vendor Type</label>
-                <app-vendor-type-dropdown class="flex-auto" (vendorTypeSelected)="onVendorTypeSelected($event)"></app-vendor-type-dropdown>
+                <app-vendor-type-dropdown class="flex-auto"
+                    (vendorTypeSelected)="onVendorTypeSelected($event)"></app-vendor-type-dropdown>
             </div>
             <div class="flex-auto">
                 <label for="Stamp Category" class="block mb-1 text-color text-lg">Stamp Category</label>
@@ -73,15 +95,25 @@
                     class="flex-auto"></app-stamp-category-type-dropdown>
             </div>
         </div>
-        <div class="flex gap-2">
+        <div class="flex gap-2 xl:flex-row flex-column">
             <div class="col-12 p-0 flex-auto">
                 <label for="Discount" class="block mb-1 text-color text-lg">Discount</label>
                 <input formControlName="discount" type="number" pinputtext="" placeholder="Eg: 20"
                     class="p-inputtext p-component p-element w-full">
+                <div
+                    *ngIf="discountDetailsEntryForm.controls['discount'].errors && (discountDetailsEntryForm.controls['discount'].dirty || discountDetailsEntryForm.controls['discount'].touched)">
+                    <small class="p-error"
+                        *ngIf="discountDetailsEntryForm.controls['discount'].errors['required']">Discount is
+                        required.</small>
+                    <small class="p-error"
+                        *ngIf="discountDetailsEntryForm.controls['discount'].errors['greaterThanZero']">Discount must be
+                        greater than 0.</small>
+                </div>
             </div>
         </div>
         <div class="flex gap-2 justify-content-end pt-3">
-            <button pbutton="" pripple="" (click)="addDiscountDetails()" label="Submit" class="p-element p-ripple p-button-rounded p-button p-component">
+            <button pbutton="" pripple="" (click)="addDiscountDetails()" label="Submit"
+                class="p-element p-ripple p-button-rounded p-button p-component">
                 <span class="p-button-label">Submit</span><span class="p-ink"></span>
             </button>
         </div>
