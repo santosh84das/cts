@@ -33,6 +33,7 @@ import { StaticLoginComponent } from './features/static-login/static-login.compo
 import { PaymentMandateComponent } from './features/payment-mandate/payment-mandate.component';
 import { CommonHeaderComponent } from './shared/modules/common-header/common-header.component';
 import { DynamicTableComponent } from './shared/modules/dynamic-table/dynamic-table.component';
+
 @NgModule({
     declarations: [
         AppComponent, NotfoundComponent, ServerDownComponent, LoginComponent, NotFoundComponent, StaticLoginComponent,

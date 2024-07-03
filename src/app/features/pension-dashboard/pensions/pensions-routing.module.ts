@@ -6,12 +6,15 @@ import { ManualAgwbPpoComponent } from './manual-agwb-ppo/manual-agwb-ppo.compon
 import { PensionDashboardComponent } from '../pension-dashboard.component';
 import { RouterModule, Routes } from '@angular/router';
 import { PensionsComponent } from './pensions.component';
+import { PensionProcessComponent } from './pension-process/pension-process.component';
+import { PensionReportsComponent } from './pension-reports/pension-reports.component';
+import { PensionQueryComponent } from './pension-query/pension-query.component';
 
 
 const routes: Routes = [{path: '', component: PensionsComponent},
-  {path: 'category', component: PensionCategoryComponent},
-  {path: 'bank-branch', component: PensionBankBranchComponent},
-  {path: 'manual-agwb', component: ManualAgwbPpoComponent},
+  {path: 'pension-process', component: PensionProcessComponent},
+  {path: 'pension-reports', component: PensionReportsComponent},
+  {path: 'pension-query', component: PensionQueryComponent},
 ];
 
 @NgModule({
