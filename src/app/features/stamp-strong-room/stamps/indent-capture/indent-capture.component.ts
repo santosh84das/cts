@@ -58,7 +58,7 @@ export class IndentCaptureComponent implements OnInit {
       memoDate: ['', [Validators.required]],
       noOfSheets: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Validates integer
       noOfLabels: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Validates integer
-      remarks: ['', Validators.required, Validators.maxLength(10)]
+      remarks: ['', [Validators.required, Validators.maxLength(20)]]
     });
   }
 
@@ -87,9 +87,8 @@ export class IndentCaptureComponent implements OnInit {
 
 
    addStampIndent() {
-     console.log(this.stampIndentForm.valid);
+     console.log(this.stampIndentForm);
     if (this.stampIndentForm.valid) {
-      
       this.stampIndentPayload = {
         stampCombinationId: this.stamCombinationId,
         amount: this.amount,

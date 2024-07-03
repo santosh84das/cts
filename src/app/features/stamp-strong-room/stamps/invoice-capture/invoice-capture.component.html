@@ -66,7 +66,7 @@
         <div class="flex gap-2 xl:flex-row flex-column">
             <div class="col-12 p-0 flex-auto">
                 <label for="Combination" class="block mb-1 text-color text-lg">Combination</label>
-                <input type="text" pinputtext="" [value]="combination" readonly disabled  class="p-inputtext p-component p-element w-full">
+                <input type="text" pinputtext="" [value]="combination" readonly disabled class="p-inputtext p-component p-element w-full">
             </div>
         </div>
         <div class="flex gap-2 xl:flex-row flex-column">
@@ -95,15 +95,21 @@
         <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
                 <label for="No: of Sheets" class="block mb-1 text-color text-lg">No: of Sheets</label>
-                <input type="number" pinputtext="" [value]="sheet" formControlName="noOfSheets" placeholder="Eg: 10"
-                    [(ngModel)]="sheet" (ngModelChange)="sheetSelected($event)"
+                <input type="number" pinputtext="" formControlName="noOfSheets" placeholder="Eg: 10"
                     class="p-inputtext p-component p-element w-full">
+                <div *ngIf="stampInvoiceForm.controls['noOfSheets'].errors && (stampInvoiceForm.controls['noOfSheets'].dirty || stampInvoiceForm.controls['noOfSheets'].touched)">
+                    <small class="p-error" *ngIf="stampInvoiceForm.controls['noOfSheets'].errors['required']">No: of Sheets is required.</small>
+                    <small class="p-error" *ngIf="stampInvoiceForm.controls['noOfSheets'].errors['pattern']">Please enter a valid number.</small>
+                </div>
             </div>
             <div class="flex-auto">
                 <label for="No: of Labels" class="block mb-1 text-color text-lg">No: of Labels</label>
-                <input type="number" pinputtext="" [value]="label" formControlName="noOfLabels" placeholder="Eg: 10"
-                    [(ngModel)]="label" (ngModelChange)="labelSelected($event)"
+                <input type="number" pinputtext="" formControlName="noOfLabels" placeholder="Eg: 10"
                     class="p-inputtext p-component p-element w-full">
+                <div *ngIf="stampInvoiceForm.controls['noOfLabels'].errors && (stampInvoiceForm.controls['noOfLabels'].dirty || stampInvoiceForm.controls['noOfLabels'].touched)">
+                    <small class="p-error" *ngIf="stampInvoiceForm.controls['noOfLabels'].errors['required']">No: of Labels is required.</small>
+                    <small class="p-error" *ngIf="stampInvoiceForm.controls['noOfLabels'].errors['pattern']">Please enter a valid number.</small>
+                </div>
             </div>
         </div>
         <div class="flex gap-2 xl:flex-row flex-column">
@@ -120,17 +126,23 @@
             <div class="flex-auto">
                 <label for="Invoice Number" class="block mb-1 text-color text-lg">Invoice Number</label>
                 <input type="text" pinputtext="" formControlName="invoiceNumber" class="p-inputtext p-component p-element w-full">
+                <div *ngIf="stampInvoiceForm.controls['invoiceNumber'].errors && (stampInvoiceForm.controls['invoiceNumber'].dirty || stampInvoiceForm.controls['invoiceNumber'].touched)">
+                    <small class="p-error" *ngIf="stampInvoiceForm.controls['invoiceNumber'].errors['required']">Invoice Number is required.</small>
+                </div>
             </div>
             <div class="flex-auto">
-                <label for="Invoice Date (Rs.)" class="block mb-1 text-color text-lg">Invoice Date</label>
+                <label for="Invoice Date" class="block mb-1 text-color text-lg">Invoice Date</label>
                 <p-calendar class="p-component p-element w-full p-calendar" formControlName="invoiceDate" placeholder="dd/mm/yyyy"
                     appendTo="body" [showIcon]="true" inputId="icon"></p-calendar>
+                <div *ngIf="stampInvoiceForm.controls['invoiceDate'].errors && (stampInvoiceForm.controls['invoiceDate'].dirty || stampInvoiceForm.controls['invoiceDate'].touched)">
+                    <small class="p-error" *ngIf="stampInvoiceForm.controls['invoiceDate'].errors['required']">Invoice Date is required.</small>
+                </div>
             </div>
         </div>
         <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
                 <label for="Remarks" class="block mb-1 text-color text-lg">Remarks</label>
-                <textarea type="text" pinputtext="" [value]="remarks" placeholder="Eg: Indent for Kolkata treasury." readonly disabled class="p-inputtext p-component p-element w-full"></textarea>
+                <textarea type="text" pinputtext="" [value]="remarks" formControlName="remarks" placeholder="Eg: Indent for Kolkata treasury." class="p-inputtext p-component p-element w-full"></textarea>
             </div>
         </div>
     </form>

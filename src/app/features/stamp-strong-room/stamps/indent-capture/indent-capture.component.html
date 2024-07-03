@@ -37,9 +37,6 @@
               <app-stamp-combination-dropdown
                 (StampCombinationSelected)="onStampCombinationSelected($event)"
               ></app-stamp-combination-dropdown>
-              <div *ngIf="!stamCombinationId && (stampIndentForm.dirty || stampIndentForm.touched)">
-                <small class="p-error">Combination is required.</small>
-              </div>
             </div>
           </div>
           
