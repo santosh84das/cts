@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// import { DropdownModule } from 'primeng/dropdow
-// import { FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { VendorTypeDropdownComponent } from './vendor-type-dropdown.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 
@@ -10,8 +10,8 @@ import { VendorTypeDropdownComponent } from './vendor-type-dropdown.component';
   declarations: [VendorTypeDropdownComponent],
   imports: [
     CommonModule,
-    // DropdownModule,
-    // FormsModule
+    DropdownModule,
+    FormsModule
   ],
   exports:[VendorTypeDropdownComponent]
 })

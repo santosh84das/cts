@@ -2,17 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
-import { StampCombinationDropdownComponent } from './stamp-combination-dropdown.component';
-
+import { StampDenominationDropdownComponent } from './stamp-denomination-dropdown.component';
 
 
 @NgModule({
-  declarations: [StampCombinationDropdownComponent],
+  declarations: [StampDenominationDropdownComponent],
   imports: [
     CommonModule,
     DropdownModule,
     FormsModule
   ],
-  exports:[StampCombinationDropdownComponent]
+  exports: [StampDenominationDropdownComponent]
 })
-export class StampCombinationDropdownModule { }
+export class StampDenominationDropdownModule { }

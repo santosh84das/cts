@@ -6,11 +6,12 @@ import { DropdownModule } from 'primeng/dropdown';
 import { OptionCardModule } from '../option-card/option-card.module';
 import { TreasuryDropdownModule } from '../treasury-dropdown/treasury-dropdown.module';
 import { CalendarModule } from 'primeng/calendar';
+import { StampIndentInvoiceFormComponent } from './stamp-indent-invoice-form.component';
 
 
 
 @NgModule({
-  declarations: [StampIndentInvoiceFormModule],
+  declarations: [StampIndentInvoiceFormComponent],
   imports: [
     CommonModule,
     ButtonModule,
@@ -21,6 +22,6 @@ import { CalendarModule } from 'primeng/calendar';
     CalendarModule,
     TreasuryDropdownModule,
   ],
-  exports: [StampIndentInvoiceFormModule]
+  exports: [StampIndentInvoiceFormComponent]
 })
 export class StampIndentInvoiceFormModule { }
