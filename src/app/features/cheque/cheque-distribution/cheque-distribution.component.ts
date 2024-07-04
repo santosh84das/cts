@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ChequeReceive, ChequeReceiveListWithMICR, NewChequeEntry, saveChequeDistributionData } from 'src/app/core/models/cheque';
 import {
   ActionButtonConfig,
@@ -49,7 +50,7 @@ export class ChequeDistributionComponent implements OnInit {
   micrList!: [];
   distributeFormDetailsData!:saveChequeDistributionData;
 
-  constructor(private chequedistributionService: ChequeDistributionService, private fb: FormBuilder, private chequeinvoiceservice: ChequeInvoiceService,  private toastService: ToastService,) { }
+  constructor(private chequedistributionService: ChequeDistributionService, private fb: FormBuilder, private chequeinvoiceservice: ChequeInvoiceService,  private toastService: ToastService,private router: Router) { }
 
   ngOnInit(): void {
     this.cheques = [
@@ -177,6 +178,7 @@ export class ChequeDistributionComponent implements OnInit {
     this.chequedistributionService.saveChequeDistribution(this.distributeFormDetailsData).subscribe((response) => {
       if (response.apiResponseStatus == 1) {
         this.toastService.showSuccess(response.message);
+        this.router.navigate(['cheque']);
       }
     })
     console.log('hi form',this.distributionForm.value);

@@ -78,7 +78,9 @@ export interface ChequeInvoiceSeries {
   quantity: number,
   series: string,
   treasuryCode: string,
-  micrCode: string
+  micrCode: string,
+  start: number,
+  end: number
 }
 
 export interface ChequeReceive{
