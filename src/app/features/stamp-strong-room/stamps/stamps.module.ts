@@ -17,6 +17,7 @@ import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown
 import { InvoiceReceiveComponent } from './invoice-receive/invoice-receive.component';
 import { StampWalletRefillComponent } from './stamp-wallet-refill/stamp-wallet-refill.component';
 import { StampCombinationDropdownModule } from 'src/app/shared/modules/stamp-combination-dropdown/stamp-combination-dropdown.module';
+import { DatatableSkeletonModule } from 'src/app/shared/modules/datatable-skeleton/datatable-skeleton.module';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { StampCombinationDropdownModule } from 'src/app/shared/modules/stamp-com
     ReactiveFormsModule,
     TreasuryDropdownModule,
     FormsModule,
+    DatatableSkeletonModule,
     StampCombinationDropdownModule
    ]
 })
