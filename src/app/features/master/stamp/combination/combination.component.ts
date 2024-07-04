@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
-import { GetStampCombinations } from 'src/app/core/models/stamp';
+import { AddStampCombination, GetStampCombinations } from 'src/app/core/models/stamp';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { convertDate } from 'src/utils/dateConversion';
 import { StampCombinationService } from 'src/app/core/services/stamp/stamp-combination.service';
@@ -12,12 +12,14 @@ import { StampCombinationService } from 'src/app/core/services/stamp/stamp-combi
 })
 export class CombinationComponent implements OnInit {
 
-  stampCategory!: string;
+  categoryDescription: string = "";
+  labelId: string = ""
+  denominationId: string = "";
   tableActionButton: ActionButtonConfig[] = [];
   tableData!: DynamicTable<GetStampCombinations>;
   tableQueryParameters!: DynamicTableQueryParameters | any;
-  combinationEntryForm!: FormGroup
-  combinationEntryPayload: any
+  // combinationEntryForm!: FormGroup
+  combinationEntryPayload!: AddStampCombination
   modal: boolean = false
 
   constructor(
@@ -25,9 +27,13 @@ export class CombinationComponent implements OnInit {
     private toastService: ToastService,
     private fb: FormBuilder
   ) { }
+  @Output() CategoryTypeSelected = new EventEmitter<string>();
+  @Output() DenominatonSelected = new EventEmitter<string>();
+  @Output() LabelSelected = new EventEmitter<string>();
+
 
   ngOnInit(): void {
-    this.initializeForm()
+    // this.initializeForm()
     this.tableActionButton = [
       {
         buttonIdentifier: 'delete',
@@ -46,33 +52,33 @@ export class CombinationComponent implements OnInit {
   }
 
 
-initializeForm() {
-  this.combinationEntryForm = this.fb.group({
-    category: [null, [Validators.required, this.exactLengthValidator(2)]],
-    denomination: [null, [Validators.required, this.greaterThanZeroValidator()]],
-    labelPerSheet: [null, [Validators.required, this.greaterThanZeroValidator()]]
-  });
-}
+  // initializeForm() {
+  //   this.combinationEntryForm = this.fb.group({
+  //     category: [null, [Validators.required]],
+  //     denomination: [null, [Validators.required]],
+  //     labelPerSheet: [null, [Validators.required]]
+  //   });
+  // }
 
-exactLengthValidator(length: number): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    const value = control.value;
-    if (value && value.length !== length) {
-      return { exactLength: { requiredLength: length, actualLength: value.length } };
-    }
-    return null;
-  };
-}
+  // exactLengthValidator(length: number): ValidatorFn {
+  //   return (control: AbstractControl): ValidationErrors | null => {
+  //     const value = control.value;
+  //     if (value && value.length !== length) {
+  //       return { exactLength: { requiredLength: length, actualLength: value.length } };
+  //     }
+  //     return null;
+  //   };
+  // }
 
-greaterThanZeroValidator(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    const value = control.value;
-    if (value !== null && value !== undefined && value <= 0) {
-      return { greaterThanZero: true };
-    }
-    return null;
-  };
-}
+  // greaterThanZeroValidator(): ValidatorFn {
+  //   return (control: AbstractControl): ValidationErrors | null => {
+  //     const value = control.value;
+  //     if (value !== null && value !== undefined && value <= 0) {
+  //       return { greaterThanZero: true };
+  //     }
+  //     return null;
+  //   };
+  // }
   getAllStampCombination() {
     console.log(this.tableQueryParameters);
 
@@ -109,11 +115,36 @@ greaterThanZeroValidator(): ValidatorFn {
   }
 
   addcombination() {
+    
+    if (!this.categoryDescription && !this.labelId && !this.denominationId) {
+      this.combinationEntryPayload = {
+        // TODO: add all the fields
+      };
 
+      this.stampCombinationService.addNewStampCombination(this.combinationEntryPayload).subscribe((response) => {
+        if (response.apiResponseStatus == 1) {
+          this.toastService.showAlert('Discount details added successfully', 1);
+          this.modal = false;
+          this.getAllStampCombination();
+        } else {
+          this.toastService.showAlert(response.message, response.apiResponseStatus);
+        }
+      });
+    } else {
+      this.toastService.showWarning('Please fill all the required fields');
+    }
   }
 
   onStampCategorySelected($event: any) {
-    this.stampCategory = $event;
+    this.categoryDescription = $event;
+  }
+
+  onStampDenominationSelected($event: any) {
+    this.denominationId = $event
+  }
+
+  onStampLabelSelected($event: any) {
+    this.labelId = $event
   }
 
 }

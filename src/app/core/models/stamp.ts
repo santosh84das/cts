@@ -168,3 +168,7 @@ export interface GetStampIndents {
     treasuryCode: string,
     clearBalance: number
   }
+
+  export interface AddStampCombination {
+    
+  }

@@ -32,4 +32,20 @@ export class MasterService {
       })
     )
   }
+
+  getStampDenominations():Observable<IapiResponce>{
+    return this.http.get<IapiResponce>('v1/StampMaster/GetALLStampTypes').pipe(
+      catchError((error)=>{
+        throw this.toastservice.showError(error.message);
+      })
+    )
+  }
+
+  getStampLabels():Observable<IapiResponce>{
+    return this.http.get<IapiResponce>('v1/StampMaster/GetALLStampLabels').pipe(
+      catchError((error)=>{
+        throw this.toastservice.showError(error.message);
+      })
+    )
+  }
 }

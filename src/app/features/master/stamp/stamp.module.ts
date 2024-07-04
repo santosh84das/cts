@@ -21,6 +21,8 @@ import { CombinationComponent } from './combination/combination.component';
 import { CalendarModule } from 'primeng/calendar';
 import { StampCategoryTypeDropdownModule } from 'src/app/shared/modules/stamp-category-type-dropdown/stamp-category-type-dropdown.module';
 import { VendorTypeDropdownModule } from 'src/app/shared/modules/vendor-type-dropdown/vendor-type-dropdown.module';
+import { StampDenominationDropdownModule } from 'src/app/shared/modules/stamp-denomination-dropdown/stamp-denomination-dropdown.module';
+import { StampLabelDropdownModule } from 'src/app/shared/modules/stamp-label-dropdown/stamp-label-dropdown.module';
 
 @NgModule({
   declarations: [
@@ -45,9 +47,11 @@ import { VendorTypeDropdownModule } from 'src/app/shared/modules/vendor-type-dro
     DynamicTableModule,
     ReactiveFormsModule,
     FormsModule,
-    NgxPermissionsModule.forChild(),
     StampCategoryTypeDropdownModule,
-    VendorTypeDropdownModule
+    VendorTypeDropdownModule,
+    StampDenominationDropdownModule,
+    StampLabelDropdownModule,
+    NgxPermissionsModule.forChild(),
 
   ],
   providers: [DatePipe]

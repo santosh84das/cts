@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
 import { Observable, catchError } from 'rxjs';
 import { IapiResponce } from '../../models/iapi-responce';
-import { GetStampCombinations } from '../../models/stamp';
+import { AddStampCombination, GetStampCombinations } from '../../models/stamp';
 import { ToastService } from '../toast.service';
 
 @Injectable({
@@ -41,6 +41,15 @@ export class StampCombinationService {
 
   deleteStampCombination(id: Number): Observable<IapiResponce> {
     return this.http.delete<IapiResponce>('v1/StampMaster/DeleteStampCombinationById?id='+id).pipe(
+      catchError((error) => {
+        throw this.toastService.showError(error.message);
+      })
+    );
+  }
+
+  // TODO: Write the AddStampCombination Interface.
+  addNewStampCombination(payload: AddStampCombination): Observable<IapiResponce> {
+    return this.http.post<IapiResponce>('v1/StampMaster/CreateStampCombination', payload).pipe(
       catchError((error) => {
         throw this.toastService.showError(error.message);
       })

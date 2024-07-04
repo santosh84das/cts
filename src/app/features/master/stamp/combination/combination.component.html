@@ -16,60 +16,42 @@
 
 <p-dialog header="Combination Entry" [(visible)]="modal" [modal]="true" [style]="{width: 'fit-content'}"
     [baseZIndex]="10000">
-    <form [formGroup]="combinationEntryForm" class="flex flex-column gap-4 mt-3">
+    <div class="flex flex-column gap-4 mt-3">
         <div class="flex gap-2 xl:flex-row flex-column align-items-end">
-            <div class="flex-1">
-                <label for="Stamp Category">Stamp Category</label>
+            <div class="flex-1 w-full">
+                <label for="Stamp Category" class="block mb-1 text-color text-lg">Stamp Category</label>
                 <app-stamp-category-type-dropdown (CategoryTypeSelected)="onStampCategorySelected($event)"
                     class="flex-auto"></app-stamp-category-type-dropdown>
-                <div
-                    *ngIf="combinationEntryForm.controls['category'].errors && (combinationEntryForm.controls['category'].dirty || combinationEntryForm.controls['category'].touched)">
-                    <small class="p-error"
-                        *ngIf="combinationEntryForm.controls['category'].errors['required']">Category is required.</small>
-                        <small class="p-error" *ngIf="combinationEntryForm.controls['category'].errors['exactLength']">Category must be exactly 2 characters.</small>
-                </div>
             </div>
             <div class="flex-1 w-full">
                 <label for="Category Description" class="block mb-1 text-color text-lg">Category Description</label>
-                <input type="text" pinputtext=""
+                <input type="text" pinputtext="" [value]="categoryDescription"
                     class="p-inputtext p-component p-element w-full" disabled>
             </div>
         </div>
         <div class="flex gap-2 xl:flex-row flex-column">
-            <div class="flex-auto">
-                <label for="Denomination" class="block mb-1 text-color text-lg">Denomination</label>
-                <input formControlName="denomination" type="number" pinputtext=""
-                    class="p-inputtext p-component p-element w-full">
-                <div
-                    *ngIf="combinationEntryForm.controls['denomination'].errors && (combinationEntryForm.controls['denomination'].dirty || combinationEntryForm.controls['denomination'].touched)">
-                    <small class="p-error"
-                        *ngIf="combinationEntryForm.controls['denomination'].errors['required']">denomination is required.</small>
-                        <small class="p-error" *ngIf="combinationEntryForm.controls['denomination'].errors['greaterThanZero']">Denomination must be greater than 0.</small>
-                </div>
+            <div class="flex-1 w-full">
+                <label for="Stamp Denomination" class="block mb-1 text-color text-lg">Stamp Denomination</label>
+                <app-stamp-denomination-dropdown (DenominatonSelected)="onStampDenominationSelected($event)"
+                    class="flex-auto"></app-stamp-denomination-dropdown>
             </div>
-            <div class="flex-auto">
+            <div class="flex-1 w-full">
                 <label for="Denomination ID" class="block mb-1 text-color text-lg">Denomination ID</label>
-                <input type="text" pinputtext="" disabled
+                <input type="text" pinputtext="" disabled [value]="denominationId"
                     class="p-inputtext p-component p-element w-full">
             </div>
         </div>
         <div class="flex gap-2 xl:flex-row flex-column">
-            <div class="col-12 p-0 flex-auto">
-                <label for="Label/Sheet" class="block mb-1 text-color text-lg">Label/Sheet</label>
-                <input formControlName="labelPerSheet" type="number" pinputtext="" placeholder="Eg: 20"
-                    class="p-inputtext p-component p-element w-full">
-                <div
-                    *ngIf="combinationEntryForm.controls['labelPerSheet'].errors && (combinationEntryForm.controls['labelPerSheet'].dirty || combinationEntryForm.controls['labelPerSheet'].touched)">
-                    <small class="p-error"
-                        *ngIf="combinationEntryForm.controls['labelPerSheet'].errors['required']">Label/Sheet is
-                        required.</small>
-                        <small class="p-error" *ngIf="combinationEntryForm.controls['labelPerSheet'].errors['greaterThanZero']">Label/Sheet must be greater than 0.</small>
-
+            <div class="flex-1 w-full">
+                <div class="flex-1 w-full">
+                    <label for="Stamp Label/Sheet" class="block mb-1 text-color text-lg">Stamp Label/Sheet</label>
+                    <app-stamp-label-dropdown (LabelSelected)="onStampLabelSelected($event)"
+                        class="flex-auto"></app-stamp-label-dropdown>
                 </div>
             </div>
-            <div class="col-12 p-0 flex-auto">
+            <div class="flex-1 w-full">
                 <label for="Label Id" class="block mb-1 text-color text-lg">Label ID</label>
-                <input type="number" pinputtext=""
+                <input type="number" pinputtext="" [value]="labelId"
                     class="p-inputtext p-component p-element w-full" disabled>
             </div>
         </div>
@@ -79,6 +61,6 @@
                 <span class="p-button-label">Submit</span><span class="p-ink"></span>
             </button>
         </div>
-    </form>
+    </div>
 </p-dialog>
 
