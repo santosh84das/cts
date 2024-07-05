@@ -41,7 +41,7 @@ export class DiscountDetailsService {
 
   // TODO
   deleteStampDiscountDetail(id: Number): Observable<IapiResponce> {
-    return this.http.delete<IapiResponce>('v1/StampMaster/DeleteStampDiscountDetailById?id='+ id).pipe(
+    return this.http.delete<IapiResponce>('v1/StampMaster/DeleteStampDiscountDetailsById?id='+ id).pipe(
       catchError((error) => {
         throw this.toastService.showError(error.message);
       })

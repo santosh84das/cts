@@ -130,7 +130,9 @@ export class DiscountDetailsComponent implements OnInit {
   }
 
   handleButtonClick($event: any) {
-    this.DiscountDetailsService.deleteStampDiscountDetail($event.rowData.stampVendorId)
+    console.log($event);
+    
+    this.DiscountDetailsService.deleteStampDiscountDetail($event.rowData.discountId)
       .subscribe((response) => {
         response.apiResponseStatus == 1 ? this.getAllStampDiscountDetails() : this.toastService.showAlert(
           response.message,
