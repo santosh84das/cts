@@ -42,15 +42,15 @@ export class IndentCaptureComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm()
-    
+
     this.tableQueryParameters = {
       pageSize: 10,
       pageIndex: 0,
     };
-    
+
     this.getAllStampIndents();
   }
-  
+
 
   initializeForm(): void {
     this.stampIndentForm = this.fb.group({
@@ -86,8 +86,8 @@ export class IndentCaptureComponent implements OnInit {
   }
 
 
-   addStampIndent() {
-     console.log(this.stampIndentForm);
+  addStampIndent() {
+    this.loading = true
     if (this.stampIndentForm.valid) {
       this.stampIndentPayload = {
         stampCombinationId: this.stamCombinationId,
@@ -105,8 +105,8 @@ export class IndentCaptureComponent implements OnInit {
       this.stampIndentService.addNewStampIndent(this.stampIndentPayload).subscribe((response) => {
         if (response.apiResponseStatus == 1) {
           this.toastService.showSuccess(response.message);
-          this.stampIndentForm.reset()
-          this.displayInsertModal = false;
+          // this.stampIndentForm.reset()
+          // this.displayInsertModal = false;
           this.getAllStampIndents();
         } else {
           this.toastService.showAlert(response.message, response.apiResponseStatus);
@@ -115,6 +115,7 @@ export class IndentCaptureComponent implements OnInit {
     } else {
       this.toastService.showWarning('Please fill all the required fields');
     }
+    this.loading = false
   }
 
   handleButtonClick($event: any) {
@@ -145,7 +146,7 @@ export class IndentCaptureComponent implements OnInit {
     this.calcAmountQuantity()
   }
 
-  onTreasurySelected($event: any) {    
+  onTreasurySelected($event: any) {
     this.raisedToTreasuryCode = $event;
   }
 

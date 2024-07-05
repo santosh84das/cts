@@ -26,6 +26,6 @@ export class StampLabelDropdownComponent implements OnInit {
     })
   }
   onStampLabelSelected() {    
-    this.LabelSelected.emit(this.selectedLabel.labelId);
+    this.LabelSelected.emit(this.selectedLabel);
   }
 }

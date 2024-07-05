@@ -12,9 +12,10 @@ import { StampCombinationService } from 'src/app/core/services/stamp/stamp-combi
 })
 export class CombinationComponent implements OnInit {
 
+  categoryId: any
   categoryDescription: string = "";
-  labelId: string = ""
-  denominationId: string = "";
+  labelId: any
+  denominationId: any
   tableActionButton: ActionButtonConfig[] = [];
   tableData!: DynamicTable<GetStampCombinations>;
   tableQueryParameters!: DynamicTableQueryParameters | any;
@@ -33,7 +34,6 @@ export class CombinationComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // this.initializeForm()
     this.tableActionButton = [
       {
         buttonIdentifier: 'delete',
@@ -52,36 +52,8 @@ export class CombinationComponent implements OnInit {
   }
 
 
-  // initializeForm() {
-  //   this.combinationEntryForm = this.fb.group({
-  //     category: [null, [Validators.required]],
-  //     denomination: [null, [Validators.required]],
-  //     labelPerSheet: [null, [Validators.required]]
-  //   });
-  // }
 
-  // exactLengthValidator(length: number): ValidatorFn {
-  //   return (control: AbstractControl): ValidationErrors | null => {
-  //     const value = control.value;
-  //     if (value && value.length !== length) {
-  //       return { exactLength: { requiredLength: length, actualLength: value.length } };
-  //     }
-  //     return null;
-  //   };
-  // }
-
-  // greaterThanZeroValidator(): ValidatorFn {
-  //   return (control: AbstractControl): ValidationErrors | null => {
-  //     const value = control.value;
-  //     if (value !== null && value !== undefined && value <= 0) {
-  //       return { greaterThanZero: true };
-  //     }
-  //     return null;
-  //   };
-  // }
   getAllStampCombination() {
-    console.log(this.tableQueryParameters);
-
     this.stampCombinationService
       .getStampCombinationList(this.tableQueryParameters)
       .subscribe((response) => {
@@ -115,15 +87,18 @@ export class CombinationComponent implements OnInit {
   }
 
   addcombination() {
-    
-    if (!this.categoryDescription && !this.labelId && !this.denominationId) {
+
+    if (this.categoryId && this.labelId && this.denominationId) {
       this.combinationEntryPayload = {
-        // TODO: add all the fields
+        stampCategoryId: this.categoryId,
+        stampTypeId: this.denominationId,
+        stampLabelId: this.labelId,
       };
+      console.log(this.combinationEntryPayload);
 
       this.stampCombinationService.addNewStampCombination(this.combinationEntryPayload).subscribe((response) => {
         if (response.apiResponseStatus == 1) {
-          this.toastService.showAlert('Discount details added successfully', 1);
+          this.toastService.showSuccess(response.message);
           this.modal = false;
           this.getAllStampCombination();
         } else {
@@ -136,15 +111,16 @@ export class CombinationComponent implements OnInit {
   }
 
   onStampCategorySelected($event: any) {
-    this.categoryDescription = $event;
+    this.categoryDescription = $event.description;
+    this.categoryId = $event.stampCategoryId
   }
 
   onStampDenominationSelected($event: any) {
-    this.denominationId = $event
+    this.denominationId = $event.denominationId
   }
 
   onStampLabelSelected($event: any) {
-    this.labelId = $event
+    this.labelId = $event.labelId
   }
 
 }

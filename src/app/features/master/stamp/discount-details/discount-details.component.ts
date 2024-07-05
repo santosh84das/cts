@@ -141,7 +141,7 @@ export class DiscountDetailsComponent implements OnInit {
   }
 
   onStampCategorySelected($event: any) {
-    this.stampCategory = $event;
+    this.stampCategory = $event.stampCategory1;
   }
 
   onVendorTypeSelected($event: any) {

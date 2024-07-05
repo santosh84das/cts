@@ -27,6 +27,6 @@ export class StampDenominationDropdownComponent implements OnInit {
   }
 
   onStampDenominationSelected() {    
-    this.DenominatonSelected.emit(this.selectedDenomination.denominationId);
+    this.DenominatonSelected.emit(this.selectedDenomination);
   }
 }
