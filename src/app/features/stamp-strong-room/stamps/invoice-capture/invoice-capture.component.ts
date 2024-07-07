@@ -14,6 +14,8 @@ import { convertDate } from 'src/utils/dateConversion';
   styleUrls: ['./invoice-capture.component.scss']
 })
 export class InvoiceCaptureComponent implements OnInit {
+  noOfLabelsPerSheet: number = 0
+  noOfSheets: number = 0
   tcode: string = ""
   sheetAsked: number = 0
   sheetGiven: number = 0
@@ -128,7 +130,6 @@ export class InvoiceCaptureComponent implements OnInit {
           item.createdAt = convertDate(item.createdAt);
           item.memoDate = convertDate(item.memoDate);
           item.invoiceDate = convertDate(item.invoiceDate)
-          // item.status = Status[item.status]
         });
         this.tableData = response.result;
       } else {
@@ -161,7 +162,7 @@ export class InvoiceCaptureComponent implements OnInit {
         }
       });
     } else {
-      this.toastService.showAlert('Please fill all the required fields', 0);
+      this.toastService.showWarning('Please fill all the required fields');
     }
   }
 

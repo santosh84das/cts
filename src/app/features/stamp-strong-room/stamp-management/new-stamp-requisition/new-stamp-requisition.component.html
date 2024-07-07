@@ -1,0 +1,101 @@
+<div class="grid">
+    <div class="col-12">
+        <app-common-header [headerName]="'New Requisition'" [imgSrc]="'assets/layout/images/icons/new-requisition.png'">
+        </app-common-header>
+    </div>
+</div>
+<section class="px-4 py-2 w-11 mx-auto flex align-items-center justify-content-center">
+    <div class="surface-card px-8 py-6 shadow-2 border-round p-fluid">
+        <div class="grid formgrid p-fluid">
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="company_name" class="font-medium text-900">Company Name</label>
+                <input id="company_name" type="text" pinputtext="" class="p-inputtext p-component p-element">
+            </div>
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="invoice_id" class="font-medium text-900">Invoice Id</label>
+                <input id="invoice_id" type="text" pinputtext="" class="p-inputtext p-component p-element">
+            </div>
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="customer_name" class="font-medium text-900">Customer Name</label>
+                <input id="customer_name" type="text" pinputtext="" class="p-inputtext p-component p-element">
+            </div>
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="customer_email" class="font-medium text-900">Customer Email</label>
+                <input id="customer_email" type="text" pinputtext="" class="p-inputtext p-component p-element">
+            </div>
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="invoice_date" class="font-medium text-900">Invoice Date</label>
+                <p-calendar id="invoice_date" class="p-element p-inputwrapper ng-tns-c26-2 ng-star-inserted">
+                    <span class="ng-tns-c26-2 p-calendar p-calendar-w-btn">
+                        <input type="text" autocomplete="off" class="ng-tns-c26-2 p-inputtext p-component ng-star-inserted" placeholder="">
+                        <button type="button" pbutton="" pripple="" tabindex="0" class="p-element p-ripple p-datepicker-trigger p-button-icon-only ng-tns-c26-2 p-button p-component ng-star-inserted">
+                            <span class="p-ink ng-tns-c26-2"></span>
+                        </button>
+                    </span>
+                </p-calendar>
+            </div>
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="due_date" class="font-medium text-900">Due Date</label>
+                <p-calendar id="due_date" class="p-element p-inputwrapper ng-tns-c26-3 ng-star-inserted">
+                    <span class="ng-tns-c26-3 p-calendar p-calendar-w-btn">
+                        <input type="text" autocomplete="off" class="ng-tns-c26-3 p-inputtext p-component ng-star-inserted" placeholder="">
+                        <button type="button" pbutton="" pripple="" tabindex="0" class="p-element p-ripple p-datepicker-trigger p-button-icon-only ng-tns-c26-3 p-button p-component ng-star-inserted">
+                            <span class="p-ink ng-tns-c26-3"></span>
+                        </button>
+                    </span>
+                </p-calendar>
+            </div>
+            <div class="surface-border border-top-1 opacity-50 mb-4 col-12"></div>
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="item" class="font-medium text-900">Item</label>
+                <input id="item" type="text" pinputtext="" class="p-inputtext p-component p-element">
+            </div>
+            <div class="field mb-4 col-6 md:col-3">
+                <label for="quantity" class="font-medium text-900">Quantity</label>
+                <input id="quantity" type="text" pinputtext="" class="p-inputtext p-component p-element">
+            </div>
+            <div class="field mb-4 col-6 md:col-3">
+                <label for="price" class="font-medium text-900">Price</label>
+                <div class="flex align-content-center">
+                    <button pbutton="" pripple="" icon="pi pi-trash" class="p-element p-ripple p-button-danger p-button-text ml-2 p-button p-component p-button-icon-only">
+                        <span class="p-button-icon pi pi-trash" aria-hidden="true"></span>
+                        <span class="p-ink"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="field mb-4 col-12 md:col-6">
+                <button pbutton="" pripple="" icon="pi pi-plus" label="Add Item" class="p-element p-ripple p-button-secondary p-button-outlined w-auto p-button p-component">
+                    <span class="p-button-icon p-button-icon-left pi pi-plus" aria-hidden="true"></span>
+                    <span class="p-button-label">Add Item</span>
+                    <span class="p-ink"></span>
+                </button>
+            </div>
+            <div class="field mb-4 col-12 md:col-6 text-right">
+                <span class="text-xl text-600 font-medium mr-2">Total</span>
+                <span class="text-xl text-900 font-medium">$59</span>
+            </div>
+            <div class="field mb-4 col-12 flex align-items-center">
+                <p-checkbox class="p-element">
+                    <div class="p-checkbox p-component">
+                        <div class="p-hidden-accessible">
+                            <input type="checkbox" value="undefined" aria-checked="false">
+                        </div>
+                        <div class="p-checkbox-box"></div>
+                    </div>
+                </p-checkbox>
+                <span class="ml-2 text-900">Taxable (VAT 18%)</span>
+            </div>
+            <div class="surface-border border-top-1 opacity-50 mb-4 col-12"></div>
+            <div class="field mb-4 col-12">
+                <label for="notes" class="font-medium text-900">Notes</label>
+                <textarea id="notes" pinputtextarea="" class="p-inputtextarea p-inputtext p-component p-element p-inputtextarea-resizable" rows="5" style="height: 132px; overflow: hidden;"></textarea>
+            </div>
+            <div class="surface-border border-top-1 opacity-50 mb-4 col-12"></div>
+        </div>
+        <button pbutton="" pripple="" label="Create Invoice" icon="pi pi-file" class="p-element p-ripple w-auto p-button p-component">
+            <span class="p-button-icon p-button-icon-left pi pi-file" aria-hidden="true"></span>
+            <span class="p-button-label">Create Invoice</span>
+            <span class="p-ink"></span>
+        </button>
+    </div>
+</section>

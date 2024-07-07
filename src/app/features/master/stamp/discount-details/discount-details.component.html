@@ -21,21 +21,21 @@
     <form [formGroup]="calculateDiscountForm" class="px-4">
         <div class="flex align-items-center gap-3 mb-3 mt-2">
             <label for="Vendor Type" class="font-semibold w-8rem">Vendor Type</label>
-            <app-vendor-type-dropdown class="flex-auto"
+            <app-vendor-type-dropdown class="flex-1"
                 (vendorTypeSelected)="onVendorTypeSelected($event)"></app-vendor-type-dropdown>
         </div>
         <div class="flex align-items-center gap-3 mb-3">
             <label for="Stamp Category" class="font-semibold w-8rem">Stamp Category</label>
             <app-stamp-category-type-dropdown (CategoryTypeSelected)="onStampCategorySelected($event)"
-                class="flex-auto"></app-stamp-category-type-dropdown>
+                class="flex-1"></app-stamp-category-type-dropdown>
         </div>
         <div class="flex align-items-center gap-3 mb-3">
             <label for="Amount" class="font-semibold w-8rem">Amount</label>
-            <input formControlName="amount" pInputText id="amount" type="number" class="flex-auto" autocomplete="off" />
+            <input formControlName="amount" pInputText id="amount" type="number" class="flex-1" autocomplete="off" />
         </div>
         <div class="flex align-items-center gap-3 mb-5">
             <label for="Discount" class="font-semibold w-8rem">Discount</label>
-            <input pInputText id="discount" [value]="discount" readonly disabled class="flex-auto" autocomplete="off" />
+            <input pInputText id="discount" [value]="discount" readonly disabled class="flex-1" autocomplete="off" />
         </div>
         <div class="flex justify-content-end gap-2">
             <p-button label="Calculate" (click)="calculateDiscount()"></p-button>
@@ -46,10 +46,10 @@
 
 <p-dialog header="Discount Details Entry" [(visible)]="displayInsertModal" [modal]="true" [style]="{width: '30vw'}"
     [baseZIndex]="10000">
-    <form [formGroup]="discountDetailsEntryForm" class="flex flex-column gap-4 mt-3">
-        <div class="flex gap-2 xl:flex-row flex-column">
-            <div class="flex-auto">
-                <label for="From" class="block mb-1 text-color text-lg">From</label>
+    <form [formGroup]="discountDetailsEntryForm" class="flex flex-column gap-4 mt-3 w-full">
+        <div class="flex gap-2 xl:flex-row flex-1 flex-column">
+            <div class="flex-1">
+                <label for="From" class="block mb-1 font-medium text-900">From</label>
                 <span class="p-input-icon-left w-full">
                     <i class="pi pi-angle-double-right"></i>
                     <input formControlName="denominationFrom" type="number" pinputtext=""
@@ -65,8 +65,8 @@
                         must be greater than or equal to 0.</small>
                 </div>
             </div>
-            <div class="flex-auto">
-                <label for="To" class="block mb-1 text-color text-lg">To</label>
+            <div class="flex-1">
+                <label for="To" class="block mb-1 font-medium text-900">To</label>
                 <span class="p-input-icon-left w-full">
                     <i class="pi pi-stop-circle"></i>
                     <input formControlName="denominationTo" type="number" pinputtext=""
@@ -83,21 +83,21 @@
                 </div>
             </div>
         </div>
-        <div class="flex gap-2 xl:flex-row flex-column">
-            <div class="flex-auto">
-                <label for="Vendor Type" class="block mb-1 text-color text-lg">Vendor Type</label>
-                <app-vendor-type-dropdown class="flex-auto"
+        <div class="flex gap-2 xl:flex-row flex-1 flex-column w-full">
+            <div class="flex-1">
+                <label for="Vendor Type" class="block mb-1 font-medium text-900">Vendor Type</label>
+                <app-vendor-type-dropdown 
                     (vendorTypeSelected)="onVendorTypeSelected($event)"></app-vendor-type-dropdown>
             </div>
-            <div class="flex-auto">
-                <label for="Stamp Category" class="block mb-1 text-color text-lg">Stamp Category</label>
+            <div class="flex-1">
+                <label for="Stamp Category" class="block mb-1 font-medium text-900">Stamp Category</label>
                 <app-stamp-category-type-dropdown (CategoryTypeSelected)="onStampCategorySelected($event)"
-                    class="flex-auto"></app-stamp-category-type-dropdown>
+                    ></app-stamp-category-type-dropdown>
             </div>
         </div>
-        <div class="flex gap-2 xl:flex-row flex-column">
-            <div class="col-12 p-0 flex-auto">
-                <label for="Discount" class="block mb-1 text-color text-lg">Discount</label>
+        <div class="flex gap-2 xl:flex-row flex-1 flex-column">
+            <div class="col-12 p-0 flex-1">
+                <label for="Discount" class="block mb-1 font-medium text-900">Discount</label>
                 <input formControlName="discount" type="number" pinputtext="" placeholder="Eg: 20"
                     class="p-inputtext p-component p-element w-full">
                 <div

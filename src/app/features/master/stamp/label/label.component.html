@@ -19,7 +19,7 @@
     <form [formGroup]="labelEntryForm" class="flex flex-column gap-4 mt-3">
         <div class="flex gap-2">
             <div class="col-12 p-0">
-                <label for="No: of label/sheet" class="block mb-1 text-color text-lg">No: of label/sheet</label>
+                <label for="No: of label/sheet" class="block mb-1 font-medium text-900">No: of label/sheet</label>
                 <input formControlName="noLabelPerSheet" type="number" pinputtext="" placeholder="Eg: 20"
                     class="p-inputtext p-component p-element w-full">
                 <div *ngIf="labelEntryForm.controls['noLabelPerSheet'].errors && (labelEntryForm.controls['noLabelPerSheet'].dirty || labelEntryForm.controls['noLabelPerSheet'].touched)">

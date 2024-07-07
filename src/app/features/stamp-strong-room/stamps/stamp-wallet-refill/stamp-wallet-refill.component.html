@@ -7,21 +7,21 @@
 <div class="w-full h-fit flex justify-content-center align-items-center">
     <form [formGroup]="stampWalletRefillForm" class="flex xl:flex-row flex-column gap-4 mt-3 w-6 xl:w-10 justify-content-center align-items-start xl:align-items-end">
         <div class="flex-1 w-full">
-            <label for="To Treasury" class="block mb-1 text-color text-lg">To Treasury (<span
+            <label for="To Treasury" class="block mb-1 font-medium text-900">To Treasury (<span
                     class="font-medium text-gray-900">Default: </span> <span
                     class="font-medium text-gray-500">Superintendent</span>)</label>
             <app-treasury-dropdown (treasurySelected)="onTreasurySelected($event)"></app-treasury-dropdown>
         </div>
         <div class="flex-1 w-full">
-            <label for="To Treasury" class="block mb-1 text-color text-lg">Denomination</label>
+            <label for="To Treasury" class="block mb-1 font-medium text-900">Denomination</label>
             <app-treasury-dropdown (treasurySelected)="onTreasurySelected($event)"></app-treasury-dropdown>
         </div>
         <div class="flex-1 w-full">
-            <label for="Available Stamp Quantity" class="block mb-1 text-color text-lg">Available Stamp Quantity</label>
+            <label for="Available Stamp Quantity" class="block mb-1 font-medium text-900">Available Stamp Quantity</label>
             <input type="text" [value]="stampQuantity" readonly disabled class="p-inputtext p-component p-element w-full">
         </div>
         <div class="flex-1 w-full">
-            <label for="Additional Stamp Quantity" class="block mb-1 text-color text-lg">Additional Stamp Quantity</label>
+            <label for="Additional Stamp Quantity" class="block mb-1 font-medium text-900">Additional Stamp Quantity</label>
             <input type="number" pinputtext="" formControlName="quantity" class="p-inputtext p-component p-element w-full">
         </div>
         <button pbutton="" pripple="" label="Submit" (click)="createOrUpdateWallet()"
