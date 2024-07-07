@@ -11,19 +11,29 @@ import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CheckboxModule } from 'primeng/checkbox';
+import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown/treasury-dropdown.module';
+import { StampCombinationDropdownModule } from 'src/app/shared/modules/stamp-combination-dropdown/stamp-combination-dropdown.module';
+import { VendorDetailsDropdownModule } from 'src/app/shared/modules/vendor-details-dropdown/vendor-details-dropdown.module';
+import { StampRequisitionStagingComponent } from './stamp-requisition-staging/stamp-requisition-staging.component';
+import { StampRequisitionApprovalComponent } from './stamp-requisition-approval/stamp-requisition-approval.component';
+import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic-table.module';
 
 
 @NgModule({
-  declarations: [StampManagementComponent, StampRequisitionComponent, NewStampRequisitionComponent],
+  declarations: [StampManagementComponent, StampRequisitionComponent, NewStampRequisitionComponent, StampRequisitionStagingComponent, StampRequisitionApprovalComponent],
   imports: [
     CommonModule,
     ButtonModule,
     CalendarModule,
     InputNumberModule,
+    DynamicTableModule,
     CheckboxModule,
     OptionCardModule,
     CommonHeaderModule,
-    StampManagementRoutingModule
+    StampManagementRoutingModule,
+    TreasuryDropdownModule,
+    StampCombinationDropdownModule,
+    VendorDetailsDropdownModule
   ]
 })
 export class StampManagementModule { }

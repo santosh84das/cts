@@ -65,10 +65,10 @@ export class InvoiceCaptureComponent implements OnInit {
 
   initializeForm(): void {
     this.stampInvoiceForm = this.fb.group({
-      noOfSheets: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Validates integer
-      noOfLabels: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Validates integer
-      invoiceNumber: ['', [Validators.required]],// Validates integer
-      invoiceDate: ['', [Validators.required]] // Validates integer
+      noOfSheets: ['', [Validators.required, Validators.pattern(/^\d+$/)]], 
+      noOfLabels: ['', [Validators.required, Validators.pattern(/^\d+$/)]], 
+      invoiceNumber: ['', [Validators.required]],
+      invoiceDate: ['', [Validators.required]] 
     });
 
     this.stampInvoiceForm.setValue({
@@ -79,6 +79,10 @@ export class InvoiceCaptureComponent implements OnInit {
 
   changeDynamicTable(type: string) {
     this.listType = type;
+    this.tableQueryParameters = {
+      pageSize: 10,
+      pageIndex: 0,
+    };
     if (type === 'indent') {
       this.tableActionButton = [
         {
@@ -94,10 +98,6 @@ export class InvoiceCaptureComponent implements OnInit {
           lable: 'Edit & Approve',
         },
       ];
-      this.tableQueryParameters = {
-        pageSize: 10,
-        pageIndex: 0,
-      };
       this.getAllStampIndents();
     } else if (type === 'invoice') {
       this.tableActionButton = [
@@ -114,10 +114,6 @@ export class InvoiceCaptureComponent implements OnInit {
           lable: 'Details',
         },
       ];
-      this.tableQueryParameters = {
-        pageSize: 10,
-        pageIndex: 0,
-      };
       this.getAllStampInvoices();
     }
   }
@@ -183,7 +179,6 @@ export class InvoiceCaptureComponent implements OnInit {
         response.result.data.map((item: any) => {
           item.createdAt = convertDate(item.createdAt);
           item.memoDate = convertDate(item.memoDate);
-          // item.status = Status[item.status];
         });
         this.tableData = response.result;
       } else {

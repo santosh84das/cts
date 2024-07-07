@@ -5,6 +5,7 @@ import { GetStampDiscountDetails, AddStampDiscountDetails } from 'src/app/core/m
 import { ToastService } from 'src/app/core/services/toast.service';
 import { DiscountDetailsService } from 'src/app/core/services/stamp/discount-details.service';
 import { convertDate } from 'src/utils/dateConversion';
+import { greaterThanZeroValidator } from 'src/utils/greaterThanZeroValidator';
 
 @Component({
   selector: 'app-discount-details',
@@ -64,7 +65,7 @@ export class DiscountDetailsComponent implements OnInit {
     this.discountDetailsEntryForm = this.fb.group({
       denominationFrom: [0, [Validators.required, Validators.min(0)]],
       denominationTo: [0, [Validators.required]],
-      discount: [null, [Validators.required, this.greaterThanZeroValidator()]]
+      discount: [null, [Validators.required, greaterThanZeroValidator()]]
     }, {
       validators: this.greaterThanValidator('denominationFrom', 'denominationTo')
     });
@@ -93,15 +94,7 @@ export class DiscountDetailsComponent implements OnInit {
       return null; 
     };
   }
-  greaterThanZeroValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const value = control.value;
-      if (value !== null && value !== undefined && value <= 0) {
-        return { greaterThanZero: true };
-      }
-      return null;
-    };
-  }
+
   getAllStampDiscountDetails() {
     this.DiscountDetailsService
       .getStampDiscountDetailsList(this.tableQueryParameters)

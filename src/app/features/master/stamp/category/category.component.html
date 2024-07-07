@@ -17,7 +17,7 @@
     <form [formGroup]="categoryEntryForm" class="flex flex-column gap-4 mt-3">
       <div class="flex gap-2 align-items-baseline">
         <div class="flex-1">
-          <label for="Description" class="block mb-1 font-medium text-900">Description</label>
+          <label for="description" class="block mb-1 font-medium text-900">Description</label>
           <input formControlName="description" type="text" pInputText placeholder="Eg: Special Adhesive" class="p-inputtext p-component p-element w-full">
           <div *ngIf="categoryEntryForm.controls['description'].errors && (categoryEntryForm.controls['description'].dirty || categoryEntryForm.controls['description'].touched)">
             <small class="p-error" *ngIf="categoryEntryForm.controls['description'].errors['required']">Description is required.</small>
@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="flex-1">
-          <label for="Stamp Category" class="block mb-1 font-medium text-900">Stamp Category (2 char)<sup>*</sup></label>
+          <label for="stampCategory1" class="block mb-1 font-medium text-900">Stamp Category (2 char)<sup>*</sup></label>
           <input formControlName="stampCategory1" type="text" pInputText placeholder="Eg: EC" class="p-inputtext p-component p-element w-full">
           <div *ngIf="categoryEntryForm.controls['stampCategory1'].errors && (categoryEntryForm.controls['stampCategory1'].dirty || categoryEntryForm.controls['stampCategory1'].touched)">
             <small class="p-error" *ngIf="categoryEntryForm.controls['stampCategory1'].errors['required']">Stamp Category is required.</small>

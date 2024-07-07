@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ToastService } from '../toast.service';
 import { DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
 import { IapiResponce } from '../../models/iapi-responce';
-import { GetStampVendors, AddStampVendors } from '../../models/stamp';
+import { GetStampVendors, AddStampVendors, StampVendorDetails } from '../../models/stamp';
 import { Observable, catchError } from 'rxjs';
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,17 @@ export class VendorService {
 
   constructor(private http: HttpClient, private toastService: ToastService) { }
 
+  getStampVendorDetails(): Observable<IapiResponce<StampVendorDetails>> {
+    return this.http
+      .get<IapiResponce<StampVendorDetails>>(
+        'v1/StampMaster/GetALLStampVendors'
+      )
+      .pipe(
+        catchError((error) => {
+          throw this.toastService.showError(error.message);
+        })
+      );
+  }
   getStampVendorList(
     queryParameters: DynamicTableQueryParameters
   ): Observable<IapiResponce<GetStampVendors>> {
@@ -47,4 +58,3 @@ export class VendorService {
     );
   }
 }
-// DeleteStampVendorsById

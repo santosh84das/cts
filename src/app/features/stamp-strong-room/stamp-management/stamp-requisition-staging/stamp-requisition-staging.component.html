@@ -1,0 +1,49 @@
+<div class="grid">
+    <div class="col-12">
+        <app-common-header [headerName]="'Requisition Staging'" [imgSrc]="'assets/layout/images/icons/stamp-requisition-staging.png'">
+        </app-common-header>
+        
+    </div>
+    <div class="col-12">
+        <div class="grid">
+            <div class="col-12 lg:col-6 p-3">
+                <div class="transition-colors transition-duration-500 p-3 border-round border-2 cursor-pointer"
+                    [ngClass]="{
+                    'hover:shadow-2 surface-card border-transparent hover:bg-primary-100 hover:border-primary':listType!== 'new',
+                    'bg-primary-100 border-primary': listType === 'new'
+                  }" (click)="changeDynamicTable('new')">
+                    <!--  -->
+                    <div class="flex align-items-center justify-content-between">
+                        <div>
+                            <p class="mt-1 mb-0 text-600 text-xl">New Requisitions</p>
+                        </div>
+                        <div>
+                            <img src="assets/layout/images/icons/new-stamp-requisition.png" height="60">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 lg:col-6 p-3">
+                <div class="transition-colors transition-duration-500 p-3 border-round border-2 cursor-pointer"
+                    [ngClass]="{
+                    'hover:shadow-2 surface-card border-transparent hover:bg-primary-100 hover:border-primary':listType!=='approvedByClerk',
+                    'bg-primary-100 border-primary': listType === 'approvedByClerk'
+                  }" (click)="changeDynamicTable('approvedByClerk')">
+                    <!--  -->
+                    <div class="flex align-items-center justify-content-between">
+                        <div>
+                            <p class="mt-1 mb-0 text-600 text-xl">Approved By Clerk</p>
+                        </div>
+                        <div>
+                            <img src="assets/layout/images/icons/approved-by-clerk.png" height="60">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <app-dynamic-table (actionButtonClicked)="handleButtonClick($event)" [numberRowsShown]="10"
+    rowSelectionMode="multiple" [rowsPerPageOptions]="[10,30,50]" [actionButtons]="tableActionButton"
+    [headers]="tableData!.headers" [data]="tableData.data" [dataCount]="tableData.dataCount">
+    </app-dynamic-table>     -->
+</div>

@@ -36,6 +36,14 @@ export interface AddStampCategory {
   isActive?: boolean;
 }
 
+export interface StampVendorDetails {
+  stampVendorId: number;
+  vendorType: string;
+  licenseNo: string;
+  phoneNumber: number;
+  panNumber: string;
+}
+
 export interface GetStampVendors {
   stampVendorId?: number;
   vendorType: number;
@@ -63,7 +71,6 @@ export interface AddStampVendors {
   vendorPanPhoto: File;
   vendorLicencePhoto: File;
 }
-
 
 export interface GetStampDiscountDetails {
   discountId?: number;
@@ -161,12 +168,15 @@ export interface AddStampInvoice {
   amount: number;
   quantity: number;
 }
+
 export interface StampWalletGet {
   clearBalance: number
 }
 export interface StampWalletRefill {
   treasuryCode: string,
-  clearBalance: number
+  combinationId: number,
+  addSheet: number,
+  addLabel: number
 }
 
 export interface AddStampCombination {

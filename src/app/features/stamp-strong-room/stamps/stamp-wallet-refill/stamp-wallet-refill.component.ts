@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StampWalletRefill } from 'src/app/core/models/stamp';
 import { StampWalletService } from 'src/app/core/services/stamp/stamp-wallet.service';
 import { ToastService } from 'src/app/core/services/toast.service';
+import { greaterThanZeroValidator } from 'src/utils/greaterThanZeroValidator';
 
 @Component({
   selector: 'app-stamp-wallet-refill',
@@ -10,9 +11,11 @@ import { ToastService } from 'src/app/core/services/toast.service';
   styleUrls: ['./stamp-wallet-refill.component.scss']
 })
 export class StampWalletRefillComponent implements OnInit {
-  stampQuantity: number = 0;
+  sheet: number = 0;
+  label: number = 0;
   stampWalletRefillForm!: FormGroup;
   treasuryCode!: string;
+  combinationId: number = 0
   walletRefillPayload!: StampWalletRefill;
   constructor(
     private stampWalletService: StampWalletService,
@@ -27,24 +30,26 @@ export class StampWalletRefillComponent implements OnInit {
 
   initializeForm(): void {
     this.stampWalletRefillForm = this.fb.group({
-      quantity: ['', Validators.required],
+      addSheet: [0, [Validators.required, greaterThanZeroValidator()]],
+      addLabel: [0, [Validators.required, greaterThanZeroValidator()]],
     });
   }
 
-   onTreasurySelected($event: any) {
-    this.treasuryCode = $event;
-    this.getStampWalletBalance()
+  
 
+  onTreasurySelected($event: any) {
+    this.treasuryCode = $event;
   }
 
   createOrUpdateWallet() {
-    if (this.stampWalletRefillForm.valid) {
+    if (this.stampWalletRefillForm.valid && this.treasuryCode && this.combinationId) {
       this.walletRefillPayload = {
-        clearBalance: this.stampWalletRefillForm.value.quantity,
-        treasuryCode: this.treasuryCode
+        treasuryCode: this.treasuryCode,
+        addSheet: this.stampWalletRefillForm.value.addSheet,
+        addLabel: this.stampWalletRefillForm.value.addLabel,
+        combinationId: this.combinationId
       };
-      console.log(this.walletRefillPayload);
-
+      
       this.stampWalletService.createOrUpdateStampWallet(this.walletRefillPayload).subscribe((response) => {
         if (response.apiResponseStatus == 1) {
           this.toastService.showAlert(response.message, 1);
@@ -55,19 +60,27 @@ export class StampWalletRefillComponent implements OnInit {
         }
       });
     } else {
-      this.toastService.showAlert('Please fill all the required fields', 0);
+      this.toastService.showWarning('Please fill all the required fields');
     }
   }
 
   getStampWalletBalance() {
-    this.stampWalletService.getStampWalletBalanceByTreasuryCode(this.treasuryCode).subscribe((response) => {
+    this.stampWalletService.getStampWalletBalanceByTreasuryCode({ treasuryCode: this.treasuryCode, combinationId: this.combinationId }).subscribe((response) => {
       if (response.apiResponseStatus == 1) {
-        console.log(response);
-        this.stampQuantity = response.result
+        this.sheet = response.result.sheetLedgerBalance
+        this.label = response.result.labelLedgerBalance
       } else {
         this.toastService.showAlert(response.message, response.apiResponseStatus);
       }
     })
     return 0
+  }
+
+  onStampCombinationSelected($event: any) {
+    this.combinationId = $event.stampCombinationId
+  }
+
+  checkBalance() {
+    this.getStampWalletBalance()
   }
 }

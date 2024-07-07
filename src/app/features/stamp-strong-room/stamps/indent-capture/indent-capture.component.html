@@ -18,15 +18,15 @@
     <form [formGroup]="stampIndentForm" class="flex flex-column gap-4 mt-3">
         <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
-                <label for="Memo No:" class="block mb-1 font-medium text-900">Memo No:</label>
+                <label for="memoNo" class="block mb-1 font-medium text-900">Memo No:</label>
                 <input type="text" pinputtext="" formControlName="memoNo" placeholder="Eg: MEMO5256" class="p-inputtext p-component p-element w-full">
                 <div *ngIf="stampIndentForm.controls['memoNo'].errors && (stampIndentForm.controls['memoNo'].dirty || stampIndentForm.controls['memoNo'].touched)">
                     <small class="p-error" *ngIf="stampIndentForm.controls['memoNo'].errors['required']">Memo No is required.</small>
                 </div>
             </div>
             <div class="flex-auto">
-                <label for="Memo Date" class="block mb-1 font-medium text-900">Memo Date</label>
-                <p-calendar class="p-component p-element w-full p-calendar" formControlName="memoDate" placeholder="dd/mm/yyyy" appendTo="body" [showIcon]="true" inputId="icon"></p-calendar>
+                <label for="memoDate" class="block mb-1 font-medium text-900">Memo Date</label>
+                <p-calendar class="p-component p-element w-full p-calendar" formControlName="memoDate" placeholder="mm/dd/yyyy" appendTo="body" [showIcon]="true" inputId="icon"></p-calendar>
                 <div *ngIf="stampIndentForm.controls['memoDate'].errors && (stampIndentForm.controls['memoDate'].dirty || stampIndentForm.controls['memoDate'].touched)">
                     <small class="p-error" *ngIf="stampIndentForm.controls['memoDate'].errors['required']">Memo Date is required.</small>
                 </div>
@@ -43,7 +43,7 @@
           
         <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-1">
-                <label for="To Treasury" class="block mb-1 font-medium text-900">To Treasury (<span class="font-medium text-gray-900">Default: </span> <span class="font-medium text-gray-500">Superintendent</span>)</label>
+                <label for="toTreasury" class="block mb-1 font-medium text-900">To Treasury (<span class="font-medium text-gray-900">Default: </span> <span class="font-medium text-gray-500">Superintendent</span>)</label>
                 <app-treasury-dropdown (treasurySelected)="onTreasurySelected($event)"></app-treasury-dropdown>
             </div>
             <div class="flex-1">
@@ -53,17 +53,17 @@
         </div>
         <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
-                <label for="Denomination (Rs.)" class="block mb-1 font-medium text-900">Denomination (Rs.)</label>
+                <label for="denomination" class="block mb-1 font-medium text-900">Denomination (Rs.)</label>
                 <input type="number" pinputtext="" [value]="denomination" readonly disabled class="p-inputtext p-component p-element w-full">
             </div>
             <div class="flex-auto">
-                <label for="Label/Sheet" class="block mb-1 font-medium text-900">Label/Sheet</label>
+                <label for="labelPerSheet" class="block mb-1 font-medium text-900">Label/Sheet</label>
                 <input type="text" pinputtext="" [value]="labelPerSheet" readonly disabled class="p-inputtext p-component p-element w-full">
             </div>
         </div>
         <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
-                <label for="No: of Sheets" class="block mb-1 font-medium text-900">No: of Sheets</label>
+                <label for="noOfSheets" class="block mb-1 font-medium text-900">No: of Sheets</label>
                 <input type="number" pinputtext="" formControlName="noOfSheets" [(ngModel)]="sheet" (ngModelChange)="sheetSelected($event)" placeholder="Eg: 10" class="p-inputtext p-component p-element w-full">
                 <div *ngIf="stampIndentForm.controls['noOfSheets'].errors && (stampIndentForm.controls['noOfSheets'].dirty || stampIndentForm.controls['noOfSheets'].touched)">
                     <small class="p-error" *ngIf="stampIndentForm.controls['noOfSheets'].errors['required']">No of Sheets is required.</small>
@@ -71,7 +71,7 @@
                 </div>
             </div>
             <div class="flex-auto">
-                <label for="No: of Labels" class="block mb-1 font-medium text-900">No: of Labels</label>
+                <label for="noOfLabels" class="block mb-1 font-medium text-900">No: of Labels</label>
                 <input type="number" pinputtext="" formControlName="noOfLabels" [(ngModel)]="label" (ngModelChange)="labelSelected($event)" placeholder="Eg: 10" class="p-inputtext p-component p-element w-full">
                 <div *ngIf="stampIndentForm.controls['noOfLabels'].errors && (stampIndentForm.controls['noOfLabels'].dirty || stampIndentForm.controls['noOfLabels'].touched)">
                     <small class="p-error" *ngIf="stampIndentForm.controls['noOfLabels'].errors['required']">No of Labels is required.</small>
@@ -81,17 +81,17 @@
         </div>
         <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
-                <label for="Quantity" class="block mb-1 font-medium text-900">Quantity</label>
+                <label for="quantity" class="block mb-1 font-medium text-900">Quantity</label>
                 <input type="text" pinputtext="" readonly disabled [value]="quantity" class="p-inputtext p-component p-element w-full">
             </div>
             <div class="flex-auto">
-                <label for="Amount (Rs.)" class="block mb-1 font-medium text-900">Amount (Rs.)</label>
+                <label for="amount" class="block mb-1 font-medium text-900">Amount (Rs.)</label>
                 <input type="text" pinputtext="" readonly disabled [value]="amount" class="p-inputtext p-component p-element w-full">
             </div>
         </div>
         <div class="flex gap-2 xl:flex-row flex-column">
             <div class="col-12 p-0 flex-auto">
-              <label for="Remarks" class="block mb-1 font-medium text-900">Remarks</label>
+              <label for="remarks" class="block mb-1 font-medium text-900">Remarks</label>
               <textarea
                 type="text"
                 pinputtext=""

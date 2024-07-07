@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-new-stamp-requisition',
@@ -8,11 +8,20 @@ import { Component, OnInit } from '@angular/core';
 export class NewStampRequisitionComponent implements OnInit {
 
   constructor() { }
+  @Output() VendorDetailsSelected = new EventEmitter<any>();
 
   ngOnInit(): void {
   }
 
-  showInsertDialog() {
+  onTreasurySelected($event: any) {
+
+  }
+
+  onStampCombinationSelected($event: any) {
+    
+  }
+
+  onVendorDetailsSelected($event: any) {
     
   }
 }
