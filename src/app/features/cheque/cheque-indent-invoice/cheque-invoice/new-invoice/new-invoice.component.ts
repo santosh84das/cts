@@ -150,7 +150,7 @@ export class NewInvoiceComponent implements OnInit {
     console.log('try');
 
     const totalAvailable = this.micrDetailsList.reduce((total, item) => total + item.availableQuantity, 0);
-    console.log(totalAvailable);
+    console.log('totalAvailable',totalAvailable);
     
     this.invoiceForm.get('availability')?.patchValue(totalAvailable);
   }
