@@ -53,7 +53,6 @@ export class StampWalletRefillComponent implements OnInit {
       this.stampWalletService.createOrUpdateStampWallet(this.walletRefillPayload).subscribe((response) => {
         if (response.apiResponseStatus == 1) {
           this.toastService.showAlert(response.message, 1);
-          // this.stampWalletRefillForm.reset()
           this.getStampWalletBalance()
         } else {
           this.toastService.showAlert(response.message, response.apiResponseStatus);
@@ -81,6 +80,11 @@ export class StampWalletRefillComponent implements OnInit {
   }
 
   checkBalance() {
-    this.getStampWalletBalance()
+    if (this.treasuryCode && this.combinationId) {
+      this.getStampWalletBalance()
+    } else {
+      this.toastService.showWarning('Treasury Code or Combination is missing.');
+
+    }
   }
 }
