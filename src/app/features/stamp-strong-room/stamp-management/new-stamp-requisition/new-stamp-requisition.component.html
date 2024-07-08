@@ -6,7 +6,7 @@
 </div>
 <section class="px-4 py-2 w-11 mx-auto flex align-items-center justify-content-center">
     <div class="surface-card px-8 py-6 shadow-2 border-round p-fluid">
-        <div class="grid formgrid p-fluid">
+        <form [formGroup]="newStampRequisition" class="grid formgrid p-fluid">
             <div class="field mb-4 col-12 md:col-6">
                 <label for="company_name" class="font-medium text-900">Vendor Details</label>
                 <app-vendor-details-dropdown (VendorDetailsSelected)="onVendorDetailsSelected($event)"></app-vendor-details-dropdown>
@@ -17,11 +17,11 @@
             </div>
             <div class="field mb-4 col-12 md:col-6">
                 <label for="customer_name" class="font-medium text-900">Sheet</label>
-                <input id="customer_name" type="number" pinputtext="" class="p-inputtext p-component p-element">
+                <input id="customer_name" formControlName="sheet" type="number" pinputtext="" class="p-inputtext p-component p-element">
             </div>
             <div class="field mb-4 col-12 md:col-6">
                 <label for="customer_email" class="font-medium text-900">Label</label>
-                <input id="customer_email" type="number" pinputtext="" class="p-inputtext p-component p-element">
+                <input id="customer_email" type="number" formControlName="label" pinputtext="" class="p-inputtext p-component p-element">
             </div>
             <div class="field mb-4 col-12 md:col-6">
                 <label for="invoice_date" class="font-medium text-900">Combination</label>
@@ -31,12 +31,12 @@
             </div>
             <div class="field mb-4 col-12 md:col-6">
                 <label for="due_date" class="font-medium text-900">Requisution Date</label>
-                <p-calendar class="p-component p-element w-full p-calendar" formControlName="memoDate" placeholder="mm/dd/yyyy" appendTo="body" [showIcon]="true" inputId="icon"></p-calendar>
+                <p-calendar class="p-component p-element w-full p-calendar" formControlName="requisitionDate" placeholder="mm/dd/yyyy" appendTo="body" [showIcon]="true" inputId="icon"></p-calendar>
             </div>
             <div class="surface-border border-top-1 opacity-50 my-4 col-12"></div>
             <div class="field mb-4 col-12 md:col-6">
                 <label for="item" class="font-medium text-900">Requisition No</label>
-                <input id="item" type="text" pinputtext="" class="p-inputtext p-component p-element">
+                <input id="item" type="text" pinputtext="" formControlName="requisitionNo" class="p-inputtext p-component p-element">
             </div>
             <div class="field mb-4 col-6 md:col-6">
                 <label for="quantity" class="font-medium text-900">Quantity</label>
@@ -58,7 +58,7 @@
                 <label for="quantity" class="font-medium text-900">Challan Amount</label>
                 <input id="quantity" type="text" pinputtext="" readonly disabled class="p-inputtext p-component p-element">
             </div>
-        </div>
+        </form>
         <div class="w-full flex justify-content-end align-items-center">
             <button pbutton="" pripple="" icon="pi pi-file" class="p-element p-ripple w-auto p-button p-component">
                 <span class="p-button-label">Submit Requisition</span>

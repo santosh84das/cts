@@ -60,7 +60,8 @@ export interface GetStampVendors {
 }
 
 export interface AddStampVendors {
-  vendorType: string;
+  vendorType: number;
+  vendorName: string;
   licenseNo: string;
   address: string;
   phoneNumber: number;
@@ -87,8 +88,8 @@ export interface AddStampDiscountDetails {
   denominationFrom: number;
   denominationTo: number;
   discount: number;
-  vendorType: string;
-  stampCategory: string;
+  vendorType: number;
+  StampCategoryId: number;
 }
 
 export interface GetStampCombinations {

@@ -53,6 +53,7 @@ export class VendorComponent implements OnInit {
   initializeForms() {
     this.VendorDetailsEntryForm = this.fb.group({
       vendorPhoto: [null, Validators.required],
+      vendorName: ['', Validators.required],
       panNumber: ['', [Validators.required, Validators.pattern('[A-Z]{5}[0-9]{4}[A-Z]{1}')]],
       licenseNo: ['', Validators.required],
       vendorPanPhoto: [null, Validators.required],
@@ -93,7 +94,9 @@ export class VendorComponent implements OnInit {
   }
 
   onVendorTypeSelected($event: any) {
-    this.vendorType = $event;
+    console.log($event.stampVendorId);
+    
+    this.vendorType = $event.stampVendorId;
   }
 
   handleFileInput(event: any, controlName: string) {
@@ -112,6 +115,7 @@ export class VendorComponent implements OnInit {
       
       const formData = new FormData();
       formData.append('vendorType', this.vendorType);
+      formData.append('vendorName', this.VendorDetailsEntryForm.value.vendorName);
       formData.append('panNumber', this.VendorDetailsEntryForm.value.panNumber);
       formData.append('licenseNo', this.VendorDetailsEntryForm.value.licenseNo);
       formData.append('address', this.VendorDetailsEntryForm.value.address);

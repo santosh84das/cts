@@ -15,6 +15,8 @@ import { greaterThanZeroValidator } from 'src/utils/greaterThanZeroValidator';
 export class DiscountDetailsComponent implements OnInit {
   vendorType!: string;
   stampCategory!: string;
+  vendorTypeId!: number;
+  stampCategoryId!: number;
   tableActionButton: ActionButtonConfig[] = [];
   tableData!: DynamicTable<GetStampDiscountDetails>;
   tableQueryParameters!: DynamicTableQueryParameters | any;
@@ -136,11 +138,13 @@ export class DiscountDetailsComponent implements OnInit {
   }
 
   onStampCategorySelected($event: any) {
+    this.stampCategoryId = $event.stampCategoryId;
     this.stampCategory = $event.stampCategory1;
   }
 
   onVendorTypeSelected($event: any) {
-    this.vendorType = $event;
+    this.vendorType = $event.vendorType;
+    this.vendorTypeId = $event.stampVendorId;
   }
 
   calculateDiscount() {
@@ -159,8 +163,8 @@ export class DiscountDetailsComponent implements OnInit {
 
     if (this.discountDetailsEntryForm.valid) {
       this.discountDetailsEntryPayload = {
-        stampCategory: this.stampCategory,
-        vendorType: this.vendorType,
+        StampCategoryId: this.stampCategoryId,
+        vendorType: this.vendorTypeId,
         denominationFrom: this.discountDetailsEntryForm.value.denominationFrom,
         denominationTo: this.discountDetailsEntryForm.value.denominationTo,
         discount: this.discountDetailsEntryForm.value.discount,
