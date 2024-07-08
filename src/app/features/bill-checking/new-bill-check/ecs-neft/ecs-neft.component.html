@@ -1,0 +1,108 @@
+<div class="grid">
+    <div class="col-12">
+        <p-divider align="left" type="dashed">
+            <div class="inline-flex align-items-center">
+                <i class="pi pi-file mr-2"></i>
+                <b>Bill Details</b>
+            </div>
+        </p-divider>
+        <div class="grid grid-nogutter static bg-primary-100 border-round border-primary border-solid text-gray-800 p-3">
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Bill No:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    <!-- {{ billDetails?.tokenDetails?.tokenNumber }} -->
+                </div>
+            </div>
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Bill Date:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    <!-- {{ billDetails?.tokenDetails?.tokenDate }} -->
+                </div>
+            </div>
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Gross Amount:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    <!-- {{ billDetails?.billDetailsDetails?.billNo }} -->
+                </div>
+            </div>
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Net Amount:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    <!-- {{ billDetails?.billDetailsDetails?.billDate }} -->
+                </div>
+            </div>
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Total Cheque Amount:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    <!-- {{ billDetails?.tokenDetails?.status }} -->
+                </div>
+            </div>
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Pay Mode:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    
+                </div>
+            </div>
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    No of Beneficiarys:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+    <p-divider align="left" type="dashed">
+        <div class="inline-flex align-items-center">
+            <i class="pi pi-book mr-2"></i>
+            <b>Sub Details Head</b>
+        </div>
+    </p-divider>
+    <!-- <div class="text-500 mb-5">Morbi tristique blandit turpis. In viverra ligula id nulla hendrerit rutrum.</div> -->
+    <ul class="list-none p-0 m-0">
+        <li class="flex justify-content-around bg-primary-500 px-4 py-2 mb-3 shadow-2 border-round flex-wrap">
+            <div class="text-100 flex pr-5 font-medium">#</div>
+            <div class="text-100 flex font-medium">Beneficiary Name</div>
+            <div class="text-100 flex font-medium">Beneficiary Code</div>
+            <div class="text-100 flex font-medium" >Bank's IFSC Code</div>
+            <div class="text-100 flex font-medium" >Bank Name</div>
+            <div class="text-100 flex font-medium" >Account Number</div>
+            <div class="text-100 flex font-medium" >E-Mail</div>
+            <div class="text-100 flex font-medium" >Contact No.</div>
+            <div class="text-100 flex font-medium" >Amount(in Rs)</div>
+            <div class="text-100 flex font-medium" >Payee Type</div>
+        </li>
+        <!-- <li class="flex surface-ground bg-indigo-50 align-items-center px-4 py-3 mb-3 shadow-2 border-round  flex-wrap "
+            *ngFor="let subHeadDetail of subHeadDetails;index as i">
+            <div class="text-500 flex  pr-5 font-medium">{{i+1}}</div>
+            <div class="text-900 flex md:w-5 font-medium">{{ subHeadDetail.subDeatils }}</div>
+            <div class="text-900 flex-1 md:w-2 font-medium" style="padding-left: 15px;">
+                {{ subHeadDetail.description }}
+            </div>
+            <div class="text-900 flex flex-1  md:w-1 justify-content-center font-medium">
+                {{ subHeadDetail.amount | currency:'INR':'symbol':'1.2-2'}}
+            </div>
+        </li>
+        <li class="flex align-items-center bg-primary-200 px-4 py-2 mb-3 shadow-2 border-round flex-wrap">
+            <div class="text-900 flex  pr-5 font-medium">Total</div>
+            <div class="text-100 flex   md:w-5 font-medium"></div>
+            <div class="text-100 flex-1 md:w-2 p-2 font-medium"></div>
+            <div class="text-900 flex-1  md:w-1 font-medium" >{{ billDetails?.billDetailsDetails?.subDeatilsTotalAmount | currency:'INR':'symbol':'1.2-2' }}</div>
+        </li> -->
+    </ul>
+</div>
+</div>

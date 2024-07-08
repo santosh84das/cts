@@ -4,7 +4,7 @@ import { Observable, catchError } from 'rxjs';
 import { IapiResponce } from '../../models/iapi-responce';
 import { HttpClient } from '@angular/common/http';
 import { error } from 'console';
-import { HoaChain, IBillCheck, IBillDetails, IBills, IRetunMemoBillDetils, IReturnMemoCount } from '../../models/bill';
+import { BillInfo, HoaChain, IBillCheck, IBillDetails, IBills, IRetunMemoBillDetils, IReturnMemoCount } from '../../models/bill';
 import { IObjection } from '../../models/objection';
 
 @Injectable({
@@ -19,6 +19,15 @@ export class BillService {
                 throw this.toastService.showError(error.message);
             })
         );
+    }
+    getBillInfo(to0kenId: number): Observable<IapiResponce<BillInfo>> {
+        return this.http
+            .get<IapiResponce<BillInfo>>('v1/BillChecking/get-bill-info?tokenId='+to0kenId)
+            .pipe(
+                catchError((error) => {
+                    throw this.toastService.showError(error.message);
+                })
+            );
     }
 
     getBillDetails(token_id: number): Observable<IapiResponce<IBillDetails>> {

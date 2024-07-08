@@ -24,8 +24,10 @@ import {DialogModule} from 'primeng/dialog';
 import { FieldsetModule } from 'primeng/fieldset';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { BadgeModule } from 'primeng/badge';
+import {SplitterModule} from 'primeng/splitter';
+import { EcsNeftComponent } from './ecs-neft/ecs-neft.component';
 @NgModule({
-  declarations: [NewBillCheckComponent, AllotmentComponent,BillDetailsComponent, ListOfObjectionComponent, ByTransferComponent, PlTransferComponent],
+  declarations: [NewBillCheckComponent, AllotmentComponent,BillDetailsComponent, ListOfObjectionComponent, ByTransferComponent, PlTransferComponent, EcsNeftComponent],
   exports: [RouterModule],
   imports: [
     CommonModule,
@@ -45,6 +47,7 @@ import { BadgeModule } from 'primeng/badge';
     FieldsetModule,
     InputTextareaModule,
     BadgeModule,
+    SplitterModule,
     RouterModule.forChild([
       {
         path: '',
@@ -54,6 +57,9 @@ import { BadgeModule } from 'primeng/badge';
           { path: 'bill-details', component: BillDetailsComponent },
           { path: 'objection', component: ListOfObjectionComponent },
           { path: 'allotment', component: AllotmentComponent },
+          { path: 'by-transfer', component: ByTransferComponent },
+          { path: 'pl-transfer', component: PlTransferComponent },
+          { path: 'ecs-neft', component: EcsNeftComponent }
         ],
       },
     ]),

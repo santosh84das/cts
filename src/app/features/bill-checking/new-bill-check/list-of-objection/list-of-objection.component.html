@@ -1,13 +1,13 @@
-<p-card>
-    <ng-template pTemplate="title"> Objection </ng-template>
-    <ng-template pTemplate="subtitle">
+<!-- <p-card> -->
+    <!-- <ng-template pTemplate="title"> Objection </ng-template> -->
+    <!-- <ng-template pTemplate="subtitle"> -->
         <!-- Enter User Basic Details -->
-    </ng-template>
-    <ng-template pTemplate="content">
+    <!-- </ng-template> -->
+    <!-- <ng-template pTemplate="content"> -->
         <p-listbox [options]="gobalObjections" optionLabel="description" [checkbox]="true" [filter]="true"
             [(ngModel)]="selectedGobalObjections" [multiple]="true" [listStyle]="{ 'max-height': '200px' }"
             (onClick)="setSelectedObjection($event)">
-            <ng-template pTemplate="header"> Gobal Objections </ng-template>
+            <!-- <ng-template pTemplate="header"> Gobal Objections </ng-template> -->
         </p-listbox>
         <p-divider align="right">
             <p-button label="Add Local Objection" icon="pi pi-plus" (click)="addLocalObjectionPanel.toggle($event)"
@@ -128,7 +128,7 @@
                     (click)="objectionOverrule()"></button>
             </div>
         </p-overlayPanel>
-    </ng-template>
+    <!-- </ng-template>
     <ng-template pTemplate="footer">
         <div class="grid grid-nogutter justify-content-between">
             <p-button label="Back" icon="pi pi-angle-left" (onClick)="prevStep()"></p-button>
@@ -136,4 +136,4 @@
                 class="p-button-success"></p-button>
         </div>
     </ng-template>
-</p-card>
+</p-card> -->
