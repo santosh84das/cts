@@ -21,7 +21,7 @@ export class VendorDetailsDropdownComponent implements OnInit {
   }
 
   formatResultItem(item: any): any {
-    return { vendorDetails: `${item.stampVendorId} | Vendor Type: ${item.vendorType} | Licence: ${item.licenseNo} | Pan: ${item.panNumber} | Phone: ${item.phoneNumber}` }
+    return { vendorDetails: `${item.stampVendorId} | Vendor Name: ${item.vendorName} | Vendor Type: ${item.vendorType} | Treasury: ${item.vendorTreasury} | Licence: ${item.licenseNo} | Pan: ${item.panNumber} | Phone: ${item.phoneNumber}` }
   }
 
   getAllVendors() {

@@ -39,9 +39,16 @@ export class DiscountDetailsService {
     );
   }
 
-  // TODO
   deleteStampDiscountDetail(id: Number): Observable<IapiResponce> {
     return this.http.delete<IapiResponce>('v1/StampMaster/DeleteStampDiscountDetailsById?id='+ id).pipe(
+      catchError((error) => {
+        throw this.toastService.showError(error.message);
+      })
+    );
+  }
+
+  getDiscount(vendorTypeId: number, stampCategoryId: number, amount: number): Observable<IapiResponce> {
+    return this.http.get<IapiResponce>(`v1/StampMaster/GetDiscount?vendorTypeId=${vendorTypeId}&stampCategoryId=${stampCategoryId}&amount=${amount}`).pipe(
       catchError((error) => {
         throw this.toastService.showError(error.message);
       })

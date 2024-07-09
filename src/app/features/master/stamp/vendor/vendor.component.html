@@ -113,14 +113,14 @@
                 </div>
             </div>
         </div>
-    
-        <div class="flex gap-2 xl:flex-row flex-column">
-            <div class="col-12 p-0 flex-1">
+        <div class="flex gap-2 xl:flex-row flex-column xl:align-items-end">
+            <div class="flex-1">
                 <label for="vVendorType" class="block mb-1 font-medium text-900">Vendor Type</label>
                 <app-vendor-type-dropdown class="flex-1" (vendorTypeSelected)="onVendorTypeSelected($event)"></app-vendor-type-dropdown>
-                <!-- <div *ngIf="VendorDetailsEntryForm.controls['vendorType'].errors && (VendorDetailsEntryForm.controls['vendorType'].dirty || VendorDetailsEntryForm.controls['vendorType'].touched)">
-                    <small class="p-error" *ngIf="VendorDetailsEntryForm.controls['vendorType'].errors['required']">Vendor Type is required.</small>
-                </div> -->
+            </div>
+            <div class="flex-1">
+                <label for="treasury" class="block mb-1 font-medium text-900">Treasury</label>
+                <app-treasury-dropdown (treasurySelected)="onTreasurySelected($event)"></app-treasury-dropdown>
             </div>
         </div>
     </form>

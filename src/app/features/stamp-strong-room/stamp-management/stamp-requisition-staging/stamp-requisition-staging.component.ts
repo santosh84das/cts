@@ -42,12 +42,6 @@ export class StampRequisitionStagingComponent implements OnInit {
       // this.getAllNewRequisitions();
     } else if (listType === 'approvedByClerk') {
       this.tableActionButton = [
-        // {
-        //   buttonIdentifier: 'invoice-received',
-        //   class: 'p-button-sm',
-        //   icon: 'pi pi-inbox',
-        //   lable: 'Receive',
-        // },
         {
           buttonIdentifier: 'edit',
           class: 'p-button-info p-button-sm',

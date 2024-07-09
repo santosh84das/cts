@@ -105,6 +105,8 @@ export interface GetStampCombinations {
   createdBy?: number;
 }
 
+// ===================Indent & Invoice=================
+
 
 export interface GetStampIndents {
   stampIndentId: number;
@@ -184,4 +186,35 @@ export interface AddStampCombination {
   stampTypeId: number;
   stampLabelId: number;
   stampCategoryId: number;
+}
+
+
+
+// =============Vendor Requisition==================
+export interface GetVendorStampRequisition {
+  vendorStampRequisitionId: number;
+  vendorId: number;
+  vendorName: string;
+  vendorType: string;
+  licenseNo: string;
+  amount: number;
+  quantity: number;
+  status: string;
+  requisitionDate: string;
+  raisedToTreasury: string;
+  sheet: number;
+  label: number;
+  requisitionNo: string;
+}
+
+
+export interface AddVendorStampRequisition {
+  vendorId: number;
+  sheet: number;
+  label: number;
+  combinationId: number;
+  requisitionDate: string;
+  requisitionNo: string;
+  challanAmount: number;
+  // raisedToTreasury: string;
 }

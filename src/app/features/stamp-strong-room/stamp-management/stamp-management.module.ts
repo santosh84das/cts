@@ -18,10 +18,11 @@ import { StampRequisitionStagingComponent } from './stamp-requisition-staging/st
 import { StampRequisitionApprovalComponent } from './stamp-requisition-approval/stamp-requisition-approval.component';
 import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic-table.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ChallanComponent } from './challan/challan.component';
 
 
 @NgModule({
-  declarations: [StampManagementComponent, StampRequisitionComponent, NewStampRequisitionComponent, StampRequisitionStagingComponent, StampRequisitionApprovalComponent],
+  declarations: [StampManagementComponent, StampRequisitionComponent, NewStampRequisitionComponent, StampRequisitionStagingComponent, StampRequisitionApprovalComponent, ChallanComponent],
   imports: [
     CommonModule,
     ButtonModule,

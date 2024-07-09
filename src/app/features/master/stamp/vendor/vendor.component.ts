@@ -14,6 +14,7 @@ import { formatDate } from 'src/utils/dateToString';
 })
 export class VendorComponent implements OnInit {
   vendorType!: string;
+  vendorTreasury!: string;
   VendorDetailsEntryForm!: FormGroup;
   displayInsertModal: boolean | undefined;
   tableActionButton: any[] = [];
@@ -98,7 +99,9 @@ export class VendorComponent implements OnInit {
     
     this.vendorType = $event.stampVendorId;
   }
-
+  onTreasurySelected($event: any) {
+    this.vendorTreasury = $event
+  }
   handleFileInput(event: any, controlName: string) {
     const file = event.target.files[0];
     if (controlName === 'vendorPhoto') {
@@ -115,6 +118,7 @@ export class VendorComponent implements OnInit {
       
       const formData = new FormData();
       formData.append('vendorType', this.vendorType);
+      formData.append('treasury', this.vendorTreasury);
       formData.append('vendorName', this.VendorDetailsEntryForm.value.vendorName);
       formData.append('panNumber', this.VendorDetailsEntryForm.value.panNumber);
       formData.append('licenseNo', this.VendorDetailsEntryForm.value.licenseNo);
