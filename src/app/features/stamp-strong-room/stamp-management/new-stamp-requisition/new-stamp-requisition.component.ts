@@ -11,6 +11,7 @@ import { ToastService } from 'src/app/core/services/toast.service';
   styleUrls: ['./new-stamp-requisition.component.scss']
 })
 export class NewStampRequisitionComponent implements OnInit {
+  vendorTypeId:number = 0
   treasuryCode: string = ""
   sheet: number = 0
   label: number = 0
@@ -58,7 +59,8 @@ export class NewStampRequisitionComponent implements OnInit {
   }
 
   onVendorDetailsSelected($event: any) {
-    this.vendorId = $event.vendorTypeId
+    this.vendorId = $event.stampVendorId
+    this.vendorTypeId = $event.vendorTypeId
     this.treasuryCode = $event.vendorTreasury
   }
 
@@ -89,7 +91,7 @@ export class NewStampRequisitionComponent implements OnInit {
     }
   }
   getDiscount() {
-    this.discountDetailsService.getDiscount(this.vendorId, this.stampCategoryId, this.amount).subscribe((response) => {
+    this.discountDetailsService.getDiscount(this.vendorTypeId, this.stampCategoryId, this.amount).subscribe((response) => {
       if (response.apiResponseStatus == 1) {
         console.log(response);
         
