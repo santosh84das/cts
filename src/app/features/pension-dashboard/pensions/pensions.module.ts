@@ -16,7 +16,6 @@ import { CalendarModule } from 'primeng/calendar';
 import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown/treasury-dropdown.module';
 import { PensionReportsComponent } from './pension-reports/pension-reports.component';
 import { PensionQueryComponent } from './pension-query/pension-query.component';
-import { PensionProcessComponent } from './pension-process/pension-process.component';
 
 
 
@@ -27,7 +26,6 @@ import { PensionProcessComponent } from './pension-process/pension-process.compo
     PensionsComponent,
     PensionReportsComponent,
     PensionQueryComponent,
-    PensionProcessComponent
   ],
   imports: [
     CommonModule,

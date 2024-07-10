@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { ButtonModule } from 'primeng/button';
+import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
 import { RouterModule, Routes } from '@angular/router';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic-table.module';
 import { OptionCardModule } from 'src/app/shared/modules/option-card/option-card.module';
@@ -12,21 +13,21 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
 import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown/treasury-dropdown.module';
-import { PpoComponent } from './ppo.component';
-import { EntryComponent } from './entry/entry.component';
-import { ManualPpoReceiptComponent } from './manual-ppo-receipt/manual-ppo-receipt.component';
+import { PpodetailsComponent } from './ppodetails.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { CardModule } from 'primeng/card';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { CheckboxModule } from 'primeng/checkbox';
 
 
 
-const routes: Routes = [
-  {path: '', component: PpoComponent},
-  {path: 'entry', component: EntryComponent},
-  {path: 'manualPpoReceipt', component: ManualPpoReceiptComponent},
-];
+
+
 
 
 @NgModule({
-  declarations: [PpoComponent],
+  declarations: [PpodetailsComponent],
   imports: [
     CommonModule,
     ButtonModule,
@@ -41,8 +42,28 @@ const routes: Routes = [
     ReactiveFormsModule,
     TreasuryDropdownModule,
     FormsModule,
-    RouterModule.forChild(routes)
+    InputTextModule,
+    RadioButtonModule,
+    RouterModule,
+    BrowserModule,
+    InputTextareaModule,
+    BrowserModule,
+    ReactiveFormsModule,
+    ButtonModule,
+    InputTextModule,
+    CalendarModule,
+    DropdownModule,
+    SelectButtonModule,
+    CardModule,
+    BrowserModule,
+    ReactiveFormsModule,
+    FormsModule,
+    DropdownModule,
+    RadioButtonModule,
+    CheckboxModule,
+    InputTextModule
   ],
-  exports: [RouterModule]
+  providers: [],
+  bootstrap: [PpodetailsComponent]
 })
-export class PpoModule { }
+export class PpodetailsModule { }

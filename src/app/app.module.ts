@@ -33,6 +33,12 @@ import { StaticLoginComponent } from './features/static-login/static-login.compo
 import { PaymentMandateComponent } from './features/payment-mandate/payment-mandate.component';
 import { CommonHeaderComponent } from './shared/modules/common-header/common-header.component';
 import { DynamicTableComponent } from './shared/modules/dynamic-table/dynamic-table.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button'; 
+import { InputTextModule } from 'primeng/inputtext';  
+import { DropdownModule } from 'primeng/dropdown';  
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @NgModule({
     declarations: [
@@ -44,6 +50,13 @@ import { DynamicTableComponent } from './shared/modules/dynamic-table/dynamic-ta
         ToastModule,
         NgxPermissionsModule.forRoot(),
         NgxSpinnerModule,
+        RadioButtonModule,
+        DropdownModule,
+        InputTextModule,
+        ButtonModule,
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

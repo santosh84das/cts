@@ -11,26 +11,46 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
 import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown/treasury-dropdown.module';
-import { PensionProcessComponent } from './pension-process.component';
-import { PensionProcessRoutingModule } from './pension-process-routing.module';
+import { ManualPpoReceiptComponent } from './manual-ppo-receipt.component';
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { RippleModule } from 'primeng/ripple';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { ToastModule } from 'primeng/toast';
+import { SliderModule } from 'primeng/slider';
+import { RatingModule } from 'primeng/rating';
+
+
+
+
 
 @NgModule({
-  declarations: [
-    PensionProcessComponent
-  ],
+  declarations: [ManualPpoReceiptComponent],
   imports: [
     CommonModule,
     ButtonModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule,    
     DynamicTableModule,
     OptionCardModule,
+    ButtonModule,
     CommonHeaderModule,
     DropdownModule,
     DialogModule,
     CalendarModule,
+    ReactiveFormsModule,
     TreasuryDropdownModule,
     FormsModule,
-    PensionProcessRoutingModule
+    TableModule,
+    InputTextModule,
+    ToggleButtonModule,
+    RippleModule,
+    MultiSelectModule,
+    ProgressBarModule,
+    ToastModule,
+    SliderModule,
+    RatingModule
   ]
 })
-export class PensionProcessModule { }
+export class ManualPpoReceiptModule { }
