@@ -118,7 +118,7 @@ export class VendorComponent implements OnInit {
       
       const formData = new FormData();
       formData.append('vendorType', this.vendorType);
-      formData.append('treasury', this.vendorTreasury);
+      // formData.append('treasury', this.vendorTreasury);
       formData.append('vendorName', this.VendorDetailsEntryForm.value.vendorName);
       formData.append('panNumber', this.VendorDetailsEntryForm.value.panNumber);
       formData.append('licenseNo', this.VendorDetailsEntryForm.value.licenseNo);
