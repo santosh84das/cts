@@ -70,8 +70,8 @@ export class StampIndentService {
     );
   }
 
-  receiveIndent(id: number): Observable<IapiResponce<GetStampIndents>> {
-    return this.http.get<IapiResponce>('v1/Stamp/ReceiveStampIndent?stampIndentId=' + id).pipe(
+  receiveIndent(payload: any): Observable<IapiResponce<GetStampIndents>> {
+    return this.http.get<IapiResponce>(`v1/Stamp/ReceiveStampIndent?stampIndentId=${payload.indentId}&sheet=${payload.sheet}&label=${payload.label}`).pipe(
       catchError((error) => {
         throw this.toastService.showError(error.message);
       })
