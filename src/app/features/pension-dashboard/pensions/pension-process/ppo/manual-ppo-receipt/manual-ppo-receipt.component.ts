@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Customer, Representative } from 'src/app/demo/api/customer';
-import { CustomerService } from 'src/app/demo/service/customer.service';
-import { Product } from 'src/app/demo/api/product';
-import { ProductService } from 'src/app/demo/service/product.service';
-import { Table } from 'primeng/table';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
+import { Status } from 'src/app/core/enum/stampIndentStatusEnum';
+import { AddStampIndent, GetStampIndents } from 'src/app/core/models/stamp';
+import { StampIndentService } from 'src/app/core/services/stamp/stamp-indent.service';
+import { ToastService } from 'src/app/core/services/toast.service';
+import { convertDate } from 'src/utils/dateConversion';
 
 interface expandedRows {
   [key: string]: boolean;
@@ -16,126 +17,85 @@ interface expandedRows {
   styleUrls: ['./manual-ppo-receipt.component.scss']
 })
 export class ManualPpoReceiptComponent implements OnInit {
+  treasuryReceiptId!: number;
+  ppoNo!: number;
+  mobileNo!: number;
+  displayInsertModal: boolean = false;
+  manualPpoForm: FormGroup = this.fb.group({
+    mobileNo: [null, Validators.required],
+    ppoNo: [null, Validators.required],
+    treasuryReceiptId: [null, Validators.required]
+  });
+  tableQueryParameters: DynamicTableQueryParameters = {
+    pageSize: 10,
+    pageIndex: 0,
+    filterParameters: [], 
+    sortParameters: { field: '', order: '' } 
+  };
+  tableActionButton: ActionButtonConfig[] = [];
+  tableData: DynamicTable<GetStampIndents> | undefined;
+  modalData: any[] = [];  // Add this line
 
-  customers1: Customer[] = [];
+  constructor(
+    private toastService: ToastService,
+    private stampIndentService: StampIndentService,
+    private fb: FormBuilder
+  ) { }
 
-    customers2: Customer[] = [];
+  @Output() StampCombinationSelected = new EventEmitter<any>();
 
-    customers3: Customer[] = [];
+  ngOnInit(): void {
+    this.initializeForm();
+    this.getAllStampIndents();
+  }
 
-    selectedCustomers1: Customer[] = [];
+  showInsertDialog() {
+    this.displayInsertModal = true;
+  }
 
-    selectedCustomer: Customer = {};
-
-    representatives: Representative[] = [];
-
-    statuses: any[] = [];
-
-    products: Product[] = [];
-
-    rowGroupMetadata: any;
-
-    expandedRows: expandedRows = {};
-
-    activityValues: number[] = [0, 100];
-
-    isExpanded: boolean = false;
-
-    idFrozen: boolean = false;
-
-    loading: boolean = true;
-
-    @ViewChild('filter') filter!: ElementRef;
-
-    constructor(private customerService: CustomerService, private productService: ProductService) { }
-
-    ngOnInit() {
-        this.customerService.getCustomersLarge().then(customers => {
-            this.customers1 = customers;
-            this.loading = false;
-
-            // @ts-ignore
-            this.customers1.forEach(customer => customer.date = new Date(customer.date));
-        });
-        this.customerService.getCustomersMedium().then(customers => this.customers2 = customers);
-        this.customerService.getCustomersLarge().then(customers => this.customers3 = customers);
-        this.productService.getProductsWithOrdersSmall().then(data => this.products = data);
-
-        this.representatives = [
-            { name: 'Amy Elsner', image: 'amyelsner.png' },
-            { name: 'Anna Fali', image: 'annafali.png' },
-            { name: 'Asiya Javayant', image: 'asiyajavayant.png' },
-            { name: 'Bernardo Dominic', image: 'bernardodominic.png' },
-            { name: 'Elwin Sharvill', image: 'elwinsharvill.png' },
-            { name: 'Ioni Bowcher', image: 'ionibowcher.png' },
-            { name: 'Ivan Magalhaes', image: 'ivanmagalhaes.png' },
-            { name: 'Onyama Limba', image: 'onyamalimba.png' },
-            { name: 'Stephen Shaw', image: 'stephenshaw.png' },
-            { name: 'XuXue Feng', image: 'xuxuefeng.png' }
-        ];
-
-        this.statuses = [
-            { label: 'Unqualified', value: 'unqualified' },
-            { label: 'Qualified', value: 'qualified' },
-            { label: 'New', value: 'new' },
-            { label: 'Negotiation', value: 'negotiation' },
-            { label: 'Renewal', value: 'renewal' },
-            { label: 'Proposal', value: 'proposal' }
-        ];
+  handleButtonClick($event: any): void {
+    if ($event && $event.buttonType === 'customButton') {
+      console.log('Custom button clicked!');
+    } else {
+      console.log('Unhandled button click event');
+      this.modalData = [this.manualPpoForm.value];
+       
     }
+  }
 
-    onSort() {
-        this.updateRowGroupMetaData();
-    }
+  initializeForm(): void {
+    this.manualPpoForm = this.fb.group({
+      pensionerName: ['', Validators.required],
+      dateOfCommencementOfPensionFamilyPension: ['', Validators.required],
+      dateOfReceipt: ['', Validators.required],
+      ppoIssuedBy: ['', Validators.required],
+      type: ['', Validators.required],
+      status: ['', Validators.required],
+      select: ['', Validators.required],
+      mobileNo: [null, Validators.required],
+      ppoNo: [null, Validators.required],
+      treasuryReceiptId: [null, Validators.required]
+    });
+  }
 
-    updateRowGroupMetaData() {
-        this.rowGroupMetadata = {};
+  addStampIndent() {
+    this.displayInsertModal = false;
+    this.modalData = [this.manualPpoForm.value];  // Update modalData with the form values
+  }
 
-        if (this.customers3) {
-            for (let i = 0; i < this.customers3.length; i++) {
-                const rowData = this.customers3[i];
-                const representativeName = rowData?.representative?.name || '';
-
-                if (i === 0) {
-                    this.rowGroupMetadata[representativeName] = { index: 0, size: 1 };
-                }
-                else {
-                    const previousRowData = this.customers3[i - 1];
-                    const previousRowGroup = previousRowData?.representative?.name;
-                    if (representativeName === previousRowGroup) {
-                        this.rowGroupMetadata[representativeName].size++;
-                    }
-                    else {
-                        this.rowGroupMetadata[representativeName] = { index: i, size: 1 };
-                    }
-                }
-            }
-        }
-    }
-
-    expandAll() {
-        if (!this.isExpanded) {
-            this.products.forEach(product => product && product.name ? this.expandedRows[product.name] = true : '');
-
+  getAllStampIndents() {
+    this.stampIndentService.getAllStampIndents(this.tableQueryParameters)
+      .subscribe((response) => {
+        if (response.apiResponseStatus === 1) {
+          response.result.data.forEach((item: GetStampIndents) => {
+            item.createdAt = convertDate(item.createdAt);
+            item.memoDate = convertDate(item.memoDate);
+            item.status = Status[item.status as keyof typeof Status].toString();
+          });
+          this.tableData = response.result;
         } else {
-            this.expandedRows = {};
+          this.toastService.showAlert(response.message, response.apiResponseStatus);
         }
-        this.isExpanded = !this.isExpanded;
-    }
-
-    formatCurrency(value: number) {
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-    }
-
-    onGlobalFilter(table: Table, event: Event) {
-        table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
-    }
-
-    clear(table: Table) {
-        table.clear();
-        this.filter.nativeElement.value = '';
-    }
-    
+      });
+  }
 }
-
-
