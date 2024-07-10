@@ -24,6 +24,6 @@ export class VendorTypeDropdownComponent implements OnInit {
   }
 
   onVendorTypeSelected() {    
-    this.vendorTypeSelected.emit(this.selectedVendorType.vendorType);
+    this.vendorTypeSelected.emit(this.selectedVendorType);
   }
 }

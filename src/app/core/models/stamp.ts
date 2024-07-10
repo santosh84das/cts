@@ -36,6 +36,14 @@ export interface AddStampCategory {
   isActive?: boolean;
 }
 
+export interface StampVendorDetails {
+  stampVendorId: number;
+  vendorType: string;
+  licenseNo: string;
+  phoneNumber: number;
+  panNumber: string;
+}
+
 export interface GetStampVendors {
   stampVendorId?: number;
   vendorType: number;
@@ -52,7 +60,8 @@ export interface GetStampVendors {
 }
 
 export interface AddStampVendors {
-  vendorType: string;
+  vendorType: number;
+  vendorName: string;
   licenseNo: string;
   address: string;
   phoneNumber: number;
@@ -63,7 +72,6 @@ export interface AddStampVendors {
   vendorPanPhoto: File;
   vendorLicencePhoto: File;
 }
-
 
 export interface GetStampDiscountDetails {
   discountId?: number;
@@ -80,8 +88,8 @@ export interface AddStampDiscountDetails {
   denominationFrom: number;
   denominationTo: number;
   discount: number;
-  vendorType: string;
-  stampCategory: string;
+  vendorType: number;
+  StampCategoryId: number;
 }
 
 export interface GetStampCombinations {
@@ -96,6 +104,8 @@ export interface GetStampCombinations {
   createdAt?: string;
   createdBy?: number;
 }
+
+// ===================Indent & Invoice=================
 
 
 export interface GetStampIndents {
@@ -161,16 +171,50 @@ export interface AddStampInvoice {
   amount: number;
   quantity: number;
 }
+
 export interface StampWalletGet {
   clearBalance: number
 }
 export interface StampWalletRefill {
   treasuryCode: string,
-  clearBalance: number
+  combinationId: number,
+  addSheet: number,
+  addLabel: number
 }
 
 export interface AddStampCombination {
   stampTypeId: number;
   stampLabelId: number;
   stampCategoryId: number;
+}
+
+
+
+// =============Vendor Requisition==================
+export interface GetVendorStampRequisition {
+  vendorStampRequisitionId: number;
+  vendorId: number;
+  vendorName: string;
+  vendorType: string;
+  licenseNo: string;
+  amount: number;
+  quantity: number;
+  status: string;
+  requisitionDate: string;
+  raisedToTreasury: string;
+  sheet: number;
+  label: number;
+  requisitionNo: string;
+}
+
+
+export interface AddVendorStampRequisition {
+  vendorId: number;
+  sheet: number;
+  label: number;
+  combinationId: number;
+  requisitionDate: string;
+  requisitionNo: string;
+  challanAmount: number;
+  // raisedToTreasury: string;
 }

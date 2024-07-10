@@ -30,8 +30,6 @@ import { DatatableSkeletonModule } from 'src/app/shared/modules/datatable-skelet
   ],
   imports: [
     CommonModule,
-    ButtonModule,
-    ReactiveFormsModule,
     StampsRoutingModule,
     DynamicTableModule,
     OptionCardModule,

@@ -4,30 +4,69 @@
         </app-common-header>
     </div>
 </div>
-<div class="w-full h-fit flex justify-content-center align-items-center">
-    <form [formGroup]="stampWalletRefillForm" class="flex xl:flex-row flex-column gap-4 mt-3 w-6 xl:w-10 justify-content-center align-items-start xl:align-items-end">
-        <div class="flex-1 w-full">
-            <label for="To Treasury" class="block mb-1 text-color text-lg">To Treasury (<span
-                    class="font-medium text-gray-900">Default: </span> <span
-                    class="font-medium text-gray-500">Superintendent</span>)</label>
-            <app-treasury-dropdown (treasurySelected)="onTreasurySelected($event)"></app-treasury-dropdown>
-        </div>
-        <div class="flex-1 w-full">
-            <label for="To Treasury" class="block mb-1 text-color text-lg">Denomination</label>
-            <app-treasury-dropdown (treasurySelected)="onTreasurySelected($event)"></app-treasury-dropdown>
-        </div>
-        <div class="flex-1 w-full">
-            <label for="Available Stamp Quantity" class="block mb-1 text-color text-lg">Available Stamp Quantity</label>
-            <input type="text" [value]="stampQuantity" readonly disabled class="p-inputtext p-component p-element w-full">
-        </div>
-        <div class="flex-1 w-full">
-            <label for="Additional Stamp Quantity" class="block mb-1 text-color text-lg">Additional Stamp Quantity</label>
-            <input type="number" pinputtext="" formControlName="quantity" class="p-inputtext p-component p-element w-full">
-        </div>
-        <button pbutton="" pripple="" label="Submit" (click)="createOrUpdateWallet()"
-            class="p-element p-ripple p-button p-component">
-            <span class="p-button-label">Submit</span><span class="p-ink"></span>
-        </button>
+<section class="px-4 py-2 w-11 mx-auto flex align-items-center justify-content-center">
+    <div class="surface-card px-8 py-6 shadow-2 border-round p-fluid">
+        <form [formGroup]="stampWalletRefillForm" class="grid formgrid p-fluid">
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="invoice_id" class="font-medium text-900">Treasury</label>
+                <app-treasury-dropdown (treasurySelected)="onTreasurySelected($event)"></app-treasury-dropdown>
+            </div>
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="invoice_date" class="font-medium text-900">Combination</label>
+                <app-stamp-combination-dropdown
+                    (StampCombinationSelected)="onStampCombinationSelected($event)"></app-stamp-combination-dropdown>
+            </div>
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="customer_name" class="font-medium text-900">Available Sheet</label>
+                <input id="customer_name" pinputtext="" [value]="sheet" readonly disabled
+                    class="p-inputtext p-component p-element">
+            </div>
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="customer_email" class="font-medium text-900">Available Label</label>
+                <input id="customer_email" pinputtext="" [value]="label" readonly disabled
+                    class="p-inputtext p-component p-element">
+            </div>
+            <div class="field col-12 w-full flex justify-content-start align-items-center">
+                <button pbutton="" pripple="" (click)="checkBalance()" icon="pi pi-file"
+                    class="p-element p-ripple w-auto p-button p-component">
+                    <span class="p-button-label">Check Balance</span>
+                </button>
+            </div>
+            <div class="surface-border border-top-1 opacity-100 my-4 col-12"></div>
 
-    </form>
-</div>
+            <div class="field mb-4 col-6 md:col-6">
+                <label for="quantity" class="font-medium text-900">Additional Sheet</label>
+                <input id="quantity" type="number" pinputtext="" formControlName="addSheet"
+                    class="p-inputtext p-component p-element">
+                <div
+                    *ngIf="stampWalletRefillForm.controls['addSheet'].errors && (stampWalletRefillForm.controls['addSheet'].dirty || stampWalletRefillForm.controls['addSheet'].touched)">
+                    <small class="p-error" *ngIf="stampWalletRefillForm.controls['addSheet'].errors['required']">
+                        Sheet is required.</small>
+                    <small class="p-error" *ngIf="stampWalletRefillForm.controls['addSheet'].errors['greaterThanZero']">
+                        Sheet must be greater than 0.
+                    </small>
+                </div>
+            </div>
+            <div class="field mb-4 col-6 md:col-6">
+                <label for="quantity" class="font-medium text-900">Additional Label</label>
+                <input id="quantity" type="number" pinputtext="" formControlName="addLabel"
+                    class="p-inputtext p-component p-element">
+                <div
+                    *ngIf="stampWalletRefillForm.controls['addLabel'].errors && (stampWalletRefillForm.controls['addLabel'].dirty || stampWalletRefillForm.controls['addLabel'].touched)">
+                    <small class="p-error" *ngIf="stampWalletRefillForm.controls['addLabel'].errors['required']">
+                        Label is required.
+                    </small>
+                    <small class="p-error" *ngIf="stampWalletRefillForm.controls['addLabel'].errors['greaterThanZero']">
+                        Label must be greater than 0.
+                    </small>
+                </div>
+            </div>
+        </form>
+        <div class="w-full flex justify-content-end align-items-center">
+            <button pbutton="" pripple="" (click)="createOrUpdateWallet()" icon="pi pi-file"
+                class="p-element p-ripple w-auto p-button p-component">
+                <span class="p-button-label">Submit</span>
+            </button>
+        </div>
+    </div>
+</section>

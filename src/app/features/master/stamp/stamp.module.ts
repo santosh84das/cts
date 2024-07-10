@@ -23,6 +23,7 @@ import { StampCategoryTypeDropdownModule } from 'src/app/shared/modules/stamp-ca
 import { VendorTypeDropdownModule } from 'src/app/shared/modules/vendor-type-dropdown/vendor-type-dropdown.module';
 import { StampDenominationDropdownModule } from 'src/app/shared/modules/stamp-denomination-dropdown/stamp-denomination-dropdown.module';
 import { StampLabelDropdownModule } from 'src/app/shared/modules/stamp-label-dropdown/stamp-label-dropdown.module';
+import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown/treasury-dropdown.module';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { StampLabelDropdownModule } from 'src/app/shared/modules/stamp-label-dro
     StampCategoryTypeDropdownModule,
     VendorTypeDropdownModule,
     StampDenominationDropdownModule,
+    TreasuryDropdownModule,
     StampLabelDropdownModule,
     NgxPermissionsModule.forChild(),
 

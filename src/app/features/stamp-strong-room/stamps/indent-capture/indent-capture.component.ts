@@ -19,7 +19,7 @@ export class IndentCaptureComponent implements OnInit {
   loading: boolean = false
   labelPerSheet: number = 0
   denomination: number = 0
-  description: string = "Eg: Court fees."
+  description: string = ""
   sheet: number = 0
   label: number = 0
   raisedToTreasuryCode!: string

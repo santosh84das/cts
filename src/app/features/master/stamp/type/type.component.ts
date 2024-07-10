@@ -5,6 +5,7 @@ import { AddStampType, GetStampTypes } from 'src/app/core/models/stamp';
 import { TypeService } from 'src/app/core/services/stamp/type.service';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { convertDate } from 'src/utils/dateConversion';
+import { greaterThanZeroValidator } from 'src/utils/greaterThanZeroValidator';
 
 @Component({
   selector: 'app-type',
@@ -50,19 +51,11 @@ export class TypeComponent implements OnInit {
 
   initializeForm(): void {
     this.typeEntryForm = this.fb.group({
-      denomination: [null, [Validators.required, this.greaterThanZeroValidator()]]
+      denomination: [null, [Validators.required, greaterThanZeroValidator()]]
     });
   }
 
-  greaterThanZeroValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const value = control.value;
-      if (value !== null && value !== undefined && value <= 0) {
-        return { greaterThanZero: true };
-      }
-      return null;
-    };
-  }
+
   getAllStampTypes() {
     this.TypeService
       .getStampTypeList(this.tableQueryParameters)

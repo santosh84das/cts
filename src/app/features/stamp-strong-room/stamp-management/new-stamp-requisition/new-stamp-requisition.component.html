@@ -1,0 +1,82 @@
+<div class="grid">
+    <div class="col-12">
+        <app-common-header [headerName]="'New Requisition'" [imgSrc]="'assets/layout/images/icons/new-requisition.png'">
+        </app-common-header>
+    </div>
+</div>
+<section class="px-4 py-2 w-11 mx-auto flex align-items-center justify-content-center">
+    <div class="surface-card px-8 py-6 shadow-2 border-round p-fluid">
+        <form [formGroup]="newStampRequisitionForm" class="grid formgrid p-fluid">
+            <div class="field mb-4 col-12 md:col-12">
+                <label for="company_name" class="font-medium text-900">Vendor Details</label>
+                <app-vendor-details-dropdown (VendorDetailsSelected)="onVendorDetailsSelected($event)"></app-vendor-details-dropdown>
+            </div>
+            <!-- <div class="field mb-4 col-12 md:col-6">
+                <label for="invoice_id" class="font-medium text-900">Treasury</label>
+                <app-treasury-dropdown (treasurySelected)="onTreasurySelected($event)"></app-treasury-dropdown>
+            </div> -->
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="invoice_date" class="font-medium text-900">Combination</label>
+                <app-stamp-combination-dropdown
+                (StampCombinationSelected)="onStampCombinationSelected($event)"
+              ></app-stamp-combination-dropdown>
+            </div>
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="due_date" class="font-medium text-900">Requisution Date</label>
+                <p-calendar class="p-component p-element w-full p-calendar" formControlName="requisitionDate" placeholder="mm/dd/yyyy" appendTo="body" [showIcon]="true" inputId="icon"></p-calendar>
+                <div *ngIf="newStampRequisitionForm.controls['requisitionDate'].errors && (newStampRequisitionForm.controls['requisitionDate'].dirty || newStampRequisitionForm.controls['requisitionDate'].touched)">
+                    <small class="p-error" *ngIf="newStampRequisitionForm.controls['requisitionDate'].errors['required']">Requisution Date is required.</small>
+                </div>
+            </div>
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="customer_name" class="font-medium text-900">Sheet</label>
+                <input id="customer_name" formControlName="sheet" type="number" [(ngModel)]="sheet" (ngModelChange)="sheetSelected($event)" pinputtext="" class="p-inputtext p-component p-element">
+                <div *ngIf="newStampRequisitionForm.controls['sheet'].errors && (newStampRequisitionForm.controls['sheet'].dirty || newStampRequisitionForm.controls['sheet'].touched)">
+                    <small class="p-error" *ngIf="newStampRequisitionForm.controls['sheet'].errors['required']">No of Sheets is required.</small>
+                    <small class="p-error" *ngIf="newStampRequisitionForm.controls['sheet'].errors['min']">Minimun no of sheets is 1.</small>
+                </div>
+            </div>
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="customer_email" class="font-medium text-900">Label</label>
+                <input id="customer_email" type="number" formControlName="label" pinputtext="" [(ngModel)]="label" (ngModelChange)="labelSelected($event)" class="p-inputtext p-component p-element">
+                <div *ngIf="newStampRequisitionForm.controls['label'].errors && (newStampRequisitionForm.controls['label'].dirty || newStampRequisitionForm.controls['label'].touched)">
+                    <small class="p-error" *ngIf="newStampRequisitionForm.controls['label'].errors['required']">No of labels is required.</small>
+                    <small class="p-error" *ngIf="newStampRequisitionForm.controls['label'].errors['min']">Minimun no of labels is 1.</small>
+                </div>
+            </div>
+            <div class="surface-border border-top-1 opacity-50 my-4 col-12"></div>
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="item" class="font-medium text-900">Requisition No</label>
+                <input id="item" type="text" pinputtext="" formControlName="requisitionNo" class="p-inputtext p-component p-element">
+                <div *ngIf="newStampRequisitionForm.controls['requisitionNo'].errors && (newStampRequisitionForm.controls['requisitionNo'].dirty || newStampRequisitionForm.controls['requisitionNo'].touched)">
+                    <small class="p-error" *ngIf="newStampRequisitionForm.controls['requisitionNo'].errors['required']">Requisution No is required.</small>
+                </div>
+            </div>
+            <div class="field mb-4 col-6 md:col-6">
+                <label for="quantity" class="font-medium text-900">Quantity</label>
+                <input id="quantity" type="text" [value]="quantity" pinputtext="" readonly disabled class="p-inputtext p-component p-element">
+            </div>
+            <div class="field mb-4 col-6 md:col-6">
+                <label for="quantity" class="font-medium text-900">Amount</label>
+                <input id="quantity" type="text" pinputtext="" [value]="amount" readonly disabled class="p-inputtext p-component p-element">
+            </div>
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="item" class="font-medium text-900">Discount Amount</label>
+                <input id="item" type="text" pinputtext="" [value]="discountAmount" readonly disabled class="p-inputtext p-component p-element">
+            </div>
+            <div class="field mb-4 col-6 md:col-6">
+                <label for="quantity" class="font-medium text-900">Tax Amount</label>
+                <input id="quantity" type="text" pinputtext="" [value]="taxAmount" readonly disabled class="p-inputtext p-component p-element">
+            </div>
+            <div class="field mb-4 col-6 md:col-6">
+                <label for="quantity" class="font-medium text-900">Challan Amount</label>
+                <input id="quantity" type="text" pinputtext="" [value]="challanAmount" readonly disabled class="p-inputtext p-component p-element">
+            </div>
+        </form>
+        <div class="w-full flex justify-content-end align-items-center">
+            <button pbutton="" pripple="" icon="pi pi-file" class="p-element p-ripple w-auto p-button p-component">
+                <span class="p-button-label">Submit Requisition</span>
+            </button>
+        </div>
+    </div>
+</section>
