@@ -11,7 +11,7 @@ import { ToastService } from 'src/app/core/services/toast.service';
   styleUrls: ['./new-stamp-requisition.component.scss']
 })
 export class NewStampRequisitionComponent implements OnInit {
-  // treasuryCode: string = ""
+  treasuryCode: string = ""
   sheet: number = 0
   label: number = 0
   vendorId: any = null
@@ -59,21 +59,23 @@ export class NewStampRequisitionComponent implements OnInit {
 
   onVendorDetailsSelected($event: any) {
     this.vendorId = $event.vendorTypeId
+    this.treasuryCode = $event.vendorTreasury
   }
 
-  addStampIndent() {
+  addStampRequisition() {
     if (this.newStampRequisitionForm.valid) {
       this.newStampRequisitionPayload = {
         challanAmount: this.challanAmount,
         combinationId: this.combinationId,
         label: this.newStampRequisitionForm.value.label,
         sheet: this.newStampRequisitionForm.value.label,
-        // raisedToTreasury: this.treasuryCode,
+        raisedToTreasury: this.treasuryCode,
         requisitionDate: this.newStampRequisitionForm.value.requisitionDate,
         requisitionNo: this.newStampRequisitionForm.value.requisitionNo,
         vendorId: this.vendorId
       };
-
+      console.log(this.newStampRequisitionPayload);
+      
       this.stampRequisitionService.addNewStampRequisition(this.newStampRequisitionPayload).subscribe((response) => {
         if (response.apiResponseStatus == 1) {
           this.toastService.showSuccess(response.message);

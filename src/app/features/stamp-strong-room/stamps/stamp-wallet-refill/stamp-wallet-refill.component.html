@@ -8,7 +8,7 @@
     <div class="surface-card px-8 py-6 shadow-2 border-round p-fluid">
         <form [formGroup]="stampWalletRefillForm" class="grid formgrid p-fluid">
             <div class="field mb-4 col-12 md:col-6">
-                <label for="invoice_id" class="font-medium text-900">Treasury</label>
+                <label for="treasury" class="font-medium text-900">Treasury</label>
                 <app-treasury-dropdown (treasurySelected)="onTreasurySelected($event)"></app-treasury-dropdown>
             </div>
             <div class="field mb-4 col-12 md:col-6">
@@ -17,13 +17,13 @@
                     (StampCombinationSelected)="onStampCombinationSelected($event)"></app-stamp-combination-dropdown>
             </div>
             <div class="field mb-4 col-12 md:col-6">
-                <label for="customer_name" class="font-medium text-900">Available Sheet</label>
-                <input id="customer_name" pinputtext="" [value]="sheet" readonly disabled
+                <label for="sheet" class="font-medium text-900">Available Sheet</label>
+                <input pinputtext="" [value]="sheet" readonly disabled
                     class="p-inputtext p-component p-element">
             </div>
             <div class="field mb-4 col-12 md:col-6">
-                <label for="customer_email" class="font-medium text-900">Available Label</label>
-                <input id="customer_email" pinputtext="" [value]="label" readonly disabled
+                <label for="label" class="font-medium text-900">Available Label</label>
+                <input pinputtext="" [value]="label" readonly disabled
                     class="p-inputtext p-component p-element">
             </div>
             <div class="field col-12 w-full flex justify-content-start align-items-center">

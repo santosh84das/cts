@@ -216,5 +216,5 @@ export interface AddVendorStampRequisition {
   requisitionDate: string;
   requisitionNo: string;
   challanAmount: number;
-  // raisedToTreasury: string;
+  raisedToTreasury: string;
 }
