@@ -81,7 +81,7 @@ export class InvoiceReceiveComponent implements OnInit {
       });
   }
   handleButtonClick($event: any) {
-    this.stampIndentService.receiveIndent($event.rowData.stampIndentId).subscribe((response) => {
+    this.stampIndentService.receiveIndent({indentId: $event.rowData.stampIndentId, sheet: $event.rowData.sheet, label: $event.rowData.label}).subscribe((response) => {
       if (response.apiResponseStatus == 1) {
 
         this.toastService.showSuccess(
