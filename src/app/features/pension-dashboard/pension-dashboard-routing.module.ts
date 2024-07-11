@@ -33,6 +33,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pensions/pension-process/ppo/manual-ppo-receipt/manual-ppo-receipt.module').then(m => m.ManualPpoReceiptModule),
   },
+  {
+    path: 'modules/pension-process/ppo/entry/sanction',
+    loadChildren: () => import('./pensions/pension-process/ppo/entry/sanction/sanction.module').then(m => m.SanctionModule),
+  }
 ];
 
 @NgModule({

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
-
 import { ButtonModule } from 'primeng/button';
+import { RouterModule, Routes } from '@angular/router';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic-table.module';
 import { OptionCardModule } from 'src/app/shared/modules/option-card/option-card.module';
 import { CommonHeaderModule } from 'src/app/shared/modules/common-header/common-header.module';
@@ -11,23 +11,27 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
 import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown/treasury-dropdown.module';
-import { EntryComponent } from './entry.component';
-import { PpodetailsComponent } from './ppodetails/ppodetails.component';
-import { SanctionComponent } from './sanction/sanction.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { CardModule } from 'primeng/card';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { CheckboxModule } from 'primeng/checkbox';
 
-const routes: Routes = [
-  { path: '', component: EntryComponent },
-  { path: 'ppodetails', component: PpodetailsComponent },
-  { path: 'pposanction', component: SanctionComponent },
-];
+import { SanctionComponent } from './sanction.component';
 
 @NgModule({
-  declarations: [EntryComponent], // Ensure both components are declared
+  declarations: [SanctionComponent],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    CheckboxModule,
+    SelectButtonModule,
+    CardModule,
+    InputTextModule,
+    RadioButtonModule,
     ButtonModule,
+    InputTextareaModule,
     DynamicTableModule,
     OptionCardModule,
     CommonHeaderModule,
@@ -35,7 +39,7 @@ const routes: Routes = [
     DialogModule,
     CalendarModule,
     TreasuryDropdownModule,
-    RouterModule.forChild(routes),
   ],
+  exports: [SanctionComponent],
 })
-export class EntryModule {}
+export class SanctionModule { }
