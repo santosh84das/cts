@@ -14,15 +14,17 @@ import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown
 import { EntryComponent } from './entry.component';
 import { PpodetailsComponent } from './ppodetails/ppodetails.component';
 import { SanctionComponent } from './sanction/sanction.component';
+import { FamilyNomineeComponent } from './family-nominee/family-nominee.component';
 
 const routes: Routes = [
   { path: '', component: EntryComponent },
   { path: 'ppodetails', component: PpodetailsComponent },
   { path: 'pposanction', component: SanctionComponent },
+  { path: 'ppofamilynominee', component: FamilyNomineeComponent}
 ];
 
 @NgModule({
-  declarations: [EntryComponent], // Ensure both components are declared
+  declarations: [EntryComponent, FamilyNomineeComponent], // Ensure both components are declared
   imports: [
     CommonModule,
     FormsModule,

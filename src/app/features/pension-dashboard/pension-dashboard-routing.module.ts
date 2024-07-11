@@ -36,6 +36,11 @@ const routes: Routes = [
   {
     path: 'modules/pension-process/ppo/entry/sanction',
     loadChildren: () => import('./pensions/pension-process/ppo/entry/sanction/sanction.module').then(m => m.SanctionModule),
+  },
+  {
+    path: 'modules/pension-process/ppo/entry/family-nominee',
+    loadChildren: () =>
+      import('./pensions/pension-process/ppo/entry/family-nominee/family-nominee.module').then(m => m.FamilyNomineeModule),
   }
 ];
 

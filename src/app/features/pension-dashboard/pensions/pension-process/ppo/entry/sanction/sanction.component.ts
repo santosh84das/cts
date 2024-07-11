@@ -11,8 +11,7 @@ import { SelectItem } from 'primeng/api';
 export class SanctionComponent implements OnInit {
 
   ppoSanctionForm!: FormGroup;
-  genders: SelectItem[]=[]
-  selectedDrop: SelectItem = { value: '' };
+  genders: SelectItem[]=[];
 
   constructor(private fb: FormBuilder) {
 
@@ -60,6 +59,8 @@ export class SanctionComponent implements OnInit {
       console.log(this.ppoSanctionForm.value); 
     }
   }
+  
+  
 }
 
 
