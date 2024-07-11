@@ -7,10 +7,16 @@
 <section class="px-4 py-2 w-11 mx-auto flex align-items-center justify-content-center">
     <div class="surface-card px-8 py-6 shadow-2 border-round p-fluid">
         <form [formGroup]="newStampRequisitionForm" class="grid formgrid p-fluid">
+            
             <div class="field mb-4 col-12 md:col-12">
-                <label for="vendorDetails" class="font-medium text-900">Vendor Details</label>
-                <app-vendor-details-dropdown (VendorDetailsSelected)="onVendorDetailsSelected($event)"></app-vendor-details-dropdown>
+                <label for="requisitionNo" class="font-medium text-900">Requisition No</label>
+                <input type="text" pinputtext="" formControlName="requisitionNo" class="p-inputtext p-component p-element">
+                <div *ngIf="newStampRequisitionForm.controls['requisitionNo'].errors && (newStampRequisitionForm.controls['requisitionNo'].dirty || newStampRequisitionForm.controls['requisitionNo'].touched)">
+                    <small class="p-error" *ngIf="newStampRequisitionForm.controls['requisitionNo'].errors['required']">Requisution No is required.</small>
+                </div>
             </div>
+            <div class="surface-border border-top-1 opacity-50 my-4 col-12"></div>
+
             <!-- <div class="field mb-4 col-12 md:col-6">
                 <label for="invoice_id" class="font-medium text-900">Treasury</label>
                 <app-treasury-dropdown (treasurySelected)="onTreasurySelected($event)"></app-treasury-dropdown>
@@ -20,6 +26,10 @@
                 <app-stamp-combination-dropdown
                 (StampCombinationSelected)="onStampCombinationSelected($event)"
               ></app-stamp-combination-dropdown>
+            </div>
+            <div class="field mb-4 col-12 md:col-6">
+                <label for="vendorDetails" class="font-medium text-900">Vendor Details</label>
+                <app-vendor-details-dropdown (VendorDetailsSelected)="onVendorDetailsSelected($event)"></app-vendor-details-dropdown>
             </div>
             <div class="field mb-4 col-12 md:col-6">
                 <label for="requisitionDate" class="font-medium text-900">Requisution Date</label>
@@ -36,6 +46,7 @@
                     <small class="p-error" *ngIf="newStampRequisitionForm.controls['sheet'].errors['min']">Minimun no of sheets is 1.</small>
                 </div>
             </div>
+            <!-- <div class="surface-border border-top-1 opacity-50 my-4 col-12"></div> -->
             <div class="field mb-4 col-12 md:col-6">
                 <label for="label" class="font-medium text-900">Label</label>
                 <input type="number" formControlName="label" pinputtext="" [(ngModel)]="label" (ngModelChange)="labelSelected($event)" class="p-inputtext p-component p-element">
@@ -44,14 +55,7 @@
                     <small class="p-error" *ngIf="newStampRequisitionForm.controls['label'].errors['min']">Minimun no of labels is 1.</small>
                 </div>
             </div>
-            <div class="surface-border border-top-1 opacity-50 my-4 col-12"></div>
-            <div class="field mb-4 col-12 md:col-6">
-                <label for="requisitionNo" class="font-medium text-900">Requisition No</label>
-                <input type="text" pinputtext="" formControlName="requisitionNo" class="p-inputtext p-component p-element">
-                <div *ngIf="newStampRequisitionForm.controls['requisitionNo'].errors && (newStampRequisitionForm.controls['requisitionNo'].dirty || newStampRequisitionForm.controls['requisitionNo'].touched)">
-                    <small class="p-error" *ngIf="newStampRequisitionForm.controls['requisitionNo'].errors['required']">Requisution No is required.</small>
-                </div>
-            </div>
+            
             <div class="field mb-4 col-6 md:col-6">
                 <label for="quantity" class="font-medium text-900">Quantity</label>
                 <input id="quantity" type="text" [value]="quantity" pinputtext="" readonly disabled class="p-inputtext p-component p-element">

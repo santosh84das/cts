@@ -35,4 +35,67 @@ export class StampRequisitionService {
       })
     );
   }
+
+  newRequisitions(
+    queryParameters: DynamicTableQueryParameters
+  ): Observable<IapiResponce<GetVendorStampRequisition>> {
+    return this.http
+      .patch<IapiResponce<GetVendorStampRequisition>>(
+        'v1/StampRequisition/GetAllStampRequisitionListForClerk',
+        queryParameters
+      )
+      .pipe(
+        catchError((error) => {
+          throw this.toastService.showError(error.message);
+        })
+      );
+  }
+
+  getAllRequisitionsForwardedToTO(
+    queryParameters: DynamicTableQueryParameters
+  ): Observable<IapiResponce<GetVendorStampRequisition>> {
+    return this.http
+      .patch<IapiResponce<GetVendorStampRequisition>>(
+        'v1/StampRequisition/GetAllStampRequisitionListForTO',
+        queryParameters
+      )
+      .pipe(
+        catchError((error) => {
+          throw this.toastService.showError(error.message);
+        })
+      );
+  }
+
+  getAllWaitingForTOVerification(
+    queryParameters: DynamicTableQueryParameters
+  ): Observable<IapiResponce<GetVendorStampRequisition>> {
+    return this.http
+      .patch<IapiResponce<GetVendorStampRequisition>>(
+        'v1/StampRequisition/GetAllStampRequisitionWaitingForPaymentVerificatonByTO',
+        queryParameters
+      )
+      .pipe(
+        catchError((error) => {
+          throw this.toastService.showError(error.message);
+        })
+      );
+  }
+
+  registerGRNNo(queryParameters: any): Observable<IapiResponce<boolean>> {
+    return this.http.get<IapiResponce<boolean>>(`v1/StampRequisition/PaymentProcessByDEO?vendorStampRequisitionId=${queryParameters.vendorStampRequisitionId}&grnNo=${queryParameters.GRNNo}`).pipe(catchError((error) => {
+      throw this.toastService.showError(error.message)
+    }))
+  }
+
+  rejectedByTO(id: number): Observable<IapiResponce<boolean>> {
+    return this.http.get<IapiResponce<boolean>>(`v1/StampRequisition/StampRequisitionRejectedByTreasuryOfficer?stampRequisitionId=${id}`).pipe((catchError((error) => {
+      throw this.toastService.showError(error.message)
+    })))
+  }
+
+  rejectedByStampClerk(id: number): Observable<IapiResponce<boolean>> {
+    return this.http.get<IapiResponce<boolean>>(`v1/StampRequisition/StampRequisitionRejectedByStampClerk?stampRequisitionId=${id}`).pipe((catchError((error) => {
+      throw this.toastService.showError(error.message)
+    })))
+  }
 }

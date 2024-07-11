@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
+import { StampRequisitionStatusEnum } from 'src/app/core/enum/stampRequisitionEnum';
+import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'src/app/core/models/dynamic-table';
 import { GetVendorStampRequisition } from 'src/app/core/models/stamp';
 import { StampRequisitionService } from 'src/app/core/services/stamp/stamp-requisition.service';
 import { ToastService } from 'src/app/core/services/toast.service';
@@ -22,7 +23,16 @@ export class StampRequisitionComponent implements OnInit {
       pageSize: 10,
       pageIndex: 0,
     };
-
+    this.tableActionButton = [
+      {
+        buttonIdentifier: 'print',
+        class: 'p-button-info p-button-sm',
+        icon: 'pi pi-print',
+        lable: 'Print',
+        renderButton: (rowData) => {
+          return rowData.status == StampRequisitionStatusEnum.WaitingForPayment
+        }
+      },]
     this.getAllStampRequisitions()
   }
 

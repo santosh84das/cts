@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DynamicTable, DynamicTableQueryParameters } from 'mh-prime-dynamic-table/lib/mh-prime-dynamic-table-interface';
 import { ActionButtonConfig } from 'src/app/core/models/dynamic-table';
+import { StampRequisitionService } from 'src/app/core/services/stamp/stamp-requisition.service';
+import { ToastService } from 'src/app/core/services/toast.service';
 
 @Component({
   selector: 'app-stamp-requisition-staging',
@@ -13,9 +15,16 @@ export class StampRequisitionStagingComponent implements OnInit {
   tableData!: DynamicTable<any>;
   tableActionButton: ActionButtonConfig[] = [];
   tableQueryParameters!: DynamicTableQueryParameters | any;
-  constructor() { }
+  constructor(private stampRequisitionService: StampRequisitionService,
+    private toastService: ToastService) { }
 
   ngOnInit(): void {
+    this.tableQueryParameters = {
+      pageSize: 10,
+      pageIndex: 0,
+    };
+
+    this.changeDynamicTable(this.listType);
   }
 
   changeDynamicTable(listType: string) {
@@ -24,7 +33,7 @@ export class StampRequisitionStagingComponent implements OnInit {
       pageSize: 10,
       pageIndex: 0,
     };
-    if (listType === 'new') {
+    if (this.listType === 'new') {
       this.tableActionButton = [
         {
           buttonIdentifier: 'reject',
@@ -39,21 +48,47 @@ export class StampRequisitionStagingComponent implements OnInit {
           lable: 'Edit & Approve',
         },
       ];
-      // this.getAllNewRequisitions();
-    } else if (listType === 'approvedByClerk') {
-      this.tableActionButton = [
-        {
-          buttonIdentifier: 'edit',
-          class: 'p-button-info p-button-sm',
-          icon: 'pi pi-info-circle',
-          lable: 'Edit & Approve',
-        },
-      ];
-      // this.getAllApprovedByClerkRequisitions();
+      this.getAllNewRequisitions();
+    } else if (this.listType === 'approvedByClerk') {
+      console.log(this.listType);
+      
+      this.tableActionButton = [];
+      this.getAllApprovedByClerkRequisitions();
     }
   }
 
   handleButtonClick($event: any) {
-
+    switch ($event.buttonIdentifier) {
+      case 'reject':
+      this.stampRequisitionService.rejectedByStampClerk($event.rowData.vendorStampRequisitionId).subscribe((response) => {
+        if (response.apiResponseStatus == 1) {
+          this.toastService.showSuccess(response.message)
+        } else {
+          this.toastService.showError(response.message)
+        }
+      })
+        break;
+    }
   }
+
+  getAllNewRequisitions() {
+    this.stampRequisitionService.newRequisitions(this.tableQueryParameters).subscribe((response) => {
+      if (response.apiResponseStatus == 1) {
+        this.tableData = response.result;
+      } else {
+        this.toastService.showError(response.message)
+      }
+    })
+  }
+  
+  getAllApprovedByClerkRequisitions() {
+    this.stampRequisitionService.getAllRequisitionsForwardedToTO(this.tableQueryParameters).subscribe((response) => {
+      if (response.apiResponseStatus == 1) {
+        this.tableData = response.result;
+      } else {
+        this.toastService.showError(response.message)
+      }
+    })
+  }
+
 }

@@ -18,11 +18,12 @@ import { StampRequisitionStagingComponent } from './stamp-requisition-staging/st
 import { StampRequisitionApprovalComponent } from './stamp-requisition-approval/stamp-requisition-approval.component';
 import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic-table.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ChallanComponent } from './challan/challan.component';
+import { PaymentProcessingComponent } from './payment-processing/payment-processing.component';
+import { DialogModule } from 'primeng/dialog';
 
 
 @NgModule({
-  declarations: [StampManagementComponent, StampRequisitionComponent, NewStampRequisitionComponent, StampRequisitionStagingComponent, StampRequisitionApprovalComponent, ChallanComponent],
+  declarations: [StampManagementComponent, StampRequisitionComponent, NewStampRequisitionComponent, StampRequisitionStagingComponent, StampRequisitionApprovalComponent, PaymentProcessingComponent],
   imports: [
     CommonModule,
     ButtonModule,
@@ -30,6 +31,7 @@ import { ChallanComponent } from './challan/challan.component';
     InputNumberModule,
     DynamicTableModule,
     FormsModule,
+    DialogModule,
     ReactiveFormsModule,
     CheckboxModule,
     OptionCardModule,
