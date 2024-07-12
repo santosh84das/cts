@@ -1,3 +1,5 @@
+import { BeneficiaryDetails } from "./beneficiary";
+
 export interface IBills {
   billId: number;
   referenceNo?: string | null;
@@ -9,9 +11,8 @@ export interface IBills {
   netAmount: number,
   hoaChain: HoaChain
 }
-export interface BillInfo 
-{
-  target:string;
+export interface BillInfo {
+  target: string;
 }
 export interface IOnlineBillDetailsRefNo {
   billDetailsDetails: any;
@@ -49,7 +50,7 @@ export interface subDeatilsHead {
 }
 export interface subDeatilsHeadWithTotal {
   subDeatils: subDeatilsHead[];
-  Total:number;
+  Total: number;
 }
 interface IAllotment {
   hoaChain: {
@@ -101,6 +102,23 @@ interface BillDetails {
 export interface IBillDetails {
   tokenDetails: TokenDetails;
   billDetailsDetails: BillDetails;
+}
+export interface AllotmentDetails {
+  allotmentId: number,
+  hoa: HoaChain,
+  ceilingAmount: number,
+  actualBalanceAmount: number,
+  bookedAmount: number
+}
+export interface ECS_NEFT {
+  billNo: string;
+  billDate: string;
+  grossAmount: number;
+  netAmount: number;
+  chequeAmount: number;
+  payMode: string;
+  noOfBeneficiarys: number;
+  beneficiarys: BeneficiaryDetails[];
 }
 
 export interface IBillCheck {

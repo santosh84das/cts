@@ -4,7 +4,7 @@ import { Observable, catchError } from 'rxjs';
 import { IapiResponce } from '../../models/iapi-responce';
 import { HttpClient } from '@angular/common/http';
 import { error } from 'console';
-import { BillInfo, HoaChain, IBillCheck, IBillDetails, IBills, IRetunMemoBillDetils, IReturnMemoCount } from '../../models/bill';
+import { AllotmentDetails, BillInfo, ECS_NEFT, HoaChain, IBillCheck, IBillDetails, IBills, IRetunMemoBillDetils, IReturnMemoCount } from '../../models/bill';
 import { IObjection } from '../../models/objection';
 
 @Injectable({
@@ -34,6 +34,28 @@ export class BillService {
         return this.http
             .get<IapiResponce<IBillDetails>>(
                 'v1/BillChecking/get-bill-details?tokenId=' + token_id
+            )
+            .pipe(
+                catchError((error) => {
+                    throw this.toastService.showError(error.message);
+                })
+            );
+    }
+    getAllotmentDetils(token_id: number): Observable<IapiResponce<AllotmentDetails>> {
+        return this.http
+            .get<IapiResponce<AllotmentDetails>>(
+                'v1/BillChecking/get-allotment-details?tokenId=' + token_id
+            )
+            .pipe(
+                catchError((error) => {
+                    throw this.toastService.showError(error.message);
+                })
+            );
+    }
+    getECSNEFTDetils(token_id: number): Observable<IapiResponce<ECS_NEFT>> {
+        return this.http
+            .get<IapiResponce<ECS_NEFT>>(
+                'v1/BillChecking/get-ecs-neft-details?tokenId=' + token_id
             )
             .pipe(
                 catchError((error) => {

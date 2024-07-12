@@ -10,8 +10,8 @@
             <!-- <ng-template pTemplate="header"> Gobal Objections </ng-template> -->
         </p-listbox>
         <p-divider align="right">
-            <p-button label="Add Local Objection" icon="pi pi-plus" (click)="addLocalObjectionPanel.toggle($event)"
-                styleClass="p-button-outlined"></p-button>
+            <!-- <p-button label="Add Local Objection" styleClass="p-button-outlined"></p-button> -->
+                <button pButton pRipple type="button" label="Add Local Objection" icon="pi pi-plus" class="p-button-rounded p-button-raised p-button-secondary" (click)="addLocalObjectionPanel.toggle($event)"></button>
             <p-confirmPopup></p-confirmPopup>
             <p-overlayPanel #addLocalObjectionPanel [showCloseIcon]="true" [style]="{ 'width': '500px', 'height': '200px'}">
                 <div class="formgroup-inline">
@@ -27,7 +27,12 @@
         </p-divider>
         <!-- ============================================================ -->
         <div *ngIf="selectedObjections.length > 0">
-            <div class="font-medium text-3xl text-900 mb-3">Selected Objections</div>
+            <p-divider align="left" type="dashed">
+                <div class="inline-flex align-items-center">
+                    <i class="pi pi-check-square mr-2"></i>
+                    <b>Selected Objections</b>
+                </div>
+            </p-divider>
             <!-- <div class="text-500 mb-5">Morbi tristique blandit turpis. In viverra ligula id nulla hendrerit rutrum.</div> -->
             <ul class="list-none p-0 m-0">
                 <li class="flex align-items-center surface-400 px-4 py-2 mb-3 shadow-2 border-round flex-wrap">
@@ -37,7 +42,7 @@
                     <div class="text-900 flex-1  md:w-1">Raised By</div>
                     <div class="flex-initial flex md:w-2">Objection Type</div>
                 </li>
-                <li class="flex surface-ground bg-indigo-50 align-items-center px-4 py-3 mb-3 shadow-2 border-round  flex-wrap "
+                <li class="flex surface-ground bg-indigo-50 align-items-center px-4 py-2 mb-3 shadow-2 border-round  flex-wrap "
                     [ngClass]="{'bg-red-200': selectedObjection.isOverruled}"
                     *ngFor="let selectedObjection of selectedObjections;index as i">
                     <div class="text-500 flex  pr-5 font-medium">{{i+1}}</div>
@@ -62,13 +67,13 @@
                             icon="pi pi-comment" class="p-button-info p-button-text p-button-sm"
                             (click)="openRemarkPanel($event,i)"></button>
                         <button *ngIf="!selectedObjection.exiestObjectionId" pButton pRipple label="Remove"
-                            icon="pi pi-minus-circle" class="p-button-danger p-button-text"
+                            icon="pi pi-minus-circle" class="p-button-danger p-button-text p-button-sm"
                             (click)="removeObjection(selectedObjection)"></button>
                         <button *ngIf="selectedObjection.exiestObjectionId&&!selectedObjection.isOverruled" pButton
-                            pRipple label="Overrule" icon="pi pi-times" class="p-button-danger p-button-text"
+                            pRipple label="Overrule" icon="pi pi-times" class="p-button-danger p-button-text p-button-sm"
                             (click)="openOverruleRemarkPanel($event,i)"></button>
                         <button *ngIf="selectedObjection.isOverruled && selectedObjection.OverruledBy==='You'" pButton
-                            pRipple label="Undo" icon="pi pi-undo" class="p-button-info p-button-text"
+                            pRipple label="Undo" icon="pi pi-undo" class="p-button-info p-button-text p-button-sm"
                             (click)="undoObjectionOverrule(i)"></button>
                         <button *ngIf="isRevertButton && selectedObjection.isOverruled  && selectedObjection.OverruledBy!='You'" pButton pRipple label="Revert"
                             class="p-button-info p-button-text p-button-sm"
