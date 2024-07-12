@@ -4,7 +4,7 @@ export enum StampRequisitionStatusEnum {
     RejectedByStampClerk = "Rejected By Stamp Clerk",
     WaitingForPayment = "Waiting For Payment",
     RejectedByTreasuryOfficer = "Rejected By Treasury Officer",
-    WaitingForTreasuryOfficerVerification = "Waiting For Treasury Officer Verification",
-    VerifiedByTreasuryOfficer = "Verified By Treasury Officer",
+    WaitingForPaymentVerification = "Waiting For Payment Verification",
+    WaitingForDelivery = "Waiting For Delivery",
     DeliveredToVendor = "Delivered To Vendor"
 }

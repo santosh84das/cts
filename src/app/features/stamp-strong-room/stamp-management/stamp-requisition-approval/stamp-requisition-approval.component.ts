@@ -37,7 +37,7 @@ export class StampRequisitionApprovalComponent implements OnInit {
         icon: 'pi pi-check-circle',
         lable: 'Approve',
         renderButton: (rowData) => {
-          return rowData.status == StampRequisitionStatusEnum.WaitingForTreasuryOfficerVerification
+          return rowData.status == StampRequisitionStatusEnum.WaitingForPaymentVerification
         }
       },
       {
