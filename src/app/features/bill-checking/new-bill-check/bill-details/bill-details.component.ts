@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { basicDynamicTable, tfoot } from 'src/app/core/models/basic-dynamic-table';
 import {
     IBillDetails,
     IOnlineBillDetailsRefNo,
@@ -19,6 +20,11 @@ export class BillDetailsComponent implements OnInit {
     billDetails: IBillDetails | undefined;
     subHeadDetails: subDeatilsHead[] | any;
     displayAllotment: boolean = false;
+    subHeadTabledetails:basicDynamicTable = {
+        header: [],
+        data: [],
+    }; 
+    subHeadTableFooterDetails: tfoot={total: 0};// details
     constructor(
         public billservice: BillService,
         private toastservice: ToastService,
@@ -29,6 +35,13 @@ export class BillDetailsComponent implements OnInit {
     ngOnInit(): void {
         this.tokenId = this.tokenServce.selectedId;
         this.getBillDetails();
+        this.subHeadTabledetails.header = [
+            { name: '#' ,key: '#' },
+            { name: 'Sub Detail',key: 'subHead' },
+            { name: 'Description',key: 'description' },
+            { name: 'Amount',key: 'amount' },
+        ];
+        
     }
 
     getBillDetails() {
@@ -37,6 +50,20 @@ export class BillDetailsComponent implements OnInit {
                 this.billDetails = responese.result;
                 this.billservice.billDetails = responese.result;
                 this.subHeadDetails = this.billDetails?.billDetailsDetails.subDeatilsHead;
+                if(this.billDetails?.billDetailsDetails?.subDeatilsTotalAmount){
+                    this.subHeadTableFooterDetails = {
+                        total: this.billDetails?.billDetailsDetails?.subDeatilsTotalAmount
+                    };
+                }
+                this.subHeadTabledetails.data = this.subHeadDetails.map((x: subDeatilsHead) => {
+                    return{
+                        subHead:x.subDeatils,
+                        description:x.description,
+                        amount:x.amount
+                    }
+                })
+                console.log('->',this.subHeadTabledetails);	
+                
                 return;
             }
             this.toastservice.showAlert(responese.message,responese.apiResponseStatus);

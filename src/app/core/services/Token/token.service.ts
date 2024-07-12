@@ -10,7 +10,7 @@ import { DynamicTable, DynamicTableQueryParameters } from '../../models/dynamic-
     providedIn: 'root',
 })
 export class TokenService {
-    selectedId: Number | any;
+    selectedId: Number | any = 5;
     selectedTokenNo: Number | any;
     selectedTokenDate: Date | undefined;
     selectedTokenRef: number | any;

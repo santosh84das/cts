@@ -26,6 +26,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { BadgeModule } from 'primeng/badge';
 import {SplitterModule} from 'primeng/splitter';
 import { EcsNeftComponent } from './ecs-neft/ecs-neft.component';
+import { BasicDynamicTableModule } from 'src/app/shared/modules/basic-dynamic-table/basic-dynamic-table.module';
 @NgModule({
   declarations: [NewBillCheckComponent, AllotmentComponent,BillDetailsComponent, ListOfObjectionComponent, ByTransferComponent, PlTransferComponent, EcsNeftComponent],
   exports: [RouterModule],
@@ -48,6 +49,7 @@ import { EcsNeftComponent } from './ecs-neft/ecs-neft.component';
     InputTextareaModule,
     BadgeModule,
     SplitterModule,
+    BasicDynamicTableModule,
     RouterModule.forChild([
       {
         path: '',
