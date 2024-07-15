@@ -4,7 +4,12 @@
     border-spacing: 0 10px; // Add space between rows
     margin: 20px 0;
 
-    th, td {
+    th {
+        padding: 12px;
+        text-align: left;
+        font-size: 14px;
+    }
+    td {
         padding: 15px;
         text-align: left;
         font-size: 14px;
@@ -12,8 +17,8 @@
 
     thead {
         tr {
-            background-color: #6567d1;
-            color: white;
+            // background-color: var(--p-color-primary-500);
+            // color: white;
 
             &:first-child {
                 th {
@@ -60,7 +65,7 @@
                     border-bottom-right-radius: 8px;
                 }
 
-                background-color: #bbc1e5;
+                // background-color: #bbc1e5;
             }
         }
     }
