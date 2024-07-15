@@ -82,7 +82,7 @@ export class StampRequisitionStagingComponent implements OnInit {
   }
   
   getAllApprovedByClerkRequisitions() {
-    this.stampRequisitionService.getAllRequisitionsForwardedToTO(this.tableQueryParameters).subscribe((response) => {
+    this.stampRequisitionService.  getAllRequisitionsForwardedToTOForApproval(this.tableQueryParameters).subscribe((response) => {
       if (response.apiResponseStatus == 1) {
         this.tableData = response.result;
       } else {

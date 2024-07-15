@@ -51,12 +51,12 @@ export class StampRequisitionService {
       );
   }
 
-  getAllRequisitionsForwardedToTO(
+  getAllRequisitionsForwardedToTOForApproval(
     queryParameters: DynamicTableQueryParameters
   ): Observable<IapiResponce<GetVendorStampRequisition>> {
     return this.http
       .patch<IapiResponce<GetVendorStampRequisition>>(
-        'v1/StampRequisition/GetAllStampRequisitionListForTO',
+        'v1/StampRequisition/GetAllStampRequisitionListWaitingForApprovalByTO',
         queryParameters
       )
       .pipe(
@@ -66,7 +66,22 @@ export class StampRequisitionService {
       );
   }
 
-  getAllWaitingForTOVerification(
+  getAllRequisitionsWaitingForPayment(
+    queryParameters: DynamicTableQueryParameters
+  ): Observable<IapiResponce<GetVendorStampRequisition>> {
+    return this.http
+      .patch<IapiResponce<GetVendorStampRequisition>>(
+        'v1/StampRequisition/GetAllStampRequisitionWaitingForPayment',
+        queryParameters
+      )
+      .pipe(
+        catchError((error) => {
+          throw this.toastService.showError(error.message);
+        })
+      );
+  }
+
+  getAllStampRequisitionWaitingForPaymentVerificatonByTO(
     queryParameters: DynamicTableQueryParameters
   ): Observable<IapiResponce<GetVendorStampRequisition>> {
     return this.http

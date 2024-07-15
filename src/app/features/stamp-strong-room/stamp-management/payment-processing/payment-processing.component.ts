@@ -26,12 +26,12 @@ export class PaymentProcessingComponent implements OnInit {
       pageIndex: 0,
     };
     this.tableActionButton = [
-      // {
-      //   buttonIdentifier: 'reject',
-      //   class: 'p-button-danger p-button-sm',
-      //   icon: 'pi pi-times',
-      //   lable: 'Reject',
-      // },
+      {
+        buttonIdentifier: 'print',
+        class: 'p-button-info p-button-sm',
+        icon: 'pi pi-print',
+        lable: 'Print',
+      },
       {
         buttonIdentifier: 'edit',
         class: 'p-button-warning p-button-sm',
@@ -39,7 +39,7 @@ export class PaymentProcessingComponent implements OnInit {
         lable: 'Register GRN',
       },
     ];
-    this.getAllWaitingForTOVerificationRequisitions()
+    this.getAllRequisitionsWaitingForPayment()
   }
 
   handleButtonClick($event: any) {
@@ -53,8 +53,8 @@ export class PaymentProcessingComponent implements OnInit {
     }
   }
 
-  getAllWaitingForTOVerificationRequisitions() {
-    this.stampRequisitionService.getAllWaitingForTOVerification(this.tableQueryParameters).subscribe((response) => {
+  getAllRequisitionsWaitingForPayment() {
+    this.stampRequisitionService.getAllRequisitionsWaitingForPayment(this.tableQueryParameters).subscribe((response) => {
       if (response.apiResponseStatus == 1) {
         this.tableData = response.result
       } else {

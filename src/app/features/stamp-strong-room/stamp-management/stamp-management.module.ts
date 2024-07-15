@@ -20,6 +20,7 @@ import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaymentProcessingComponent } from './payment-processing/payment-processing.component';
 import { DialogModule } from 'primeng/dialog';
+import { Tr7FormModule } from 'src/app/shared/modules/tr7-form/tr7-form.module';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { DialogModule } from 'primeng/dialog';
     StampManagementRoutingModule,
     TreasuryDropdownModule,
     StampCombinationDropdownModule,
-    VendorDetailsDropdownModule
+    VendorDetailsDropdownModule,
+    Tr7FormModule
   ]
 })
 export class StampManagementModule { }
