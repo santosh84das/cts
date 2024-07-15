@@ -1,1 +1,61 @@
-<p>by-transfer works!</p>
+<div class="grid">
+    <div class="col-12">
+        <p-divider align="left" type="dashed">
+            <div class="inline-flex align-items-center">
+                <i class="pi pi-file mr-2"></i>
+                <b>By-Transfer Amount</b>
+            </div>
+        </p-divider>
+        <div class="grid grid-nogutter static bg-primary-100 border-round border-primary border-solid text-gray-800 p-3">
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Bill By-Transfer Amount:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    {{ byTransferData.billBtAmount | currency:'INR':'symbol':'1.2-2' }}
+                </div>
+            </div>
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Available Bill By-Transfer Amount:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    {{ byTransferData.availableBtAmount | currency:'INR':'symbol':'1.2-2' }}
+                </div>
+            </div>
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Total By-Transfer Amount:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    {{ byTransferData.totalByTransfersAmount | currency:'INR':'symbol':'1.2-2'  }}
+                </div>
+            </div>
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Treasury Net Amount:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    {{ byTransferData.billNetAmount | currency:'INR':'symbol':'1.2-2' }}
+                </div>
+            </div>
+            <div class="col-12 md:col-6 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Treasury Gross Amount:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    {{ byTransferData.billNetAmount + byTransferData.totalByTransfersAmount | currency:'INR':'symbol':'1.2-2' }} (  Total By-Transfer Amount + Treasury Net Amount )
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+    <p-divider align="left" type="dashed">
+        <div class="inline-flex align-items-center">
+            <i class="pi pi-book mr-2"></i>
+            <b>By-Transfer Details</b>
+        </div>
+    </p-divider>
+    <app-basic-dynamic-table [tableData]="byTransfersTable"></app-basic-dynamic-table>
+</div>
+</div>

@@ -120,6 +120,21 @@ export interface ECS_NEFT {
   noOfBeneficiarys: number;
   beneficiarys: BeneficiaryDetails[];
 }
+export interface ByTransfer {
+  btSerial: number;
+  hoa: string;
+  desc: string;
+  type: string;
+  amount: number;
+}
+
+export interface ByTransferDetails {
+  billBtAmount: number;
+  availableBtAmount: number;
+  billNetAmount: number;
+  totalByTransfersAmount:number;
+  byTransfers: ByTransfer[];
+}
 
 export interface IBillCheck {
   tokenId: number;

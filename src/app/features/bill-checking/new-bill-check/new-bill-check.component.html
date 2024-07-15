@@ -1,91 +1,72 @@
 <p-splitter [panelSizes]="[15, 80]">
-    <ng-template pTemplate>
-        <ul class="list-none p-5 m-0 surface-0">
-            <li
-                class="p-3 mb-2 flex"
-                *ngFor="let steperItem of steperItems; let i = index"
-                [ngClass]="{
-                    'border-2 border-blue-500 border-round': steperItem.visible
-                }"
+  <ng-template pTemplate>
+    <ul class="list-none p-5 m-0 surface-0">
+      <li
+        class="p-3 mb-2 flex"
+        *ngFor="let steperItem of steperItems; let i = index"
+        [ngClass]="{
+          'border-2 border-blue-500 border-round': steperItem.visible
+        }"
+      >
+        <div class="flex flex-column align-items-center" style="width: 2rem">
+          <ng-container *ngIf="steperItem.escape">
+            <span
+              class="bg-green-500 text-0 flex align-items-center justify-content-center border-circle"
+              style="min-width: 2rem; min-height: 2rem"
             >
-                <div
-                    class="flex flex-column align-items-center"
-                    style="width: 2rem"
-                >
-                    <ng-container *ngIf="steperItem.escape">
-                        <span
-                            class="bg-green-500 text-0 flex align-items-center justify-content-center border-circle"
-                            style="min-width: 2rem; min-height: 2rem"
-                            ><i class="pi pi-check"></i
-                        ></span>
-                        <div
-                            class="h-full surface-300"
-                            style="width: 2px"
-                        ></div>
-                    </ng-container>
-                    <ng-container *ngIf="steperItem.visible">
-                        <span
-                            class="surface-0 text-blue-500 border-blue-500 border-2 border-circle flex align-items-center justify-content-center border-circle"
-                            style="min-width: 2rem; min-height: 2rem"
-                        >
-                            {{ i+1 }}
-                        </span>
-                        <div
-                            class="h-full bg-blue-500"
-                            style="width: 2px"
-                        ></div>
-                    </ng-container>
+              <i class="pi pi-check"></i>
+            </span>
+            <div class="h-full surface-300" style="width: 2px"></div>
+          </ng-container>
+          <ng-container *ngIf="steperItem.visible">
+            <span
+              class="surface-0 text-blue-500 border-blue-500 border-2 border-circle flex align-items-center justify-content-center border-circle"
+              style="min-width: 2rem; min-height: 2rem"
+            >
+              {{ i + 1 }}
+            </span>
+            <div class="h-full bg-blue-500" style="width: 2px"></div>
+          </ng-container>
 
-                    <ng-container
-                        *ngIf="!steperItem.visible && !steperItem.escape"
-                    >
-                        <span
-                            class="surface-0 text-300 border-2 border-circle flex align-items-center justify-content-center border-circle"
-                            style="min-width: 2rem; min-height: 2rem"
-                        >
-                            {{ i+1 }}
-                        </span>
-                        <div
-                            class="h-full surface-300"
-                            style="width: 2px"
-                        ></div>
-                    </ng-container>
-                </div>
-                <ng-container *ngIf="steperItem.escape">
-                    <div class="ml-3">
-                        <div class="font-medium text-900 mb-2">
-                            {{ steperItem.title }}
-                        </div>
-                        <span class="line-height-3 text-700">{{
-                            steperItem.label
-                        }}</span>
-                    </div>
-                </ng-container>
-                <ng-container *ngIf="steperItem.visible">
-                    <div class="ml-3">
-                        <div class="font-medium text-blue-500 mb-2">
-                            {{ steperItem.title }}
-                        </div>
-                        <span class="line-height-3 text-700">{{
-                            steperItem.label
-                        }}</span>
-                    </div>
-                </ng-container>
-                <ng-container *ngIf="!steperItem.visible && !steperItem.escape">
-                    <div class="ml-3">
-                        <div class="font-medium text-600 mb-2">
-                            {{ steperItem.title }}
-                        </div>
-                        <span class="line-height-3 text-500">{{
-                            steperItem.label
-                        }}</span>
-                    </div>
-                </ng-container>
-            </li>
-        </ul>
-    </ng-template>
-    <ng-template pTemplate>
-        <!-- <div class="col flex flex-column">
+          <ng-container *ngIf="!steperItem.visible && !steperItem.escape">
+            <span
+              class="surface-0 text-300 border-2 border-circle flex align-items-center justify-content-center border-circle"
+              style="min-width: 2rem; min-height: 2rem"
+            >
+              {{ i + 1 }}
+            </span>
+            <div class="h-full surface-300" style="width: 2px"></div>
+          </ng-container>
+        </div>
+        <ng-container *ngIf="steperItem.escape">
+          <div class="ml-3">
+            <div class="font-medium text-900 mb-2">
+              {{ steperItem.title }}
+            </div>
+            <span class="line-height-3 text-700">{{ steperItem.label }}</span>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="steperItem.visible">
+          <div class="ml-3">
+            <div class="font-medium text-blue-500 mb-2">
+              {{ steperItem.title }}
+            </div>
+            <span class="line-height-3 text-700">{{ steperItem.label }}</span>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!steperItem.visible && !steperItem.escape">
+          <div class="ml-3">
+            <div class="font-medium text-600 mb-2">
+              {{ steperItem.title }}
+            </div>
+            <span class="line-height-3 text-500">{{ steperItem.label }}</span>
+          </div>
+        </ng-container>
+      </li>
+    </ul>
+  </ng-template>
+  <ng-template pTemplate>
+    <!-- <div class="col flex flex-column">
             <div class="flex-1 h-4rem bg-primary font-bold text-center p-4 border-round">1</div>
             <div class="flex-1 h-4rem bg-primary font-bold text-center p-4 border-round mx-4">2</div>
             <div class="flex-1 h-4rem bg-primary font-bold text-center p-4 border-round">3</div>
@@ -95,15 +76,31 @@
             <div class="flex-1 h-4rem bg-primary font-bold text-center p-4 border-round mx-4">2</div>
             <div class="flex-1 h-4rem bg-primary font-bold text-center p-4 border-round">3</div>
         </div> -->
-        
-        <div class="col flex flex-column">
-            <div class="flex-1">
-                <router-outlet *ngIf="steperItems && steperItems.length > 0"></router-outlet>
-            </div>
-            <div class="flex  justify-content-between pt-3 pb-2 px-2">
-                <button pButton type="button" label="Back" icon="pi pi-chevron-left" iconPos="left" (click)="backStep()" class="p-button-secondary" [disabled]="currentStepIndex === 0"></button>
-                <button pButton type="button" label="Confrim" icon="pi pi-chevron-right" iconPos="right" (click)="nextStep()"></button>
-            </div>
-        </div>
-    </ng-template>
+
+    <div class="col flex flex-column">
+      <div class="flex-1">
+        <router-outlet *ngIf="steperItems && steperItems.length > 0"></router-outlet>
+      </div>
+      <div class="flex justify-content-between pt-3 pb-2 px-2">
+        <button
+          pButton
+          type="button"
+          label="Back"
+          icon="pi pi-chevron-left"
+          iconPos="left"
+          (click)="backStep()"
+          class="p-button-secondary"
+          [disabled]="currentStepIndex === 0"
+        ></button>
+        <button
+          pButton
+          type="button"
+          label="Confrim"
+          icon="pi pi-chevron-right"
+          iconPos="right"
+          (click)="nextStep()"
+        ></button>
+      </div>
+    </div>
+  </ng-template>
 </p-splitter>
