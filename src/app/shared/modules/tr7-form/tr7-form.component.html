@@ -1,122 +1,106 @@
-<div class="w-screen h-full flex align-items-center justify-content-center">
-  <div class="p-col-12 p-md-8">
-    <h1 class="text-center text-2xl font-bold">T.R. FORM NO.-7</h1>
-    <p class="text-center text-2xl">[See sub-rule (2)(b) of T.R.3.06]</p>
-    <h2 class="text-center font-bold">
+<div class="w-screen h-full flex align-items-center justify-content-center bg-white">
+  <div class="w-8 p-4">
+    <div class="flex flex-column gap-2 mb-4">
+    <h1 class="text-center text-2xl font-bold my-0">T.R. FORM NO.-7</h1>
+    <p class="text-center text-gray-900 text-bold text-xl my-0">[See sub-rule (2)(b) of T.R.3.06]</p>
+    <h4 class="text-center font-bold my-0">
       Challan for Deposit of money in the account of GOVERNMENT OF WEST BENGAL
-    </h2>
+    </h4>
+    </div>
     <form class="flex flex-column gap-4">
-      <div class="flex gap-4">
-        <label for="bankBranch" class="p-d-block font-bold">1. Name of the Bank & Branch:</label>
-        <input pInputText id="bankBranch"  class="p-inputtext p-component p-element" formControlName="bankBranch" />
+      <div class="flex flex-column gap-2">
+        <label for="bankBranch" class="text-xl">1. Name of the Bank & Branch:</label>
+        <input pInputText id="bankBranch" class="p-inputtext p-component p-element" disabled formControlName="bankBranch" />
       </div>
-      <div class="p-field">
-        <label for="treasuryName" class="p-d-block font-bold">2. (a). Name of the Treasury:</label>
-        <input pInputText id="treasuryName" formControlName="treasuryName" />
-        <label for="treasuryCode" class="p-d-block font-bold mt-2">(b). Treasury Code:</label>
-        <div class="p-grid p-nogutter">
-          <div class="p-col-2">
-            <input pInputText maxlength="1" class="p-text-center" />
+        <div class="flex flex-column gap-2">
+          <label for="treasuryName" class="text-xl">2. (a). Name of the Treasury:</label>
+          <input class="p-inputtext p-component p-element" disabled pInputText id="treasuryName" formControlName="treasuryName" />
+        </div>
+        <div class="flex flex-column gap-2">
+          <label for="treasuryCode" class="text-xl">(b). Treasury Code:</label>
+          <div class="flex gap-2 w-12rem">
+            <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
+            <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
+            <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
           </div>
         </div>
-      </div>
-      <div class="p-field">
-        <label for="accountCode" class="p-d-block font-bold">3. Account Code:</label>
-        <div class="p-grid p-nogutter">
-          <div class="p-col-1">
-            <input pInputText maxlength="1" class="p-text-center" />
-          </div>
+      <div class="flex flex-column gap-2">
+        <label for="accountCode" class="text-xl">3. Account Code:</label>
+        <div class="flex gap-2 w-10">
+          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
+          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
+          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
+          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
+          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
+          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
+          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
+          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
+          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
+          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
+          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
+          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
+          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
+          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
         </div>
         <p class="text-sm mt-1">(14- Digits must be filled up properly)</p>
       </div>
-      <div class="p-field">
-        <label for="detailHead" class="p-d-block font-bold">4. Detail Head of Account:</label>
-        <input pInputText id="detailHead" formControlName="detailHead" />
+      <div class="flex flex-column gap-2">
+        <label for="detailHead" class="text-xl">4. Detail Head of Account:</label>
+        <input class="p-inputtext p-component p-element" disabled pInputText id="detailHead" formControlName="detailHead" />
       </div>
-      <div class="p-field">
-        <label for="amount" class="p-d-block font-bold">5. (a) Amount : Rs.</label>
-        <input pInputText id="amount" formControlName="amount" />
-        <label for="amountWords" class="p-d-block font-bold mt-2">(b) In Words: Rupees:</label>
-        <input pInputText id="amountWords" formControlName="amountWords" />
+      <div class="flex flex-column gap-2">
+        <label for="amount" class="text-xl">5. (a) Amount : Rs.</label>
+        <input class="p-inputtext p-component p-element" disabled pInputText id="amount" formControlName="amount" />
+        <label for="amountWords" class="text-xl mt-2">(b) In Words: Rupees:</label>
+        <input class="p-inputtext p-component p-element" disabled pInputText id="amountWords" formControlName="amountWords" />
       </div>
-      <div class="p-field">
-        <label for="tenderedBy" class="p-d-block font-bold">6. By whom tendered – Name & Address:</label>
-        <input pInputText id="tenderedBy" formControlName="tenderedBy" />
+      <div class="flex flex-column gap-2">
+        <label for="tenderedBy" class="text-xl">6. By whom tendered – Name & Address:</label>
+        <input class="p-inputtext p-component p-element" disabled pInputText id="tenderedBy" formControlName="tenderedBy" />
       </div>
-      <div class="p-field">
-        <label for="departmentalOfficer" class="p-d-block font-bold">
+      <div class="flex flex-column gap-2">
+        <label for="departmentalOfficer" class="text-xl">
           7. Name / Designation & Address of the Departmental Officer on whose behalf / favour money is paid:
         </label>
-        <input pInputText id="departmentalOfficer" formControlName="departmentalOfficer" />
+        <input class="p-inputtext p-component p-element" disabled pInputText id="departmentalOfficer" formControlName="departmentalOfficer" />
       </div>
-      <div class="p-field">
-        <label for="depositAuthority" class="p-d-block font-bold">8. (a) Particulars & Authority of Deposit:</label>
-        <input pInputText id="depositAuthority" formControlName="depositAuthority" />
-        <label for="tvNo" class="p-d-block font-bold mt-2">1 * (b) T.V. No. & Date of A.C. Bill:</label>
-        <input pInputText id="tvNo" formControlName="tvNo" />
+      <div class="flex flex-column gap-2">
+        <label for="depositAuthority" class="text-xl">8. (a) Particulars & Authority of Deposit:</label>
+        <input class="p-inputtext p-component p-element" disabled pInputText id="depositAuthority" formControlName="depositAuthority" />
+        <label for="tvNo" class="text-xl mt-2">1 * (b) T.V. No. & Date of A.C. Bill:</label>
+        <input class="p-inputtext p-component p-element" disabled pInputText id="tvNo" formControlName="tvNo" />
       </div>
-      <div class="p-field">
-        <label class="p-d-block font-bold">
+      <div class="flex flex-column gap-2 mb-4">
+        <label class="text-xl">
           9. Accounts Officer by whom adjustable: Accountant General (A&E), West Bengal.
         </label>
-        <p class="mt-2">Verified</p>
+        <!-- <p class="mt-2">Verified</p> -->
       </div>
-      <div class="p-grid p-fluid">
-        <div class="p-col-12 p-md-6">
-          <div class="p-field">
-            <label for="deptOfficerSignature" class="p-d-block font-bold">Signature of Departmental / Treasury Officer</label>
-            <input pInputText id="deptOfficerSignature" formControlName="deptOfficerSignature" />
+      <div class="flex justify-content-between align-items-center mb-4">
+          <div class="flex flex-column">
+            <p class="border-bottom-1 m-0"></p>
+            <label for="deptOfficerSignature" class="text-xl">Signature of Departmental / Treasury Officer</label>
           </div>
-        </div>
-        <div class="p-col-12 p-md-6">
-          <div class="p-field">
-            <label for="depositorSignature" class="p-d-block font-bold">Depositor’s Signature</label>
-            <input pInputText id="depositorSignature" formControlName="depositorSignature" />
+          <div class="flex flex-column">
+            <p class="border-bottom-1 m-0"></p>
+            <label for="depositorSignature" class="text-xl">Depositor’s Signature</label>
           </div>
-        </div>
       </div>
-      <div class="p-grid p-fluid">
-        <div class="p-col-12 p-md-6">
-          <div class="p-field">
-            <label for="date" class="p-d-block font-bold">Date:</label>
-            <input pInputText id="date" formControlName="date" />
-          </div>
+      <div class="flex flex-column gap-6 w-10">
+        <div class="flex justify-content-between align-items-center">
+          <label for="date" class="text-xl">Date:</label>
+          <label for="challanNo" class="text-xl">Treasury Receipted Challan No.</label>
         </div>
-        <div class="p-col-12 p-md-6">
-          <div class="p-field">
-            <label for="challanNo" class="p-d-block font-bold">Treasury Receipted Challan No.</label>
-            <input pInputText id="challanNo" formControlName="challanNo" />
-          </div>
+        <div class="flex justify-content-between align-items-center">
+          <label for="scrollNo" class="text-xl">Received payment</label>
+          <label for="scrollNo" class="text-xl">Bank Scroll Serial No.</label>
         </div>
-      </div>
-      <div class="p-grid p-fluid">
-        <div class="p-col-12 p-md-6">
-          <div class="p-field">
-            <label for="scrollNo" class="p-d-block font-bold">Received payment. Bank Scroll Serial No.</label>
-            <input pInputText id="scrollNo" formControlName="scrollNo" />
-          </div>
+        <div class="flex justify-content-between align-items-cente">
+          <label for="bankReceipt" class="text-xl">Receipt by Bank / Treasury</label>
+          <label for="bankSignature" class="text-xl">Signature with seal of the Bank</label>
         </div>
-      </div>
-      <div class="p-grid p-fluid">
-        <div class="p-col-12 p-md-6">
-          <div class="p-field">
-            <label for="bankReceipt" class="p-d-block font-bold">Receipt by Bank / Treasury</label>
-            <input pInputText id="bankReceipt" formControlName="bankReceipt" />
-          </div>
-        </div>
-        <div class="p-col-12 p-md-6">
-          <div class="p-field">
-            <label for="bankSignature" class="p-d-block font-bold">Signature with seal of the Bank.</label>
-            <input pInputText id="bankSignature" formControlName="bankSignature" />
-          </div>
-        </div>
-      </div>
-      <div class="p-grid p-fluid">
-        <div class="p-col-12 p-md-6">
-          <div class="p-field">
-            <label for="bankDate" class="p-d-block font-bold">Date:</label>
-            <input pInputText id="bankDate" formControlName="bankDate" />
-          </div>
+        <div class="flex justify-content-between align-items-cente">
+              <label for="bankDate" class="text-xl">Date:</label>
         </div>
       </div>
       <p class="text-sm mt-4">1 * In respect of Challan relating to refund of unspent amount of A.C. Bill</p>
