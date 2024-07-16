@@ -62,8 +62,6 @@ export class BillDetailsComponent implements OnInit {
                         amount:x.amount
                     }
                 })
-                console.log('->',this.subHeadTabledetails);	
-                
                 return;
             }
             this.toastservice.showAlert(responese.message,responese.apiResponseStatus);

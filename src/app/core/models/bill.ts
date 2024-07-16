@@ -135,6 +135,22 @@ export interface ByTransferDetails {
   totalByTransfersAmount:number;
   byTransfers: ByTransfer[];
 }
+export interface IChequeDetails {
+    billNo?: string;
+    billDate?: string;
+    grossAmount?: number;
+    netAmount?: number;
+    chequeAmount?: number;
+    payMode?: string;
+    totalBeneficiaryAmount?: number;
+    chequeDetails: IChequeList[];
+}
+
+export interface IChequeList {
+    payeeName: string;
+    amount: number;
+    chequeType: string;
+}
 
 export interface IBillCheck {
   tokenId: number;

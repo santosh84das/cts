@@ -32,7 +32,8 @@ export class NewBillCheckComponent implements OnInit {
       { id: '3', title: 'By-Transfer', routerLink: 'by-transfer', target: 'bt', visible: false, escape: false },
       { id: '4', title: 'PL-Transfer', routerLink: 'pl-transfer', target: 'pl', visible: false, escape: false },
       { id: '5', title: 'ECS/NEFT', routerLink: 'ecs-neft', target: 'ecs', visible: false, escape: false },
-      { id: '6', title: 'List Of Objection', routerLink: 'objection', target: 'obj', visible: false, escape: false },
+      { id: '6', title: 'Cheque', routerLink: 'cheque', target: 'cheque', visible: false, escape: false },
+      { id: '7', title: 'List Of Objection', routerLink: 'objection', target: 'obj', visible: false, escape: false },
     ];
   }
   configSteperItems() {

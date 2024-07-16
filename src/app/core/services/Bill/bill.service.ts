@@ -4,7 +4,7 @@ import { Observable, catchError } from 'rxjs';
 import { IapiResponce } from '../../models/iapi-responce';
 import { HttpClient } from '@angular/common/http';
 import { error } from 'console';
-import { AllotmentDetails, BillInfo, ByTransferDetails, ECS_NEFT, HoaChain, IBillCheck, IBillDetails, IBills, IRetunMemoBillDetils, IReturnMemoCount } from '../../models/bill';
+import { AllotmentDetails, BillInfo, ByTransferDetails, ECS_NEFT, HoaChain, IBillCheck, IBillDetails, IBills, IChequeDetails, IRetunMemoBillDetils, IReturnMemoCount } from '../../models/bill';
 import { IObjection } from '../../models/objection';
 
 @Injectable({
@@ -65,6 +65,11 @@ export class BillService {
     }
     getByTransferDetails(token_id: number): Observable<IapiResponce<ByTransferDetails>> {
         return this.http.get<IapiResponce<ByTransferDetails>>('v1/BillChecking/get-bt-details?tokenId=' + token_id).pipe(catchError((error) => {
+            throw this.toastService.showError(error.message);
+        }));
+    }
+    getChequeDetails(token_id: number): Observable<IapiResponce<IChequeDetails>> {
+        return this.http.get<IapiResponce<IChequeDetails>>('v1/BillChecking/get-cheque-details?tokenId=' + token_id).pipe(catchError((error) => {
             throw this.toastService.showError(error.message);
         }));
     }

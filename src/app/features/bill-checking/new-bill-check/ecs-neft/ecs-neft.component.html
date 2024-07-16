@@ -73,7 +73,7 @@
         </div>
     </p-divider>
     <!-- <div class="text-500 mb-5">Morbi tristique blandit turpis. In viverra ligula id nulla hendrerit rutrum.</div> -->
-    <ul class="list-none p-0 m-0">
+    <!-- <ul class="list-none p-0 m-0">
         <li class="flex justify-content-between bg-primary-500 px-4 py-2 mb-3 shadow-2 border-round flex-wrap">
             <div class="text-100 flex pr-5 font-medium">#</div>
             <div class="text-100 flex font-medium">Beneficiary Name</div>
@@ -115,6 +115,8 @@
                 {{ beneficiary.payeeType }}
             </div>
         </li>
-    </ul>
+    </ul> -->
+    <app-basic-dynamic-table [tableData]="escneftTable"></app-basic-dynamic-table>
+
 </div>
 </div>

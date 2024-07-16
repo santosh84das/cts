@@ -1,0 +1,69 @@
+<div class="grid">
+    <div class="col-12">
+        <p-divider align="left" type="dashed">
+            <div class="inline-flex align-items-center">
+                <i class="pi pi-indian-rupee mr-2"></i>
+                <b>Bill Details</b>
+            </div>
+        </p-divider>
+        <div class="grid grid-nogutter static bg-primary-100 border-round border-primary border-solid text-gray-800 p-3">
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Bill No:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    {{ chequeDetails.billNo }}
+                </div>
+            </div>
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Bill Date:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    {{ chequeDetails.billDate }}
+                </div>
+            </div>
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Gross Amount:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    {{ chequeDetails.grossAmount | currency:'INR':'symbol':'1.2-2'  }}
+                </div>
+            </div>
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Net Amount:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    {{ chequeDetails.netAmount | currency:'INR':'symbol':'1.2-2' }}
+                </div>
+            </div>
+            <div class="col-12 md:col-6 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Total Cheque Amount :
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    {{ chequeDetails.chequeAmount | currency:'INR':'symbol':'1.2-2' }}
+                </div>
+            </div>
+            <div class="col-12 md:col-6 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Pay Mode :
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    {{ chequeDetails.payMode }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+    <p-divider align="left" type="dashed">
+        <div class="inline-flex align-items-center">
+            <i class="pi pi-book mr-2"></i>
+            <b>Cheques </b>
+        </div>
+    </p-divider>
+    <app-basic-dynamic-table [tableData]="chequeTable"></app-basic-dynamic-table>
+</div>
+</div>

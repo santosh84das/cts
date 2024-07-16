@@ -27,8 +27,9 @@ import { BadgeModule } from 'primeng/badge';
 import {SplitterModule} from 'primeng/splitter';
 import { EcsNeftComponent } from './ecs-neft/ecs-neft.component';
 import { BasicDynamicTableModule } from 'src/app/shared/modules/basic-dynamic-table/basic-dynamic-table.module';
+import { ChequeComponent } from './cheque/cheque.component';
 @NgModule({
-  declarations: [NewBillCheckComponent, AllotmentComponent,BillDetailsComponent, ListOfObjectionComponent, ByTransferComponent, PlTransferComponent, EcsNeftComponent],
+  declarations: [NewBillCheckComponent, AllotmentComponent,BillDetailsComponent, ListOfObjectionComponent, ByTransferComponent, PlTransferComponent, EcsNeftComponent, ChequeComponent],
   exports: [RouterModule],
   imports: [
     CommonModule,
@@ -61,7 +62,8 @@ import { BasicDynamicTableModule } from 'src/app/shared/modules/basic-dynamic-ta
           { path: 'allotment', component: AllotmentComponent },
           { path: 'by-transfer', component: ByTransferComponent },
           { path: 'pl-transfer', component: PlTransferComponent },
-          { path: 'ecs-neft', component: EcsNeftComponent }
+          { path: 'ecs-neft', component: EcsNeftComponent },
+          { path: 'cheque', component: ChequeComponent },
         ],
       },
     ]),

@@ -39,7 +39,8 @@ export class ByTransferComponent implements OnInit {
             btDescription: item.desc,
             amount: item.amount
           }
-        })
+        });
+        return;
       }
       this.toastService.showAlert(response.message, response.apiResponseStatus);
     })
