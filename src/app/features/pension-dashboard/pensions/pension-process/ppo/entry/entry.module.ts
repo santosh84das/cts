@@ -24,7 +24,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [EntryComponent, FamilyNomineeComponent], // Ensure both components are declared
+  declarations: [EntryComponent], // Ensure both components are declared
   imports: [
     CommonModule,
     FormsModule,

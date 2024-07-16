@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { RouterModule, Routes } from '@angular/router';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { StepsModule } from 'primeng/steps';
 
 import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic-table.module';
 import { OptionCardModule } from 'src/app/shared/modules/option-card/option-card.module';
@@ -19,9 +20,16 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { CardModule } from 'primeng/card';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { CheckboxModule } from 'primeng/checkbox';
+import { SanctionComponent } from '../sanction/sanction.component';
 
 
 
+
+
+const routes: Routes = [
+  { path: '', component: PpodetailsComponent },
+  { path: 'sanction', component: SanctionComponent }
+];
 
 
 
@@ -61,9 +69,12 @@ import { CheckboxModule } from 'primeng/checkbox';
     DropdownModule,
     RadioButtonModule,
     CheckboxModule,
-    InputTextModule
+    InputTextModule,
+    StepsModule,
+    RouterModule.forChild(routes)
   ],
   providers: [],
-  bootstrap: [PpodetailsComponent]
+  bootstrap: [PpodetailsComponent],
+  exports: [RouterModule]
 })
 export class PpodetailsModule { }
