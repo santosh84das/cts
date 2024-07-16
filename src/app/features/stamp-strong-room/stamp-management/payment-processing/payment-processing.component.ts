@@ -12,11 +12,13 @@ import { ToastService } from 'src/app/core/services/toast.service';
 export class PaymentProcessingComponent implements OnInit {
 
   registerGRNModal: boolean = false
+  printModal: boolean = false
   vendorStampRequisitionId: number = 0
   GRNNo: string = ""
   tableActionButton: ActionButtonConfig[] = [];
   tableData!: DynamicTable<GetVendorStampRequisition>;
   tableQueryParameters!: DynamicTableQueryParameters | any;
+  printData: any
   constructor(private stampRequisitionService: StampRequisitionService,
     private toastService: ToastService) { }
 
@@ -44,7 +46,8 @@ export class PaymentProcessingComponent implements OnInit {
 
   handleButtonClick($event: any) {
     switch ($event.buttonIdentifier) {
-      case 'reject':
+      case 'print':
+        this.getDataForPrint($event.rowData.vendorStampRequisitionId)
         break;
       case 'edit':
         this.registerGRNModal = true
@@ -80,5 +83,23 @@ export class PaymentProcessingComponent implements OnInit {
 
   GRNNoSelected($event: any) {
     this.GRNNo = $event
+  }
+  getDataForPrint(id: number) {
+    this.stampRequisitionService.printtr7(9).subscribe((response) => {
+      if (response.apiResponseStatus == 1) {
+        this.printData = {
+          raisedToTreasury: response.result.raisedToTreasury,
+          hoa: response.result.hoa,
+          detailHead: response.result.detailHead,
+          amount: response.result.amount,
+          vendorName: response.result.vendorName,
+          vendorAddress: response.result.vendorAddress,
+          treasuryName: response.result.treasuryName
+        }
+        this.printModal = true
+      } else {
+        this.toastService.showError(response.message)
+      }
+    })
   }
 }

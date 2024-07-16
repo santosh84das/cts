@@ -1,5 +1,5 @@
-<div class="w-screen h-full flex align-items-center justify-content-center bg-white">
-  <div class="w-8 p-4">
+<!-- <div id="myPrintData" class="w-full h-full flex align-items-center justify-content-center bg-white">
+  <div class="w-10 py-4 px-2">
     <div class="flex flex-column gap-2 mb-4">
     <h1 class="text-center text-2xl font-bold my-0">T.R. FORM NO.-7</h1>
     <p class="text-center text-gray-900 text-bold text-xl my-0">[See sub-rule (2)(b) of T.R.3.06]</p>
@@ -10,71 +10,53 @@
     <form class="flex flex-column gap-4">
       <div class="flex flex-column gap-2">
         <label for="bankBranch" class="text-xl">1. Name of the Bank & Branch:</label>
-        <input pInputText id="bankBranch" class="p-inputtext p-component p-element" disabled formControlName="bankBranch" />
+        <input pInputText id="bankBranch" class="p-inputtext p-component p-element" disabled [value]="bankBranch" />
       </div>
         <div class="flex flex-column gap-2">
           <label for="treasuryName" class="text-xl">2. (a). Name of the Treasury:</label>
-          <input class="p-inputtext p-component p-element" disabled pInputText id="treasuryName" formControlName="treasuryName" />
+          <input class="p-inputtext p-component p-element" disabled pInputText id="treasuryName" [value]="treasuryName" />
         </div>
         <div class="flex flex-column gap-2">
           <label for="treasuryCode" class="text-xl">(b). Treasury Code:</label>
-          <div class="flex gap-2 w-12rem">
-            <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
-            <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
+          <div class="flex gap-2">
             <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
           </div>
         </div>
       <div class="flex flex-column gap-2">
         <label for="accountCode" class="text-xl">3. Account Code:</label>
-        <div class="flex gap-2 w-10">
-          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
-          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
-          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
-          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
-          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
-          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
-          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
-          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
-          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
-          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
-          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
-          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
-          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
+        <div class="flex gap-2">
           <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
         </div>
         <p class="text-sm mt-1">(14- Digits must be filled up properly)</p>
       </div>
       <div class="flex flex-column gap-2">
         <label for="detailHead" class="text-xl">4. Detail Head of Account:</label>
-        <input class="p-inputtext p-component p-element" disabled pInputText id="detailHead" formControlName="detailHead" />
+        <input class="p-inputtext p-component p-element" disabled pInputText id="detailHead" [value]="detailHead" />
       </div>
       <div class="flex flex-column gap-2">
         <label for="amount" class="text-xl">5. (a) Amount : Rs.</label>
-        <input class="p-inputtext p-component p-element" disabled pInputText id="amount" formControlName="amount" />
+        <input class="p-inputtext p-component p-element" disabled pInputText id="amount" [value]="amount" />
         <label for="amountWords" class="text-xl mt-2">(b) In Words: Rupees:</label>
-        <input class="p-inputtext p-component p-element" disabled pInputText id="amountWords" formControlName="amountWords" />
+        <input class="p-inputtext p-component p-element" disabled pInputText id="amountWords" [value]="amountWords" />
       </div>
       <div class="flex flex-column gap-2">
         <label for="tenderedBy" class="text-xl">6. By whom tendered – Name & Address:</label>
-        <input class="p-inputtext p-component p-element" disabled pInputText id="tenderedBy" formControlName="tenderedBy" />
+        <input class="p-inputtext p-component p-element" disabled pInputText id="tenderedBy" [value]="tenderedBy" />
       </div>
       <div class="flex flex-column gap-2">
         <label for="departmentalOfficer" class="text-xl">
           7. Name / Designation & Address of the Departmental Officer on whose behalf / favour money is paid:
         </label>
-        <input class="p-inputtext p-component p-element" disabled pInputText id="departmentalOfficer" formControlName="departmentalOfficer" />
+        <input class="p-inputtext p-component p-element" disabled pInputText id="departmentalOfficer" [value]="departmentalOfficer" />
       </div>
       <div class="flex flex-column gap-2">
-        <label for="depositAuthority" class="text-xl">8. (a) Particulars & Authority of Deposit:</label>
-        <input class="p-inputtext p-component p-element" disabled pInputText id="depositAuthority" formControlName="depositAuthority" />
-        <label for="tvNo" class="text-xl mt-2">1 * (b) T.V. No. & Date of A.C. Bill:</label>
-        <input class="p-inputtext p-component p-element" disabled pInputText id="tvNo" formControlName="tvNo" />
+        <label for="depositAuthority" class="text-xl mb-4">8. (a) Particulars & Authority of Deposit:</label>
+        <label for="tvNo" class="text-xl mb-4"><span>&nbsp;&nbsp;&nbsp;</span> (b) T.V. No. & Date of A.C. Bill:</label>
       </div>
       <div class="flex flex-column gap-2 mb-4">
         <label class="text-xl">
           9. Accounts Officer by whom adjustable: Accountant General (A&E), West Bengal.
         </label>
-        <!-- <p class="mt-2">Verified</p> -->
       </div>
       <div class="flex justify-content-between align-items-center mb-4">
           <div class="flex flex-column">
@@ -103,7 +85,218 @@
               <label for="bankDate" class="text-xl">Date:</label>
         </div>
       </div>
-      <p class="text-sm mt-4">1 * In respect of Challan relating to refund of unspent amount of A.C. Bill</p>
+     <div>
+      <p class="border-bottom-1 m-0"></p>
+      <p class="text-sm">1 * In respect of Challan relating to refund of unspent amount of A.C. Bill</p>
+     </div>
     </form>
+    <div class="w-full text-right">
+      <p-button class="noPrint p-button" (click)="printTR7()" class="rounded">
+        Print
+      </p-button>
+    </div>
+  </div>
+</div> -->
+
+<!-- 
+<div *ngIf="data" id="myPrintData" class="w-full h-full flex align-items-center justify-content-center bg-white">
+  <div class="w-10 py-4 px-2">
+    <div class="flex flex-column gap-2 mb-4">
+      <h1 class="text-center text-2xl font-bold my-0">T.R. FORM NO.-7</h1>
+      <p class="text-center text-gray-900 text-bold text-xl my-0">[See sub-rule (2)(b) of T.R.3.06]</p>
+      <h4 class="text-center font-bold my-0">
+        Challan for Deposit of money in the account of GOVERNMENT OF WEST BENGAL
+      </h4>
+    </div>
+    <form class="flex flex-column gap-4">
+      <div class="flex flex-column gap-2">
+        <label for="bankBranch" class="text-xl">1. Name of the Bank & Branch:</label>
+        <input pInputText id="bankBranch" class="p-inputtext p-component p-element" disabled [value]="bankBranch" />
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="treasuryName" class="text-xl">2. (a). Name of the Treasury:</label>
+        <input class="p-inputtext p-component p-element" disabled pInputText id="treasuryName" [value]="treasuryName" />
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="treasuryCode" class="text-xl">(b). Treasury Code:</label>
+        <div class="flex gap-2">
+          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
+        </div>
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="accountCode" class="text-xl">3. Account Code:</label>
+        <div class="flex gap-2">
+          <input class="p-inputtext p-component p-element w-full" disabled pInputText maxlength="1" />
+        </div>
+        <p class="text-sm mt-1">(14- Digits must be filled up properly)</p>
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="detailHead" class="text-xl">4. Detail Head of Account:</label>
+        <input class="p-inputtext p-component p-element" disabled pInputText id="detailHead" [value]="detailHead" />
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="amount" class="text-xl">5. (a) Amount : Rs.</label>
+        <input class="p-inputtext p-component p-element" disabled pInputText id="amount" [value]="amount" />
+        <label for="amountWords" class="text-xl mt-2">(b) In Words: Rupees:</label>
+        <input class="p-inputtext p-component p-element" disabled pInputText id="amountWords" [value]="amountWords" />
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="tenderedBy" class="text-xl">6. By whom tendered – Name & Address:</label>
+        <input class="p-inputtext p-component p-element" disabled pInputText id="tenderedBy" [value]="tenderedBy" />
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="departmentalOfficer" class="text-xl">
+          7. Name / Designation & Address of the Departmental Officer on whose behalf / favour money is paid:
+        </label>
+        <input class="p-inputtext p-component p-element" disabled pInputText id="departmentalOfficer" [value]="departmentalOfficer" />
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="depositAuthority" class="text-xl mb-4">8. (a) Particulars & Authority of Deposit:</label>
+        <label for="tvNo" class="text-xl mb-4"><span>&nbsp;&nbsp;&nbsp;</span> (b) T.V. No. & Date of A.C. Bill:</label>
+      </div>
+      <div class="flex flex-column gap-2 mb-4">
+        <label class="text-xl">
+          9. Accounts Officer by whom adjustable: Accountant General (A&E), West Bengal.
+        </label>
+      </div>
+      <div class="flex justify-content-between align-items-center mb-4">
+        <div class="flex flex-column">
+          <p class="border-bottom-1 m-0"></p>
+          <label for="deptOfficerSignature" class="text-xl">Signature of Departmental / Treasury Officer</label>
+        </div>
+        <div class="flex flex-column">
+          <p class="border-bottom-1 m-0"></p>
+          <label for="depositorSignature" class="text-xl">Depositor’s Signature</label>
+        </div>
+      </div>
+      <div class="flex flex-column gap-6 w-10">
+        <div class="flex justify-content-between align-items-center">
+          <label for="date" class="text-xl">Date:</label>
+          <label for="challanNo" class="text-xl">Treasury Receipted Challan No.</label>
+        </div>
+        <div class="flex justify-content-between align-items-center">
+          <label for="scrollNo" class="text-xl">Received payment</label>
+          <label for="scrollNo" class="text-xl">Bank Scroll Serial No.</label>
+        </div>
+        <div class="flex justify-content-between align-items-center">
+          <label for="bankReceipt" class="text-xl">Receipt by Bank / Treasury</label>
+          <label for="bankSignature" class="text-xl">Signature with seal of the Bank</label>
+        </div>
+        <div class="flex justify-content-between align-items-center">
+          <label for="bankDate" class="text-xl">Date:</label>
+        </div>
+      </div>
+      <div>
+        <p class="border-bottom-1 m-0"></p>
+        <p class="text-sm">1 * In respect of Challan relating to refund of unspent amount of A.C. Bill</p>
+      </div>
+    </form>
+    <div class="w-full text-right">
+      <p-button class="noPrint p-button" (click)="printTR7()" class="rounded">
+        Print
+      </p-button>
+    </div>
+  </div>
+</div> -->
+
+<!-- tr7-form.component.html -->
+<div *ngIf="data" id="myPrintData" class="w-full h-full flex align-items-center justify-content-center bg-white">
+  <div class="w-10 py-4 px-2">
+    <div class="flex flex-column gap-2 mb-4">
+      <h1 class="text-center text-2xl font-bold my-0">T.R. FORM NO.-7</h1>
+      <p class="text-center text-gray-900 text-bold text-xl my-0">[See sub-rule (2)(b) of T.R.3.06]</p>
+      <h4 class="text-center font-bold my-0">
+        Challan for Deposit of money in the account of GOVERNMENT OF WEST BENGAL
+      </h4>
+    </div>
+    <form class="flex flex-column gap-4">
+      <div class="flex flex-column gap-2">
+        <label for="bankBranch" class="text-xl">1. Name of the Bank & Branch:</label>
+        <input pInputText id="bankBranch" class="p-inputtext p-component p-element" disabled />
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="treasuryName" class="text-xl">2. (a). Name of the Treasury:</label>
+        <input class="p-inputtext p-component p-element" disabled pInputText id="treasuryName" [value]="treasuryName" />
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="treasuryCode" class="text-xl">(b). Treasury Code:</label>
+        <div class="flex gap-2">
+          <input class="p-inputtext p-component p-element w-full" [value]="raisedToTreasury" disabled pInputText maxlength="1" />
+        </div>
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="accountCode" class="text-xl">3. Account Code:</label>
+        <div class="flex gap-2">
+          <input class="p-inputtext p-component p-element w-full" [value]="hoa" disabled pInputText maxlength="1" />
+        </div>
+        <p class="text-sm mt-1">(14- Digits must be filled up properly)</p>
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="detailHead" class="text-xl">4. Detail Head of Account:</label>
+        <input class="p-inputtext p-component p-element" disabled [value]="detailHead" pInputText id="detailHead" value="{{ detailHead }}" />
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="amount" class="text-xl">5. (a) Amount : Rs.</label>
+        <input class="p-inputtext p-component p-element" disabled pInputText id="amount" value="{{ amount }}" />
+        <label for="amountWords" class="text-xl mt-2">(b) In Words: Rupees:</label>
+        <input class="p-inputtext p-component p-element" disabled pInputText id="amountWords" value="{{ amountInWord }}" />
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="tenderedBy" class="text-xl">6. By whom tendered – Name & Address:</label>
+        <input class="p-inputtext p-component p-element" disabled pInputText id="tenderedBy" value="{{ vendorName }}, {{ vendorAddress }}" />
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="departmentalOfficer" class="text-xl">
+          7. Name / Designation & Address of the Departmental Officer on whose behalf / favour money is paid:
+        </label>
+        <input class="p-inputtext p-component p-element" disabled pInputText id="departmentalOfficer" value="" />
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="depositAuthority" class="text-xl mb-4">8. (a) Particulars & Authority of Deposit:</label>
+        <label for="tvNo" class="text-xl mb-4"><span>&nbsp;&nbsp;&nbsp;</span> (b) T.V. No. & Date of A.C. Bill:</label>
+      </div>
+      <div class="flex flex-column gap-2 mb-4">
+        <label class="text-xl">
+          9. Accounts Officer by whom adjustable: Accountant General (A&E), West Bengal.
+        </label>
+      </div>
+      <div class="flex justify-content-between align-items-center mb-4">
+        <div class="flex flex-column">
+          <p class="border-bottom-1 m-0"></p>
+          <label for="deptOfficerSignature" class="text-xl">Signature of Departmental / Treasury Officer</label>
+        </div>
+        <div class="flex flex-column">
+          <p class="border-bottom-1 m-0"></p>
+          <label for="depositorSignature" class="text-xl">Depositor’s Signature</label>
+        </div>
+      </div>
+      <div class="flex flex-column gap-6 w-10">
+        <div class="flex justify-content-between align-items-center">
+          <label for="date" class="text-xl">Date:</label>
+          <label for="challanNo" class="text-xl">Treasury Receipted Challan No.</label>
+        </div>
+        <div class="flex justify-content-between align-items-center">
+          <label for="scrollNo" class="text-xl">Received payment</label>
+          <label for="scrollNo" class="text-xl">Bank Scroll Serial No.</label>
+        </div>
+        <div class="flex justify-content-between align-items-center">
+          <label for="bankReceipt" class="text-xl">Receipt by Bank / Treasury</label>
+          <label for="bankSignature" class="text-xl">Signature with seal of the Bank</label>
+        </div>
+        <div class="flex justify-content-between align-items-center">
+          <label for="bankDate" class="text-xl">Date:</label>
+        </div>
+      </div>
+      <div>
+        <p class="border-bottom-1 m-0"></p>
+        <p class="text-sm">1 * In respect of Challan relating to refund of unspent amount of A.C. Bill</p>
+      </div>
+    </form>
+    <div class="w-full text-right">
+      <p-button class="noPrint p-button" (click)="printTR7()" class="rounded">
+        Print
+      </p-button>
+    </div>
   </div>
 </div>
+

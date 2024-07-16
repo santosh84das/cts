@@ -110,3 +110,10 @@ $gutter: 1rem; //for primeflex grid system
     background: transparent;
     border: none;
 }
+
+@media print {
+    .noPrint{
+        display: none;
+    }
+    
+}

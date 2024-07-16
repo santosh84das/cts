@@ -1,0 +1,19 @@
+@page {
+    height: 6in;
+    width: 7in;
+}
+
+@media print {
+    .noPrint {
+        display: none;
+    }
+    body {
+        visibility: hidden;
+    }
+    #myPrintData {
+        visibility: visible;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}

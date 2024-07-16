@@ -27,3 +27,8 @@
     </p-button>
 </div>
 </p-dialog>
+
+<p-dialog [(visible)]="printModal" [modal]="false" [style]="{width: '60vw'}"
+[baseZIndex]="10000" [draggable]="false">
+    <app-tr7-form *ngIf="printModal" [data]="printData"></app-tr7-form>
+</p-dialog>

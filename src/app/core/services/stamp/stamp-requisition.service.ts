@@ -113,4 +113,9 @@ export class StampRequisitionService {
       throw this.toastService.showError(error.message)
     })))
   }
+  printtr7(id: number): Observable<IapiResponce<any>> {
+    return this.http.get<IapiResponce<any>>(`v1/StampRequisition/TrFromGenerationDataByRequisitionId?stampRequisitionId=${id}`).pipe((catchError((error) => {
+      throw this.toastService.showError(error.message)
+    })))
+  }
 }
