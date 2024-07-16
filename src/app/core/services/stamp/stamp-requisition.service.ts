@@ -4,7 +4,7 @@ import { ToastService } from '../toast.service';
 import { IapiResponce } from '../../models/iapi-responce';
 import { Observable, catchError } from 'rxjs';
 import { AddVendorStampRequisition, GetVendorStampRequisition } from '../../models/stamp';
-import { DynamicTableQueryParameters } from 'mh-prime-dynamic-table/lib/mh-prime-dynamic-table-interface';
+import { DynamicTableQueryParameters } from '../../models/dynamic-table';
 
 @Injectable({
   providedIn: 'root'
@@ -91,6 +91,22 @@ export class StampRequisitionService {
       )
       .pipe(
         catchError((error) => {
+          throw this.toastService.showError(error.message);
+        })
+      );
+  }
+
+  getAllStampRequisitionWaitingForDelivery(
+    queryParameters: DynamicTableQueryParameters
+  ): Observable<IapiResponce<GetVendorStampRequisition>> {
+    return this.http
+      .patch<IapiResponce<GetVendorStampRequisition>>(
+        'v1/StampRequisition/GetAllStampRequisitionListForDelivery',
+        queryParameters
+      )
+      .pipe(
+        catchError((error) => {
+          console.log(error);
           throw this.toastService.showError(error.message);
         })
       );
