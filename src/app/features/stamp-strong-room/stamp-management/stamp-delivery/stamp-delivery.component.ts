@@ -33,18 +33,28 @@ export class StampDeliveryComponent implements OnInit {
 
   getAllStampRequisitionsForDelivery() {
     this.stampRequisitionService
-    .getAllStampRequisitionWaitingForDelivery(this.tableQueryParameters)
-    .subscribe((response) => {
+      .getAllStampRequisitionWaitingForDelivery(this.tableQueryParameters)
+      .subscribe((response) => {
+        if (response.apiResponseStatus == 1) {
+          this.tableData = response.result
+        } else {
+          this.toastService.showError(response.message)
+        }
+      })
+  }
+
+  requisitionDeliveredToVendor(id: number) {
+    this.stampRequisitionService.stampRequisitionDeliveredToVendor(id).subscribe((response) => {
       if (response.apiResponseStatus == 1) {
-        this.tableData = response.result
+        this.toastService.showSuccess(response.message)
+        this.getAllStampRequisitionsForDelivery()
       } else {
         this.toastService.showError(response.message)
       }
     })
   }
 
-  
   handleButtonClick($event: any) {
-
+    this.requisitionDeliveredToVendor($event.rowData.vendorStampRequisitionId)
   }
 }

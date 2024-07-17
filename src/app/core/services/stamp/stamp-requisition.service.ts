@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ToastService } from '../toast.service';
 import { IapiResponce } from '../../models/iapi-responce';
 import { Observable, catchError } from 'rxjs';
-import { AddVendorStampRequisition, GetVendorStampRequisition } from '../../models/stamp';
+import { AddVendorStampRequisition, ApprovedByClerk, ApprovedByTO, GetVendorStampRequisition, PrintData } from '../../models/stamp';
 import { DynamicTableQueryParameters } from '../../models/dynamic-table';
 
 @Injectable({
@@ -112,8 +112,8 @@ export class StampRequisitionService {
       );
   }
 
-  registerGRNNo(queryParameters: any): Observable<IapiResponce<boolean>> {
-    return this.http.get<IapiResponce<boolean>>(`v1/StampRequisition/PaymentProcessByDEO?vendorStampRequisitionId=${queryParameters.vendorStampRequisitionId}&grnNo=${queryParameters.GRNNo}`).pipe(catchError((error) => {
+  registerGRNNo(payload: any): Observable<IapiResponce<boolean>> {
+    return this.http.post<IapiResponce<boolean>>(`v1/StampRequisition/PaymentProcessByDEO`, payload).pipe(catchError((error) => {
       throw this.toastService.showError(error.message)
     }))
   }
@@ -129,9 +129,29 @@ export class StampRequisitionService {
       throw this.toastService.showError(error.message)
     })))
   }
-  printtr7(id: number): Observable<IapiResponce<any>> {
-    return this.http.get<IapiResponce<any>>(`v1/StampRequisition/TrFromGenerationDataByRequisitionId?stampRequisitionId=${id}`).pipe((catchError((error) => {
+
+  printtr7(id: number): Observable<IapiResponce<PrintData>> {
+    return this.http.get<IapiResponce<PrintData>>(`v1/StampRequisition/TrFromGenerationDataByRequisitionId?stampRequisitionId=${id}`).pipe((catchError((error) => {
       throw this.toastService.showError(error.message)
     })))
+  }
+
+
+  stampRequisitionDeliveredToVendor(id: number): Observable<IapiResponce<PrintData>> {
+    return this.http.get<IapiResponce<PrintData>>(`v1/StampRequisition/StampRequisitionDeliveredToVendor?stampRequisitionId=${id}`).pipe((catchError((error) => {
+      throw this.toastService.showError(error.message)
+    })))
+  }
+
+  approveByClerk(payload: ApprovedByClerk): Observable<IapiResponce<boolean>> {
+    return this.http.post<IapiResponce<boolean>>(`v1/StampRequisition/StampRequisitionApprovedByStampClerk`, payload).pipe(catchError((error) => {
+      throw this.toastService.showError(error.message)
+    }))
+  }
+
+  approveByTO(payload: ApprovedByTO): Observable<IapiResponce<boolean>> {
+    return this.http.post<IapiResponce<boolean>>(`v1/StampRequisition/StampRequisitionApprovedByTreasuryOfficer`, payload).pipe(catchError((error) => {
+      throw this.toastService.showError(error.message)
+    }))
   }
 }

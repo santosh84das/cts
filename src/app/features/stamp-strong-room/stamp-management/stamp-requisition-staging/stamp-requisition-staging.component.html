@@ -26,7 +26,7 @@
             <div class="col-12 lg:col-6 p-3">
                 <div class="transition-colors transition-duration-500 p-3 border-round border-2 cursor-pointer"
                     [ngClass]="{
-                    'hover:shadow-2 surface-card border-transparent hover:bg-primary-100 hover:border-primary':listType!=='approvedByClerk',
+                    'hover:shadow-2 surface-card border-transparent hover:bg-primary-100 hover:border-primary':listType!=='approveByClerkFormvedByClerk',
                     'bg-primary-100 border-primary': listType === 'approvedByClerk'
                   }" (click)="changeDynamicTable('approvedByClerk')">
                     <!--  -->
@@ -49,3 +49,29 @@
         </app-dynamic-table>
     </div>    
 </div>
+
+<p-dialog header="Modify Requisition" [(visible)]="modal" [modal]="false" [style]="{'width': 'fit-content'}" [baseZIndex]="10000">
+    <form [formGroup]="approveByClerkForm" class="grid formgrid p-fluid">
+        <div class="field mb-4 col-12 md:col-6">
+            <label for="sheet" class="font-medium text-900">Sheet</label>
+            <input formControlName="sheet" type="text" pinputtext="" class="p-inputtext p-component p-element">
+            <div *ngIf="approveByClerkForm.controls['sheet'].errors && (approveByClerkForm.controls['sheet'].dirty || approveByClerkForm.controls['sheet'].touched)">
+                <small class="p-error" *ngIf="approveByClerkForm.controls['sheet'].errors['required']">No of Sheets is required.</small>
+                <small class="p-error" *ngIf="approveByClerkForm.controls['sheet'].errors['min']">Minimun no of sheets is 1.</small>
+            </div>
+        </div>
+        <div class="field mb-4 col-12 md:col-6">
+            <label for="label" class="font-medium text-900">Label</label>
+            <input type="text" formControlName="label" pinputtext="" class="p-inputtext p-component p-element">
+            <div *ngIf="approveByClerkForm.controls['label'].errors && (approveByClerkForm.controls['label'].dirty || approveByClerkForm.controls['label'].touched)">
+                <small class="p-error" *ngIf="approveByClerkForm.controls['label'].errors['required']">No of labels is required.</small>
+                <small class="p-error" *ngIf="approveByClerkForm.controls['label'].errors['min']">Minimun no of labels is 1.</small>
+            </div>
+        </div>
+      </form>
+    <div class="w-full flex justify-content-end align-items-center">
+        <button pbutton="" pripple="" icon="pi pi-file" (click)="approveByClerk()" class="p-element p-ripple w-auto p-button p-component">
+            <span class="p-button-label">Approve Requisition</span>
+        </button>
+    </div>
+</p-dialog>
