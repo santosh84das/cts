@@ -14,7 +14,7 @@ export class PaymentProcessingComponent implements OnInit {
   registerGRNModal: boolean = false
   printModal: boolean = false
   vendorStampRequisitionId: number = 0
-  GRNNo: string = ""
+  GRNNo: number = 0
   tableActionButton: ActionButtonConfig[] = [];
   tableData!: DynamicTable<GetVendorStampRequisition>;
   tableQueryParameters!: DynamicTableQueryParameters | any;
@@ -72,6 +72,7 @@ export class PaymentProcessingComponent implements OnInit {
       this.stampRequisitionService.registerGRNNo({ vendorStampRequisitionId: this.vendorStampRequisitionId, GRNNo: this.GRNNo }).subscribe((response) => {
         if (response.apiResponseStatus == 1) {
           this.toastService.showSuccess(response.message)
+          this.getAllRequisitionsWaitingForPayment()
         } else {
           this.toastService.showError(response.message)
         }

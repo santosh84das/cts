@@ -40,7 +40,7 @@
             </div>
             <div class="field mb-4 col-12 md:col-6">
                 <label for="sheet" class="font-medium text-900">Sheet</label>
-                <input formControlName="sheet" type="number" [(ngModel)]="sheet" (ngModelChange)="sheetSelected($event)" pinputtext="" class="p-inputtext p-component p-element">
+                <input formControlName="sheet" type="text" [(ngModel)]="sheet" (ngModelChange)="sheetSelected($event)" pinputtext="" class="p-inputtext p-component p-element">
                 <div *ngIf="newStampRequisitionForm.controls['sheet'].errors && (newStampRequisitionForm.controls['sheet'].dirty || newStampRequisitionForm.controls['sheet'].touched)">
                     <small class="p-error" *ngIf="newStampRequisitionForm.controls['sheet'].errors['required']">No of Sheets is required.</small>
                     <small class="p-error" *ngIf="newStampRequisitionForm.controls['sheet'].errors['min']">Minimun no of sheets is 1.</small>
@@ -49,7 +49,7 @@
             <!-- <div class="surface-border border-top-1 opacity-50 my-4 col-12"></div> -->
             <div class="field mb-4 col-12 md:col-6">
                 <label for="label" class="font-medium text-900">Label</label>
-                <input type="number" formControlName="label" pinputtext="" [(ngModel)]="label" (ngModelChange)="labelSelected($event)" class="p-inputtext p-component p-element">
+                <input type="text" formControlName="label" pinputtext="" [(ngModel)]="label" (ngModelChange)="labelSelected($event)" class="p-inputtext p-component p-element">
                 <div *ngIf="newStampRequisitionForm.controls['label'].errors && (newStampRequisitionForm.controls['label'].dirty || newStampRequisitionForm.controls['label'].touched)">
                     <small class="p-error" *ngIf="newStampRequisitionForm.controls['label'].errors['required']">No of labels is required.</small>
                     <small class="p-error" *ngIf="newStampRequisitionForm.controls['label'].errors['min']">Minimun no of labels is 1.</small>

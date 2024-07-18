@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DynamicTable, DynamicTableQueryParameters } from 'mh-prime-dynamic-table/lib/mh-prime-dynamic-table-interface';
 import { ActionButtonConfig } from 'src/app/core/models/dynamic-table';
+import { ApprovedByClerk } from 'src/app/core/models/stamp';
 import { StampRequisitionService } from 'src/app/core/services/stamp/stamp-requisition.service';
 import { ToastService } from 'src/app/core/services/toast.service';
 
@@ -12,19 +14,32 @@ import { ToastService } from 'src/app/core/services/toast.service';
 export class StampRequisitionStagingComponent implements OnInit {
 
   listType: string = 'new'
+  id: number = 0
+  modal: boolean = false
   tableData!: DynamicTable<any>;
   tableActionButton: ActionButtonConfig[] = [];
   tableQueryParameters!: DynamicTableQueryParameters | any;
+  approveByClerkPayload!: ApprovedByClerk
+  approveByClerkForm!: FormGroup
   constructor(private stampRequisitionService: StampRequisitionService,
-    private toastService: ToastService) { }
+    private toastService: ToastService,
+    private fb: FormBuilder,) { }
 
   ngOnInit(): void {
+    this.initialozeForm()
     this.tableQueryParameters = {
       pageSize: 10,
       pageIndex: 0,
     };
 
     this.changeDynamicTable(this.listType);
+  }
+
+  initialozeForm() {
+    this.approveByClerkForm = this.fb.group({
+      sheet: [0, [Validators.required, Validators.min(0)]],
+      label: [0, [Validators.required, Validators.min(0)]],
+    });
   }
 
   changeDynamicTable(listType: string) {
@@ -50,8 +65,6 @@ export class StampRequisitionStagingComponent implements OnInit {
       ];
       this.getAllNewRequisitions();
     } else if (this.listType === 'approvedByClerk') {
-      console.log(this.listType);
-      
       this.tableActionButton = [];
       this.getAllApprovedByClerkRequisitions();
     }
@@ -60,14 +73,40 @@ export class StampRequisitionStagingComponent implements OnInit {
   handleButtonClick($event: any) {
     switch ($event.buttonIdentifier) {
       case 'reject':
-      this.stampRequisitionService.rejectedByStampClerk($event.rowData.vendorStampRequisitionId).subscribe((response) => {
+        this.stampRequisitionService.rejectedByStampClerk($event.rowData.vendorStampRequisitionId).subscribe((response) => {
+          if (response.apiResponseStatus == 1) {
+            this.toastService.showSuccess(response.message)
+            this.getAllNewRequisitions()
+          } else {
+            this.toastService.showError(response.message)
+          }
+        })
+        break;
+      case 'edit':
+        this.modal = true
+        this.id = $event.rowData.vendorStampRequisitionId
+    }
+  }
+
+  approveByClerk() {
+    if (this.approveByClerkForm.valid) {
+      this.approveByClerkPayload = {
+        labelByClerk: this.approveByClerkForm.value.label,
+        sheetByClerk: this.approveByClerkForm.value.sheet,
+        vendorStampRequisitionId: this.id
+      }
+      this.stampRequisitionService.approveByClerk(this.approveByClerkPayload).subscribe((response) => {
         if (response.apiResponseStatus == 1) {
           this.toastService.showSuccess(response.message)
+          this.getAllNewRequisitions()
+          this.approveByClerkForm.reset()
+          this.modal = false
         } else {
           this.toastService.showError(response.message)
         }
       })
-        break;
+    } else {
+      this.toastService.showWarning("Please fill all the fields.")
     }
   }
 
@@ -80,9 +119,9 @@ export class StampRequisitionStagingComponent implements OnInit {
       }
     })
   }
-  
+
   getAllApprovedByClerkRequisitions() {
-    this.stampRequisitionService.  getAllRequisitionsForwardedToTOForApproval(this.tableQueryParameters).subscribe((response) => {
+    this.stampRequisitionService.getAllRequisitionsForwardedToTOForApproval(this.tableQueryParameters).subscribe((response) => {
       if (response.apiResponseStatus == 1) {
         this.tableData = response.result;
       } else {

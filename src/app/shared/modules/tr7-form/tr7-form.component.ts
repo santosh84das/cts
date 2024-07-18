@@ -1,6 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { StampRequisitionService } from 'src/app/core/services/stamp/stamp-requisition.service';
-import { ToastService } from 'src/app/core/services/toast.service';
 import { numberToWords } from 'src/utils/numberToWords';
 
 @Component({
@@ -19,7 +17,7 @@ export class Tr7FormComponent implements OnInit {
   vendorName?: string;
   vendorAddress?: string;
 
-  constructor(private stampRequisitionService: StampRequisitionService, private toastService: ToastService) { }
+  constructor() { }
 
   ngOnInit(): void {
     if (this.data) {

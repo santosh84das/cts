@@ -218,3 +218,35 @@ export interface AddVendorStampRequisition {
   challanAmount: number;
   raisedToTreasury: string;
 }
+
+export interface PrintData {
+  raisedToTreasury: string;
+  hoa: string;
+  detailHead: string;
+  amount: number;
+  vendorName: string;
+  vendorAddress: string;
+  treasuryName: string;
+}
+
+export interface ApprovedByClerk {
+  vendorStampRequisitionId: number,
+  sheetByClerk: number,
+  labelByClerk: number
+}
+
+export interface ApprovedByTO {
+  vendorRequisitionStagingId: number,
+  sheetByTo: number,
+  labelByTo: number,
+  discountedAmount: number,
+  taxAmount: number,
+  challanAmount: number,
+}
+
+export interface calcAmountDetails {
+  amount: number,
+  discountAmount: number,
+  taxAmount: number,
+  challanAmount: number
+}
