@@ -55,6 +55,22 @@
                         {{item.quantity}}
                     </div>
                 </div>
+                <div class="col-4 flex">
+                    <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                        Start:
+                    </div>
+                    <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+                        {{item.start}}
+                    </div>
+                </div>
+                <div class="col-4 flex">
+                    <div class="text-500 font-medium mb-2 mr-2 text-lg text-center">
+                        End:
+                    </div>
+                    <div class="text-900 text-lg text-primary-500 font-semibold text-center">
+                        {{item.end}}
+                    </div>
+                </div>
             </div>
             <div class="mt-5" *ngIf="chequesDamageType1!=undefined&&chequesDamageType1[i]!=undefined">
                 <div class="flex flex-wrap gap-3 p-fluid">

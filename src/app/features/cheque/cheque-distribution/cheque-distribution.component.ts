@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ChequeReceive, ChequeReceiveListWithMICR, NewChequeEntry, saveChequeDistributionData } from 'src/app/core/models/cheque';
 import {
   ActionButtonConfig,
@@ -49,7 +50,7 @@ export class ChequeDistributionComponent implements OnInit {
   micrList!: [];
   distributeFormDetailsData!:saveChequeDistributionData;
 
-  constructor(private chequedistributionService: ChequeDistributionService, private fb: FormBuilder, private chequeinvoiceservice: ChequeInvoiceService,  private toastService: ToastService,) { }
+  constructor(private chequedistributionService: ChequeDistributionService, private fb: FormBuilder, private chequeinvoiceservice: ChequeInvoiceService,  private toastService: ToastService,private router: Router) { }
 
   ngOnInit(): void {
     this.cheques = [
@@ -170,13 +171,14 @@ export class ChequeDistributionComponent implements OnInit {
     this.distributeFormDetailsData ={
       micrCode: this.distributionForm.value.micr_code,
       series: this.distributionForm.value.series,
-      distributor: "BAA",
-      chequeInvoiceDetailsid: 135,
+      distributor: "BAA", //Todo need to change in dynamic
+      chequeInvoiceDetailsid: 1, //Todo need to change in dynamic
       chequeDistributeToUse: this.distributionForm.value.userListDetails
     }
     this.chequedistributionService.saveChequeDistribution(this.distributeFormDetailsData).subscribe((response) => {
       if (response.apiResponseStatus == 1) {
         this.toastService.showSuccess(response.message);
+        this.router.navigate(['cheque']);
       }
     })
     console.log('hi form',this.distributionForm.value);

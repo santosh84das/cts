@@ -160,8 +160,6 @@ export class ChequeIndentComponent implements OnInit {
           }
         })
       }
-      console.log('----->>>>',this.chequeIndentFormDetails);
-      
       this.chequeindentService.chqueIndentEntry(this.chequeIndentFormDetails).subscribe((response) => {
         if (response.apiResponseStatus == 1) {
           this.indentForm.reset();
@@ -170,6 +168,8 @@ export class ChequeIndentComponent implements OnInit {
             response.message,
             response.apiResponseStatus,
           );
+           window.location.reload();
+
         } else {
           this.toastService.showError(response.message);
         }

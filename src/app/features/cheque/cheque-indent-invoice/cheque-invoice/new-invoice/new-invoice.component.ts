@@ -32,7 +32,7 @@ export class NewInvoiceComponent implements OnInit {
   micrList!: [];
   micrDetailsList: micrDetails[] =[];
 
-  constructor(private fb: FormBuilder, private chequeIndentService: ChequeIndentService, private toastService: ToastService, private route: ActivatedRoute, private date: DatePipe, private chequeinvoiceservice: ChequeInvoiceService) { }
+  constructor(private fb: FormBuilder, private chequeIndentService: ChequeIndentService, private toastService: ToastService, private route: ActivatedRoute, private date: DatePipe, private chequeinvoiceservice: ChequeInvoiceService, private router: Router) { }
 
   ngOnInit(): void {
     this.id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
@@ -112,6 +112,8 @@ export class NewInvoiceComponent implements OnInit {
     const selectedSeries = this.invoiceForm.get('series')!.value;
     this.chequeIndentService.getSeriesDetails(selectedSeries).subscribe((res) => {
       if (res.apiResponseStatus == 1) {
+        console.log('result', res.result.availableQuantity);
+        
         this.invoiceForm.get('availability')!.patchValue(res.result.availableQuantity);
       } else {
         this.toastService.showError(res.message);
@@ -148,7 +150,7 @@ export class NewInvoiceComponent implements OnInit {
     console.log('try');
 
     const totalAvailable = this.micrDetailsList.reduce((total, item) => total + item.availableQuantity, 0);
-    console.log(totalAvailable);
+    console.log('totalAvailable',totalAvailable);
     
     this.invoiceForm.get('availability')?.patchValue(totalAvailable);
   }
@@ -171,7 +173,9 @@ export class NewInvoiceComponent implements OnInit {
       // );
       const chequeInvoiceDeatils: InvoiceDetails[] = [{micrCode: this.invoiceForm.get('micr_code')?.value, quantity: this.invoiceForm.get('quantity')?.value}];
       this.indentInvoiceDetails = { chequeIndentId, invoiceDate, invoiceNumber, chequeInvoiceDeatils }
-      console.log('mere ko chaye',this.indentInvoiceDetails);
+
+      console.log('k', this.indentInvoiceDetails);
+      
       this.chequeIndentService.saveChequeIndentInvoice(this.indentInvoiceDetails).subscribe(res => {
         if (res.apiResponseStatus == 1) {
           this.invoiceForm.reset();
@@ -179,6 +183,7 @@ export class NewInvoiceComponent implements OnInit {
             res.message,
             res.apiResponseStatus,
           );
+          this.router.navigate(['cheque/cheque-indent-invoice']);
         } else {
           this.toastService.showError(res.message);
         }

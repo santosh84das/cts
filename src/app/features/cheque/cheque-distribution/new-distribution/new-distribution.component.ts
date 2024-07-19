@@ -38,6 +38,8 @@ export class NewDistributionComponent implements OnInit {
   constructor(private fb: FormBuilder, private toastService: ToastService, private chequeDistributionService: ChequeDistributionService) { }
 
   ngOnInit(): void {
+
+    //Todo Treasury Cheque update in dynamic 
     this.cheques = [
       { name: 'Treasury Cheque', code: 1 },
       { name: 'Othres', code: 2 }
