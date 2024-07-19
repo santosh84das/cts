@@ -3,10 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { PensionProcessComponent } from './pension-process.component';
 import { PpoComponent } from './ppo/ppo.component';
 import { EntryComponent } from './ppo/entry/entry.component';
+import { PensionBillComponent } from './pension-bill/pension-bill.component';
 
 const routes: Routes = [
   {path: '', component: PensionProcessComponent},
   {path: 'ppo', component: PpoComponent},
+  {path:'app-pension-billS',component: PensionBillComponent},
 ];
 
 @NgModule({

@@ -14,9 +14,22 @@ import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown
 import { PensionProcessComponent } from './pension-process.component';
 import { PensionProcessRoutingModule } from './pension-process-routing.module';
 
+import { AutoCompleteModule } from "primeng/autocomplete";
+import { ChipsModule } from "primeng/chips";
+import { InputMaskModule } from "primeng/inputmask";
+import { InputNumberModule } from "primeng/inputnumber";
+import { CascadeSelectModule } from "primeng/cascadeselect";
+import { MultiSelectModule } from "primeng/multiselect";
+import { InputTextareaModule } from "primeng/inputtextarea";
+import { InputTextModule } from "primeng/inputtext";
+import { PensionBillComponent } from './pension-bill/pension-bill.component';
+
+
+
 @NgModule({
   declarations: [
-    PensionProcessComponent
+    PensionProcessComponent,
+    PensionBillComponent,
   ],
   imports: [
     CommonModule,
@@ -30,7 +43,15 @@ import { PensionProcessRoutingModule } from './pension-process-routing.module';
     CalendarModule,
     TreasuryDropdownModule,
     FormsModule,
-    PensionProcessRoutingModule
+    PensionProcessRoutingModule,
+    AutoCompleteModule,
+    ChipsModule,
+    InputMaskModule,
+    InputNumberModule,
+    CascadeSelectModule,
+    MultiSelectModule,
+    InputTextareaModule,
+    InputTextModule,
   ]
 })
 export class PensionProcessModule { }
