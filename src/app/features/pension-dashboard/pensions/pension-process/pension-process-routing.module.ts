@@ -14,3 +14,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class PensionProcessRoutingModule { }
+
+// pension-process-routing.module.ts
