@@ -21,11 +21,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaymentProcessingComponent } from './payment-processing/payment-processing.component';
 import { DialogModule } from 'primeng/dialog';
 import { Tr7FormModule } from 'src/app/shared/modules/tr7-form/tr7-form.module';
-import { StampDeliveryComponent } from './stamp-delivery/stamp-delivery.component';
 
 
 @NgModule({
-  declarations: [StampManagementComponent, StampRequisitionComponent, NewStampRequisitionComponent, StampRequisitionStagingComponent, StampRequisitionApprovalComponent, PaymentProcessingComponent, StampDeliveryComponent],
+  declarations: [StampManagementComponent, StampRequisitionComponent, NewStampRequisitionComponent, StampRequisitionStagingComponent, StampRequisitionApprovalComponent, PaymentProcessingComponent],
   imports: [
     CommonModule,
     ButtonModule,

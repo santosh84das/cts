@@ -46,8 +46,9 @@ export class StampRequisitionComponent implements OnInit {
           // });
           this.tableData = response.result;
         } else {
-          this.toastService.showError(
-            response.message
+          this.toastService.showAlert(
+            response.message,
+            response.apiResponseStatus
           );
         }
       });
