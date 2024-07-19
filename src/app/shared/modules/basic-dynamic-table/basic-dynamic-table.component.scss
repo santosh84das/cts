@@ -1,0 +1,85 @@
+#basicTable {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px; // Add space between rows
+    margin: 20px 0;
+
+    th {
+        padding: 12px;
+        text-align: left;
+        font-size: 14px;
+    }
+    td {
+        padding: 15px;
+        text-align: left;
+        font-size: 14px;
+    }
+
+    thead {
+        tr {
+            // background-color: var(--p-color-primary-500);
+            // color: white;
+
+            &:first-child {
+                th {
+                    &:first-child {
+                        border-top-left-radius: 8px;
+                        border-bottom-left-radius: 8px;
+                    }
+                    &:last-child {
+                        border-top-right-radius: 8px;
+                        border-bottom-right-radius: 8px;
+                    }
+                }
+            }
+        }
+    }
+
+    tfoot {
+        tr {
+            background-color: #8c94c1;
+            color: white;
+
+            td {
+                &:first-child {
+                    border-top-left-radius: 8px;
+                    border-bottom-left-radius: 8px;
+                }
+                &:last-child {
+                    border-top-right-radius: 8px;
+                    border-bottom-right-radius: 8px;
+                }
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            td {
+                &:first-child {
+                    border-top-left-radius: 8px;
+                    border-bottom-left-radius: 8px;
+                }
+                &:last-child {
+                    border-top-right-radius: 8px;
+                    border-bottom-right-radius: 8px;
+                }
+
+                // background-color: #bbc1e5;
+            }
+        }
+    }
+
+    .status {
+        color: white;
+        background-color: #79d379;
+        padding: 5px 15px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+
+    .booked-balance {
+        color: #39b54a;
+        font-weight: bold;
+    }
+}

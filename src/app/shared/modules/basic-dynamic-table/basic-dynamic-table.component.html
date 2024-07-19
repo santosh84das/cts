@@ -1,0 +1,21 @@
+<table id="basicTable">
+    <thead>
+        <tr class="bg-primary-500 px-4 py-2 mb-3 shadow-2">
+            <th *ngFor="let header of tableData.header" class="text-100 font-medium">{{header.name}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of tableData.data let i=index" class="surface-ground bg-indigo-50 shadow-2">
+            <td *ngFor="let header of tableData.header">
+                <span *ngIf="header.key === '#'" class="text-500 font-medium">{{i+1}}</span>
+                <span class="text-900 font-medium">{{data[header.key]}}</span>
+            </td>
+        </tr>
+    </tbody>
+    <!-- <tfoot>
+        <tr>
+            <td [attr.colspan]="tableData.header.length - 1">Total</td>
+            <td class="font-bold">{{tfoot.total}}</td>
+        </tr>
+    </tfoot> -->
+</table>

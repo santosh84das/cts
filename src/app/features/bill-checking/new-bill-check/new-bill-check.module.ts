@@ -24,8 +24,12 @@ import {DialogModule} from 'primeng/dialog';
 import { FieldsetModule } from 'primeng/fieldset';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { BadgeModule } from 'primeng/badge';
+import {SplitterModule} from 'primeng/splitter';
+import { EcsNeftComponent } from './ecs-neft/ecs-neft.component';
+import { BasicDynamicTableModule } from 'src/app/shared/modules/basic-dynamic-table/basic-dynamic-table.module';
+import { ChequeComponent } from './cheque/cheque.component';
 @NgModule({
-  declarations: [NewBillCheckComponent, AllotmentComponent,BillDetailsComponent, ListOfObjectionComponent, ByTransferComponent, PlTransferComponent],
+  declarations: [NewBillCheckComponent, AllotmentComponent,BillDetailsComponent, ListOfObjectionComponent, ByTransferComponent, PlTransferComponent, EcsNeftComponent, ChequeComponent],
   exports: [RouterModule],
   imports: [
     CommonModule,
@@ -45,6 +49,8 @@ import { BadgeModule } from 'primeng/badge';
     FieldsetModule,
     InputTextareaModule,
     BadgeModule,
+    SplitterModule,
+    BasicDynamicTableModule,
     RouterModule.forChild([
       {
         path: '',
@@ -54,6 +60,10 @@ import { BadgeModule } from 'primeng/badge';
           { path: 'bill-details', component: BillDetailsComponent },
           { path: 'objection', component: ListOfObjectionComponent },
           { path: 'allotment', component: AllotmentComponent },
+          { path: 'by-transfer', component: ByTransferComponent },
+          { path: 'pl-transfer', component: PlTransferComponent },
+          { path: 'ecs-neft', component: EcsNeftComponent },
+          { path: 'cheque', component: ChequeComponent },
         ],
       },
     ]),

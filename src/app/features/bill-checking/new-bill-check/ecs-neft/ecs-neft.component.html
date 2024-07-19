@@ -1,0 +1,122 @@
+<div class="grid">
+    <div class="col-12">
+        <p-divider align="left" type="dashed">
+            <div class="inline-flex align-items-center">
+                <i class="pi pi-file mr-2"></i>
+                <b>Bill Details</b>
+            </div>
+        </p-divider>
+        <div class="grid grid-nogutter static bg-primary-100 border-round border-primary border-solid text-gray-800 p-3">
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Bill No:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    {{ escneftData.billNo }}
+                </div>
+            </div>
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Bill Date:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    {{ escneftData.billDate  }}
+                </div>
+            </div>
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Gross Amount:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    {{ escneftData.grossAmount | currency:'INR':'symbol':'1.2-2' }}
+                </div>
+            </div>
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Net Amount:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    {{ escneftData.netAmount | currency:'INR':'symbol':'1.2-2' }}
+                </div>
+            </div>
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Total Cheque Amount:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    {{ escneftData.chequeAmount | currency:'INR':'symbol':'1.2-2' }}
+                </div>
+            </div>
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    Pay Mode:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    {{escneftData.payMode }}
+                </div>
+            </div>
+            <div class="col-12 md:col-3 p-3 flex">
+                <div class="font-medium mb-2 mr-2 text-lg">
+                    No of Beneficiarys:
+                </div>
+                <div class="text-900 text-lg text-primary-500 font-semibold">
+                    {{escneftData.noOfBeneficiarys }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+    <p-divider align="left" type="dashed">
+        <div class="inline-flex align-items-center">
+            <i class="pi pi-users mr-2"></i>
+            <b>Beneficiary Details</b>
+        </div>
+    </p-divider>
+    <!-- <div class="text-500 mb-5">Morbi tristique blandit turpis. In viverra ligula id nulla hendrerit rutrum.</div> -->
+    <!-- <ul class="list-none p-0 m-0">
+        <li class="flex justify-content-between bg-primary-500 px-4 py-2 mb-3 shadow-2 border-round flex-wrap">
+            <div class="text-100 flex pr-5 font-medium">#</div>
+            <div class="text-100 flex font-medium">Beneficiary Name</div>
+            <div class="text-100 flex font-medium">Beneficiary Code</div>
+            <div class="text-100 flex font-medium" >Bank's IFSC Code</div>
+            <div class="text-100 flex font-medium" >Bank Name</div>
+            <div class="text-100 flex font-medium" >Account Number</div>
+            <div class="text-100 flex font-medium" >E-Mail</div>
+            <div class="text-100 flex font-medium" >Contact No.</div>
+            <div class="text-100 flex font-medium" >Amount(in Rs)</div>
+            <div class="text-100 flex font-medium" >Payee Type</div>
+        </li>
+        <li class="flex surface-ground bg-indigo-50 align-items-center px-4 py-3 mb-3 shadow-2 border-round  justify-content-between"
+            *ngFor="let beneficiary of escneftData.beneficiarys;index as i">
+            <div class="text-500  pr-5 font-medium">{{i+1}}</div>
+            <div class="text-900 font-medium">{{ beneficiary.beneficiaryName }}</div>
+            <div class="text-900 font-medium">
+                {{ beneficiary.beneficiaryCode }}
+            </div>
+            <div class="text-900 font-medium">
+                {{ beneficiary.ifscCode }}
+            </div>
+            <div class="text-900 font-medium">
+                {{ beneficiary.bankName }}
+            </div>
+            <div class="text-900 font-medium">
+                {{ beneficiary.accountNumber }}
+            </div>
+            <div class="text-900 font-medium">
+                {{ beneficiary.eMail }}
+            </div>
+            <div class="text-900 font-medium">
+                {{ beneficiary.contactNo }}
+            </div>
+            <div class="text-900 font-medium">
+                 {{ beneficiary.amount | currency:'INR':'symbol':'1.2-2'}}
+            </div>
+            <div class="text-900 font-medium">
+                {{ beneficiary.payeeType }}
+            </div>
+        </li>
+    </ul> -->
+    <app-basic-dynamic-table [tableData]="escneftTable"></app-basic-dynamic-table>
+
+</div>
+</div>
