@@ -34,9 +34,9 @@ export class InvoiceReceiveComponent implements OnInit {
         class: 'p-button-info p-button-sm',
         icon: 'pi pi-inbox',
         lable: 'Receive',
-        renderButton: (rowData) => {
-          return (rowData.status === Status[15] || rowData.status === Status[12]);
-        }
+        // renderButton: (rowData) => {
+        //   return (rowData.status === Status[24] || rowData.status === Status[27]);
+        // }
       },
       // {
       //   buttonIdentifier: 'rejected',
@@ -70,7 +70,6 @@ export class InvoiceReceiveComponent implements OnInit {
           response.result.data.map((item: any) => {
             item.createdAt = convertDate(item.createdAt);
             item.memoDate = convertDate(item.memoDate);
-            item.status = Status[item.status]
           });
           this.tableData = response.result;
         } else {
@@ -82,7 +81,7 @@ export class InvoiceReceiveComponent implements OnInit {
       });
   }
   handleButtonClick($event: any) {
-    this.stampIndentService.receiveIndent($event.rowData.stampIndentId).subscribe((response) => {
+    this.stampIndentService.receiveIndent({indentId: $event.rowData.stampIndentId, sheet: $event.rowData.sheet, label: $event.rowData.label}).subscribe((response) => {
       if (response.apiResponseStatus == 1) {
 
         this.toastService.showSuccess(

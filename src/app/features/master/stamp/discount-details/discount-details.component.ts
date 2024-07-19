@@ -1,10 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'src/app/core/models/dynamic-table';
 import { GetStampDiscountDetails, AddStampDiscountDetails } from 'src/app/core/models/stamp';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { DiscountDetailsService } from 'src/app/core/services/stamp/discount-details.service';
 import { convertDate } from 'src/utils/dateConversion';
+import { greaterThanZeroValidator } from 'src/utils/greaterThanZeroValidator';
 
 @Component({
   selector: 'app-discount-details',
@@ -14,15 +15,17 @@ import { convertDate } from 'src/utils/dateConversion';
 export class DiscountDetailsComponent implements OnInit {
   vendorType!: string;
   stampCategory!: string;
+  vendorTypeId!: number;
+  stampCategoryId!: number;
   tableActionButton: ActionButtonConfig[] = [];
   tableData!: DynamicTable<GetStampDiscountDetails>;
   tableQueryParameters!: DynamicTableQueryParameters | any;
-  displayCalculateModal: boolean | undefined;
-  displayInsertModal: boolean | undefined;
+  displayCalculateModal: boolean = false;
+  displayInsertModal: boolean = false;
   CategoryTypeList: any[] = [];
   discountDetailsEntryForm!: FormGroup;
   calculateDiscountForm!: FormGroup;
-  amount!: number;
+  amount: number = 0;
   discount: string = '0';
   discountDetailsEntryPayload!: AddStampDiscountDetails;
 
@@ -62,10 +65,36 @@ export class DiscountDetailsComponent implements OnInit {
     });
 
     this.discountDetailsEntryForm = this.fb.group({
-      denominationFrom: [0, Validators.required],
-      denominationTo: [0, Validators.required],
-      discount: [0, Validators.required]
+      denominationFrom: [0, [Validators.required, Validators.min(0)]],
+      denominationTo: [0, [Validators.required]],
+      discount: [null, [Validators.required, greaterThanZeroValidator()]]
+    }, {
+      validators: this.greaterThanValidator('denominationFrom', 'denominationTo')
     });
+  }
+
+
+  greaterThanValidator(fromControlName: string, toControlName: string): ValidatorFn {
+    return (formGroup: AbstractControl): ValidationErrors | null => {
+      const formGroupControl = formGroup as FormGroup;
+      const fromControl = formGroupControl.get(fromControlName);
+      const toControl = formGroupControl.get(toControlName);
+
+      if (!fromControl || !toControl) {
+        return null; 
+      }
+
+      const fromValue = fromControl.value;
+      const toValue = toControl.value;
+      
+      if (fromValue != null && toValue != null && toValue <= fromValue) {
+        console.log("Hi=====>");
+        
+        return { greaterThan: true }; 
+      }
+
+      return null; 
+    };
   }
 
   getAllStampDiscountDetails() {
@@ -96,7 +125,9 @@ export class DiscountDetailsComponent implements OnInit {
   }
 
   handleButtonClick($event: any) {
-    this.DiscountDetailsService.deleteStampDiscountDetail($event.rowData.stampVendorId)
+    console.log($event);
+    
+    this.DiscountDetailsService.deleteStampDiscountDetail($event.rowData.discountId)
       .subscribe((response) => {
         response.apiResponseStatus == 1 ? this.getAllStampDiscountDetails() : this.toastService.showAlert(
           response.message,
@@ -107,11 +138,13 @@ export class DiscountDetailsComponent implements OnInit {
   }
 
   onStampCategorySelected($event: any) {
-    this.stampCategory = $event;
+    this.stampCategoryId = $event.stampCategoryId;
+    this.stampCategory = $event.stampCategory1;
   }
 
   onVendorTypeSelected($event: any) {
-    this.vendorType = $event;
+    this.vendorType = $event.vendorType;
+    this.vendorTypeId = $event.stampVendorId;
   }
 
   calculateDiscount() {
@@ -130,8 +163,8 @@ export class DiscountDetailsComponent implements OnInit {
 
     if (this.discountDetailsEntryForm.valid) {
       this.discountDetailsEntryPayload = {
-        stampCategory: this.stampCategory,
-        vendorType: this.vendorType,
+        StampCategoryId: this.stampCategoryId,
+        vendorType: this.vendorTypeId,
         denominationFrom: this.discountDetailsEntryForm.value.denominationFrom,
         denominationTo: this.discountDetailsEntryForm.value.denominationTo,
         discount: this.discountDetailsEntryForm.value.discount,
@@ -148,7 +181,7 @@ export class DiscountDetailsComponent implements OnInit {
         }
       });
     } else {
-      this.toastService.showAlert('Please fill all the required fields', 0);
+      this.toastService.showWarning('Please fill all the required fields');
     }
   }
 }

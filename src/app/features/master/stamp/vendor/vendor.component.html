@@ -6,7 +6,7 @@
     </div>
     <div class="col-12">
         <app-dynamic-table (actionButtonClicked)="handleButtonClick($event)"
-        [numberRowsShown]="10" rowSelectionMode="multiple" [rowsPerPageOptions]="[10,30,50]"
+        [numberRowsShown]="10" [rowsPerPageOptions]="[10,30,50]"
             [actionButtons]="tableActionButton" [headers]="tableData!.headers" [data]="tableData.data"
             [dataCount]="tableData.dataCount">
         </app-dynamic-table>
@@ -15,75 +15,117 @@
 
 
 
-<p-dialog header="Vendor Details Entry" [(visible)]="displayInsertModal" [modal]="true" [style]="{ 'width': '30vw'}">
+<p-dialog header="Vendor Details Entry" [(visible)]="displayInsertModal" [modal]="true" [style]="{ 'width': '40vw'}">
     <form [formGroup]="VendorDetailsEntryForm" enctype="multipart/form-data" class="flex flex-column gap-4 mt-3">
-        <div class="flex gap-2">
-            <div class="col-12 p-0 flex-auto">
-                <label for="Upload Photo" class="block mb-1 text-color text-lg">Upload Photo</label>
-                <input type="file" pinputtext="" formControlName="vendorPhoto" (change)="handleFileInput($event, 'vendorPhoto')" accept="image/*"
-                    class="font-medium cursor-pointer block p-inputtext w-full file">
+        <div class="flex gap-2 xl:flex-row flex-column">
+            <div class="flex-1">
+                <label for="vendorName" class="block mb-1 font-medium text-900">Vendor Name</label>
+                <input type="text" pinputtext="" formControlName="vendorName" class="p-inputtext p-component p-element w-full">
+                <div *ngIf="VendorDetailsEntryForm.controls['vendorName'].errors && (VendorDetailsEntryForm.controls['vendorName'].dirty || VendorDetailsEntryForm.controls['vendorName'].touched)">
+                    <small class="p-error" *ngIf="VendorDetailsEntryForm.controls['vendorName'].errors['required']">Vendor Name is required.</small>
+                </div>
+            </div>
+            <div class="flex-1">
+                <label for="vendorPhoto" class="block mb-1 font-medium text-900">Upload Photo</label>
+                <input type="file" pinputtext="" formControlName="vendorPhoto" (change)="handleFileInput($event, 'vendorPhoto')" accept="image/*" class="font-medium cursor-pointer block p-inputtext w-full file">
+                <div *ngIf="VendorDetailsEntryForm.controls['vendorPhoto'].errors && (VendorDetailsEntryForm.controls['vendorPhoto'].dirty || VendorDetailsEntryForm.controls['vendorPhoto'].touched)">
+                    <small class="p-error" *ngIf="VendorDetailsEntryForm.controls['vendorPhoto'].errors['required']">Photo upload is required.</small>
+                </div>
             </div>
         </div>
-        <div class="flex gap-2">
+    
+        <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-1">
-                <label for="Pan Number" class="block mb-1 text-color text-lg">Pan No:</label>
-                <input formControlName="panNumber" type="text" pinputtext="" placeholder="Eg: ABCDE1234F"
-                    class="p-inputtext p-component p-element w-full">
+                <label for="panNumber" class="block mb-1 font-medium text-900">Pan No:</label>
+                <input formControlName="panNumber" type="text" pinputtext="" placeholder="Eg: ABCDE1234F" class="p-inputtext p-component p-element w-full">
+                <div *ngIf="VendorDetailsEntryForm.controls['panNumber'].errors && (VendorDetailsEntryForm.controls['panNumber'].dirty || VendorDetailsEntryForm.controls['panNumber'].touched)">
+                    <small class="p-error" *ngIf="VendorDetailsEntryForm.controls['panNumber'].errors['required']">PAN Number is required.</small>
+                    <small class="p-error" *ngIf="VendorDetailsEntryForm.controls['panNumber'].errors['pattern']">Enter a valid PAN Number (e.g., ABCDE1234F).</small>
+                </div>
             </div>
+    
             <div class="flex-1">
-                <label for="License Number" class="block mb-1 text-color text-lg">License Number</label>
-                <input formControlName="licenseNo" type="text" pinputtext="" placeholder="Eg: LIC123457"
-                    class="p-inputtext p-component p-element w-full">
-            </div>
-        </div>
-        <div class="flex gap-2">
-            <div class="flex-1">
-                <label for="Upload Pan" class="block mb-1 text-color text-lg">Upload Pan</label>
-                <input type="file" pinputtext="" formControlName="vendorPanPhoto" (change)="handleFileInput($event, 'vendorPanPhoto')" accept="image/*"
-                    class="font-medium cursor-pointer block p-inputtext w-full file">
-            </div>
-            <div class="flex-1">
-                <label for="Upload Licence" class="block mb-1 text-color text-lg">Upload Licence</label>
-                <input type="file" pinputtext="" formControlName="vendorLicencePhoto" (change)="handleFileInput($event, 'vendorLicencePhoto')" accept="image/*"
-                    class="font-medium cursor-pointer block p-inputtext w-full file">
+                <label for="licenseNo" class="block mb-1 font-medium text-900">License Number</label>
+                <input formControlName="licenseNo" type="text" pinputtext="" placeholder="Eg: LIC123457" class="p-inputtext p-component p-element w-full">
+                <div *ngIf="VendorDetailsEntryForm.controls['licenseNo'].errors && (VendorDetailsEntryForm.controls['licenseNo'].dirty || VendorDetailsEntryForm.controls['licenseNo'].touched)">
+                    <small class="p-error" *ngIf="VendorDetailsEntryForm.controls['licenseNo'].errors['required']">License Number is required.</small>
+                </div>
             </div>
         </div>
-        
-        <div class="flex gap-2">
+    
+        <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-1">
-                <label for="Phone" class="block mb-1 text-color text-lg">Phone</label>
-                <input formControlName="phoneNumber" type="text" pinputtext="" placeholder="Eg: 1234567891"
-                    class="p-inputtext p-component p-element w-full">
+                <label for="vendorPanPhoto" class="block mb-1 font-medium text-900">Upload Pan</label>
+                <input type="file" pinputtext="" formControlName="vendorPanPhoto" (change)="handleFileInput($event, 'vendorPanPhoto')" accept="image/*" class="font-medium cursor-pointer block p-inputtext w-full file">
+                <div *ngIf="VendorDetailsEntryForm.controls['vendorPanPhoto'].errors && (VendorDetailsEntryForm.controls['vendorPanPhoto'].dirty || VendorDetailsEntryForm.controls['vendorPanPhoto'].touched)">
+                    <small class="p-error" *ngIf="VendorDetailsEntryForm.controls['vendorPanPhoto'].errors['required']">PAN upload is required.</small>
+                </div>
             </div>
+    
             <div class="flex-1">
-                <label for="Address" class="block mb-1 text-color text-lg">Address</label>
-                <input formControlName="address" type="text" pinputtext="" placeholder="Eg: 20, ABC Road. New Delhi."
-                    class="p-inputtext p-component p-element w-full">
+                <label for="vendorLicencePhoto" class="block mb-1 font-medium text-900">Upload Licence</label>
+                <input type="file" pinputtext="" formControlName="vendorLicencePhoto" (change)="handleFileInput($event, 'vendorLicencePhoto')" accept="image/*" class="font-medium cursor-pointer block p-inputtext w-full file">
+                <div *ngIf="VendorDetailsEntryForm.controls['vendorLicencePhoto'].errors && (VendorDetailsEntryForm.controls['vendorLicencePhoto'].dirty || VendorDetailsEntryForm.controls['vendorLicencePhoto'].touched)">
+                    <small class="p-error" *ngIf="VendorDetailsEntryForm.controls['vendorLicencePhoto'].errors['required']">Licence upload is required.</small>
+                </div>
             </div>
         </div>
-        <div class="flex gap-2">
+    
+        <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-1">
-                <label for="Effective From" class="block mb-1 text-color text-lg">Effective From</label>
-                <span class="p-input-icon-left w-full"><i class="pi pi-angle-double-right"></i>
-                    <p-calendar  appendTo="body"[showIcon]="true" inputId="icon" formControlName="effectiveFrom"></p-calendar>
+                <label for="phoneNumber" class="block mb-1 font-medium text-900">Phone</label>
+                <input formControlName="phoneNumber" type="text" pinputtext="" placeholder="Eg: 1234567891" class="p-inputtext p-component p-element w-full">
+                <div *ngIf="VendorDetailsEntryForm.controls['phoneNumber'].errors && (VendorDetailsEntryForm.controls['phoneNumber'].dirty || VendorDetailsEntryForm.controls['phoneNumber'].touched)">
+                    <small class="p-error" *ngIf="VendorDetailsEntryForm.controls['phoneNumber'].errors['required']">Phone number is required.</small>
+                    <small class="p-error" *ngIf="VendorDetailsEntryForm.controls['phoneNumber'].errors['pattern']">Enter a valid 10-digit phone number.</small>
+                </div>
+            </div>
+    
+            <div class="flex-1">
+                <label for="address" class="block mb-1 font-medium text-900">Address</label>
+                <input formControlName="address" type="text" pinputtext="" placeholder="Eg: 20, ABC Road. New Delhi." class="p-inputtext p-component p-element w-full">
+                <div *ngIf="VendorDetailsEntryForm.controls['address'].errors && (VendorDetailsEntryForm.controls['address'].dirty || VendorDetailsEntryForm.controls['address'].touched)">
+                    <small class="p-error" *ngIf="VendorDetailsEntryForm.controls['address'].errors['required']">Address is required.</small>
+                </div>
+            </div>
+        </div>
+    
+        <div class="flex gap-2 xl:flex-row flex-column">
+            <div class="flex-1">
+                <label for="effectiveFrom" class="block mb-1 font-medium text-900">Effective From</label>
+                <span class="p-input-icon-left w-full">
+                    <!-- <i class="pi pi-angle-double-right z-3"></i> -->
+                    <p-calendar appendTo="body" [showIcon]="true" inputId="effectiveFrom" formControlName="effectiveFrom"></p-calendar>
                 </span>
+                <div *ngIf="VendorDetailsEntryForm.controls['effectiveFrom'].errors && (VendorDetailsEntryForm.controls['effectiveFrom'].dirty || VendorDetailsEntryForm.controls['effectiveFrom'].touched)">
+                    <small class="p-error" *ngIf="VendorDetailsEntryForm.controls['effectiveFrom'].errors['required']">Effective From date is required.</small>
+                </div>
             </div>
+    
             <div class="flex-1">
-                <label for="To" class="block mb-1 text-color text-lg">Valid upto</label>
-                <span class="p-input-icon-left w-full"><i class="pi pi-stop-circle"></i>
-                    <p-calendar  appendTo="body"[showIcon]="true" inputId="icon" formControlName="validUpto"></p-calendar>
+                <label for="validUpto" class="block mb-1 font-medium text-900">Valid Upto</label>
+                <span class="p-input-icon-left w-full">
+                    <!-- <i class="pi pi-stop-circle z-3"></i> -->
+                    <p-calendar appendTo="body" [showIcon]="true" inputId="validUpto" formControlName="validUpto"></p-calendar>
                 </span>
+                <div *ngIf="VendorDetailsEntryForm.controls['validUpto'].errors && (VendorDetailsEntryForm.controls['validUpto'].dirty || VendorDetailsEntryForm.controls['validUpto'].touched)">
+                    <small class="p-error" *ngIf="VendorDetailsEntryForm.controls['validUpto'].errors['required']">Valid Upto date is required.</small>
+                </div>
             </div>
         </div>
-        <div class="flex gap-2">
-            <div class="col-12 p-0 flex-auto">
-                <label for="Vendor Type" class="block mb-1 text-color text-lg">Vendor Type</label>
-                <app-vendor-type-dropdown class="flex-auto" (vendorTypeSelected)="onVendorTypeSelected($event)"></app-vendor-type-dropdown>
+        <div class="flex gap-2 xl:flex-row flex-column xl:align-items-end">
+            <div class="flex-1">
+                <label for="vVendorType" class="block mb-1 font-medium text-900">Vendor Type</label>
+                <app-vendor-type-dropdown class="flex-1" (vendorTypeSelected)="onVendorTypeSelected($event)"></app-vendor-type-dropdown>
             </div>
+            <!-- <div class="flex-1">
+                <label for="treasury" class="block mb-1 font-medium text-900">Treasury</label>
+                <app-treasury-dropdown (treasurySelected)="onTreasurySelected($event)"></app-treasury-dropdown>
+            </div> -->
         </div>
-        <!-- TODO -->
-        <!-- <p-button label="Submit" (click)="addDiscountDetails()" class="justify-content-center"></p-button> -->
     </form>
+    
+    
     <div class="flex gap-2 justify-content-end pt-3">
         <button pbutton="" (click)="addVendors()" pripple="" label="Submit" class="p-element p-ripple p-button-rounded p-button p-component">
             <span class="p-button-label">Submit</span><span class="p-ink"></span>

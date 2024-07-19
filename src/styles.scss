@@ -13,6 +13,11 @@ $gutter: 1rem; //for primeflex grid system
 @import "assets/demo/styles/badges.scss";
 
 /*------------CUSTOM---------------*/
+*, *::after, *::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 .layout-topbar-menu.layout-topbar-menu-mobile-active {
     z-index: 5 !important;
 }
@@ -104,4 +109,11 @@ $gutter: 1rem; //for primeflex grid system
 .file::-webkit-file-upload-button {
     background: transparent;
     border: none;
+}
+
+@media print {
+    .noPrint{
+        display: none;
+    }
+    
 }

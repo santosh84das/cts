@@ -16,16 +16,17 @@ import { error } from 'console';
 })
 export class IndentCaptureComponent implements OnInit {
 
+  loading: boolean = false
   labelPerSheet: number = 0
   denomination: number = 0
-  description: string = "Eg: Court fees."
+  description: string = ""
   sheet: number = 0
   label: number = 0
   raisedToTreasuryCode!: string
   quantity: number = (this.labelPerSheet * this.sheet) + this.label
   amount: number = this.quantity * this.denomination
   stamCombinationId!: number
-  displayInsertModal?: boolean;
+  displayInsertModal: boolean = false;
   stampIndentForm!: FormGroup
   tableActionButton: ActionButtonConfig[] = [];
   tableData!: DynamicTable<GetStampIndents>;
@@ -41,23 +42,15 @@ export class IndentCaptureComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm()
-    
+
     this.tableQueryParameters = {
       pageSize: 10,
       pageIndex: 0,
     };
-    
+
     this.getAllStampIndents();
-    // this.tableActionButton = [
-    //   {
-    //     buttonIdentifier: 'details',
-    //     class: 'p-button-info p-button-sm',
-    //     icon: 'pi pi-info-circle',
-    //     lable: 'Details',
-    //   },
-    // ];
   }
-  
+
 
   initializeForm(): void {
     this.stampIndentForm = this.fb.group({
@@ -65,7 +58,7 @@ export class IndentCaptureComponent implements OnInit {
       memoDate: ['', [Validators.required]],
       noOfSheets: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Validates integer
       noOfLabels: ['', [Validators.required, Validators.pattern(/^\d+$/)]], // Validates integer
-      remarks: ['']
+      remarks: ['', [Validators.required, Validators.maxLength(20)]]
     });
   }
 
@@ -77,7 +70,6 @@ export class IndentCaptureComponent implements OnInit {
           response.result.data.map((item: any) => {
             item.createdAt = convertDate(item.createdAt);
             item.memoDate = convertDate(item.memoDate);
-            item.status = Status[item.status]
           });
           this.tableData = response.result;
         } else {
@@ -94,7 +86,8 @@ export class IndentCaptureComponent implements OnInit {
   }
 
 
-   addStampIndent() {
+  addStampIndent() {
+    this.loading = true
     if (this.stampIndentForm.valid) {
       this.stampIndentPayload = {
         stampCombinationId: this.stamCombinationId,
@@ -112,16 +105,17 @@ export class IndentCaptureComponent implements OnInit {
       this.stampIndentService.addNewStampIndent(this.stampIndentPayload).subscribe((response) => {
         if (response.apiResponseStatus == 1) {
           this.toastService.showSuccess(response.message);
-          this.stampIndentForm.reset()
-          this.displayInsertModal = false;
+          // this.stampIndentForm.reset()
+          // this.displayInsertModal = false;
           this.getAllStampIndents();
         } else {
           this.toastService.showAlert(response.message, response.apiResponseStatus);
         }
       });
     } else {
-      this.toastService.showAlert('Please fill all the required fields', 0);
+      this.toastService.showWarning('Please fill all the required fields');
     }
+    this.loading = false
   }
 
   handleButtonClick($event: any) {
@@ -152,7 +146,7 @@ export class IndentCaptureComponent implements OnInit {
     this.calcAmountQuantity()
   }
 
-  onTreasurySelected($event: any) {    
+  onTreasurySelected($event: any) {
     this.raisedToTreasuryCode = $event;
   }
 

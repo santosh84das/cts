@@ -9,7 +9,7 @@ import { NumberToWordsPipe } from 'src/app/core/pipe/number-to-words.pipe';
     NumberToWordsPipe,
   ],
   imports: [
-    CommonModule
+    CommonModule,
   ],
   exports:[
     FirstLetterPipe,

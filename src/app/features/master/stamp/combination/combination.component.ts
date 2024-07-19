@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
-import { GetStampCombinations } from 'src/app/core/models/stamp';
+import { AddStampCombination, GetStampCombinations } from 'src/app/core/models/stamp';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { convertDate } from 'src/utils/dateConversion';
 import { StampCombinationService } from 'src/app/core/services/stamp/stamp-combination.service';
@@ -12,15 +12,26 @@ import { StampCombinationService } from 'src/app/core/services/stamp/stamp-combi
 })
 export class CombinationComponent implements OnInit {
 
+  categoryId: any
+  categoryDescription: string = "";
+  labelId: any
+  denominationId: any
   tableActionButton: ActionButtonConfig[] = [];
   tableData!: DynamicTable<GetStampCombinations>;
   tableQueryParameters!: DynamicTableQueryParameters | any;
+  // combinationEntryForm!: FormGroup
+  combinationEntryPayload!: AddStampCombination
+  modal: boolean = false
 
   constructor(
     private stampCombinationService: StampCombinationService,
     private toastService: ToastService,
     private fb: FormBuilder
   ) { }
+  @Output() CategoryTypeSelected = new EventEmitter<string>();
+  @Output() DenominatonSelected = new EventEmitter<string>();
+  @Output() LabelSelected = new EventEmitter<string>();
+
 
   ngOnInit(): void {
     this.tableActionButton = [
@@ -40,9 +51,9 @@ export class CombinationComponent implements OnInit {
     this.getAllStampCombination();
   }
 
+
+
   getAllStampCombination() {
-    console.log(this.tableQueryParameters);
-    
     this.stampCombinationService
       .getStampCombinationList(this.tableQueryParameters)
       .subscribe((response) => {
@@ -70,4 +81,46 @@ export class CombinationComponent implements OnInit {
         );
       });
   }
+
+  displayInsertModal() {
+    this.modal = true
+  }
+
+  addcombination() {
+
+    if (this.categoryId && this.labelId && this.denominationId) {
+      this.combinationEntryPayload = {
+        stampCategoryId: this.categoryId,
+        stampTypeId: this.denominationId,
+        stampLabelId: this.labelId,
+      };
+      console.log(this.combinationEntryPayload);
+
+      this.stampCombinationService.addNewStampCombination(this.combinationEntryPayload).subscribe((response) => {
+        if (response.apiResponseStatus == 1) {
+          this.toastService.showSuccess(response.message);
+          this.modal = false;
+          this.getAllStampCombination();
+        } else {
+          this.toastService.showAlert(response.message, response.apiResponseStatus);
+        }
+      });
+    } else {
+      this.toastService.showWarning('Please fill all the required fields');
+    }
+  }
+
+  onStampCategorySelected($event: any) {
+    this.categoryDescription = $event.description;
+    this.categoryId = $event.stampCategoryId
+  }
+
+  onStampDenominationSelected($event: any) {
+    this.denominationId = $event.denominationId
+  }
+
+  onStampLabelSelected($event: any) {
+    this.labelId = $event.labelId
+  }
+
 }

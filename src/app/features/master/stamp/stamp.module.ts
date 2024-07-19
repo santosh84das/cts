@@ -17,10 +17,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
-import { VendorTypeDropdownComponent } from '../../../shared/modules/vendor-type-dropdown/vendor-type-dropdown.component';
-import { StampCategoryTypeDropdownComponent } from 'src/app/shared/modules/stamp-category-type-dropdown/stamp-category-type-dropdown.component';
 import { CombinationComponent } from './combination/combination.component';
 import { CalendarModule } from 'primeng/calendar';
+import { StampCategoryTypeDropdownModule } from 'src/app/shared/modules/stamp-category-type-dropdown/stamp-category-type-dropdown.module';
+import { VendorTypeDropdownModule } from 'src/app/shared/modules/vendor-type-dropdown/vendor-type-dropdown.module';
+import { StampDenominationDropdownModule } from 'src/app/shared/modules/stamp-denomination-dropdown/stamp-denomination-dropdown.module';
+import { StampLabelDropdownModule } from 'src/app/shared/modules/stamp-label-dropdown/stamp-label-dropdown.module';
+import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown/treasury-dropdown.module';
 
 @NgModule({
   declarations: [
@@ -30,8 +33,6 @@ import { CalendarModule } from 'primeng/calendar';
     TypeComponent,
     VendorComponent,
     DiscountDetailsComponent,
-    VendorTypeDropdownComponent,
-    StampCategoryTypeDropdownComponent,
     CombinationComponent
   ],
   imports: [
@@ -47,7 +48,12 @@ import { CalendarModule } from 'primeng/calendar';
     DynamicTableModule,
     ReactiveFormsModule,
     FormsModule,
-    NgxPermissionsModule.forChild()
+    StampCategoryTypeDropdownModule,
+    VendorTypeDropdownModule,
+    StampDenominationDropdownModule,
+    TreasuryDropdownModule,
+    StampLabelDropdownModule,
+    NgxPermissionsModule.forChild(),
 
   ],
   providers: [DatePipe]

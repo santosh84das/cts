@@ -13,12 +13,12 @@ export class StampWalletService {
   constructor(private http: HttpClient, private toastService: ToastService) { }
 
 
-  getStampWalletBalanceByTreasuryCode(
-    treasuryCode: string
+  getStampWalletBalanceByTreasuryCodeAndCombinationId(
+    payload: any
   ): Observable<IapiResponce<StampWalletGet>> {
     return this.http
       .get<IapiResponce<StampWalletGet>>(
-        'v1/StampWallet/getStampWalletBalanceByTreasuryCode?treasuryCode=' + treasuryCode        
+        `v1/StampWallet/getStampWalletBalanceByTreasuryCode?treasuryCode=${payload.treasury}&combinationId=${5}`        
       )
       .pipe(
         catchError((error) => {

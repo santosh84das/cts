@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'src/app/core/models/dynamic-table';
 import { AddStampType, GetStampTypes } from 'src/app/core/models/stamp';
 import { TypeService } from 'src/app/core/services/stamp/type.service';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { convertDate } from 'src/utils/dateConversion';
+import { greaterThanZeroValidator } from 'src/utils/greaterThanZeroValidator';
 
 @Component({
   selector: 'app-type',
@@ -50,9 +51,10 @@ export class TypeComponent implements OnInit {
 
   initializeForm(): void {
     this.typeEntryForm = this.fb.group({
-      denomination: [0, Validators.required]
+      denomination: [null, [Validators.required, greaterThanZeroValidator()]]
     });
   }
+
 
   getAllStampTypes() {
     this.TypeService
@@ -105,7 +107,7 @@ export class TypeComponent implements OnInit {
         }
       });
     } else {
-      this.toastService.showAlert('Please fill all the required fields', 0);
+      this.toastService.showWarning('Please fill all the required fields');
     }
   }
 }

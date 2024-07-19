@@ -11,12 +11,13 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic-table.module';
-import { StampCombinationDropdownComponent } from 'src/app/shared/modules/stamp-combination-dropdown/stamp-combination-dropdown.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown/treasury-dropdown.module';
 import { InvoiceReceiveComponent } from './invoice-receive/invoice-receive.component';
 import { StampWalletRefillComponent } from './stamp-wallet-refill/stamp-wallet-refill.component';
+import { StampCombinationDropdownModule } from 'src/app/shared/modules/stamp-combination-dropdown/stamp-combination-dropdown.module';
+import { DatatableSkeletonModule } from 'src/app/shared/modules/datatable-skeleton/datatable-skeleton.module';
 
 
 @NgModule({
@@ -25,13 +26,10 @@ import { StampWalletRefillComponent } from './stamp-wallet-refill/stamp-wallet-r
     IndentCaptureComponent,
     InvoiceCaptureComponent,
     InvoiceReceiveComponent,
-    StampCombinationDropdownComponent,
     StampWalletRefillComponent,
   ],
   imports: [
     CommonModule,
-    ButtonModule,
-    ReactiveFormsModule,
     StampsRoutingModule,
     DynamicTableModule,
     OptionCardModule,
@@ -42,7 +40,9 @@ import { StampWalletRefillComponent } from './stamp-wallet-refill/stamp-wallet-r
     CalendarModule,
     ReactiveFormsModule,
     TreasuryDropdownModule,
-    FormsModule
+    FormsModule,
+    DatatableSkeletonModule,
+    StampCombinationDropdownModule
    ]
 })
 export class StampsModule { }
