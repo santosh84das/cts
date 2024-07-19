@@ -11,6 +11,7 @@ import { ToastService } from 'src/app/core/services/toast.service';
   styleUrls: ['./new-stamp-requisition.component.scss']
 })
 export class NewStampRequisitionComponent implements OnInit {
+  minDateLimit: Date = new Date()
   vendorTypeId:number = 0
   treasuryCode: string = ""
   sheet: number = 0
@@ -27,7 +28,11 @@ export class NewStampRequisitionComponent implements OnInit {
   challanAmount: number = this.amount - this.discountAmount + this.taxAmount;
   newStampRequisitionForm!: FormGroup
   newStampRequisitionPayload!: AddVendorStampRequisition
-  constructor(private fb: FormBuilder, private stampRequisitionService: StampRequisitionService, private discountDetailsService: DiscountDetailsService, private toastService: ToastService) { }
+  constructor(
+    private fb: FormBuilder, 
+    private stampRequisitionService: StampRequisitionService, 
+    private discountDetailsService: DiscountDetailsService, 
+    private toastService: ToastService) { }
 
   @Output() VendorDetailsSelected = new EventEmitter<any>();
 
@@ -49,7 +54,6 @@ export class NewStampRequisitionComponent implements OnInit {
   // }
 
   onStampCombinationSelected($event: any) {
-    console.log($event);
     
     this.combinationId = $event.stampCombinationId
     this.stampCategoryId = $event.stampCategoryId
@@ -62,6 +66,7 @@ export class NewStampRequisitionComponent implements OnInit {
     this.vendorId = $event.stampVendorId
     this.vendorTypeId = $event.vendorTypeId
     this.treasuryCode = $event.vendorTreasury
+    this.calcAmountQuantity()
   }
 
   addStampRequisition() {
@@ -69,8 +74,8 @@ export class NewStampRequisitionComponent implements OnInit {
       this.newStampRequisitionPayload = {
         challanAmount: this.challanAmount,
         combinationId: this.combinationId,
-        label: this.newStampRequisitionForm.value.label,
-        sheet: this.newStampRequisitionForm.value.label,
+        label: Number(this.newStampRequisitionForm.value.label),
+        sheet: Number(this.newStampRequisitionForm.value.sheet),
         raisedToTreasury: this.treasuryCode,
         requisitionDate: this.newStampRequisitionForm.value.requisitionDate,
         requisitionNo: this.newStampRequisitionForm.value.requisitionNo,
@@ -92,9 +97,7 @@ export class NewStampRequisitionComponent implements OnInit {
   }
   getDiscount() {
     this.discountDetailsService.getDiscount(this.vendorTypeId, this.stampCategoryId, this.amount).subscribe((response) => {
-      if (response.apiResponseStatus == 1) {
-        console.log(response);
-        
+      if (response.apiResponseStatus == 1) {        
         this.discountAmount = response.result
         this.taxAmount = this.discountAmount * 0.1
         this.challanAmount = this.amount - this.discountAmount + this.taxAmount
@@ -102,7 +105,6 @@ export class NewStampRequisitionComponent implements OnInit {
         this.toastService.showAlert(response.message, response.apiResponseStatus);
       }
     })
-
   }
   calcAmountQuantity() {
     this.quantity = (this.noOfLabelsPerSheet * this.sheet) + this.label

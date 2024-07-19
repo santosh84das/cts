@@ -33,7 +33,7 @@
             </div>
             <div class="field mb-4 col-12 md:col-6">
                 <label for="requisitionDate" class="font-medium text-900">Requisution Date</label>
-                <p-calendar class="p-component p-element w-full p-calendar" formControlName="requisitionDate" placeholder="mm/dd/yyyy" appendTo="body" [showIcon]="true" inputId="icon"></p-calendar>
+                <p-calendar [minDate]="minDateLimit" class="p-component p-element w-full p-calendar" formControlName="requisitionDate" placeholder="mm/dd/yyyy" appendTo="body" [showIcon]="true" inputId="icon"></p-calendar>
                 <div *ngIf="newStampRequisitionForm.controls['requisitionDate'].errors && (newStampRequisitionForm.controls['requisitionDate'].dirty || newStampRequisitionForm.controls['requisitionDate'].touched)">
                     <small class="p-error" *ngIf="newStampRequisitionForm.controls['requisitionDate'].errors['required']">Requisution Date is required.</small>
                 </div>

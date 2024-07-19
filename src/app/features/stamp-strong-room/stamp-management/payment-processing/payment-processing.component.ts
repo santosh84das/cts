@@ -72,6 +72,7 @@ export class PaymentProcessingComponent implements OnInit {
       this.stampRequisitionService.registerGRNNo({ vendorStampRequisitionId: this.vendorStampRequisitionId, GRNNo: this.GRNNo }).subscribe((response) => {
         if (response.apiResponseStatus == 1) {
           this.toastService.showSuccess(response.message)
+          this.registerGRNModal = false
           this.getAllRequisitionsWaitingForPayment()
         } else {
           this.toastService.showError(response.message)
