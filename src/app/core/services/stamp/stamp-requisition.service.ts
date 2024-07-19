@@ -119,7 +119,7 @@ export class StampRequisitionService {
   }
 
   rejectedByTO(id: number): Observable<IapiResponce<boolean>> {
-    return this.http.get<IapiResponce<boolean>>(`v1/StampRequisition/StampRequisitionRejectedByTreasuryOfficer?stampRequisitionId=${id}`).pipe((catchError((error) => {
+    return this.http.get<IapiResponce<boolean>>(`v1/StampRequisition/StampRequisitionRejectedByTreasuryOfficer?requisitionId=${id}`).pipe((catchError((error) => {
       throw this.toastService.showError(error.message)
     })))
   }

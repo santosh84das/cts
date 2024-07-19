@@ -59,12 +59,14 @@ export class StampRequisitionApprovalComponent implements OnInit {
         break;
       case 'edit':
         this.modal = true
-        this.id = $event.rowData.vendorRequisitionStagingId
+        this.id = $event.rowData.vendorStampRequisitionId
         this.sheet = $event.rowData.sheet
         this.label = $event.rowData.label
+        this.getAmountCalculations({vendorStampRequisitionId: $event.rowData.vendorStampRequisitionId, sheet: this.sheet, label: this.label})
         break;
     }
   }
+
   getAllApprovedByClerkRequisitionsOrForwardedToTO() {
     this.stampRequisitionService.getAllRequisitionsForwardedToTOForApproval(this.tableQueryParameters).subscribe((response) => {
       if (response.apiResponseStatus == 1) {
@@ -85,16 +87,34 @@ export class StampRequisitionApprovalComponent implements OnInit {
     })
   }
 
+  getAmountCalculations(params:any) {
+    this.stampRequisitionService.getCalcAmountDetails({
+      vendorStampRequisitionId: params.vendorStampRequisitionId,
+      sheet: params.sheet,
+      label: params.label
+    }).subscribe((response) => {
+      if (response.apiResponseStatus == 1) {
+        this.challanAmount = response.result.challanAmount
+        this.taxAmount = response.result.taxAmount
+        this.discountAmount = response.result.discountAmount
+        this.amount = response.result.amount
+      } else {
+        this.toastService.showError(response.message)
+      }
+    }) 
+  }
+
   approveByTO() {
     if (this.approveByTOForm.valid) {
       this.approveByTOPayload = {
-        vendorRequisitionStagingId: this.id,
+        vendorStampRequisitionId: this.id,
         labelByTo: this.approveByTOForm.value.label,
         sheetByTo: this.approveByTOForm.value.sheet,
-        challanAmount: 100,
-        discountedAmount: 100,
-        taxAmount: 100
+        challanAmount: this.challanAmount,
+        discountedAmount: this.discountAmount,
+        taxAmount: this.taxAmount
       }
+      console.log(this.approveByTOPayload)
       this.stampRequisitionService.approveByTO(this.approveByTOPayload).subscribe((response) => {
         if (response.apiResponseStatus == 1) {
           this.toastService.showSuccess(response.message)

@@ -103,10 +103,11 @@ export class StampRequisitionStagingComponent implements OnInit {
   approveByClerk() {
     if (this.approveByClerkForm.valid) {
       this.approveByClerkPayload = {
-        labelByClerk: this.approveByClerkForm.value.label,
-        sheetByClerk: this.approveByClerkForm.value.sheet,
+        labelByClerk: Number(this.approveByClerkForm.value.label),
+        sheetByClerk: Number(this.approveByClerkForm.value.sheet),
         vendorStampRequisitionId: this.id
       }
+      // console.log(this.approveByClerkPayload)
       this.stampRequisitionService.approveByClerk(this.approveByClerkPayload).subscribe((response) => {
         if (response.apiResponseStatus == 1) {
           this.toastService.showSuccess(response.message)

@@ -236,7 +236,7 @@ export interface ApprovedByClerk {
 }
 
 export interface ApprovedByTO {
-  vendorRequisitionStagingId: number,
+  vendorStampRequisitionId: number,
   sheetByTo: number,
   labelByTo: number,
   discountedAmount: number,
