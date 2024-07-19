@@ -154,4 +154,11 @@ export class StampRequisitionService {
       throw this.toastService.showError(error.message)
     }))
   }
+
+  getCalcAmountDetails(payload: any): Observable<IapiResponce<any>> {
+    return this.http.post<IapiResponce<any>>(`v1/StampRequisition/GetAllCalculationDetails`, payload).pipe(catchError((error) => {
+      throw this.toastService.showError(error.message)
+    }))
+  }
+
 }

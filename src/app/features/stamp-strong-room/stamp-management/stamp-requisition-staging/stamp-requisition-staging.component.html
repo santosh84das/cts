@@ -50,11 +50,26 @@
     </div>    
 </div>
 
-<p-dialog header="Modify Requisition" [(visible)]="modal" [modal]="false" [style]="{'width': 'fit-content'}" [baseZIndex]="10000">
+<p-dialog header="Modify Requisition" [(visible)]="modal" [modal]="false" [style]="{'width': '35rem'}" [baseZIndex]="10000">
+    <hr class="mb-2" />
+    <div class="w-full border-rounded p-2 flex flex-column gap-2 align-items-start">
+        <h5 class="text-red-500 p-0">Current Balance</h5>
+        <div class="flex align-items-center justify-content-between w-full">
+            <div class="flex flex-column align-items-start gap-2">
+                <label class="block mb-1 text-gray-500 font-medium" for="noOfSheets">No of sheets</label>
+                <input pinputtext="" disabled type="text" [value]="noOfSheets" class="pl-1 border-rounded py-1">
+            </div>
+            <div class="flex flex-column align-items-start gap-2">
+                <label class="block mb-1 text-gray-500 font-medium" for="noOfLabelsPerSheet">No of labels/sheet</label>
+                <input pinputtext="" disabled type="text" [value]="noOfLabelsPerSheet" class="pl-1 border-rounded py-1">
+            </div>
+        </div>
+    </div>
+    <hr class="mb-4" />
     <form [formGroup]="approveByClerkForm" class="grid formgrid p-fluid">
         <div class="field mb-4 col-12 md:col-6">
             <label for="sheet" class="font-medium text-900">Sheet</label>
-            <input formControlName="sheet" type="text" pinputtext="" class="p-inputtext p-component p-element">
+            <input formControlName="sheet" type="text" pinputtext="" [(ngModel)]="sheet" (ngModelChange)="sheetSelected($event)" class="p-inputtext p-component p-element">
             <div *ngIf="approveByClerkForm.controls['sheet'].errors && (approveByClerkForm.controls['sheet'].dirty || approveByClerkForm.controls['sheet'].touched)">
                 <small class="p-error" *ngIf="approveByClerkForm.controls['sheet'].errors['required']">No of Sheets is required.</small>
                 <small class="p-error" *ngIf="approveByClerkForm.controls['sheet'].errors['min']">Minimun no of sheets is 1.</small>
@@ -62,11 +77,31 @@
         </div>
         <div class="field mb-4 col-12 md:col-6">
             <label for="label" class="font-medium text-900">Label</label>
-            <input type="text" formControlName="label" pinputtext="" class="p-inputtext p-component p-element">
+            <input type="text" formControlName="label" pinputtext="" [(ngModel)]="label" (ngModelChange)="labelSelected($event)" class="p-inputtext p-component p-element">
             <div *ngIf="approveByClerkForm.controls['label'].errors && (approveByClerkForm.controls['label'].dirty || approveByClerkForm.controls['label'].touched)">
                 <small class="p-error" *ngIf="approveByClerkForm.controls['label'].errors['required']">No of labels is required.</small>
                 <small class="p-error" *ngIf="approveByClerkForm.controls['label'].errors['min']">Minimun no of labels is 1.</small>
             </div>
+        </div>
+        <div class="field mb-4 col-6 md:col-6">
+            <label for="quantity" class="font-medium text-900">Quantity</label>
+            <input id="quantity" type="text" [value]="quantity" pinputtext="" readonly disabled class="p-inputtext p-component p-element">
+        </div>
+        <div class="field mb-4 col-6 md:col-6">
+            <label for="amount" class="font-medium text-900">Amount</label>
+            <input id="amount" type="text" pinputtext="" [value]="amount" readonly disabled class="p-inputtext p-component p-element">
+        </div>
+        <div class="field mb-4 col-12 md:col-6">
+            <label for="discountAmount" class="font-medium text-900">Discount Amount</label>
+            <input id="discountAmount" type="text" pinputtext="" [value]="discountAmount" readonly disabled class="p-inputtext p-component p-element">
+        </div>
+        <div class="field mb-4 col-6 md:col-6">
+            <label for="taxAmount" class="font-medium text-900">Tax Amount</label>
+            <input id="taxAmount" type="text" pinputtext="" [value]="taxAmount" readonly disabled class="p-inputtext p-component p-element">
+        </div>
+        <div class="field mb-4 col-6 md:col-12">
+            <label for="challanAmount" class="font-medium text-900">Challan Amount</label>
+            <input id="challanAmount" type="text" pinputtext="" [value]="challanAmount" readonly disabled class="p-inputtext p-component p-element">
         </div>
       </form>
     <div class="w-full flex justify-content-end align-items-center">

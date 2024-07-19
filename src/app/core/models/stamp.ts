@@ -243,3 +243,10 @@ export interface ApprovedByTO {
   taxAmount: number,
   challanAmount: number,
 }
+
+export interface calcAmountDetails {
+  amount: number,
+  discountAmount: number,
+  taxAmount: number,
+  challanAmount: number
+}

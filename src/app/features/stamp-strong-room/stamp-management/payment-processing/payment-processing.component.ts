@@ -86,7 +86,7 @@ export class PaymentProcessingComponent implements OnInit {
     this.GRNNo = $event
   }
   getDataForPrint(id: number) {
-    this.stampRequisitionService.printtr7(9).subscribe((response) => {
+    this.stampRequisitionService.printtr7(id).subscribe((response) => {
       if (response.apiResponseStatus == 1) {
         this.printData = {
           raisedToTreasury: response.result.raisedToTreasury,

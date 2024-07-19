@@ -15,6 +15,16 @@ export class StampRequisitionStagingComponent implements OnInit {
 
   listType: string = 'new'
   id: number = 0
+  sheet: number = 0
+  label: number = 0
+  discountAmount: number = 0
+  denomination: number = 0
+  noOfLabelsPerSheet: number = 0
+  taxAmount: number = 0.1 * this.discountAmount
+  quantity: number = (this.noOfLabelsPerSheet * this.sheet) + this.label
+  amount: number = this.quantity * this.denomination
+  challanAmount: number = this.amount - this.discountAmount + this.taxAmount;
+  noOfSheets: number = 0
   modal: boolean = false
   tableData!: DynamicTable<any>;
   tableActionButton: ActionButtonConfig[] = [];
@@ -85,6 +95,8 @@ export class StampRequisitionStagingComponent implements OnInit {
       case 'edit':
         this.modal = true
         this.id = $event.rowData.vendorStampRequisitionId
+        this.sheet = $event.rowData.sheet
+        this.label = $event.rowData.label
     }
   }
 
@@ -130,4 +142,11 @@ export class StampRequisitionStagingComponent implements OnInit {
     })
   }
 
+  labelSelected($event: any) {
+
+  }
+
+  sheetSelected($event: any) {
+
+  }
 }
