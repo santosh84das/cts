@@ -8,6 +8,7 @@ import { SelectItem } from 'primeng/api';
   templateUrl: './sanction.component.html',
   styleUrls: ['./sanction.component.scss']
 })
+
 export class SanctionComponent implements OnInit {
 
   ppoSanctionForm!: FormGroup;

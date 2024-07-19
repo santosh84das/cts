@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
 import { Router } from '@angular/router';
 
@@ -16,6 +16,9 @@ export class PpodetailsComponent implements OnInit {
   isNextButtonDisabled: boolean = true;
   currentStepIndex: number = 0;
   steps: any[];
+  ppoSanctionForm!: FormGroup;
+  genders: SelectItem[]=[];
+  
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.ininalizer();
@@ -36,8 +39,14 @@ export class PpodetailsComponent implements OnInit {
     this.steps = [
       { label: 'PPO Details' },
       { label: 'Bank Details' },
-      { label: 'Other Details' }
+      { label: 'Sanction Details' }
     ];
+
+    this.genders = [
+      { label: 'Male', value: { id: 1, name: 'Male', code: 'M' } },
+      { label: 'Female', value: { id: 2, name: 'Female', code: 'F' } },
+      { label: 'Transgender', value: { id: 3, name: 'Transgender', code: 'T' } },
+  ];
   }
 
   ngOnInit(): void {}
@@ -90,8 +99,31 @@ export class PpodetailsComponent implements OnInit {
       retirementDate: [''],
       basic: [''],
       dateOfDeath: [''],
-      epf: ['']
+      epf: [''],
+      PpoId: ['', Validators.required],
+      nameOfServiceHolder: ['', Validators.required],
+      sanctionAuthority: ['', Validators.required],
+      sanctionNo: ['', Validators.required],
+      sanctionDate: ['', Validators.required],
+      dateOfBirth: ['', Validators.required],
+      gender: ['',Validators.required],
+      dateOfAppointment: ['', Validators.required],
+      officeName: ['', Validators.required],
+      postHeld: ['',Validators.required],
+      lastPay: ['',Validators.required],
+      averageAmolument:['',Validators.required],
+      hrmsUniqueIdOfServiceHolder: ['',Validators.required],
+      issuingAuthority: ['',Validators.required],
+      letterNo: ['',Validators.required],
+      letterDate: ['',Validators.required],
+      grossYear: ['',Validators.required],
+      grossMonth: ['',Validators.required],
+      grossDay: ['',Validators.required],
+      netYear: ['',Validators.required],
+      netMonth: ['',Validators.required],
+      netDay: ['',Validators.required],
     });
+
   }
 
   
