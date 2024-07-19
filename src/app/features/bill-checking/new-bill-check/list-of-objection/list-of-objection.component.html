@@ -133,12 +133,18 @@
                     (click)="objectionOverrule()"></button>
             </div>
         </p-overlayPanel>
+        <div class="flex justify-content-end">
+            <p-button [label]="submitButtonLabel" (onClick)="billCheck()" icon="pi pi-save"
+                      class="p-button-success"></p-button>
+        </div>
     <!-- </ng-template>
     <ng-template pTemplate="footer">
         <div class="grid grid-nogutter justify-content-between">
             <p-button label="Back" icon="pi pi-angle-left" (onClick)="prevStep()"></p-button>
-            <p-button [label]="submitButtonLabel" (onClick)="billCheck()" icon="pi pi-save"
-                class="p-button-success"></p-button>
+            <div class="flex justify-content-end">
+                <p-button [label]="submitButtonLabel" (onClick)="billCheck()" icon="pi pi-save"
+                          class="p-button-success"></p-button>
+            </div>
         </div>
     </ng-template>
 </p-card> -->
