@@ -22,6 +22,9 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { SanctionComponent } from '../sanction/sanction.component';
 
+import { PanelModule } from 'primeng/panel';
+import { FieldsetModule } from 'primeng/fieldset';
+
 
 
 
@@ -71,6 +74,9 @@ const routes: Routes = [
     CheckboxModule,
     InputTextModule,
     StepsModule,
+    /// my add
+    PanelModule,
+    FieldsetModule,
     RouterModule.forChild(routes)
   ],
   providers: [],

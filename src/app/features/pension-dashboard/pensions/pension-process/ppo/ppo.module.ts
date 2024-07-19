@@ -15,6 +15,7 @@ import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown
 import { PpoComponent } from './ppo.component';
 import { EntryComponent } from './entry/entry.component';
 import { ManualPpoReceiptComponent } from './manual-ppo-receipt/manual-ppo-receipt.component';
+import { SanctionComponent } from './entry/sanction/sanction.component';
 
 
 
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: '', component: PpoComponent},
   {path: 'entry', component: EntryComponent},
   {path: 'manualPpoReceipt', component: ManualPpoReceiptComponent},
+  {path: 'sanction', component: SanctionComponent}
 ];
 
 
