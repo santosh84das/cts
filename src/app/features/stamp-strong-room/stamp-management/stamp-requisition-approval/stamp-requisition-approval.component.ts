@@ -4,6 +4,7 @@ import { StampRequisitionStatusEnum } from 'src/app/core/enum/stampRequisitionEn
 import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'src/app/core/models/dynamic-table';
 import { ApprovedByTO } from 'src/app/core/models/stamp';
 import { StampRequisitionService } from 'src/app/core/services/stamp/stamp-requisition.service';
+import { StampWalletService } from 'src/app/core/services/stamp/stamp-wallet.service';
 import { ToastService } from 'src/app/core/services/toast.service';
 
 @Component({
@@ -13,6 +14,8 @@ import { ToastService } from 'src/app/core/services/toast.service';
 })
 export class StampRequisitionApprovalComponent implements OnInit {
 
+  denom: number = 0
+  category: string = ""
   id: number = 0
   sheet: number = 0
   label: number = 0
@@ -24,6 +27,7 @@ export class StampRequisitionApprovalComponent implements OnInit {
   amount: number = this.quantity * this.denomination
   challanAmount: number = this.amount - this.discountAmount + this.taxAmount;
   noOfSheets: number = 0
+  noOfLabels: number = 0
   modal: boolean = false
   listType: string = 'forwarded'
   tableActionButton: ActionButtonConfig[] = [];
@@ -32,7 +36,7 @@ export class StampRequisitionApprovalComponent implements OnInit {
   approveByTOForm!: FormGroup
   approveByTOPayload!: ApprovedByTO
 
-  constructor(private stampRequisitionService: StampRequisitionService, private toastService: ToastService, private fb: FormBuilder,) { }
+  constructor(private stampRequisitionService: StampRequisitionService, private toastService: ToastService, private fb: FormBuilder, private stampWalletService: StampWalletService) { }
 
   ngOnInit(): void {
     this.initialozeForm()
@@ -62,6 +66,7 @@ export class StampRequisitionApprovalComponent implements OnInit {
         this.id = $event.rowData.vendorRequisitionStagingId
         this.sheet = $event.rowData.sheet
         this.label = $event.rowData.label
+        this.getBalance({treasury: $event.rowData.raisedToTreasury, combinationId: $event.rowData.combinationId})
         break;
     }
   }
@@ -161,5 +166,18 @@ export class StampRequisitionApprovalComponent implements OnInit {
 
   sheetSelected($event: any) {
 
+  }
+
+  getBalance(params: any) {
+    this.stampWalletService.getStampWalletBalanceByTreasuryCodeAndCombinationId({treasuryCode: params.treasury, combinationId: params.combinationId}).subscribe((response) => {
+      if (response.apiResponseStatus == 1) {
+        this.denom = response.result.denomination
+        this.noOfSheets = response.result.sheetLedgerBalance
+        this.noOfLabels = response.result.labelLedgerBalance
+        this.category = response.result.category
+      } else {
+        this.toastService.showError(response.message)
+      }
+    })
   }
 }

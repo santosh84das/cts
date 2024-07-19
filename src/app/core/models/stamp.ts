@@ -173,7 +173,10 @@ export interface AddStampInvoice {
 }
 
 export interface StampWalletGet {
-  clearBalance: number
+  sheetLedgerBalance: number,
+  labelLedgerBalance: number
+  category: string,
+  denomination: number
 }
 export interface StampWalletRefill {
   treasuryCode: string,

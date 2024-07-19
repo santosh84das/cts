@@ -52,14 +52,24 @@
     <hr class="mb-2" />
     <div class="w-full border-rounded p-2 flex flex-column gap-2 align-items-start">
         <h5 class="text-red-500 p-0">Current Balance</h5>
-        <div class="flex align-items-center justify-content-between w-full">
-            <div class="flex flex-column align-items-start gap-2">
-                <label class="block mb-1 text-gray-500 font-medium" for="noOfSheets">No of sheets</label>
-                <input pinputtext="" disabled type="text" [value]="noOfSheets" class="pl-1 border-rounded py-1">
+        <div class="flex gap-4 md:flex-row align-items-center flex-column justify-content-between w-full">
+            <div class="flex flex-column align-items-start gap-2 w-full">
+                <label class="block mb-1 text-gray-500 font-medium" for="category">Category</label>
+                <input pinputtext="" disabled type="text" [value]="category" class="pl-1 w-full border-rounded py-1">
             </div>
-            <div class="flex flex-column align-items-start gap-2">
-                <label class="block mb-1 text-gray-500 font-medium" for="noOfLabelsPerSheet">No of labels/sheet</label>
-                <input pinputtext="" disabled type="text" [value]="noOfLabelsPerSheet" class="pl-1 border-rounded py-1">
+            <div class="flex flex-column align-items-start gap-2 w-full">
+                <label class="block mb-1 text-gray-500 font-medium" for="denom">Denomination</label>
+                <input pinputtext="" disabled type="text" [value]="denom" class="pl-1 w-full border-rounded py-1">
+            </div>
+        </div>
+        <div class="flex gap-4 md:flex-row align-items-center flex-column justify-content-between w-full">
+            <div class="flex flex-column align-items-start gap-2 w-full">
+                <label class="block mb-1 text-gray-500 font-medium" for="noOfSheets">No of sheets</label>
+                <input pinputtext="" disabled type="text" [value]="noOfSheets" class="pl-1 w-full border-rounded py-1">
+            </div>
+            <div class="flex flex-column align-items-start gap-2 w-full">
+                <label class="block mb-1 text-gray-500 font-medium" for="noOfLabels">No of labels</label>
+                <input pinputtext="" disabled type="text" [value]="noOfLabels" class="pl-1 w-full border-rounded py-1">
             </div>
         </div>
     </div>

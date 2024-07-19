@@ -64,7 +64,7 @@ export class StampWalletRefillComponent implements OnInit {
   }
 
   getStampWalletBalance() {
-    this.stampWalletService.getStampWalletBalanceByTreasuryCode({ treasuryCode: this.treasuryCode, combinationId: this.combinationId }).subscribe((response) => {
+    this.stampWalletService.getStampWalletBalanceByTreasuryCodeAndCombinationId({ treasuryCode: this.treasuryCode, combinationId: this.combinationId }).subscribe((response) => {
       if (response.apiResponseStatus == 1) {
         console.log(response);
         

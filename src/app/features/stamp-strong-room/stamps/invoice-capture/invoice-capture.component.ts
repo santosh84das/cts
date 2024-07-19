@@ -14,6 +14,8 @@ import { convertDate } from 'src/utils/dateConversion';
   styleUrls: ['./invoice-capture.component.scss']
 })
 export class InvoiceCaptureComponent implements OnInit {
+
+  minDate: Date = new Date()
   noOfLabelsPerSheet: number = 0
   noOfSheets: number = 0
   tcode: string = ""
@@ -65,15 +67,10 @@ export class InvoiceCaptureComponent implements OnInit {
 
   initializeForm(): void {
     this.stampInvoiceForm = this.fb.group({
-      noOfSheets: ['', [Validators.required, Validators.pattern(/^\d+$/)]], 
-      noOfLabels: ['', [Validators.required, Validators.pattern(/^\d+$/)]], 
-      invoiceNumber: ['', [Validators.required]],
-      invoiceDate: ['', [Validators.required]] 
-    });
-
-    this.stampInvoiceForm.setValue({
-      noOfSheets: this.sheet,
-      noOfLabels: this.label
+      noOfSheets: [null, [Validators.required, Validators.pattern(/^\d+$/)]], 
+      noOfLabels: [null, [Validators.required, Validators.pattern(/^\d+$/)]], 
+      invoiceNumber: [null, [Validators.required]],
+      invoiceDate: [null, [Validators.required]] 
     });
   }
 
@@ -101,12 +98,6 @@ export class InvoiceCaptureComponent implements OnInit {
       this.getAllStampIndents();
     } else if (type === 'invoice') {
       this.tableActionButton = [
-        // {
-        //   buttonIdentifier: 'invoice-received',
-        //   class: 'p-button-sm',
-        //   icon: 'pi pi-inbox',
-        //   lable: 'Receive',
-        // },
         {
           buttonIdentifier: 'invoice-details',
           class: 'p-button-info p-button-sm',
@@ -138,10 +129,10 @@ export class InvoiceCaptureComponent implements OnInit {
     if (this.stampInvoiceForm.valid) {
       this.stampInvoiceEntryPayload = {
         amount: this.amount,
-        label: this.label,
         quantity: this.quantity,
-        sheet: this.sheet,
         stampIndentId: this.stampIndentId,
+        label: this.stampInvoiceForm.value.noOfLabels,
+        sheet: this.stampInvoiceForm.value.noOfSheets,
         invoiceDate: this.stampInvoiceForm.value.invoiceDate,
         invoiceNumber: this.stampInvoiceForm.value.invoiceNumber
       };
@@ -196,6 +187,10 @@ export class InvoiceCaptureComponent implements OnInit {
         this.sheetAsked = response.result.sheet
         this.sheetGiven = rowData.sheet
         this.tcode = response.result.raisedByTreasuryCode
+        this.stampInvoiceForm.setValue({
+          noOfSheets: this.sheet,
+          noOfLabels: this.label
+        });
       } else {
         this.toastService.showAlert(response.message, response.apiResponseStatus);
       }
