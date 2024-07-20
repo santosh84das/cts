@@ -202,7 +202,7 @@
             </div>
 
             <!-- Show tables -->
-            <div class="col-12">
+            <div *ngIf="!showNomineeDetailsFrom" class="col-12">
                 <app-dynamic-table *ngIf="tableData" (actionButtonClicked)="handleButtonClick($event)"
                     [numberRowsShown]="10" rowSelectionMode="multiple" [rowsPerPageOptions]="[10,30,50]"
                     [headers]="tableData?.headers ?? []" [data]="tableData?.data ?? []"
@@ -300,7 +300,7 @@
             </div>
 
             <!-- Show tables -->
-            <div class="col-12">
+            <div *ngIf="!showPensionHolder" class="col-12">
                 <app-dynamic-table *ngIf="tableData" (actionButtonClicked)="handleButtonClick($event)"
                     [numberRowsShown]="10" rowSelectionMode="multiple" [rowsPerPageOptions]="[10,30,50]"
                     [headers]="tableData?.headers ?? []" [data]="tableData?.data ?? []"
