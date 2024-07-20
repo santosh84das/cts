@@ -1,33 +1,17 @@
-<div class="grid">
-	<div class="col-12 md:col-6">
-		<div class="card p-fluid">
-			<h5>Vertical</h5>
-			<div class="field">
-				<label htmlFor="name1">Name</label>
-				<input pInputText id="name1" type="text" />
-			</div>
-			<div class="field">
-				<label htmlFor="email1">Email</label>
-				<input pInputText id="email1" type="text" />
-			</div>
-			<div class="field">
-				<label htmlFor="age1">Age</label>
-				<input pInputText id="age1" type="text" />
-			</div>
-		</div>
+<div class="grid p-fluid">
+    <div class="col-12 ">
+        <div class="card card-w-title flex flex-wrap">
+            <div class="col-12 md:col-12 h-full">
+                <p-steps
+                    [model]="routeItems"
+                    styleClass="mt-5"
+                    [readonly]="false"
+                ></p-steps>
+            </div>
+            <div class="col-12 md:col-4 mt-5 md:mt-0">
+                <router-outlet></router-outlet>
 
-		<div class="card p-fluid">
-			<h5>Vertical Grid</h5>
-			<div class="p-formgrid grid">
-				<div class="field col">
-					<label htmlFor="name2">Name</label>
-					<input pInputText id="name2" type="text" />
-				</div>
-				<div class="field col">
-					<label htmlFor="email2">Email</label>
-					<input pInputText id="email2" type="text" />
-				</div>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </div>
