@@ -42,6 +42,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { ToastModule } from 'primeng/toast';
 import { SliderModule } from 'primeng/slider';
 import { RatingModule } from 'primeng/rating';
+import { ClassificationDetailsComponent } from './classification-details/classification-details.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { RatingModule } from 'primeng/rating';
     PensionBillComponent,
     PentionDetailComponent,
     BillDetailComponent,
+    ClassificationDetailsComponent,
   ],
   imports: [
     CommonModule,
