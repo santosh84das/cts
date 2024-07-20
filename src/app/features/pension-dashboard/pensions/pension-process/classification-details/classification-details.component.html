@@ -1,6 +1,6 @@
 <div class="flex justify-center card mx-6  ">
     <div class="col-12">
-        <h5>Bill Details</h5>
+        <h5>Classification Detail</h5>
         <p-toast></p-toast>
         <p-table [value]="products" dataKey="name" [expandedRowKeys]="expandedRows" responsiveLayout="scroll">
             <ng-template pTemplate="caption">
@@ -10,15 +10,10 @@
             </ng-template>
             <ng-template pTemplate="header">
                 <tr>
-                    <th style="width: auto"></th>
-                    <th pSortableColumn="Bill NO">Bill NO <p-sortIcon field="Bill NO"></p-sortIcon></th>
 
                     <th pSortableColumn="Description">Description <p-sortIcon field="Description"></p-sortIcon></th>
                     <th pSortableColumn="Account Head">Account Head <p-sortIcon field="Account Head"></p-sortIcon></th>
-                    <th pSortableColumn="Gross Amount">Gross Amount <p-sortIcon field="Gross Amount"></p-sortIcon></th>
-                    <th pSortableColumn="By Transfer">By Transfer <p-sortIcon field="By Transfer"></p-sortIcon></th>
-                    <th pSortableColumn="Net Amount">Net Amount <p-sortIcon field="Net Amount"></p-sortIcon></th>
-                    <th pSortableColumn="Remarks">Remarks <p-sortIcon field="Remarks"></p-sortIcon></th>
+                    <th pSortableColumn="Amount">Amount <p-sortIcon field="Gross Amount"></p-sortIcon></th>
 
                 </tr>
             </ng-template>
@@ -30,10 +25,10 @@
                     </td>
                     <td style="min-width: 12rem;">{{product.name}}</td>
                     <td><img [src]="'assets/demo/images/product/' + product.image" [alt]="product.name" width="100" class="shadow-4" /></td>
-                    <td style="min-width: 8rem;">{{product.price | currency:'USD'}}</td>
-                    <td style="min-width: 10rem;">{{product.category}}</td>
-                    <td style="min-width: 10rem;"><p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating></td>
-                    <td><span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span></td>
+                    <!-- <td style="min-width: 8rem;">{{product.price | currency:'USD'}}</td> -->
+                    <!-- <td style="min-width: 10rem;">{{product.category}}</td> -->
+                    <!-- <td style="min-width: 10rem;"><p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating></td> -->
+                    <!-- <td><span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span></td> -->
                 </tr>
             </ng-template>
     </p-table>
