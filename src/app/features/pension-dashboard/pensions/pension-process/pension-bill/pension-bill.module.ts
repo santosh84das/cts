@@ -3,15 +3,14 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { PensionBillRoutingModule } from './pension-bill-routing.module';
-import { PentionDetailComponent } from './../pention-detail/pention-detail.component';
 
 @NgModule({
-  declarations: [PentionDetailComponent, PensionBillModule], // PensionBillModule should not be declared here
+  declarations: [ PensionBillModule], // PensionBillModule should not be declared here
   imports: [
     CommonModule,
     PensionBillRoutingModule,
     RouterModule
   ],
-  exports: [PentionDetailComponent]
+  exports: []
 })
 export class PensionBillModule { }

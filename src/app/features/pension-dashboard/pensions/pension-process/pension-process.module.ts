@@ -22,7 +22,6 @@ import { CascadeSelectModule } from "primeng/cascadeselect";
 import { MultiSelectModule } from "primeng/multiselect";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { PensionBillComponent } from './pension-bill/pension-bill.component';
-import { PentionDetailComponent } from './pention-detail/pention-detail.component';
 import { RouterModule } from '@angular/router';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { MenubarModule } from 'primeng/menubar';
@@ -33,7 +32,6 @@ import { MenuModule } from 'primeng/menu';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { MegaMenuModule } from 'primeng/megamenu';
 import { PanelMenuModule } from 'primeng/panelmenu';
-import { BillDetailComponent } from './bill-detail/bill-detail.component';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToggleButtonModule } from 'primeng/togglebutton';
@@ -42,17 +40,12 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { ToastModule } from 'primeng/toast';
 import { SliderModule } from 'primeng/slider';
 import { RatingModule } from 'primeng/rating';
-import { ClassificationDetailsComponent } from './classification-details/classification-details.component';
-import { ComponentDetailsComponent } from './component-details/component-details.component';
 
 @NgModule({
   declarations: [
     PensionProcessComponent,
     PensionBillComponent,
-    PentionDetailComponent,
-    BillDetailComponent,
-    ClassificationDetailsComponent,
-    ComponentDetailsComponent,
+
   ],
   imports: [
     CommonModule,
