@@ -41,7 +41,14 @@ const routes: Routes = [
     path: 'modules/pension-process/ppo/entry/family-nominee',
     loadChildren: () =>
       import('./pensions/pension-process/ppo/entry/family-nominee/family-nominee.module').then(m => m.FamilyNomineeModule),
+  },
+
+  {
+    path: 'modules/pension-process/ppo/life-certificate',
+    loadChildren: () =>
+      import('./pensions/pension-process/ppo/life-certificate/life-certificate.module').then(m => m.LifeCertificateModule),
   }
+  
 ];
 
 @NgModule({
