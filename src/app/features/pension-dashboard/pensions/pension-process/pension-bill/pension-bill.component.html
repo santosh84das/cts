@@ -572,14 +572,7 @@
             </div>
             <div class="flex flex-col mt-1 align-items-center justify-content-center">
                 <div class="flex flex-wrap gap-2">
-                    <p-button *ngIf="currentStepIndex > 0" label="Back" icon="pi pi-step-backward"
-                        styleClass="p-button-warning" (click)="prev()">
-                    </p-button>
-                    <p-button *ngIf="currentStepIndex < 2" label="Next" icon="pi pi-step-forward"
-                        styleClass="p-button-success" (click)="next()" [disabled]="!isCurrentStepValid">
-                    </p-button>
-                    <p-button *ngIf="currentStepIndex > 1" label="Save" icon="pi pi-cloud-upload" (click)="save()">
-                    </p-button>
+                    <button type="submit" pButton pRipple >Submit</button>
                 </div>
             </div>
         </div>
