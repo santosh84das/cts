@@ -57,7 +57,6 @@ export class ManualPpoReceiptService {
     //   if (queryParameters.hasOwnProperty(key)) {
     //     params = params.set(key, queryParameters[key]);
 
-
     //   }
     // }
 
