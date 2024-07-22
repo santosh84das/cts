@@ -21,6 +21,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 
 
 
+
 const routes: Routes = [
   {path: '', component: PpoComponent},
   {path: 'entry', component: EntryComponent},
@@ -45,10 +46,6 @@ const routes: Routes = [
     ReactiveFormsModule,
     TreasuryDropdownModule,
     FormsModule,
-    //
-    FieldsetModule,
-    RadioButtonModule,
-    
     RouterModule.forChild(routes)
   ],
   exports: [RouterModule]
