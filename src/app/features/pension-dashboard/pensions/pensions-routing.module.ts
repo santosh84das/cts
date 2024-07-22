@@ -16,7 +16,6 @@ const routes: Routes = [{path: '', component: PensionsComponent},
   {path: 'pension-process', component: PensionProcessComponent},
   {path: 'pension-reports', component: PensionReportsComponent},
   {path: 'pension-query', component: PensionQueryComponent},
-
 ];
 
 @NgModule({

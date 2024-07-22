@@ -1,0 +1,194 @@
+<form [formGroup]="lifeCertificateForm" (ngSubmit)="onRefresh()">
+ 
+    <div class="card sm:w-full">
+        <p-fieldset legend="Life Certificate" class="line-height-4 m-0">
+            <div class="mx-auto p-6">
+
+                <div class="flex w-full text-lg items-center flex-wrap lg:gap-7">
+                    <div class="mx-4">
+                        <p>Total No. Of Pensioner: {{ Fpn }}</p>
+                    </div>
+
+                    <div class="mx-4">
+                        <p>LIC Submitted: 0</p>
+                    </div>
+
+                    <div class="mx-4">
+                        <p>LIC Not Submitted: 0</p>
+                    </div>
+
+                    <div class="mx-4">
+                        <p>No Action Taken: 19</p>
+                    </div>
+                </div>
+
+                <div class="grid formgrid mx-4 mt-3">
+                    <div class="formgroup-inline text-xl gap-7">
+                                <div class="field">
+                                    <label class="mr-3 text-lg">Financial Year</label>
+                                </div>
+                                <div class="field">
+                                    <p-calendar view="year" dateFormat="yy" formControlName="financialYear" ></p-calendar>
+                                </div>
+                    </div>
+
+
+                    <div class="col-12 md:col-2">
+                        <div class="field-radiobutton">
+                            <p-radioButton
+                                value="NewPPO"
+                                formControlName="newPPO"
+                            ></p-radioButton>
+                            <label>New PPO</label>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-2">
+                        <div class="field-radiobutton">
+                            <p-radioButton
+                                value="updatedPPO"
+                                formControlName="newPPO"
+                            ></p-radioButton>
+                            <label>Updated PPO</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mx-4 flex w-full text-lg items-center flex-wrap">
+                    <label for="Bank Branch Name">Bank Branch Name</label>
+                    <input
+                        type="text"
+                        pInputText
+                        placeholder="Branch Name"
+                        class="pl-2 lg:ml-4"
+                        formControlName="branchName"
+                    />
+                    <button type="button"
+                        pButton
+                        pRipple
+                        icon="pi pi-search"
+                        class="rounded-r-lg"
+                        (click)="searchOne()"
+                    ></button>
+                    <p-button
+                        label="Search"
+                        icon="pi pi-search"
+                        iconPos="right"
+                        class="mx-5 mt-2"
+                        (click)="searchTwo()"
+                    ></p-button>
+                </div>
+            </div>
+
+        </p-fieldset>
+
+        <div class="w-full text-center mt-2">
+            <button pButton pRipple type="refresh" class="p-button-raised
+            p-button-info" [disabled]="!lifeCertificateForm.valid"> Refresh</button>
+        </div>
+    </div>
+  
+</form>
+
+<!-- ADVANCED -->
+
+    <!-- <div class="card">
+        <form [formGroup]="lifeCertificateForm" (ngSubmit)="onRefresh()">
+            <p-fieldset legend="Life Certificate" class="line-height-4 m-0">
+                    <div class="p-fluid p-formgrid grid">
+                        <div class="field col-12 md:col-6 w-full col-start-1 col-end-7">
+                            div class="formgroup-inline text-xl gap-7">
+                                <div class="field">
+                                    <label htmlFor="firstname2">Total No. Of Pensioner: {{ Fpn }}</label>
+                                </div>
+<
+                                <div class="field">
+                                    <label htmlFor="firstname2">LIC Submitted: 0</label>
+                                </div>
+
+                                <div class="field">
+                                    <label htmlFor="firstname2">LIC Not Submitted: 0</label>
+                                </div>
+
+                                <div class="field">
+                                    <label htmlFor="firstname2">No Action Taken: 19</label>
+                                </div>
+                            </div>
+                        </div>
+
+                       
+
+                        <div class="field col-12 md:col-6">
+                            <label class="mr-3 text-lg">Financial Year</label>
+                            <p-calendar
+                                view="year"
+                                dateFormat="yy"
+                                formControlName="financialYear"
+                            ></p-calendar>
+                        </div>
+
+                        <div class="field col-12">
+                            <div class="field-radiobutton">
+                                <p-radioButton
+                                    value="NewPPO"
+                                    formControlName="newPPO"
+                                ></p-radioButton>
+                                <label>New PPO</label>
+                            </div>
+                        </div>
+
+                        <div class="field col-12 md:col-6">
+                            <div class="field-radiobutton">
+                                <p-radioButton
+                                    value="updatedPPO"
+                                    formControlName="newPPO"
+                                ></p-radioButton>
+                                <label>Updated PPO</label>
+                            </div>
+                        </div>
+
+                        <div class="field col-12 md:col-3">
+                            <label for="Bank Branch Name">Bank Branch Name</label>
+                            <input
+                                type="text"
+                                pInputText
+                                placeholder="Branch Name"
+                                class="pl-2 lg:ml-4"
+                                formControlName="branchName"
+                            />
+                            <button
+                                type="button"
+                                pButton
+                                pRipple
+                                icon="pi pi-search"
+                                class="rounded-r-lg"
+                                (click)="searchOne()"
+                            ></button>
+                        </div>
+
+                        <div class="field col-12 md:col-3">
+                            <p-button
+                                label="Search"
+                                icon="pi pi-search"
+                                iconPos="right"
+                                class="mx-5 mt-2"
+                                (click)="searchTwo()"
+                            ></p-button>
+                        </div>
+                    </div>
+            </p-fieldset>
+
+            <div class="w-full text-center mt-2">
+                <button
+                    pButton
+                    pRipple
+                    type="refresh"
+                    class="p-button-raised p-button-info"
+                    [disabled]="!lifeCertificateForm.valid"
+                >
+                    Refresh
+                </button>
+            </div>
+        </form>
+
+    </div> -->

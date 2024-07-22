@@ -5,11 +5,15 @@ import { PpoComponent } from './ppo/ppo.component';
 import { EntryComponent } from './ppo/entry/entry.component';
 import { PensionBillComponent } from './pension-bill/pension-bill.component';
 
-const routes: Routes = [
-    { path: '', component: PensionProcessComponent },
-    { path: 'ppo', component: PpoComponent },
-    { path: 'app-pension-billS', component: PensionBillComponent },
 
+import { LifeCertificateComponent } from './ppo/life-certificate/life-certificate.component';
+
+const routes: Routes = [
+  {path: '', component: PensionProcessComponent},
+  {path: 'ppo', component: PpoComponent},
+  // path added for life-certificate
+  {path: 'life-certificate',component: LifeCertificateComponent},
+  { path: 'app-pension-billS', component: PensionBillComponent },
 ];
 
 @NgModule({
