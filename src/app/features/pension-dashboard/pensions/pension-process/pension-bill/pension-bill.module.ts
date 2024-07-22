@@ -1,16 +1,28 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-
-import { PensionBillRoutingModule } from './pension-bill-routing.module';
+import { ButtonModule } from 'primeng/button';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
+import { ChipsModule } from "primeng/chips";
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
+import { RatingModule } from 'primeng/rating';
+import { PensionBillComponent } from './pension-bill.component';
 
 @NgModule({
-  declarations: [ PensionBillModule], // PensionBillModule should not be declared here
+  declarations: [
+    PensionBillComponent
+  ],
   imports: [
     CommonModule,
-    PensionBillRoutingModule,
-    RouterModule
-  ],
-  exports: []
+    ButtonModule,
+    ReactiveFormsModule,
+    DropdownModule,
+    FormsModule,
+    ChipsModule,
+    ToastModule,
+    RatingModule,
+    TableModule,
+  ]
 })
 export class PensionBillModule { }

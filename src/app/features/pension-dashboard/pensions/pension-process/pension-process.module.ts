@@ -48,8 +48,12 @@ import { PensionProcessComponent } from './pension-process.component';
 
 @NgModule({
   declarations: [
-    PensionProcessComponent,
+
+
+
+    PensionProcessComponent
     ConvertToFamilyPensionComponent
+
   ],
   imports: [
     CommonModule,

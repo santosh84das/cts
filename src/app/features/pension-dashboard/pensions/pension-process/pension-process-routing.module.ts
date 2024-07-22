@@ -5,8 +5,11 @@ import { PpoComponent } from './ppo/ppo.component';
 import { EntryComponent } from './ppo/entry/entry.component';
 
 const routes: Routes = [
+
+
   {path: '', component: PensionProcessComponent},
   {path: 'ppo', component: PpoComponent},
+
 ];
 
 @NgModule({
