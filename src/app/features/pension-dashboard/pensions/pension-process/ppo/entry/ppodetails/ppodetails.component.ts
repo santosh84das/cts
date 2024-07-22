@@ -126,16 +126,11 @@ export class PpodetailsComponent implements OnInit {
 
   }
 
-  
-
-  
 
   handlePrintData() {
     console.log(this.ppoForm.value);
   }
 
-  
-  
 
   onSearch() {
     if (this.ppoForm.valid) {

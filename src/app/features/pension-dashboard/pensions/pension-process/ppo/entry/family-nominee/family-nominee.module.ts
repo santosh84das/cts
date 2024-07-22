@@ -25,6 +25,10 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 
 import { FamilyNomineeComponent } from './family-nominee.component';
 
+// add requirement for panel
+import { PanelModule } from 'primeng/panel';
+import { FieldsetModule } from 'primeng/fieldset';
+
 
 
 
@@ -52,6 +56,8 @@ import { FamilyNomineeComponent } from './family-nominee.component';
     ToastModule,
     SliderModule,
     RatingModule,
+    PanelModule,
+    FieldsetModule,
     
   ],
   exports: [FamilyNomineeComponent]

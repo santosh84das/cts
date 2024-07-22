@@ -1,6 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { log } from 'console';
 import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
 import { SelectItem } from 'primeng/api';
 import { Status } from 'src/app/core/enum/stampIndentStatusEnum';
@@ -19,20 +18,27 @@ interface expandedRows {
   templateUrl: './family-nominee.component.html',
   styleUrls: ['./family-nominee.component.scss']
 })
+
 export class FamilyNomineeComponent implements OnInit {
-  displayInsertModal: boolean = false;
+  showFamilyNomineeFrom:boolean = false;
+  showNomineeDetailsFrom:boolean = false;
+  showPensionHolder:boolean = false;
+
   tableQueryParameters: DynamicTableQueryParameters = {
     pageSize: 10,
     pageIndex: 0,
     filterParameters: [], 
     sortParameters: { field: '', order: '' } 
   };
+
   tableActionButton: ActionButtonConfig[] = [];
+
   tableData: DynamicTable<GetStampIndents> | undefined;
   modalData: any[] = []; 
-  displayInsertModel: boolean = false;
+
   nomineeDetailsForm: FormGroup = new FormGroup({});
   familyNomineeForm: FormGroup = new FormGroup({});
+  
   expandedRows: expandedRows = {};
   modelData: any[] = []; 
   relationship: SelectItem[]=[];
@@ -53,6 +59,7 @@ export class FamilyNomineeComponent implements OnInit {
   ngOnInit(): void {
     this.initializeForm();
     this.getAllStampIndents();
+
     this.relationship = [
       {label: 'Son', value: {id: '1', name: 'Son', code: 'S'}},
       {label: 'Daughter', value: {id: '2', name: 'Daughter', code: 'D'}},
@@ -84,9 +91,6 @@ export class FamilyNomineeComponent implements OnInit {
     ]
   }
 
-  showInsertDialog() {
-    this.displayInsertModal = true;
-  }
 
   handleButtonClick($event: any): void {
     if ($event && $event.buttonType === 'customButton') {
@@ -99,6 +103,8 @@ export class FamilyNomineeComponent implements OnInit {
   }
 
   initializeForm(): void {
+    
+    // for form A
     this.familyNomineeForm = this.fb.group({
           slNo: ['', Validators.required],  
           dependentName: ['', Validators.required],
@@ -107,13 +113,35 @@ export class FamilyNomineeComponent implements OnInit {
           dateOfDeath: ['', Validators.required],
           identificationMark: ['', Validators.required],
           handicap: ['', Validators.required],
-        });
+    });
+
+
   }
 
-  addStampIndent() {
-    this.displayInsertModal = false;
-    this.modalData = [this.familyNomineeForm.value];  
-    console.log(this.modalData.length);
+  addStampIndent(nameForm:string) {
+    switch(nameForm){
+      case 'A':
+        this.switchFamilyNomineeFrom();
+        this.modalData = [this.familyNomineeForm.value];  
+        console.log(this.modalData.length);
+        break;
+
+      case 'B':
+          this.switchNomineeDetails();
+          this.modalData = [this.familyNomineeForm.value];  
+          console.log(this.modalData.length);
+          break;
+
+      case 'C':
+          this.switchPensionHolder();
+          this.modalData = [this.familyNomineeForm.value];  
+          console.log(this.modalData.length);
+          break;
+          
+      default:
+        console.log('Invalid form name');
+        return;
+    }
   }
 
   getAllStampIndents() {
@@ -131,63 +159,18 @@ export class FamilyNomineeComponent implements OnInit {
         }
       });
   }
-  //  
 
 
-  
+  // show and hide forms
+  switchFamilyNomineeFrom(){
+    this.showFamilyNomineeFrom = (!this.showFamilyNomineeFrom);
+  }
 
-  // @Output() StampCombinationSelected = new EventEmitter<any>();
+  switchNomineeDetails(){
+    this.showNomineeDetailsFrom = (!this.showNomineeDetailsFrom);
+  }
 
-  // ngOnInit(): void {
-  //   
-  // }
-
-  // showInsertFamilyDialog() {
-  //   this.displayInsertModal = true;
-  // }
-
-  // showInsertNomineeDialog() {
-  //   this.displayInsertModel = true;
-  // }
-
-  // handleButtonClick($event: any) { 
-  //   this.modalData = [this.familyNomineeForm.value];
-  //   this.modelData = [this.nomineeDetailsForm.value];
-  // }
-
-  // initializeFamilyForm(): void {
-  //   this.familyNomineeForm = this.fb.group({
-  //     slNo: ['', Validators.required],  
-  //     dependentName: ['', Validators.required],
-  //     relationship: ['', Validators.required],
-  //     dateOfBirthFamilyDetails: ['', Validators.required],
-  //     dateOfDeath: ['', Validators.required],
-  //     identificationMark: ['', Validators.required],
-  //     handicap: ['', Validators.required],
-  //   });
-  // }
-
-  // initializeNomineeForm(): void {
-  //   this.nomineeDetailsForm = this.fb.group({
-  //     sl: ['', Validators.required],  
-  //     nomineeName: ['', Validators.required],
-  //     relation: ['', Validators.required],
-  //     dateOfBirth: ['', Validators.required],
-  //     accountNo: ['', Validators.required],
-  //     ifscCode: ['', Validators.required],
-  //     bankBranch: ['', Validators.required],
-  //     nomineeType: ['', Validators.required],
-  //     priorityLevel: ['', Validators.required],
-  //     share: ['', Validators.required],
-  //     activeFlag: ['', Validators.required],
-  //   });
-  // }
-
-  // addData() {
-  //   this.displayInsertModal = false;
-  //   this.modalData = [this.familyNomineeForm.value];  
-  //   this.modelData = [this.nomineeDetailsForm.value];
-  // }
-
-
+  switchPensionHolder(){
+    this.showPensionHolder = (!this.showPensionHolder);
+  }
 }
