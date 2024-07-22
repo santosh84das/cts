@@ -8,6 +8,11 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { RatingModule } from 'primeng/rating';
 import { PensionBillComponent } from './pension-bill.component';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+  { path: '', component: PensionBillComponent },
+];
 
 @NgModule({
   declarations: [
@@ -23,6 +28,9 @@ import { PensionBillComponent } from './pension-bill.component';
     ToastModule,
     RatingModule,
     TableModule,
-  ]
+    RouterModule.forChild(routes)
+
+  ],
+  exports: [RouterModule]
 })
 export class PensionBillModule { }

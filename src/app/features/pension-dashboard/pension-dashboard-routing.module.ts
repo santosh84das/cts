@@ -46,7 +46,16 @@ const routes: Routes = [
   {
    path: 'modules/pension-process/pension-bill',
    loadChildren: () => import('./pensions/pension-process/pension-bill/pension-bill.module').then(m => m.PensionBillModule),
-  }
+  },
+  {
+    path: 'modules/pension-process/ppo/convert-to-family-pension',
+    loadChildren: () => import('./pensions/pension-process/ppo/convert-to-family-pension/convert-to-family-pension.module').then(m => m.ConvertToFamilyPensionModule),
+   },
+   {
+    path: 'modules/pension-process/ppo/life-certificate',
+    loadChildren: () => import('./pensions/pension-process/ppo/life-certificate/life-certificate.module').then(m => m.LifeCertificateModule),
+   }
+  
 ];
 
 @NgModule({

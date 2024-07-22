@@ -42,18 +42,13 @@ import { CommonHeaderModule } from 'src/app/shared/modules/common-header/common-
 import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic-table.module';
 import { OptionCardModule } from 'src/app/shared/modules/option-card/option-card.module';
 import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown/treasury-dropdown.module';
-import { ConvertToFamilyPensionComponent } from './convert-to-family-pension/convert-to-family-pension.component';
 import { PensionProcessRoutingModule } from './pension-process-routing.module';
 import { PensionProcessComponent } from './pension-process.component';
 
+
 @NgModule({
   declarations: [
-
-
-
     PensionProcessComponent
-    ConvertToFamilyPensionComponent
-
   ],
   imports: [
     CommonModule,
@@ -100,6 +95,7 @@ import { PensionProcessComponent } from './pension-process.component';
     ProgressBarModule,
     TableModule,
     CalendarModule,
+    FormsModule
   ]
 })
 export class PensionProcessModule { }
