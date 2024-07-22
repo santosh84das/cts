@@ -16,9 +16,6 @@ import { PpoComponent } from './ppo.component';
 import { EntryComponent } from './entry/entry.component';
 import { ManualPpoReceiptComponent } from './manual-ppo-receipt/manual-ppo-receipt.component';
 import { SanctionComponent } from './entry/sanction/sanction.component';
-import { LifeCertificateComponent } from './life-certificate/life-certificate.component';
-import { FieldsetModule } from 'primeng/fieldset';
-import { RadioButtonModule } from 'primeng/radiobutton';
 
 
 
@@ -31,7 +28,7 @@ const routes: Routes = [
 
 
 @NgModule({
-  declarations: [PpoComponent, LifeCertificateComponent],
+  declarations: [PpoComponent],
   imports: [
     CommonModule,
     ButtonModule,
@@ -46,10 +43,6 @@ const routes: Routes = [
     ReactiveFormsModule,
     TreasuryDropdownModule,
     FormsModule,
-    //
-    FieldsetModule,
-    RadioButtonModule,
-    
     RouterModule.forChild(routes)
   ],
   exports: [RouterModule]

@@ -5,9 +5,11 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './ppo.component.html',
   styleUrls: ['./ppo.component.scss']
 })
-export class PpoComponent  {
+export class PpoComponent implements OnInit {
 
   constructor() { }
 
+  ngOnInit(): void {
+  }
 
 }
