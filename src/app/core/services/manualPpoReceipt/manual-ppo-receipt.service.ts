@@ -53,11 +53,13 @@ export class ManualPpoReceiptService {
     queryParameters: DynamicTableQueryParameters
   ): Observable<IapiResponce<manualPpoReceiptEntryDTO>> {
     let params = new HttpParams();
-    for (const key in queryParameters) {
-      if (queryParameters.hasOwnProperty(key)) {
-        params = params.set(key, queryParameters[key]);
-      }
-    }
+    // for (const key in queryParameters) {
+    //   if (queryParameters.hasOwnProperty(key)) {
+    //     params = params.set(key, queryParameters[key]);
+
+
+    //   }
+    // }
 
     return this.http
       .get<IapiResponce<manualPpoReceiptEntryDTO>>(this.apiUrl, { params })
