@@ -8,7 +8,8 @@ import { PensionBillComponent } from './pension-bill/pension-bill.component';
 const routes: Routes = [
     { path: '', component: PensionProcessComponent },
     { path: 'ppo', component: PpoComponent },
-    { path: 'app-pension-billS', component: PensionBillComponent },
+    {path: 'pension-bill',component:PensionBillComponent}
+
 
 ];
 

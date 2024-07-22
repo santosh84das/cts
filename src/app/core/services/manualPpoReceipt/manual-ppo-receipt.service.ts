@@ -19,6 +19,7 @@ export class ManualPpoReceiptService {
 
   apiUrl = "v1/manual-ppo/receipts";
 
+
   constructor(private http: HttpClient, private toastService: ToastService) {}
 
   //Get All Manual PPO Receipt
@@ -48,7 +49,6 @@ export class ManualPpoReceiptService {
   //       })
   //     );
   // }
-
   getAllManualPpoReceipt(
     queryParameters: DynamicTableQueryParameters
   ): Observable<IapiResponce<manualPpoReceiptEntryDTO>> {
@@ -58,7 +58,6 @@ export class ManualPpoReceiptService {
         params = params.set(key, queryParameters[key]);
       }
     }
-
     return this.http
       .get<IapiResponce<manualPpoReceiptEntryDTO>>(this.apiUrl, { params })
       .pipe(

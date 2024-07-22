@@ -43,9 +43,7 @@ import { RatingModule } from 'primeng/rating';
 
 @NgModule({
   declarations: [
-    PensionProcessComponent,
-    PensionBillComponent,
-
+    PensionProcessComponent
   ],
   imports: [
     CommonModule,

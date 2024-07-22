@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { PensionDashboardComponent } from './pension-dashboard.component';
 
+
 const routes: Routes = [
   { path: '', component: PensionDashboardComponent },
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
     path: 'modules/pension-process/ppo/entry/family-nominee',
     loadChildren: () =>
       import('./pensions/pension-process/ppo/entry/family-nominee/family-nominee.module').then(m => m.FamilyNomineeModule),
+  },
+  {
+   path: 'modules/pension-process/pension-bill',
+   loadChildren: () => import('./pensions/pension-process/pension-bill/pension-bill.module').then(m => m.PensionBillModule),
   }
 ];
 
