@@ -1,0 +1,18 @@
+<div class="grid">
+    <div class="col">
+        <div class="grid nested-grid">
+            <div class="col-fixed">
+                <img [src]="imgSrc" alt="logo" height="60" />
+            </div>
+            <div class="col-11">
+                <div class="text-900 font-bold text-3xl mb-1">
+                    {{ headerName }}
+                </div>
+                <div class="text-700 text-1xl line-height-3">{{SubHeaderName}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-fixed">
+        <ng-content></ng-content>
+    </div>
+</div>
