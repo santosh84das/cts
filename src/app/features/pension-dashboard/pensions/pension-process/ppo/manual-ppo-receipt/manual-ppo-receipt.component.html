@@ -50,19 +50,16 @@
             </div>
         </div>
         <div class="flex gap-2 xl:flex-row flex-column">
-            <div class="col-12 p-0 flex-auto">
-                <label for="ppoType" class="block mb-1 text-color text-lg">PPO Type:</label>
-                <input type="text" pinputtext="" formControlName="ppoType" placeholder="PPO Type"
-                    class="p-inputtext p-component p-element w-full">
-            </div>
-        </div>
-        <div class="flex gap-2 xl:flex-row flex-column">
-            <div class="flex-auto">
-                <label for="psaCode" class="block mb-1 text-color text-lg">PSA Code:</label>
-                <input type="text" pinputtext="" formControlName="psaCode" placeholder="PSA Code"
-                    class="p-inputtext p-component p-element w-full">
-            </div>
-        </div>
+          <div class="col-12 p-0 flex-auto">
+              <label for="psaCode" class="block mb-1 text-color text-lg">PPO Issued By:</label>
+              <p-dropdown [options]="ppoIssuedBy" formControlName="psaCode" placeholder="Select a PPO Issued By" [showClear]="true"></p-dropdown>
+          </div>
+      
+          <div class="flex-auto">
+              <label for="ppoType" class="block mb-1 text-color text-lg">Type:</label>
+              <p-dropdown [options]="type" formControlName="ppoType" placeholder="Select a Type" [showClear]="true"></p-dropdown>
+          </div>
+      </div>
     </form>
     <div class="flex gap-2 justify-content-end pt-3">
         <button pButton label="Submit" (click)="selectedRowData ? updateManualPpoReceipt() : addManualPpoReceipt()" class="p-element p-ripple p-button-rounded p-button p-component"></button>
@@ -110,7 +107,7 @@
             <th style="min-width: 12rem">
               <div class="flex justify-content-between align-items-center">
                 Date of Receipt
-                <p-columnFilter type="date" field="receiptDate" display="menu" placeholder="mm/dd/yyyy"></p-columnFilter>
+                <p-columnFilter type="date" field="receiptDate" display="menu" placeholder="dd/mm/yyyy"></p-columnFilter>
               </div>
             </th>
             <th style="min-width: 10rem">

@@ -8,6 +8,7 @@ import { ManualPpoReceiptService } from 'src/app/core/services/manualPpoReceipt/
 import { ToastService } from 'src/app/core/services/toast.service';
 import { convertDate } from 'src/utils/dateConversion';
 import { DatePipe } from '@angular/common';
+import { SelectItem } from 'primeng/api';
 
 interface expandedRows {
   [key: string]: boolean;
@@ -29,13 +30,18 @@ export class ManualPpoReceiptComponent implements OnInit {
     sortParameters: { field: '', order: '' }
   };
   tableActionButton: ActionButtonConfig[] = [];
-  tableData: DynamicTable<manualPpoReceiptEntryDTO> = { headers: [], data: [], dataCount: 0 }; // Initialize with default value
+  tableData: DynamicTable<manualPpoReceiptEntryDTO> = { headers: [], data: [], dataCount: 0 }; 
   modalData: manualPpoReceiptEntryDTO[] = [];
   count: number = 0;
   loading: boolean = false;
   treasuryReceiptId!: string;
   manaualPpoPayload!: manualPpoReceiptEntryDTO;
-  selectedRowData: manualPpoReceiptEntryDTO | null = null;  // For edit functionality
+  selectedRowData: manualPpoReceiptEntryDTO | null = null;  
+  selectedRow: any;
+  ppoIssuedBy: SelectItem[] = [];
+  type: SelectItem[] = [];
+  selectedDrop: SelectItem = { value: '' };
+  
 
   constructor(
     private datapipe: DatePipe,
@@ -49,11 +55,24 @@ export class ManualPpoReceiptComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
+    this.ppoIssuedBy = [
+      { label: 'AGWB', value: 'A' },
+      { label: 'DPPGWG', value: 'D' },
+      { label: 'Other', value: 'O' }
+    ];
+
+    this.type = [
+      { label: 'New PPO', value: 'N' },
+      { label: 'Revise PPO', value: 'R' },
+      { label: 'PSA Sanction', value: 'P' },
+      { label: 'Other', value: 'O' }
+    ];
     this.getAllManualPpoReceipt();
   }
 
   showInsertDialog() {
     this.displayInsertModal = true;
+    this.manualPpoForm.reset();
   }
 
   handleButtonClick($event: any) {
@@ -85,6 +104,7 @@ export class ManualPpoReceiptComponent implements OnInit {
   addManualPpoReceipt() {
     if (this.manualPpoForm.valid) {
       const formData = this.manualPpoForm.value;
+  
       if (formData.receiptDate && formData.dateOfCommencement) {
         const localDate = new Date(formData.dateOfCommencement);
         const offset = localDate.getTimezoneOffset();
@@ -92,7 +112,9 @@ export class ManualPpoReceiptComponent implements OnInit {
         formData.dateOfCommencement = this.datapipe.transform(adjustedDate, 'yyyy-MM-dd');
         formData.receiptDate = this.datapipe.transform(formData.receiptDate, 'yyyy-MM-dd');
       }
-      
+  
+      console.log('Form Data:', formData);
+  
       this.manualPpoReceiptService.addNewManualPpoReceipt(formData).subscribe(
         response => {
           console.log('Form submitted successfully:', response);
@@ -122,6 +144,7 @@ export class ManualPpoReceiptComponent implements OnInit {
       });
     }
   }
+  
 
   resetForm() {
     this.manualPpoForm.reset();
@@ -189,11 +212,38 @@ export class ManualPpoReceiptComponent implements OnInit {
     }
   }
 
-  EditInit(rowData: any) {
-    this.manualPpoForm.patchValue(rowData);
-    this.selectedRowData = rowData;
-    this.displayInsertModal = true;
+  EditInit(rowData: any): void {
+    console.log('EditInit called with rowData:', rowData);
+    this.selectedRow = rowData;
+    var treasuryReceiptId: string = this.selectedRow.treasuryReceiptNo;
+    console.log('Treasury Receipt ID:', treasuryReceiptId);
+
+    this.manualPpoReceiptService.getManualPpoDetailsById(treasuryReceiptId).subscribe({
+        next: response => {
+            console.log('Fetched DTO:', response);
+            const dateOfCommencement = response.result.dateOfCommencement ? new Date(response.result.dateOfCommencement) : null;
+            const receiptDate = response.result.receiptDate ? new Date(response.result.receiptDate) : null;
+
+            this.manualPpoForm.patchValue({
+                ppoNo: response.result.ppoNo,
+                pensionerName: response.result.pensionerName,
+                dateOfCommencement: dateOfCommencement,
+                mobileNo: response.result.mobileNumber,  
+                receiptDate: receiptDate,
+                psaCode: response.result.psaCode,
+                ppoType: response.result.ppoType
+            });
+            console.log('Form Values:', this.manualPpoForm.value);
+            this.displayInsertModal = true;
+        },
+        error: err => {
+            this.toastService.showError('Failed to fetch PPO receipt details.');
+        }
+    });
 }
+
+
+  
 
   // Update Manual PPO Receipt
   updateManualPpoReceipt() {
@@ -225,7 +275,7 @@ export class ManualPpoReceiptComponent implements OnInit {
   onRowEditInit(data: manualPpoReceiptEntryDTO) {
     this.selectedRowData = { ...data };
     this.manualPpoForm.patchValue(this.selectedRowData);
-    this.displayInsertModal = true;  // Open the modal for editing
+    this.displayInsertModal = true;  
   }
 
   onRowEditCancel() {

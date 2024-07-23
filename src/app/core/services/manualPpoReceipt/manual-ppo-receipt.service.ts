@@ -75,8 +75,7 @@ export class ManualPpoReceiptService {
 
   //Get Manual PPO Receipt By Id
   getManualPpoDetailsById(id: string): Observable<IapiResponce<manualPpoReceiptEntryDTO>> {
-    console.log("Hi service");
-    return this.http.get<IapiResponce>('v1/manual-ppo/receipts?id=' + id).pipe(
+    return this.http.get<IapiResponce>('v1/manual-ppo/receipts/' + id).pipe(
       catchError((error) => {
         throw this.toastService.showError(error.message);
       })
