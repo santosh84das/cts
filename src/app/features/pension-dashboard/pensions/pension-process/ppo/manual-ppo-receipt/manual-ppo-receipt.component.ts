@@ -193,7 +193,7 @@ export class ManualPpoReceiptComponent implements OnInit {
         (response: any) => {
           this.loading = false;
           if (response && response.apiResponseStatus === 1 && response.result) {
-            const updatedData = response.result.map((item: any) => ({
+            const updatedData = response.result.data.map((item: any) => ({
               ...item,
               receiptDate: convertDate(item.receiptDate)
             }));
