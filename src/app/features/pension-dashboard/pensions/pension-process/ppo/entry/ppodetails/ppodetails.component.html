@@ -234,13 +234,6 @@
                                         </div>
                                     </p-fieldset>
 
-                                    <div class="flex flex-col mt-1 align-items-center justify-content-center">
-                                        <div class="flex flex-wrap gap-2">
-                                            <p-button label="Next" icon="pi pi-step-forward"
-                                                styleClass="p-button-success" (click)="next()"></p-button>
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
 
@@ -287,17 +280,6 @@
                                         </div>
                                     </div>
                                 </p-fieldset>
-
-                                <div class="flex flex-col mt-1 align-items-center justify-content-center">
-                                    <div class="flex flex-wrap gap-2">
-                                        <p-button label="Back" icon="pi pi-step-backward" styleClass="p-button-warning"
-                                            (onClick)="prev()"></p-button>
-                                        <div class="flex flex-wrap gap-2">
-                                            <p-button label="Next" icon="pi pi-step-forward"
-                                                styleClass="p-button-success" (click)="next()"></p-button>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
 
 
@@ -506,18 +488,6 @@
                                             </div>
                                         </div>
                                     </p-fieldset>
-                                </div>
-
-
-                                <div class="flex flex-col mt-1 align-items-center justify-content-center">
-                                    <div class="flex flex-wrap gap-2">
-                                        <p-button label="Back" icon="pi pi-step-backward" styleClass="p-button-warning"
-                                            (onClick)="prev()"></p-button>
-                                        <div class="flex flex-wrap gap-2">
-                                            <p-button label="Next" icon="pi pi-step-forward"
-                                                styleClass="p-button-success" (click)="next()"></p-button>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
 
@@ -896,6 +866,21 @@
                                 
                             </div>
                         </form>
+                    </div>
+                </div>
+                <div class="flex flex-col mt-1 align-items-center justify-content-center">
+                    <div class="flex flex-wrap gap-2">
+                        <p-button label="Back" *ngIf="currentStepIndex > 0" icon="pi pi-step-backward" styleClass="p-button-warning"
+                            (onClick)="prev()"></p-button>
+                        <div class="flex flex-wrap gap-2">
+                            <p-button label="Next" *ngIf="currentStepIndex < 3" icon="pi pi-step-forward"
+                                styleClass="p-button-success" (click)="next()"></p-button>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <p-button label="submit" *ngIf="currentStepIndex == 3" icon="pi pi-bookmark"
+                                styleClass="p-button-raised" (click)="next()"></p-button>
+                                <!-- <button pButton pRipple label="Submit" icon="pi pi-bookmark"></button> -->
+                        </div>
                     </div>
                 </div>
             </div>
