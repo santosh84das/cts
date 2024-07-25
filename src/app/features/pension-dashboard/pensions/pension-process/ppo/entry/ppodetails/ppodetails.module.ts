@@ -35,7 +35,11 @@ const routes: Routes = [
 
 
 @NgModule({
-  declarations: [PpodetailsComponent],
+  declarations: [
+    PpodetailsComponent,
+    SanctionComponent,
+    
+  ],
   imports: [
     CommonModule,
     ButtonModule,
