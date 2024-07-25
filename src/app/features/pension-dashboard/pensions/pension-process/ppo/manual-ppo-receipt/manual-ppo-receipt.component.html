@@ -5,12 +5,24 @@
                 class="p-button-rounded p-button-raised"></button>
         </app-common-header>
     </div>
-    <!-- <div class="col-12">
-        <app-dynamic-table (actionButtonClicked)="handleButtonClick($event)" [numberRowsShown]="10"
-            rowSelectionMode="multiple" [rowsPerPageOptions]="[10,30,50]" [actionButtons]="tableActionButton"
-            [headers]="tableData!.headers" [data]="tableData.data" [dataCount]="tableData.dataCount">
-        </app-dynamic-table>
-    </div> -->
+    <div class="col-12">
+      <mh-prime-dynamic-table
+      size="small"
+      [data]="tableData"
+      [numberRowsShown]="10"
+      [rowsPerPageOptions]="[10, 30, 50]"
+      rowSelectionMode = 'multiple'
+      [showTopMenubar]="true"
+      [isLoading]="isTableDataLoading"
+      [actionButtons]="tableActionButton"
+      [childActionButtons]="tableChildActionButton"
+      (rowSelect)="handleRowSelection($event)"
+      (actionButtonClicked)="handleButtonClick($event)"
+      (queryParameterChange)="handQueryParameterChange($event)"
+      (queryParameterChange)="handQueryParameterChange($event)"
+      (searchKeyChange)="handsearchKeyChange($event)"
+    ></mh-prime-dynamic-table>
+    </div>
   </div>
   
 <p-dialog header="Manual PPO Receipt" [(visible)]="displayInsertModal" [modal]="true" [style]="{width: '45vw'}"
@@ -66,7 +78,7 @@
         <button pButton label="Cancel" (click)="cancelPpoReceipt()" class="p-element p-ripple p-button-rounded p-button p-component"></button>
     </div>
 </p-dialog>
-<div class="col-12">
+<!-- <div class="col-12">
     <div class="card">
       <h5>Manual PPO Receipt</h5>
       <p-table
@@ -74,7 +86,7 @@
         [value]="tableData?.data || []"
         dataKey="ppoNo"
         [rows]="10"
-        [loading]="loading"
+        [loading]="isTableDataLoading"
         [rowHover]="true"
         styleClass="p-datatable-gridlines"
         [paginator]="true"
@@ -142,4 +154,4 @@
         </ng-template>
       </p-table>
     </div>
-  </div>
+  </div> -->

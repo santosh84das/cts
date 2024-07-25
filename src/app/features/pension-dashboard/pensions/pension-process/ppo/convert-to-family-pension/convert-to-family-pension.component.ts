@@ -3,7 +3,7 @@ import { SelectItem } from 'primeng/api';
 import { Customer } from 'src/app/demo/api/customer';
 import { Product } from 'src/app/demo/api/product';
 import { CountryService } from 'src/app/demo/service/country.service';
-
+import { Intr1, Intr2 } from './intr';
 interface expandedRows {
   [key: string]: boolean;
 }
@@ -54,22 +54,24 @@ export class ConvertToFamilyPensionComponent implements OnInit {
   }];
 
     customers2: Customer[] = [];
-    customers3: Customer[] = [
-      {
-        name: 'Amit',
-        country: { code: 'IN', name: 'India' },
-        company: 'Example Company',
-        status: 'Active',
-        date: '2024-07-21',
-        representative: { name: 'John Doe', image: 'john_doe.png' }
-      },
-      // Add more customer objects as needed
+    customers3: Intr1[];
+    pension_details_items : Intr2[];
+
+  constructor(private countryService: CountryService) {
+    this.customers3=[
+      {id:''},
+      {id:''},
+      {id:''},
+      {id:''}
     ];
-
-
-
-  constructor(private countryService: CountryService) { }
-
+    this.pension_details_items = [
+       {Component_description:'Shruti',wef:'12/01/2015',amount:10000},
+       {Component_description:'Sumit',wef:'12/07/2015',amount:20000},
+       {Component_description:'Ayansh',wef:'14/06/2018',amount:15000},
+       {Component_description:'Sangita',wef:'05/06/2014',amount:5000}
+     ]
+    }
+     
   ngOnInit() {
     this.countryService.getCountries().then(countries => {
       return this.countries = countries;

@@ -64,7 +64,7 @@ export class ManualPpoReceiptService {
 
 
     return this.http
-      .get<IapiResponce<manualPpoReceiptEntryDTO>>(this.apiUrl, { params })
+      .patch<IapiResponce<manualPpoReceiptEntryDTO>>(this.apiUrl, { params })
       .pipe(
         catchError((error) => {
           this.toastService.showError(error.message);

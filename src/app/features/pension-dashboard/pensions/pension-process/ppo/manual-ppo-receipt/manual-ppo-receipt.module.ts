@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ButtonModule } from 'primeng/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MhPrimeDynamicTableModule } from 'mh-prime-dynamic-table';
 
 import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic-table.module';
 import { OptionCardModule } from 'src/app/shared/modules/option-card/option-card.module';
@@ -51,7 +52,8 @@ import { ManualPpoReceiptService } from 'src/app/core/services/manualPpoReceipt/
     ProgressBarModule,
     ToastModule,
     SliderModule,
-    RatingModule
+    RatingModule,
+    MhPrimeDynamicTableModule
   ]
 })
 export class ManualPpoReceiptModule { }
