@@ -22,8 +22,8 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { PanelModule } from 'primeng/panel';
 import { FieldsetModule } from 'primeng/fieldset';
-
-
+import { BankDetails } from './bank_details/bankdetails.component';
+import { FamilyNomineeComponent } from './family-nominee/family-nominee.component';
 
 const routes: Routes = [
   { path: '', component: PpodetailsComponent },
@@ -33,7 +33,11 @@ const routes: Routes = [
 
 
 @NgModule({
-  declarations: [PpodetailsComponent],
+  declarations: [
+    PpodetailsComponent,
+    BankDetails,
+    FamilyNomineeComponent
+  ],
   imports: [
     CommonModule,
     ButtonModule,
