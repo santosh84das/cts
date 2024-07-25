@@ -26,8 +26,8 @@ build-job:       # This job runs in the build stage, which runs first.
     - npm install
     - npm run build
     - cd dist
-    - tar cvfz ~/cts.tgz cts 
-    - printf 'krish@Nic24\ny'|/opt/cisco/anyconnect/bin/vpn -s connect sconnect.nic.in
-    - scp ~/cts.tgz root@10.173.13.51:/usr/share/nginx/html/
-    - ssh root@10.173.13.51 "cd /usr/share/nginx/html/ && rm -rf cts && tar xvfz cts.tgz && rm cts.tgz && chown -R root:root cts &&chmod -R 755 cts && systemctl stop nginx && systemctl daemon-reload && systemctl start nginx"
-    - /opt/cisco/anyconnect/bin/vpn disconnect
+    - tar cvfz ~/cts.tgz cts
+    - cp ~/cts.tgz /usr/share/nginx/html/
+    # - printf 'krish@Nic24\ny'|/opt/cisco/anyconnect/bin/vpn -s connect sconnect.nic.in
+    - ssh root@localhost "cd /usr/share/nginx/html/ && rm -rf cts && tar xvfz cts.tgz && rm cts.tgz && chown -R root:root cts &&chmod -R 755 cts && systemctl stop nginx && systemctl daemon-reload && systemctl start nginx"
+    # - /opt/cisco/anyconnect/bin/vpn disconnect
