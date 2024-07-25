@@ -1,0 +1,889 @@
+<div class="container">
+
+    <div class="grid">
+        <div class="col-12">
+            <div class="card">
+                <div class="flex flex-column gap-4 mt-4">
+                    <p-steps [model]="steps" [(activeIndex)]="currentStepIndex"></p-steps>
+                    <div class="my-4 px-4">
+                        <form [formGroup]="ppoForm" (ngSubmit)="onSearch()">
+                            <!-- PPO and OtherDetails -->
+                            <div *ngIf="currentStepIndex === 0" class="flex flex-column gap-3">
+                                <div class="col-12 md:col-12">
+                                    <p-fieldset legend="PPO Details" class="line-height-3 m-0">
+                                        <div class="formgroup-inline">
+                                            <!-- <label for="ppoId" class="col-12 mb-2 md:col-2 md:mb-0">PPO ID:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <input pInputText formControlName="ppoId" />
+                                            </div> :: add in buttom-->
+                                            <label for="ppoNo" class="col-12 mb-2 md:col-2 md:mb-0">PPO No.:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <input pInputText formControlName="ppoNo" />
+                                            </div>
+                                            <label for="pensionerName" class="col-12 mb-2 md:col-2 md:mb-0">Pensioner
+                                                Name:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <input pInputText formControlName="pensionerName" />
+                                            </div>
+                                        </div>
+                                        <div class="formgroup-inline">
+                                            <label for="type" class="col-12 mb-2 md:col-2 md:mb-0">Type:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <p-dropdown
+                                                    [options]="[{label: 'Pension', value: 'pension'}, {label: 'Bank', value: 'bank'}]"
+                                                    formControlName="type"></p-dropdown>
+                                            </div>
+                                            <label for="subType" class="col-12 mb-2 md:col-2 md:mb-0">Sub Type:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <p-dropdown
+                                                    [options]="[{label: 'Pension', value: 'pension'}, {label: 'Bank', value: 'bank'}]"
+                                                    formControlName="subType"></p-dropdown>
+                                            </div>
+                                        </div>
+                                        <div class="formgroup-inline">
+                                            <label for="catDescription" class="col-12 mb-2 md:col-2 md:mb-0">Cat
+                                                Description:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <input pInputText formControlName="catDescription" />
+                                            </div>
+                                            <label for="catSubCatid"
+                                                class="col-12 mb-2 md:col-2 md:mb-0">Cat-SubCatID:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <input pInputText formControlName="catSubCatid" />
+                                            </div>
+                                            <label for="retirementDate" class="col-12 mb-2 md:col-2 md:mb-0">Retirement
+                                                Date:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <p-calendar formControlName="retirementDate"
+                                                    [showIcon]="true"></p-calendar>
+                                            </div>
+                                        </div>
+                                        <div class="formgroup-inline">
+                                            <label for="dateOfDeath" class="col-12 mb-2 md:col-2 md:mb-0">Date of
+                                                Death:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <p-calendar formControlName="dateOfDeath"
+                                                    [showIcon]="true"></p-calendar>
+                                            </div>
+
+                                            <label for="commencementDate"
+                                                class="col-12 mb-2 md:col-2 md:mb-0">Commencement Date:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0" style="width: 300px;">
+                                                <p-calendar formControlName="commencementDate"
+                                                    [showIcon]="true"></p-calendar>
+                                            </div>
+
+                                            <!-- <label for="notionalBasicPension" class="col-12 mb-2 md:col-2 md:mb-0">Notional Basic Pension:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <input pInputText formControlName="notionalBasicPension" />
+                                            </div>
+                                            <label for="withEffectiveDate" class="col-12 mb-2 md:col-2 md:mb-0">With Effective Date:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <p-calendar formControlName="withEffectiveDate" [showIcon]="true"></p-calendar>
+                                            </div> -->
+                                        </div>
+                                        <div class="formgroup-inline">
+                                            <label for="basic" class="col-12 mb-2 md:col-2 md:mb-0">Basic:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <input pInputText formControlName="basic" />
+                                            </div>
+                                            <label for="commutedPension" class="col-12 mb-2 md:col-2 md:mb-0">Commuted
+                                                Pension:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <input pInputText formControlName="commutedPension" />
+                                            </div>
+                                            <label for="effectiveDate"
+                                                class="col-12 mb-2 md:col-2 md:mb-0 w-400">Effective Date:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <p-calendar formControlName="effectiveDate" [showIcon]="true"
+                                                    [styleClass]="'testClass'"></p-calendar>
+                                            </div>
+                                            <label for="reducedPension" class="col-12 mb-2 md:col-2 md:mb-0">Reduced
+                                                Pension:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <input pInputText formControlName="reducedPension" />
+                                            </div>
+                                        </div>
+                                        <div class="formgroup-inline">
+                                            <label for="epf" class="col-12 mb-2 md:col-2 md:mb-0">EPF:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <input pInputText formControlName="epf" />
+                                            </div>
+                                            <label for="upto" class="col-12 mb-2 md:col-2 md:mb-0">Upto:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <p-calendar formControlName="upto" [showIcon]="true"></p-calendar>
+                                            </div>
+                                            <label for="familyPension" class="col-12 mb-2 md:col-2 md:mb-0">Family
+                                                Pension:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <input pInputText formControlName="familyPension" />
+                                            </div>
+                                        </div>
+                                    </p-fieldset>
+
+                                    <p-fieldset legend="Outher Details" class="line-height-3 m-8">
+                                        <div class="formgroup-inline">
+                                            <label for="religion" class="col-12 mb-2 md:col-2 md:mb-0">Religion:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <p-dropdown [options]="religionOptions"
+                                                    formControlName="religion"></p-dropdown>
+                                            </div>
+                                            <label for="firstPensionGenerated"
+                                                class="col-12 mb-2 md:col-2 md:mb-0">First Pension Generated:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <p-radioButton name="firstPensionGenerated" value="yes"
+                                                    formControlName="firstPensionGenerated" label="Yes"></p-radioButton>
+                                                <p-radioButton name="firstPensionGenerated" value="no"
+                                                    formControlName="firstPensionGenerated" label="No"></p-radioButton>
+                                            </div>
+                                            <label for="mobileNo" class="col-12 mb-2 md:col-2 md:mb-0">Mobile
+                                                No.:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <input pInputText formControlName="mobileNo" />
+                                            </div>
+                                        </div>
+                                        <div class="formgroup-inline">
+                                            <label for="aadharNo" class="col-12 mb-2 md:col-2 md:mb-0">Aadhar
+                                                No.:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <input pInputText formControlName="aadharNo" />
+                                            </div>
+                                            <label for="panNo" class="col-12 mb-2 md:col-2 md:mb-0">PAN No.:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <input pInputText formControlName="panNo" />
+                                            </div>
+                                            <label for="healthScheme" class="col-12 mb-2 md:col-2 md:mb-0">Health
+                                                Scheme:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <p-radioButton name="healthScheme" value="yes"
+                                                    formControlName="healthScheme" label="Yes"></p-radioButton>
+                                                <p-radioButton name="healthScheme" value="no"
+                                                    formControlName="healthScheme" label="No"></p-radioButton>
+                                            </div>
+                                        </div>
+                                        <div class="formgroup-inline">
+                                            <label for="gpfTpfNo" class="col-12 mb-2 md:col-2 md:mb-0">GPF/TPF
+                                                No.:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <input pInputText formControlName="gpfTpfNo" />
+                                            </div>
+                                            <label for="subDiv" class="col-12 mb-2 md:col-2 md:mb-0">Sub Div:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <p-dropdown [options]="subDivOptions"
+                                                    formControlName="subDiv"></p-dropdown>
+                                            </div>
+                                            <label for="doublePension" class="col-12 mb-2 md:col-2 md:mb-0">Double
+                                                Pension:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <p-checkbox formControlName="doublePension"
+                                                    [binary]="true"></p-checkbox>
+                                            </div>
+                                        </div>
+                                        <div class="formgroup-inline">
+                                            <label for="employedPensioner" class="col-12 mb-2 md:col-2 md:mb-0">Employed
+                                                Pensioner:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <p-radioButton name="employedPensioner" value="yes"
+                                                    formControlName="employedPensioner" label="Yes"></p-radioButton>
+                                                <p-radioButton name="employedPensioner" value="no"
+                                                    formControlName="employedPensioner" label="No"></p-radioButton>
+                                            </div>
+                                            <label for="reEmployed"
+                                                class="col-12 mb-2 md:col-2 md:mb-0">Re-Employed:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <p-radioButton name="reEmployed" value="yes"
+                                                    formControlName="reEmployed" label="Yes"></p-radioButton>
+                                                <p-radioButton name="reEmployed" value="no" formControlName="reEmployed"
+                                                    label="No"></p-radioButton>
+                                            </div>
+                                        </div>
+                                        <div class="formgroup-inline">
+                                            <label for="address" class="col-12 mb-2 md:col-2 md:mb-0">Address:</label>
+                                            <div class="field col-12 mb-2 lg:col-10 lg:mb-0">
+                                                <input pInputText formControlName="address" />
+                                            </div>
+                                            <label for="remarks" class="col-12 mb-2 md:col-2 md:mb-0">Remarks:</label>
+                                            <div class="field col-12 mb-2 lg:col-10 lg:mb-0">
+                                                <input pInputText formControlName="remarks" />
+                                            </div>
+                                        </div>
+                                        <div class="formgroup-inline">
+                                            <label for="adhocPension" class="col-12 mb-2 md:col-2 md:mb-0">Adhoc
+                                                Pension:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <p-checkbox formControlName="adhocPension" [binary]="true"></p-checkbox>
+                                            </div>
+                                            <label for="provisionalPension"
+                                                class="col-12 mb-2 md:col-2 md:mb-0">Provisional Pension:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <p-checkbox formControlName="provisionalPension"
+                                                    [binary]="true"></p-checkbox>
+                                            </div>
+                                            <label for="interimAllowance" class="col-12 mb-2 md:col-2 md:mb-0">Interim
+                                                Allowance:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <p-checkbox formControlName="interimAllowance"
+                                                    [binary]="true"></p-checkbox>
+                                            </div>
+                                            <label for="sharedPension" class="col-12 mb-2 md:col-2 md:mb-0">Shared
+                                                Pension:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <p-checkbox formControlName="sharedPension"
+                                                    [binary]="true"></p-checkbox>
+                                            </div>
+                                        </div>
+                                    </p-fieldset>
+
+                                </div>
+                            </div>
+
+
+                            <!-- BankDetails -->
+                            <div *ngIf="currentStepIndex === 1" class="flex flex-column gap-3">
+                                <p-fieldset legend="Bank Details" class="line-height-3 m-0">
+                                    <div class="p-fluid">
+                                        <div class="formgroup-inline">
+                                            <label for="payMode" class="col-12 mb-2 md:col-2 md:mb-0">Pay Mode:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <p-dropdown
+                                                    [options]="[{label: 'Treasury', value: 'treasury'}, {label: 'Bank', value: 'bank'}]"
+                                                    formControlName="payMode"></p-dropdown>
+                                            </div>
+                                            <label for="bankBranchName" class="col-12 mb-2 md:col-2 md:mb-0">Bank-Branch
+                                                Name:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <input id="bankBranchName" type="text" pInputText
+                                                    formControlName="bankBranchName" placeholder="Bank-Branch Name" />
+                                            </div>
+                                        </div>
+                                        <div class="formgroup-inline">
+                                            <label for="accountNo" class="col-12 mb-2 md:col-2 md:mb-0">Account
+                                                No:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <input id="accountNo" type="text" pInputText formControlName="accountNo"
+                                                    placeholder="Account No" />
+                                            </div>
+                                            <label for="accountHolder" class="col-12 mb-2 md:col-2 md:mb-0">Account
+                                                Holder:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <input id="accountHolder" type="text" pInputText
+                                                    formControlName="accountHolder" placeholder="Account Holder" />
+                                            </div>
+                                        </div>
+                                        <div class="formgroup-inline">
+                                            <label for="ifscCode" class="col-12 mb-2 md:col-2 md:mb-0">IFSC
+                                                Code:</label>
+                                            <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                <input id="ifscCode" type="text" pInputText formControlName="ifscCode"
+                                                    placeholder="IFSC Code" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p-fieldset>
+                            </div>
+
+
+                            <div *ngIf="currentStepIndex === 2" class="flex flex-column gap-3">
+                                <!-- add from for sanction -->
+                                <div class="col-12 md:col-12">
+
+                                    <p-fieldset legend="Details of Service Holder" class="line-height-3 m-0">
+                                        <!-- Details of Service Holder -->
+                                        <div class="col-12">
+                                            <div class="p-fluid">
+                                                <div class="formgroup-inline">
+                                                    <label for="nameOfServiceHolder"
+                                                        class="col-12 mb-2 md:col-3 md:mb-0">Name of Service
+                                                        Holder:</label>
+                                                    <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                        <input id="nameOfServiceHolder" type="text" pInputText
+                                                            formControlName="nameOfServiceHolder"
+                                                            placeholder="Name of Service Holder" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </p-fieldset>
+
+                                    <!-- Sanction Details -->
+                                    <p-fieldset legend="Sanction Details" class="line-height-3 m-8">
+                                        <div class="col-12 md:col-12">
+                                            <div class="card p-fluid">
+
+                                                <div class="formgroup-inline">
+                                                    <label for="sanctionAuthority"
+                                                        class="col-12 mb-2 md:col-2 md:mb-0">Sanction Authority:</label>
+                                                    <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                        <input id="sanctionAuthority" type="text" pInputText
+                                                            formControlName="sanctionAuthority"
+                                                            placeholder="Sanction Authority" />
+                                                    </div>
+                                                    <label for="sanctionNo"
+                                                        class="col-12 mb-2 md:col-2 md:mb-0">Sanction No:</label>
+                                                    <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                        <input type="number" pinputtext="" formControlName="sanctionNo"
+                                                            placeholder="Sanction No"
+                                                            class="p-inputtext p-component p-element w-full">
+                                                    </div>
+                                                    <label for="sanctionDate"
+                                                        class="col-12 mb-2 md:col-2 md:mb-0">Sanction Date:</label>
+                                                    <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                        <p-calendar class="p-component p-element w-full p-calendar"
+                                                            formControlName="sanctionDate" placeholder="dd/mm/yyyy"
+                                                            appendTo="body" [showIcon]="true"
+                                                            inputId="icon"></p-calendar>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </p-fieldset>
+
+                                    <!-- Office and Personal Details of Service Holder -->
+                                    <p-fieldset legend="Office and Personal Details of Service Holder"
+                                        class="line-height-3  m-8">
+                                        <div class="col-12 md:col-12">
+                                            <div class="card p-fluid">
+                                                <div class="formgroup-inline">
+                                                    <label for="dateOfBirth" class="col-12 mb-2 md:col-2 md:mb-0">Date
+                                                        of Birth:</label>
+                                                    <div class="field col-12 mb-2 lg:col-2 lg:mb-0">
+                                                        <p-calendar class="p-component p-element w-full p-calendar"
+                                                            formControlName="dateOfBirth" placeholder="dd/mm/yyyy"
+                                                            appendTo="body" [showIcon]="true"
+                                                            inputId="icon"></p-calendar>
+                                                    </div>
+                                                    <label for="gender"
+                                                        class="col-12 mb-2 md:col-2 md:mb-0">Gender:</label>
+                                                    <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                        <p-dropdown [options]="genders" formControlName="gender"
+                                                            placeholder="Select a Gender"
+                                                            [showClear]="true"></p-dropdown>
+                                                    </div>
+                                                    <label for="dateOfAppointment"
+                                                        class="col-12 mb-2 md:col-2 md:mb-0">Date of
+                                                        Appointment:</label>
+                                                    <p-calendar class="p-component p-element w-full p-calendar"
+                                                        formControlName="dateOfAppointment" placeholder="dd/mm/yyyy"
+                                                        appendTo="body" [showIcon]="true" inputId="icon"></p-calendar>
+                                                    <label for="officeName" class="col-12 mb-2 md:col-2 md:mb-0">Office
+                                                        Name:</label>
+                                                    <div class="field col-12 mb-2 lg:col-2 lg:mb-0">
+                                                        <input id="officeName" type="text" pInputText
+                                                            formControlName="officeName" placeholder="Office Name" />
+                                                    </div>
+                                                    <label for="postHeld" class="col-12 mb-2 md:col-2 md:mb-0">Post
+                                                        Held:</label>
+                                                    <div class="field col-12 mb-2 lg:col-2 lg:mb-0">
+                                                        <input id="postHeld" type="text" pInputText
+                                                            formControlName="postHeld" placeholder="Post Held" />
+                                                    </div>
+                                                    <label for="officeName" class="col-12 mb-2 md:col-2 md:mb-0">Office
+                                                        Name:</label>
+                                                    <div class="field col-12 mb-2 lg:col-2 lg:mb-0">
+                                                        <input id="officeName" type="text" pInputText
+                                                            formControlName="officeName" placeholder="Office Name" />
+                                                    </div>
+                                                    <label for="lastPay" class="col-12 mb-2 md:col-2 md:mb-0">Last
+                                                        Pay:</label>
+                                                    <div class="field col-12 mb-2 lg:col-2 lg:mb-0">
+                                                        <input id="lastPay" type="text" pInputText
+                                                            formControlName="lastPay" placeholder="Last Pay" />
+                                                    </div>
+                                                    <label for="averageAmolument"
+                                                        class="col-12 mb-2 md:col-2 md:mb-0">Average Amolument:</label>
+                                                    <div class="field col-12 mb-2 lg:col-2 lg:mb-0">
+                                                        <input id="averageAmolument" type="text" pInputText
+                                                            formControlName="averageAmolument"
+                                                            placeholder="Average Amolument" />
+                                                    </div>
+                                                    <label for="hrmsUniqueIdOfServiceHolder"
+                                                        class="col-12 mb-2 md:col-2 md:mb-0">HRMS Unique of Service
+                                                        Holder:</label>
+                                                    <div class="field col-12 mb-2 lg:col-2 lg:mb-0">
+                                                        <input id="hrmsUniqueIdOfServiceHolder" type="text" pInputText
+                                                            formControlName="hrmsUniqueIdOfServiceHolder"
+                                                            placeholder="HRMS Unique Id" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </p-fieldset>
+
+                                    <!-- Issuing Authority -->
+                                    <p-fieldset legend="Issuing Authority" class="line-height-3  m-8">
+                                        <div class="col-12">
+                                            <div class="card p-fluid">
+
+                                                <div class="formgroup-inline">
+                                                    <label for="issuingAuthority"
+                                                        class="col-12 mb-2 md:col-3 md:mb-0">Issuing Authority:</label>
+                                                    <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                        <input id="issuingAuthority" type="text" pInputText
+                                                            formControlName="issuingAuthority"
+                                                            placeholder="Issuing Authority" />
+                                                    </div>
+                                                    <label for="letterNo" class="col-12 mb-2 md:col-3 md:mb-0">Letter
+                                                        No:</label>
+                                                    <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                        <input id="letterNo" type="text" pInputText
+                                                            formControlName="letterNo" placeholder="Letter No" />
+                                                    </div>
+                                                    <label for="letterDate" class="col-12 mb-2 md:col-3 md:mb-0">Letter
+                                                        Date:</label>
+                                                    <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
+                                                        <p-calendar class="p-component p-element w-full p-calendar"
+                                                            formControlName="letterDate" placeholder="dd/mm/yyyy"
+                                                            appendTo="body" [showIcon]="true"
+                                                            inputId="icon"></p-calendar>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </p-fieldset>
+
+                                    <!-- Qualifying Service -->
+                                    <p-fieldset legend="Qualifying Service" class="line-height-3 m-8">
+                                        <div class="col-12 md:col-12">
+                                            <div class="card p-fluid">
+
+                                                <div class="formgroup-inline">
+                                                    <label for="grossYear" class="col-12 mb-2 md:col-2 md:mb-0">Gross
+                                                        Year:</label>
+                                                    <div class="field col-12 mb-2 lg:col-2 lg:mb-0">
+                                                        <input id="grossYear" type="text" pInputText
+                                                            formControlName="grossYear" placeholder="GrossYear" />
+                                                    </div>
+                                                    <label for="grossMonth" class="col-12 mb-2 md:col-2 md:mb-0">Gross
+                                                        Month:</label>
+                                                    <div class="field col-12 mb-2 lg:col-2 lg:mb-0">
+                                                        <input id="grossMonth" type="text" pInputText
+                                                            formControlName="grossMonth" placeholder="Gross Month" />
+                                                    </div>
+                                                    <label for="grossDay" class="col-12 mb-2 md:col-2 md:mb-0">Gross
+                                                        Day:</label>
+                                                    <div class="field col-12 mb-2 lg:col-2 lg:mb-0">
+                                                        <input id="grossDay" type="text" pInputText
+                                                            formControlName="grossDay" placeholder="Gross Day" />
+                                                    </div>
+                                                    <label for="netYear" class="col-12 mb-2 md:col-2 md:mb-0">Net
+                                                        Year:</label>
+                                                    <div class="field col-12 mb-2 lg:col-2 lg:mb-0">
+                                                        <input id="netYear" type="text" pInputText
+                                                            formControlName="netYear" placeholder="Net Year" />
+                                                    </div>
+                                                    <label for="netMonth" class="col-12 mb-2 md:col-2 md:mb-0">Net
+                                                        Month:</label>
+                                                    <div class="field col-12 mb-2 lg:col-2 lg:mb-0">
+                                                        <input id="netMonth" type="text" pInputText
+                                                            formControlName="netMonth" placeholder="Net Month" />
+                                                    </div>
+                                                    <label for="netDay" class="col-12 mb-2 md:col-2 md:mb-0">Net
+                                                        Day:</label>
+                                                    <div class="field col-12 mb-2 lg:col-2 lg:mb-0">
+                                                        <input id="netDay" type="text" pInputText
+                                                            formControlName="netDay" placeholder="Net Day" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </p-fieldset>
+                                </div>
+                            </div>
+
+                            <div *ngIf="currentStepIndex === 3" class="flex flex-column gap-3">
+                                <div class="grid">
+                                    <!-- Family Nominee Form -->
+                                    <div class="col-12">
+                                        <p-fieldset legend="Family Nominee Form" class="line-height-3 m-0">
+                                            <!-- from enable btn -->
+                                            <div class="w-full">
+                                                <button pButton pRipple (click)="switchFamilyNomineeFrom();" type="button" icon="pi pi-plus"
+                                                    label="Show Form" class="p-button-rounded p-button-raised"></button>
+                                            </div>
+                                
+                                            <!-- Form area -->
+                                            <div *ngIf="showFamilyNomineeFrom" class="w-full">
+                                                <form [formGroup]="familyNomineeForm" class="flex flex-column gap-4 mt-3">
+                                                    <div class="flex gap-2 xl:flex-row flex-column">
+                                                        <div class="flex-auto">
+                                                            <label for="slNo" class="block mb-1 text-color text-lg">Sl No:</label>
+                                                            <input type="number" pinputtext="" formControlName="slNo" placeholder="Sl No"
+                                                                class="p-inputtext p-component p-element w-full">
+                                                        </div>
+                                                    </div>
+                                
+                                                    <div class="flex gap-2 xl:flex-row flex-column">
+                                                        <div class="flex-auto">
+                                                            <label for="dependentName" class="block mb-1 text-color text-lg">Dependent Name:</label>
+                                                            <input type="text" pinputtext="" formControlName="dependentName"
+                                                                placeholder="Dependent Name" class="p-inputtext p-component p-element w-full">
+                                                        </div>
+                                
+                                                        <div class="flex-auto">
+                                                            <label for="relationship" class="block mb-1 text-color text-lg">Relationship:</label>
+                                                            <p-dropdown [options]="relationship" formControlName="relationship"
+                                                                placeholder="Relationship" appendTo="body" [showClear]="true"
+                                                                inputId="icon"></p-dropdown>
+                                                        </div>
+                                
+                                                    </div>
+                                
+                                                    <div class="flex gap-2 xl:flex-row flex-column">
+                                                        <div class="flex-auto">
+                                                            <label for="dateOfBirthFamilyDetails" class="block mb-1 text-color text-lg">Date of
+                                                                Birth:</label>
+                                                            <p-calendar class="p-component p-element w-full p-calendar"
+                                                                formControlName="dateOfBirthFamilyDetails" placeholder="dd/mm/yyyy" appendTo="body"
+                                                                [showIcon]="true" inputId="icon"></p-calendar>
+                                                        </div>
+                                                        <div class="flex-auto">
+                                                            <label for="dateOfDeath" class="block mb-1 text-color text-lg">Date of Death:</label>
+                                                            <p-calendar class="p-component p-element w-full p-calendar" formControlName="dateOfDeath"
+                                                                placeholder="dd/mm/yyyy" appendTo="body" [showIcon]="true" inputId="icon"></p-calendar>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex gap-2 xl:flex-row flex-column">
+                                                        <div class="col-12 p-0 flex-auto">
+                                                            <label for="identificationMark" class="block mb-1 text-color text-lg">Identification
+                                                                Mark:</label>
+                                                            <input type="text" pinputtext="" formControlName="identificationMark"
+                                                                placeholder="Identification Mark" class="p-inputtext p-component p-element w-full">
+                                                        </div>
+                                                        <div class="col-12 p-0 flex-auto">
+                                                            <label for="handicap" class="block mb-1 text-color text-lg">Handicap:</label>
+                                                            <div class="grid formgrid">
+                                                                <div class="col-12 md:col-4">
+                                                                    <div class="field-radiobutton">
+                                                                        <p-radioButton name="handicap" value="True" id="handicap1"
+                                                                            formControlName="handicap"></p-radioButton>
+                                                                        <label for="handicap1">True</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12 md:col-4">
+                                                                    <div class="field-radiobutton">
+                                                                        <p-radioButton name="handicap" value="False" formControlName="handicap"
+                                                                            id="handicap2"></p-radioButton>
+                                                                        <label for="handicap2">False</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                
+                                                <div class="flex gap-2 justify-content-end pt-3">
+                                                    <button label="Submit" (click)="addStampIndent('A')"
+                                                        class="p-element p-ripple p-button-rounded p-button p-component">
+                                                        <span class="p-button-label">Add</span><span class="p-ink"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                
+                                            <!-- Show tables -->
+                                            <div *ngIf="!showFamilyNomineeFrom" class="col-12">
+                                                <app-dynamic-table *ngIf="tableData" (actionButtonClicked)="handleButtonClick($event)"
+                                                    [numberRowsShown]="10" rowSelectionMode="multiple" [rowsPerPageOptions]="[10,30,50]"
+                                                    [headers]="tableData?.headers ?? []" [data]="tableData?.data ?? []"
+                                                    [dataCount]="tableData?.dataCount ?? 0">
+                                                </app-dynamic-table>
+                                            </div>
+                                        </p-fieldset>
+                                    </div>
+                                
+                                    <!-- Nominee Details  -->
+                                    <div class="col-12">
+                                        <p-fieldset legend="Nominee Details" class="line-height-3 m-0">
+                                            <!-- from enable btn -->
+                                
+                                            <div class="w-full">
+                                                <button pButton pRipple (click)="switchNomineeDetails();" type="button" icon="pi pi-plus"
+                                                    label="Show Form" class="p-button-rounded p-button-raised"></button>
+                                            </div>
+                                
+                                            <!-- From area -->
+                                            <div *ngIf="showNomineeDetailsFrom" class="w-full">
+                                                <form [formGroup]="familyNomineeForm" class="flex flex-column gap-4 mt-3">
+                                                    <div class="flex gap-2 xl:flex-row flex-column">
+                                                        <div class="flex-auto">
+                                                            <label for="slNo" class="block mb-1 text-color text-lg">Sl No:</label>
+                                                            <input type="number" pinputtext="" formControlName="slNo" placeholder="Sl No"
+                                                                class="p-inputtext p-component p-element w-full">
+                                                        </div>
+                                                    </div>
+                                
+                                                    <div class="flex gap-2 xl:flex-row flex-column">
+                                                        <div class="flex-auto">
+                                                            <label for="dependentName" class="block mb-1 text-color text-lg">Nominee Name:</label>
+                                                            <input type="text" pinputtext="" formControlName="dependentName" placeholder="Nominee Name"
+                                                                class="p-inputtext p-component p-element w-full">
+                                                        </div>
+                                
+                                                        <div class="flex-auto">
+                                                            <label for="relationship" class="block mb-1 text-color text-lg">Relation:</label>
+                                                            <p-dropdown [options]="relationship" formControlName="relationship" placeholder="Relation"
+                                                                appendTo="body" [showClear]="true" inputId="icon"></p-dropdown>
+                                                        </div>
+                                
+                                                    </div>
+                                
+                                                    <div class="flex gap-2 xl:flex-row flex-column">
+                                                        <div class="flex-auto">
+                                                            <label for="dateOfBirthFamilyDetails" class="block mb-1 text-color text-lg">Date of
+                                                                Birth:</label>
+                                                            <p-calendar class="p-component p-element w-full p-calendar"
+                                                                formControlName="dateOfBirthFamilyDetails" placeholder="dd/mm/yyyy" appendTo="body"
+                                                                [showIcon]="true" inputId="icon"></p-calendar>
+                                                        </div>
+                                                    </div>
+                                
+                                                    <div class="flex gap-2 xl:flex-row flex-column">
+                                                        <div class="flex-auto">
+                                                            <label for="AccountNumber" class="block mb-1 text-color text-lg">Account Number:</label>
+                                                            <input type="text" pinputtext="" formControlName="dependentName"
+                                                                placeholder="Account Number" class="p-inputtext p-component p-element w-full">
+                                                        </div>
+                                
+                                                        <div class="flex-auto">
+                                                            <label for="IFSCCode" class="block mb-1 text-color text-lg">IFSC Code:</label>
+                                                            <input type="text" pinputtext="" formControlName="dependentName" placeholder="IFSC Code"
+                                                                class="p-inputtext p-component p-element w-full">
+                                                        </div>
+                                
+                                                        <div class="flex-auto">
+                                                            <label for="BankBranch" class="block mb-1 text-color text-lg">Bank Branch:</label>
+                                                            <input type="text" pinputtext="" formControlName="dependentName" placeholder="Bank Branch"
+                                                                class="p-inputtext p-component p-element w-full">
+                                                        </div>
+                                                    </div>
+                                
+                                                    <div class="flex gap-2 xl:flex-row flex-column">
+                                                        <div class="flex-auto">
+                                                            <label for="relationship" class="block mb-1 text-color text-lg">Nominee Type</label>
+                                                            <p-dropdown [options]="relationship" formControlName="relationship" placeholder="Relation"
+                                                                appendTo="body" [showClear]="true" inputId="icon"></p-dropdown>
+                                                        </div>
+                                                    </div>
+                                
+                                
+                                                    <div class="flex gap-2 xl:flex-row flex-column">
+                                                        <div class="flex-auto">
+                                                            <label for="relationship" class="block mb-1 text-color text-lg">Priority Level</label>
+                                                            <p-dropdown [options]="relationship" formControlName="relationship" placeholder="Relation"
+                                                                appendTo="body" [showClear]="true" inputId="icon"></p-dropdown>
+                                                        </div>
+                                                    </div>
+                                
+                                                    <div class="flex gap-2 xl:flex-row flex-column">
+                                                        <div class="flex-auto">
+                                                            <label for="dependentName" class="block mb-1 text-color text-lg">Share:</label>
+                                                            <input type="text" pinputtext="" formControlName="dependentName" placeholder="Nominee Name"
+                                                                class="p-inputtext p-component p-element w-full">
+                                                        </div>
+                                
+                                
+                                                    </div>
+                                
+                                                    <div class="col-12 p-0 flex-auto">
+                                                        <label for="handicap" class="block mb-1 text-color text-lg">Active Flag:</label>
+                                                        <div class="grid formgrid">
+                                                            <div class="col-12 md:col-4">
+                                                                <div class="field-radiobutton">
+                                                                    <p-radioButton name="handicap" value="True" id="handicap1"
+                                                                        formControlName="handicap"></p-radioButton>
+                                                                    <label for="handicap1">True</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 md:col-4">
+                                                                <div class="field-radiobutton">
+                                                                    <p-radioButton name="handicap" value="False" formControlName="handicap"
+                                                                        id="handicap2"></p-radioButton>
+                                                                    <label for="handicap2">False</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                
+                                                </form>
+                                
+                                                <!-- add Button -->
+                                                <div class="flex gap-2 justify-content-end pt-3">
+                                                    <button pbutton="" pripple="" label="Submit" (click)="addStampIndent('B')"
+                                                        class="p-element p-ripple p-button-rounded p-button p-component">
+                                                        <span class="p-button-label">Add</span><span class="p-ink"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                
+                                            <!-- Show tables -->
+                                            <div *ngIf="!showNomineeDetailsFrom" class="col-12">
+                                                <app-dynamic-table *ngIf="tableData" (actionButtonClicked)="handleButtonClick($event)"
+                                                    [numberRowsShown]="10" rowSelectionMode="multiple" [rowsPerPageOptions]="[10,30,50]"
+                                                    [headers]="tableData?.headers ?? []" [data]="tableData?.data ?? []"
+                                                    [dataCount]="tableData?.dataCount ?? 0">
+                                                </app-dynamic-table>
+                                            </div>
+                                        </p-fieldset>
+                                    </div>
+                                
+                                    <!-- Nominee details for family pension holder  -->
+                                    <div class="col-12">
+                                        <p-fieldset legend="Nominee details for family pension holder" class="line-height-3 m-0">
+                                            <!-- from enable btn -->
+                                
+                                            <div class="w-full">
+                                                <button pButton pRipple (click)="switchPensionHolder();" type="button" icon="pi pi-plus"
+                                                    label="Show Form" class="p-button-rounded p-button-raised"></button>
+                                            </div>
+                                
+                                            <!-- From area -->
+                                            <div *ngIf="showPensionHolder" class="w-full">
+                                                <form [formGroup]="familyNomineeForm" class="flex flex-column gap-4 mt-3">
+                                                    <div class="flex gap-2 xl:flex-row flex-column">
+                                                        <div class="flex-auto">
+                                                            <label for="slNo" class="block mb-1 text-color text-lg">Sl No:</label>
+                                                            <input type="number" pinputtext="" formControlName="slNo" placeholder="Sl No"
+                                                                class="p-inputtext p-component p-element w-full">
+                                                        </div>
+                                                    </div>
+                                
+                                                    <div class="flex gap-2 xl:flex-row flex-column">
+                                                        <div class="flex-auto">
+                                                            <label for="dependentName" class="block mb-1 text-color text-lg">Nominee Name:</label>
+                                                            <input type="text" pinputtext="" formControlName="dependentName" placeholder="Nominee Name"
+                                                                class="p-inputtext p-component p-element w-full">
+                                                        </div>
+                                
+                                                        <div class="flex-auto">
+                                                            <label for="relationship" class="block mb-1 text-color text-lg">Relation:</label>
+                                                            <p-dropdown [options]="relationship" formControlName="relationship" placeholder="Relation"
+                                                                appendTo="body" [showClear]="true" inputId="icon"></p-dropdown>
+                                                        </div>
+                                
+                                                    </div>
+                                
+                                                    <div class="flex gap-2 xl:flex-row flex-column">
+                                                        <div class="flex-auto">
+                                                            <label for="dateOfBirthFamilyDetails" class="block mb-1 text-color text-lg">Date of
+                                                                Birth:</label>
+                                                            <p-calendar class="p-component p-element w-full p-calendar"
+                                                                formControlName="dateOfBirthFamilyDetails" placeholder="dd/mm/yyyy" appendTo="body"
+                                                                [showIcon]="true" inputId="icon"></p-calendar>
+                                                        </div>
+                                                    </div>
+                                
+                                                    <div class="flex gap-2 xl:flex-row flex-column">
+                                                        <div class="flex-auto">
+                                                            <label for="AccountNumber" class="block mb-1 text-color text-lg">Account Number:</label>
+                                                            <input type="text" pinputtext="" formControlName="dependentName"
+                                                                placeholder="Account Number" class="p-inputtext p-component p-element w-full">
+                                                        </div>
+                                
+                                                        <div class="flex-auto">
+                                                            <label for="IFSCCode" class="block mb-1 text-color text-lg">IFSC Code:</label>
+                                                            <input type="text" pinputtext="" formControlName="dependentName" placeholder="IFSC Code"
+                                                                class="p-inputtext p-component p-element w-full">
+                                                        </div>
+                                
+                                                        <div class="flex-auto">
+                                                            <label for="BankBranch" class="block mb-1 text-color text-lg">Bank Branch:</label>
+                                                            <input type="text" pinputtext="" formControlName="dependentName" placeholder="Bank Branch"
+                                                                class="p-inputtext p-component p-element w-full">
+                                                        </div>
+                                                    </div>
+                                
+                                                    <div class="flex gap-2 xl:flex-row flex-column">
+                                                        <div class="flex-auto">
+                                                            <label for="relationship" class="block mb-1 text-color text-lg">Nominee Type</label>
+                                                            <p-dropdown [options]="relationship" formControlName="relationship" placeholder="Relation"
+                                                                appendTo="body" [showClear]="true" inputId="icon"></p-dropdown>
+                                                        </div>
+                                                    </div>
+                                
+                                
+                                                    <div class="flex gap-2 xl:flex-row flex-column">
+                                                        <div class="flex-auto">
+                                                            <label for="relationship" class="block mb-1 text-color text-lg">Priority Level</label>
+                                                            <p-dropdown [options]="relationship" formControlName="relationship" placeholder="Relation"
+                                                                appendTo="body" [showClear]="true" inputId="icon"></p-dropdown>
+                                                        </div>
+                                                    </div>
+                                
+                                                    <div class="flex gap-2 xl:flex-row flex-column">
+                                                        <div class="flex-auto">
+                                                            <label for="dependentName" class="block mb-1 text-color text-lg">Share:</label>
+                                                            <input type="text" pinputtext="" formControlName="dependentName" placeholder="Nominee Name"
+                                                                class="p-inputtext p-component p-element w-full">
+                                                        </div>
+                                
+                                
+                                                    </div>
+                                
+                                                    <div class="col-12 p-0 flex-auto">
+                                                        <label for="handicap" class="block mb-1 text-color text-lg">Active Flag:</label>
+                                                        <div class="grid formgrid">
+                                                            <div class="col-12 md:col-4">
+                                                                <div class="field-radiobutton">
+                                                                    <p-radioButton name="handicap" value="True" id="handicap1"
+                                                                        formControlName="handicap"></p-radioButton>
+                                                                    <label for="handicap1">True</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 md:col-4">
+                                                                <div class="field-radiobutton">
+                                                                    <p-radioButton name="handicap" value="False" formControlName="handicap"
+                                                                        id="handicap2"></p-radioButton>
+                                                                    <label for="handicap2">False</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                
+                                                </form>
+                                
+                                                <!-- add Button -->
+                                                <div class="flex gap-2 justify-content-end pt-3">
+                                                    <button pbutton="" pripple="" label="Submit" (click)="addStampIndent('B')"
+                                                        class="p-element p-ripple p-button-rounded p-button p-component">
+                                                        <span class="p-button-label">Add</span><span class="p-ink"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                
+                                            <!-- Show tables -->
+                                            <div *ngIf="!showPensionHolder" class="col-12">
+                                                <app-dynamic-table *ngIf="tableData" (actionButtonClicked)="handleButtonClick($event)"
+                                                    [numberRowsShown]="10" rowSelectionMode="multiple" [rowsPerPageOptions]="[10,30,50]"
+                                                    [headers]="tableData?.headers ?? []" [data]="tableData?.data ?? []"
+                                                    [dataCount]="tableData?.dataCount ?? 0">
+                                                </app-dynamic-table>
+                                            </div>
+                                        </p-fieldset>
+                                    </div>
+                                
+                                
+                                </div>
+                                
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="flex flex-col mt-1 align-items-center justify-content-center">
+                    <div class="flex flex-wrap gap-2">
+                        <p-button label="Back" *ngIf="currentStepIndex > 0" icon="pi pi-step-backward" styleClass="p-button-warning"
+                            (onClick)="prev()"></p-button>
+                        <div class="flex flex-wrap gap-2">
+                            <p-button label="Next" *ngIf="currentStepIndex < 3" icon="pi pi-step-forward"
+                                styleClass="p-button-success" (click)="next()"></p-button>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <p-button label="submit" *ngIf="currentStepIndex == 3" icon="pi pi-bookmark"
+                                styleClass="p-button-raised" (click)="next()"></p-button>
+                                <!-- <button pButton pRipple label="Submit" icon="pi pi-bookmark"></button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
