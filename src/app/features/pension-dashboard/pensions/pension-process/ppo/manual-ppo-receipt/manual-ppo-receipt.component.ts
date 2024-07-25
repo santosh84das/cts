@@ -30,10 +30,11 @@ export class ManualPpoReceiptComponent implements OnInit {
     sortParameters: { field: '', order: '' }
   };
   tableActionButton: ActionButtonConfig[] = [];
-  tableData: DynamicTable<manualPpoReceiptEntryDTO> = { headers: [], data: [], dataCount: 0 }; 
+  tableChildActionButton: ActionButtonConfig[] = []; // New property for child action buttons
+  tableData: any;
   modalData: manualPpoReceiptEntryDTO[] = [];
   count: number = 0;
-  loading: boolean = false;
+  isTableDataLoading: boolean = false; // New property for table loading state
   treasuryReceiptId!: string;
   manaualPpoPayload!: manualPpoReceiptEntryDTO;
   selectedRowData: manualPpoReceiptEntryDTO | null = null;  
@@ -41,7 +42,6 @@ export class ManualPpoReceiptComponent implements OnInit {
   ppoIssuedBy: SelectItem[] = [];
   type: SelectItem[] = [];
   selectedDrop: SelectItem = { value: '' };
-  
 
   constructor(
     private datapipe: DatePipe,
@@ -77,6 +77,18 @@ export class ManualPpoReceiptComponent implements OnInit {
 
   handleButtonClick($event: any) {
     // Handle button click logic here
+  }
+
+  handleRowSelection($event: any) {
+    // Handle row selection logic here
+  }
+
+  handQueryParameterChange($event: any) {
+    // Handle query parameter change logic here
+  }
+
+  handsearchKeyChange($event: any) {
+    // Handle search key change logic here
   }
 
   initializeForm(): void {
@@ -144,7 +156,6 @@ export class ManualPpoReceiptComponent implements OnInit {
       });
     }
   }
-  
 
   resetForm() {
     this.manualPpoForm.reset();
@@ -166,11 +177,11 @@ export class ManualPpoReceiptComponent implements OnInit {
 
   // Get All Manual PPO Receipt
   getAllManualPpoReceipt(treasuryReceiptId?: string) {
-    this.loading = true;
+    this.isTableDataLoading = true;
     if (treasuryReceiptId) {
       this.manualPpoReceiptService.getManualPpoDetailsById(treasuryReceiptId).subscribe(
         (response: any) => {
-          this.loading = false;
+          this.isTableDataLoading = false;
           if (response && response.apiResponseStatus === 1) {
             const updatedData = [response.result].map((item: any) => ({
               ...item,
@@ -183,7 +194,7 @@ export class ManualPpoReceiptComponent implements OnInit {
           this.cd.detectChanges();
         },
         (error) => {
-          this.loading = false;
+          this.isTableDataLoading = false;
           console.error('API Error:', error);
           this.toastService.showAlert('An error occurred while fetching data', 0);
         }
@@ -191,7 +202,7 @@ export class ManualPpoReceiptComponent implements OnInit {
     } else {
       this.manualPpoReceiptService.getAllManualPpoReceipt(this.tableQueryParameters).subscribe(
         (response: any) => {
-          this.loading = false;
+          this.isTableDataLoading = false;
           if (response && response.apiResponseStatus === 1 && response.result) {
             const updatedData = response.result.data.map((item: any) => ({
               ...item,
@@ -204,7 +215,7 @@ export class ManualPpoReceiptComponent implements OnInit {
           this.cd.detectChanges();
         },
         (error) => {
-          this.loading = false;
+          this.isTableDataLoading = false;
           console.error('API Error:', error);
           this.toastService.showAlert('An error occurred while fetching data', 0);
         }
@@ -240,10 +251,7 @@ export class ManualPpoReceiptComponent implements OnInit {
             this.toastService.showError('Failed to fetch PPO receipt details.');
         }
     });
-}
-
-
-  
+  }
 
   // Update Manual PPO Receipt
   updateManualPpoReceipt() {
