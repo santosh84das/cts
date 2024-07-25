@@ -8,10 +8,10 @@ import { Router } from '@angular/router';
 import { Output, EventEmitter } from '@angular/core';
 import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters } from 'mh-prime-dynamic-table';
 import { Status } from 'src/app/core/enum/stampIndentStatusEnum';
-import { AddStampIndent, GetStampIndents } from 'src/app/core/models/stamp';
 import { StampIndentService } from 'src/app/core/services/stamp/stamp-indent.service';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { convertDate } from 'src/utils/dateConversion';
+import { GetStampIndents } from 'src/app/core/models/stamp';
 
 
 
@@ -27,8 +27,7 @@ interface expandedRows {
 export class PpodetailsComponent implements OnInit {
 
   ppoForm: FormGroup = new FormGroup({});
-  religionOptions: SelectItem[];
-  subDivOptions: SelectItem[];
+
   isNextButtonDisabled: boolean = true;
   currentStepIndex: number = 0;
   steps: any[];
@@ -70,18 +69,8 @@ export class PpodetailsComponent implements OnInit {
     private stampIndentService: StampIndentService) {
     this.ininalizer();
 
-    this.religionOptions = [
-      { label: 'Hindu', value: 'hindu' },
-      { label: 'Muslim', value: 'muslim' },
-      { label: 'Christian', value: 'christian' },
-      { label: 'Other', value: 'other' }
-    ];
 
-    this.subDivOptions = [
-      { label: 'Sub Div 1', value: 'subDiv1' },
-      { label: 'Sub Div 2', value: 'subDiv2' },
-      { label: 'Sub Div 3', value: 'subDiv3' }
-    ];
+
 
     this.steps = [
       { label: 'PPO Details' },
