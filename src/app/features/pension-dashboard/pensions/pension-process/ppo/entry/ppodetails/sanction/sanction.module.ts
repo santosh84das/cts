@@ -20,7 +20,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { SanctionComponent } from './sanction.component';
 import { FieldsetModule } from 'primeng/fieldset';
 @NgModule({
-  declarations: [SanctionComponent],
+  // declarations: [SanctionComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -41,6 +41,6 @@ import { FieldsetModule } from 'primeng/fieldset';
     TreasuryDropdownModule,
     FieldsetModule,
   ],
-  exports: [SanctionComponent],
+  // exports: [SanctionComponent],
 })
 export class SanctionModule { }

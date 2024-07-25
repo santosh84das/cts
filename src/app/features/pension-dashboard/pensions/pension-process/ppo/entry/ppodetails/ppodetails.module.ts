@@ -25,6 +25,11 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { BankDetails } from './bank_details/bankdetails.component';
 import { FamilyNomineeComponent } from './family-nominee/family-nominee.component';
 
+
+import { SanctionComponent } from './sanction/sanction.component';
+import { DetailsComponent } from './delails/details.component';
+
+
 const routes: Routes = [
   { path: '', component: PpodetailsComponent },
 ];
@@ -36,7 +41,13 @@ const routes: Routes = [
   declarations: [
     PpodetailsComponent,
     BankDetails,
+<<<<<<< HEAD
     FamilyNomineeComponent
+=======
+    FamilyNomineeComponent,
+    SanctionComponent,
+    DetailsComponent,
+>>>>>>> 04b4e7a (added)
   ],
   imports: [
     CommonModule,
