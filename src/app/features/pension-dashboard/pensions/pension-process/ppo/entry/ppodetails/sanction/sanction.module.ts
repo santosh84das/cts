@@ -20,7 +20,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { SanctionComponent } from './sanction.component';
 
 @NgModule({
-  declarations: [SanctionComponent],
+  // declarations: [SanctionComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -40,6 +40,6 @@ import { SanctionComponent } from './sanction.component';
     CalendarModule,
     TreasuryDropdownModule,
   ],
-  exports: [SanctionComponent],
+  // exports: [SanctionComponent],
 })
 export class SanctionModule { }

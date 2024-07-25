@@ -13,8 +13,8 @@ import { CalendarModule } from 'primeng/calendar';
 import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown/treasury-dropdown.module';
 import { EntryComponent } from './entry.component';
 import { PpodetailsComponent } from './ppodetails/ppodetails.component';
-import { SanctionComponent } from './sanction/sanction.component';
-import { FamilyNomineeComponent } from './family-nominee/family-nominee.component';
+import { SanctionComponent } from './ppodetails/sanction/sanction.component';
+import { FamilyNomineeComponent } from './ppodetails/family-nominee/family-nominee.component';
 
 const routes: Routes = [
   { path: '', component: EntryComponent },

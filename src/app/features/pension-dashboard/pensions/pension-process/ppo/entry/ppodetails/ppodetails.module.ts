@@ -20,59 +20,50 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { CardModule } from 'primeng/card';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { CheckboxModule } from 'primeng/checkbox';
-import { SanctionComponent } from '../sanction/sanction.component';
+import { SanctionComponent } from './sanction/sanction.component';
 import { PanelModule } from 'primeng/panel';
 import { FieldsetModule } from 'primeng/fieldset';
-
-
+import { FamilyNomineeComponent } from './family-nominee/family-nominee.component';
+import { DetailsComponent } from './delails/details.component';
+import { BankDetailsComponent } from './bank_details/bankdetails.component';
 
 const routes: Routes = [
   { path: '', component: PpodetailsComponent },
-  { path: 'sanction', component: SanctionComponent }
 ];
 
 
 
 
 @NgModule({
-  declarations: [PpodetailsComponent],
+  declarations: [
+    PpodetailsComponent,
+    FamilyNomineeComponent,
+    SanctionComponent,
+    DetailsComponent,
+    BankDetailsComponent
+  ],
   imports: [
     CommonModule,
     ButtonModule,
-    ReactiveFormsModule,    
+    FormsModule,
+    ReactiveFormsModule,
+    InputTextareaModule,
+    StepsModule,
     DynamicTableModule,
     OptionCardModule,
-    ButtonModule,
     CommonHeaderModule,
     DropdownModule,
     DialogModule,
     CalendarModule,
-    ReactiveFormsModule,
     TreasuryDropdownModule,
-    FormsModule,
     InputTextModule,
     RadioButtonModule,
-    RouterModule,
-    BrowserModule,
-    InputTextareaModule,
-    BrowserModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    InputTextModule,
-    CalendarModule,
-    DropdownModule,
-    SelectButtonModule,
     CardModule,
-    BrowserModule,
-    ReactiveFormsModule,
-    FormsModule,
-    DropdownModule,
-    RadioButtonModule,
+    SelectButtonModule,
     CheckboxModule,
-    InputTextModule,
-    StepsModule,
     PanelModule,
     FieldsetModule,
+    BrowserModule,
     RouterModule.forChild(routes)
   ],
   providers: [],
