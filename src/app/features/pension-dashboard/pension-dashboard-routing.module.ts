@@ -54,7 +54,11 @@ const routes: Routes = [
    {
     path: 'modules/pension-process/ppo/life-certificate',
     loadChildren: () => import('./pensions/pension-process/ppo/life-certificate/life-certificate.module').then(m => m.LifeCertificateModule),
-   }
+   },
+   {
+    path: 'modules/pension-process/pensioner-details',
+    loadChildren: () => import('./pensions/pension-process/pensioner-details/pensioner-details.module').then(m => m.PensionerDetailsModule),
+   },
   
 ];
 

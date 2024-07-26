@@ -19,7 +19,6 @@
       (rowSelect)="handleRowSelection($event)"
       (actionButtonClicked)="handleButtonClick($event)"
       (queryParameterChange)="handQueryParameterChange($event)"
-      (queryParameterChange)="handQueryParameterChange($event)"
       (searchKeyChange)="handsearchKeyChange($event)"
     ></mh-prime-dynamic-table>
     </div>
@@ -29,11 +28,14 @@
     [baseZIndex]="10000">
     <form [formGroup]="manualPpoForm" class="flex flex-column gap-4 mt-3">
         <div class="flex gap-2 xl:flex-row flex-column">
-            <div class="flex-auto">
-                <label for="ppoNo" class="block mb-1 text-color text-lg">PPO No:</label>
-                <input type="text" pinputtext="" formControlName="ppoNo" placeholder="PPO Number"
-                    class="p-inputtext p-component p-element w-full">
-            </div>
+          <div class="flex-auto">
+            <label for="ppoNo" class="block mb-1 text-color text-lg">PPO No:</label>
+            <input type="text" pinputtext="" formControlName="ppoNo" placeholder="PPO Number"
+              class="p-inputtext p-component p-element w-full">
+            <small class="p-error" *ngIf="manualPpoForm.get('ppoNo')?.hasError('duplicate')">
+              This PPO number already exists. Please use a different PPO number.
+            </small>
+          </div>
         </div>
         
         <div class="flex gap-2 xl:flex-row flex-column">
@@ -51,8 +53,8 @@
 
         <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
-                <label for="mobileNo" class="block mb-1 text-color text-lg">Mobile No:</label>
-                <input type="number" pinputtext="" formControlName="mobileNo" placeholder="Mobile No"
+                <label for="mobileNumber" class="block mb-1 text-color text-lg">Mobile No:</label>
+                <input type="text" pinputtext="" formControlName="mobileNumber" placeholder="Mobile No"
                     class="p-inputtext p-component p-element w-full">
             </div>
             <div class="flex-auto">
@@ -74,84 +76,14 @@
       </div>
     </form>
     <div class="flex gap-2 justify-content-end pt-3">
-        <button pButton label="Submit" (click)="selectedRowData ? updateManualPpoReceipt() : addManualPpoReceipt()" class="p-element p-ripple p-button-rounded p-button p-component"></button>
-        <button pButton label="Cancel" (click)="cancelPpoReceipt()" class="p-element p-ripple p-button-rounded p-button p-component"></button>
-    </div>
+      <button *ngIf="!selectedRow" pButton label="Submit" (click)="addManualPpoReceipt()" 
+              class="p-element p-ripple p-button-rounded p-button p-component" 
+              [disabled]="!manualPpoForm.valid"></button>
+      <button *ngIf="selectedRow" pButton label="Update" (click)="updateManualPpoReceipt(selectedRow)"
+              class="p-element p-ripple p-button-rounded p-button p-component" 
+              [disabled]="!manualPpoForm.valid"></button>
+      <button pButton label="Cancel" (click)="cancelPpoReceipt()" 
+              class="p-element p-ripple p-button-rounded p-button p-component"></button>
+  </div>
 </p-dialog>
-<!-- <div class="col-12">
-    <div class="card">
-      <h5>Manual PPO Receipt</h5>
-      <p-table
-        #dt1
-        [value]="tableData?.data || []"
-        dataKey="ppoNo"
-        [rows]="10"
-        [loading]="isTableDataLoading"
-        [rowHover]="true"
-        styleClass="p-datatable-gridlines"
-        [paginator]="true"
-        [globalFilterFields]="['ppoNo', 'pensionerName', 'treasuryReceiptNo']"
-        responsiveLayout="scroll"
-      >
-        <ng-template pTemplate="caption">
-          <div class="flex justify-content-between flex-column sm:flex-row">
-            <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
-            <span class="p-input-icon-left mb-2">
-              <i class="pi pi-search"></i>
-              <input pInputText type="text" #filter (input)="onGlobalFilter(dt1, $event)" placeholder="Search Keyword" class="w-full" />
-            </span>
-          </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-          <tr>
-            <th style="min-width: 12rem">
-              <div class="flex justify-content-between align-items-center">
-                PPO No
-                <p-columnFilter type="text" field="ppoNo" display="menu" placeholder="Search by PPO No"></p-columnFilter>
-              </div>
-            </th>
-            <th style="min-width: 14rem">
-              <div class="flex justify-content-between align-items-center">
-                Pensioner's Name
-                <p-columnFilter type="text" field="pensionerName" display="menu" placeholder="Search by Name"></p-columnFilter>
-              </div>
-            </th>
-            <th style="min-width: 12rem">
-              <div class="flex justify-content-between align-items-center">
-                Date of Receipt
-                <p-columnFilter type="date" field="receiptDate" display="menu" placeholder="dd/mm/yyyy"></p-columnFilter>
-              </div>
-            </th>
-            <th style="min-width: 10rem">
-              <div class="flex justify-content-between align-items-center">
-                Treasury Receipt No
-                <p-columnFilter type="text" field="treasuryReceiptNo" display="menu" placeholder="Search by Treasury Receipt No"></p-columnFilter>
-              </div>
-            </th>
-            <th style="min-width: 8rem">Actions</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData>
-          <tr>
-            <td>{{ rowData.ppoNo }}</td>
-            <td>{{ rowData.pensionerName }}</td>
-            <td>{{ rowData.receiptDate }}</td>
-            <td>{{ rowData.treasuryReceiptNo }}</td>
-            <td>
-                <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-info" (click)="EditInit(rowData)"></button>
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-          <tr>
-            <td colspan="4">No data found.</td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="loadingbody">
-          <tr>
-            <td colspan="4">Loading data. Please wait.</td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </div>
-  </div> -->
+
