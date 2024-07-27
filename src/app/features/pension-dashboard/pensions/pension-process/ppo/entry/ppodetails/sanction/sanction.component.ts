@@ -63,6 +63,3 @@ export class SanctionComponent implements OnInit {
   
   
 }
-
-
-

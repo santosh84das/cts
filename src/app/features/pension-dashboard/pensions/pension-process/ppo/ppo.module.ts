@@ -13,7 +13,7 @@ import { DynamicTableModule } from 'src/app/shared/modules/dynamic-table/dynamic
 import { OptionCardModule } from 'src/app/shared/modules/option-card/option-card.module';
 import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown/treasury-dropdown.module';
 import { EntryComponent } from './entry/entry.component';
-import { SanctionComponent } from './entry/sanction/sanction.component';
+import { SanctionComponent } from './entry/ppodetails/sanction/sanction.component';
 import { ManualPpoReceiptComponent } from './manual-ppo-receipt/manual-ppo-receipt.component';
 import { PpoComponent } from './ppo.component';
 

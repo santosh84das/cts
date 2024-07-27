@@ -13,14 +13,11 @@ import { CalendarModule } from 'primeng/calendar';
 import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown/treasury-dropdown.module';
 import { EntryComponent } from './entry.component';
 import { PpodetailsComponent } from './ppodetails/ppodetails.component';
-import { SanctionComponent } from './sanction/sanction.component';
-import { FamilyNomineeComponent } from './family-nominee/family-nominee.component';
+
 
 const routes: Routes = [
   { path: '', component: EntryComponent },
   { path: 'ppodetails', component: PpodetailsComponent },
-  { path: 'pposanction', component: SanctionComponent },
-  { path: 'ppofamilynominee', component: FamilyNomineeComponent}
 ];
 
 @NgModule({

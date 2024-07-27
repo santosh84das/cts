@@ -18,9 +18,9 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { CheckboxModule } from 'primeng/checkbox';
 
 import { SanctionComponent } from './sanction.component';
-
+import { FieldsetModule } from 'primeng/fieldset';
 @NgModule({
-  declarations: [SanctionComponent],
+  // declarations: [SanctionComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -39,7 +39,8 @@ import { SanctionComponent } from './sanction.component';
     DialogModule,
     CalendarModule,
     TreasuryDropdownModule,
+    FieldsetModule,
   ],
-  exports: [SanctionComponent],
+  // exports: [SanctionComponent],
 })
 export class SanctionModule { }

@@ -33,7 +33,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 
 
 @NgModule({
-  declarations: [FamilyNomineeComponent],
+  // declarations: [FamilyNomineeComponent],
   imports: [
     CommonModule,
     ButtonModule,
@@ -60,6 +60,5 @@ import { FieldsetModule } from 'primeng/fieldset';
     FieldsetModule,
     
   ],
-  exports: [FamilyNomineeComponent]
 })
 export class FamilyNomineeModule { }
