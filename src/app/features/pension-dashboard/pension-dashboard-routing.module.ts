@@ -36,12 +36,12 @@ const routes: Routes = [
   },
   {
     path: 'modules/pension-process/ppo/entry/sanction',
-    loadChildren: () => import('./pensions/pension-process/ppo/entry/sanction/sanction.module').then(m => m.SanctionModule),
+    loadChildren: () => import('./pensions/pension-process/ppo/entry/ppodetails/sanction/sanction.module').then(m => m.SanctionModule),
   },
   {
     path: 'modules/pension-process/ppo/entry/family-nominee',
     loadChildren: () =>
-      import('./pensions/pension-process/ppo/entry/family-nominee/family-nominee.module').then(m => m.FamilyNomineeModule),
+      import('./pensions/pension-process/ppo/entry/ppodetails/family-nominee/family-nominee.module').then(m => m.FamilyNomineeModule),
   },
   {
    path: 'modules/pension-process/pension-bill',

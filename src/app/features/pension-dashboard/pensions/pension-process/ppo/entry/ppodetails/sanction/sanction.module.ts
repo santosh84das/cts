@@ -16,7 +16,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { CardModule } from 'primeng/card';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { CheckboxModule } from 'primeng/checkbox';
-
+import { FieldsetModule } from 'primeng/fieldset';
 import { SanctionComponent } from './sanction.component';
 
 @NgModule({
@@ -39,6 +39,7 @@ import { SanctionComponent } from './sanction.component';
     DialogModule,
     CalendarModule,
     TreasuryDropdownModule,
+    FieldsetModule,
   ],
   exports: [SanctionComponent],
 })
