@@ -6,7 +6,7 @@
                 <div class="flex flex-column gap-4 mt-4">
                     <p-steps [model]="steps" [(activeIndex)]="currentStepIndex"></p-steps>
                     <div class="my-4 px-4">
-                        <form [formGroup]="ppoForm" (ngSubmit)="onSearch()">
+                
                             <!-- PPO and OtherDetails -->
                             <div *ngIf="currentStepIndex === 0" class="flex flex-column gap-3">
                                <app-details></app-details>
@@ -27,7 +27,6 @@
                             <div *ngIf="currentStepIndex === 3" class="flex flex-column gap-3">
                                 <app-family-nominee></app-family-nominee>
                             </div>
-                        </form>
                     </div>
                 </div>
                 
@@ -36,11 +35,12 @@
                         <p-button label="Back" *ngIf="currentStepIndex > 0" icon="pi pi-step-backward" styleClass="p-button-warning"
                             (onClick)="prev()"></p-button>
                         <div class="flex flex-wrap gap-2">
-                            <p-button label="Next" *ngIf="currentStepIndex < 3" icon="pi pi-step-forward"
-                                styleClass="p-button-success" (click)="next()"></p-button>
+                            <p-button label="Next" *ngIf="(currentStepIndex < 3)" [disabled]="!isFormValid" icon="pi pi-step-forward"
+                                styleClass="p-button-success" (onClick)="next()"></p-button>
                         </div>
+
                         <div class="flex flex-wrap gap-2">
-                            <p-button label="submit" *ngIf="currentStepIndex == 3" icon="pi pi-bookmark"
+                            <p-button label="submit" *ngIf="currentStepIndex === 3" [disabled]="!isFormValid" icon="pi pi-bookmark"
                                 styleClass="p-button-raised" (click)="next()"></p-button>
                                 <!-- <button pButton pRipple label="Submit" icon="pi pi-bookmark"></button> -->
                         </div>
