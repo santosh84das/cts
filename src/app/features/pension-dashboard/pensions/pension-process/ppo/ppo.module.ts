@@ -16,6 +16,7 @@ import { EntryComponent } from './entry/entry.component';
 import { SanctionComponent } from './entry/sanction/sanction.component';
 import { ManualPpoReceiptComponent } from './manual-ppo-receipt/manual-ppo-receipt.component';
 import { PpoComponent } from './ppo.component';
+import { PensionerStatusComponent } from './pensioner-status/pensioner-status.component';
 
 
 

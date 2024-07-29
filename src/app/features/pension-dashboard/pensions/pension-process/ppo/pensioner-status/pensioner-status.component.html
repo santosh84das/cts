@@ -1,0 +1,22 @@
+<div class="container">
+    <p-dropdown 
+      [options]="statusOptions" 
+      [(ngModel)]="selectedStatus" 
+      [ngModelOptions]="{standalone: true}"
+      optionLabel="label"
+      optionValue="value"
+      placeholder="Select a Status"
+      (onChange)="onStatusChange($event)">
+      <ng-template let-option pTemplate="item">
+        <div [ngClass]="getStatusClass(option.value)">
+          {{ option.label }}
+        </div>
+      </ng-template>
+      <ng-template let-selectedOption pTemplate="selectedItem">
+        <div [ngClass]="getStatusClass(selectedOption.value)">
+          {{ selectedOption.label }}
+        </div>
+      </ng-template>
+    </p-dropdown>
+  </div>
+  
