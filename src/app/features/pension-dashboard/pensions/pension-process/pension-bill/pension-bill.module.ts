@@ -47,17 +47,3 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   ]
 })
 export class PensionBillModule { }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
