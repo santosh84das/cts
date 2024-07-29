@@ -1,11 +1,7 @@
-<form>
+<form [formGroup]="ppoFormDetails" (ngSubmit)="onSearch()">
     <div class="col-12 md:col-12">
         <p-fieldset legend="PPO Details" class="line-height-3 m-0">
             <div class="formgroup-inline">
-                <!-- <label for="ppoId" class="col-12 mb-2 md:col-2 md:mb-0">PPO ID:</label>
-                <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
-                    <input pInputText formControlName="ppoId" />
-                </div> :: add in buttom-->
                 <label for="ppoNo" class="col-12 mb-2 md:col-2 md:mb-0">PPO No.:</label>
                 <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
                     <input pInputText formControlName="ppoNo" />
