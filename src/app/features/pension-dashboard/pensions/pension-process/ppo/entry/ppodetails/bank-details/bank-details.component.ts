@@ -10,9 +10,6 @@ export class BankDetailsComponent implements OnInit {
   BankDetailsForm: FormGroup = new FormGroup({});
 
   constructor(private fb: FormBuilder) { 
-    this.initializer();
-  }
-  initializer(){
     this.BankDetailsForm= this.fb.group({
       payMode:[''],
       bankBranchName:[''],
@@ -20,6 +17,10 @@ export class BankDetailsComponent implements OnInit {
       accountHolder:[''],
       IFSCCode:[''],
     });
+  }
+
+  onSubmit(){
+    console.log(this.BankDetailsForm)
   }
   ngOnInit(): void {
   }
