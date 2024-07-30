@@ -1,6 +1,7 @@
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { LayoutService } from './service/app.layout.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-menu',
@@ -18,6 +19,108 @@ export class AppMenuComponent implements OnInit {
                 label: 'Home',
                 items: [
                     { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }
+                ]
+            },
+            {
+                label: 'Pension',
+                items: [
+                    {
+                        label: 'Pension Process', icon: 'pi pi-fw pi-bookmark',
+                        items: [
+                            {
+                                label: 'PPO', icon: 'pi pi-fw pi-bookmark',
+                                items: [
+                                    { label: 'Entry', icon: 'pi pi-fw pi-bookmark',routerLink: ['/pension/modules/pension-process/ppo/entry/ppodetails'] },
+                                    { label: 'Manual PPO Entry', icon: 'pi pi-fw pi-bookmark', routerLink: ['/pension/modules/pension-process/ppo/manualPpoReceipt'] },
+                                    { label: 'Convert to Family Pension', icon: 'pi pi-fw pi-bookmark' , routerLink: ['/pension/modules/pension-process/ppo/manualPpoReceipt'] },
+                                    { label: 'Life Certificate', icon: 'pi pi-fw pi-bookmark' , routerLink: ['/pension/modules/pension-process/ppo/life-certificate'] },
+                                ]
+                            },
+                            {
+                                label: 'Pension Details', icon: 'pi pi-fw pi-bookmark',
+                                items: [
+                                    { label: 'Submenu 1.1.1', icon: 'pi pi-fw pi-bookmark' },
+                                    { label: 'Submenu 1.1.2', icon: 'pi pi-fw pi-bookmark' },
+                                    { label: 'Submenu 1.1.3', icon: 'pi pi-fw pi-bookmark' },
+                                ]
+                            },
+                            {
+                                label: 'Pension Bill', icon: 'pi pi-fw pi-bookmark',
+                                items: [
+                                    { label: 'Submenu 1.1.1', icon: 'pi pi-fw pi-bookmark' },
+                                    { label: 'Submenu 1.1.2', icon: 'pi pi-fw pi-bookmark' },
+                                    { label: 'Submenu 1.1.3', icon: 'pi pi-fw pi-bookmark' },
+                                ]
+                            },
+                            {
+                                label: 'Approval', icon: 'pi pi-fw pi-bookmark',
+                                items: [
+                                    { label: 'Submenu 1.1.1', icon: 'pi pi-fw pi-bookmark' },
+                                    { label: 'Submenu 1.1.2', icon: 'pi pi-fw pi-bookmark' },
+                                    { label: 'Submenu 1.1.3', icon: 'pi pi-fw pi-bookmark' },
+                                ]
+                            },
+                            {
+                                label: 'Bill Print', icon: 'pi pi-fw pi-bookmark',
+                                items: [
+                                    { label: 'Submenu 1.1.1', icon: 'pi pi-fw pi-bookmark' },
+                                    { label: 'Submenu 1.1.2', icon: 'pi pi-fw pi-bookmark' },
+                                    { label: 'Submenu 1.1.3', icon: 'pi pi-fw pi-bookmark' },
+                                ]
+                            },
+                            {
+                                label: 'File Upload', icon: 'pi pi-fw pi-bookmark',
+                                items: [
+                                    { label: 'Submenu 1.2.1', icon: 'pi pi-fw pi-bookmark' }
+                                ]
+                            },
+                            {
+                                label: 'Send to Epradan', icon: 'pi pi-fw pi-bookmark',
+                                
+                            },
+                            {
+                                
+                                label: 'Court Case entry', icon: 'pi pi-fw pi-bookmark',
+                                
+                            },
+                        ]
+                    },
+                    {
+                        label: 'Reports', icon: 'pi pi-fw pi-bookmark',
+                        items: [
+                            {
+                                label: 'Submenu 2.1', icon: 'pi pi-fw pi-bookmark',
+                                items: [
+                                    { label: 'Submenu 2.1.1', icon: 'pi pi-fw pi-bookmark' },
+                                    { label: 'Submenu 2.1.2', icon: 'pi pi-fw pi-bookmark' },
+                                ]
+                            },
+                            {
+                                label: 'Submenu 2.2', icon: 'pi pi-fw pi-bookmark',
+                                items: [
+                                    { label: 'Submenu 2.2.1', icon: 'pi pi-fw pi-bookmark' },
+                                ]
+                            },
+                        ]
+                    },
+                    {
+                        label: 'Query', icon: 'pi pi-fw pi-bookmark',
+                        items: [
+                            {
+                                label: 'Submenu 2.1', icon: 'pi pi-fw pi-bookmark',
+                                items: [
+                                    { label: 'Submenu 2.1.1', icon: 'pi pi-fw pi-bookmark' },
+                                    { label: 'Submenu 2.1.2', icon: 'pi pi-fw pi-bookmark' },
+                                ]
+                            },
+                            {
+                                label: 'Submenu 2.2', icon: 'pi pi-fw pi-bookmark',
+                                items: [
+                                    { label: 'Submenu 2.2.1', icon: 'pi pi-fw pi-bookmark' },
+                                ]
+                            },
+                        ]
+                    }
                 ]
             },
             {
