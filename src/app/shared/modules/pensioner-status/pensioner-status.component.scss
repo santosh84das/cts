@@ -1,0 +1,116 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%; /* Ensure container takes full width */
+}
+
+.status-approved, .status-not-approved {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    margin: 5px 0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.status-approved {
+    background-color: #d4edda !important;
+    color: #155724 !important;
+}
+
+.status-approved::before {
+    content: "\2713"; /* Checkmark icon */
+    margin-right: 8px;
+    color: #155724;
+    font-size: 18px;
+}
+
+.status-not-approved {
+    background-color: #f8d7da !important;
+    color: #721c24 !important;
+}
+
+.status-not-approved::before {
+    content: "\2717"; /* Cross mark icon */
+    margin-right: 8px;
+    color: #721c24;
+    font-size: 18px;
+}
+
+/* Hover effects for better interactivity */
+.status-approved:hover {
+    background-color: #c3e6cb !important;
+}
+
+.status-not-approved:hover {
+    background-color: #f5c6cb !important;
+}
+
+/* Styling for the dropdown container */
+.p-dropdown {
+    border: 1px solid #ced4da; /* Light grey border */
+    border-radius: 0.25rem; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: border-color 0.3s, box-shadow 0.3s;
+    width: 100%; /* Full width */
+    max-width: 250px; /* Adjusted max width to ensure it doesn't get too wide */
+    margin-top: 10px; /* Margin for spacing */
+}
+
+/* Adjusting the height to match other input fields */
+.p-dropdown .p-dropdown-label {
+    padding: 8px 10px; /* Adjust padding to match other inputs */
+    height: 38px; /* Adjust height to match other inputs */
+    color: #495057; /* Dark grey text */
+    font-size: 14px; /* Same font size as the options */
+}
+
+/* Focus effects for better accessibility */
+.p-dropdown:focus {
+    border-color: #80bdff; /* Light blue border on focus */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Blue shadow on focus */
+}
+
+/* Dropdown panel styling */
+.p-dropdown-panel {
+    border-radius: 0.25rem; /* Same rounded corners as the container */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border: 1px solid #ced4da; /* Same border as the container */
+}
+
+/* Option item styling */
+.p-dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
+.p-dropdown-item:hover {
+    background-color: #f1f1f1; /* Light grey on hover */
+}
+
+/* Custom styles for the dropdown indicator */
+.p-dropdown-trigger {
+    padding: 0 10px;
+    border-left: 1px solid #ced4da; /* Separate the trigger from the label */
+}
+
+/* Additional styling to add gap between label and dropdown */
+.pensioner-status-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Add gap between label and dropdown */
+}
+
+/* Input styling to match dropdown */
+input[type="text"] {
+    height: 38px; /* Adjust height to match dropdown */
+    padding: 8px 10px; /* Adjust padding to match dropdown */
+    border: 1px solid #ced4da; /* Light grey border */
+    border-radius: 0.25rem; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: border-color 0.3s, box-shadow 0.3s;
+}

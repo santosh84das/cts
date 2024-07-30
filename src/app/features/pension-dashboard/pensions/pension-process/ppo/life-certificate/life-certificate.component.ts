@@ -18,6 +18,7 @@ export class LifeCertificateComponent implements OnInit {
     financialYear:  new FormControl(''),
     newPPO: new FormControl('',Validators.required),
     branchName: new FormControl('', Validators.required),
+    pensionerStatus: new FormControl('', Validators.required),
   });
 
 

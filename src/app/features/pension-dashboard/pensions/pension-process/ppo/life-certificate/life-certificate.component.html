@@ -78,6 +78,20 @@
                         (click)="searchTwo()"
                     ></p-button>
                 </div>
+                <div class="mx-4 flex w-full text-lg items-center flex-wrap mt-4">
+                    <label for="Pensioner Status">Pensioner Status</label>
+                        <app-pensioner-status
+                          [approvedText]="'Active'"
+                          [notApprovedText]="'InActive'"
+                          [readonly]="true"
+                          [ppoId]="11"
+                          [statusFlag]="11"
+                          formControlName="pensionerStatus"
+                          class="pl-2 lg:ml-4"
+                        ></app-pensioner-status>
+                </div>
+                
+            
             </div>
 
         </p-fieldset>

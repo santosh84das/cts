@@ -58,10 +58,6 @@ const routes: Routes = [
    {
     path: 'modules/pension-process/pensioner-details',
     loadChildren: () => import('./pensions/pension-process/pensioner-details/pensioner-details.module').then(m => m.PensionerDetailsModule),
-   },
-   {
-    path: 'modules/pension-process/ppo/pensioner-status',
-    loadChildren: () => import('./pensions/pension-process/ppo/pensioner-status/pensioner-status.module').then(m => m.PensionerStatusModule),
    }
   
 ];

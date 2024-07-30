@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, forwardRef } from '@angular/core';
 import { SelectItem } from 'primeng/api';
 import { PensionerStatusService } from 'src/app/core/services/pensionerStatus/pensioner-status.service';
 import { ToastService } from 'src/app/core/services/toast.service';
@@ -6,22 +6,34 @@ import { pensionerStatusDTO } from 'src/app/core/models/pensioner-status';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-pensioner-status',
   templateUrl: './pensioner-status.component.html',
-  styleUrls: ['./pensioner-status.component.scss']
+  styleUrls: ['./pensioner-status.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => PensionerStatusComponent),
+      multi: true
+    }
+  ]
 })
-export class PensionerStatusComponent implements OnInit {
-  statusOptions: SelectItem[] = [
-    { label: 'Approved', value: 1 },
-    { label: 'Not Approved', value: 0 }
-  ];
+export class PensionerStatusComponent implements OnInit, ControlValueAccessor {
+  @Input() approvedText: string = 'Approved';
+  @Input() notApprovedText: string = 'Not Approved';
+  @Input() readonly: boolean = false;
+  @Input() ppoId!: number;
+  @Input() statusFlag!: number;
+
+  statusOptions: SelectItem[] = [];
   selectedStatus: number | null = null;
   previousStatus: number | null = null;
-  ppoId: number = 10;
-  statusFlag: number = 1;
   statusWef: string = '2024-05-31';
+
+  onChange: any = () => {};
+  onTouch: any = () => {};
 
   constructor(
     private toastService: ToastService,
@@ -29,6 +41,10 @@ export class PensionerStatusComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.statusOptions = [
+      { label: this.approvedText, value: 1 },
+      { label: this.notApprovedText, value: 0 }
+    ];
     this.getData();
   }
 
@@ -43,16 +59,20 @@ export class PensionerStatusComponent implements OnInit {
       .subscribe((response) => {
         console.log('Status response after getData: ', response);    
         if (response.result && response.result.statusFlag !== undefined) {
-          this.selectedStatus = response.result.statusFlag === 1 ? 1 : 0;
+          this.selectedStatus = response.result.statusFlag > 0 ? 1 : 0;
         } else {
           this.selectedStatus = 0;
         }
         this.previousStatus = this.selectedStatus;
         console.log('Current status:', this.selectedStatus);
+        this.onChange(this.selectedStatus);
+        this.onTouch();
       });
   }
 
   onStatusChange(event: any): void {
+    if (this.readonly) return;
+
     const newStatus = event.value;
     console.log('Previous status:', this.previousStatus);
     console.log('New status:', newStatus);
@@ -64,6 +84,8 @@ export class PensionerStatusComponent implements OnInit {
         this.deleteStatus();
       }
     }
+    this.onChange(newStatus);
+    this.onTouch();
   }
 
   addStatus(): void {
@@ -71,7 +93,7 @@ export class PensionerStatusComponent implements OnInit {
     this.pensionerStatusService.addStatus(statusData).subscribe(
       (response) => {
         console.log('Status updated:', response);
-        this.toastService.showSuccess('Status updated to Approved');
+        this.toastService.showSuccess('Status updated to ' + this.approvedText);
         this.previousStatus = 1;
       },
       (error: HttpErrorResponse) => {
@@ -86,7 +108,7 @@ export class PensionerStatusComponent implements OnInit {
     this.pensionerStatusService.deleteStatus(this.ppoId, this.statusFlag).subscribe(
       (response) => {
         console.log('Status deleted:', response);
-        this.toastService.showSuccess('Status updated to Not Approved');
+        this.toastService.showSuccess('Status updated to ' + this.notApprovedText);
         this.previousStatus = 0;
       },
       (error: HttpErrorResponse) => {
@@ -99,5 +121,28 @@ export class PensionerStatusComponent implements OnInit {
 
   getStatusClass(status: number): string {
     return status === 1 ? 'status-approved' : 'status-not-approved';
+  }
+
+  getStatusIcon(): string {
+    return this.selectedStatus === 1 ? 'pi pi-check' : 'pi pi-times';
+  }
+
+  // ControlValueAccessor methods
+  writeValue(value: any): void {
+    if (value !== undefined) {
+      this.selectedStatus = value;
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouch = fn;
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+    this.readonly = isDisabled;
   }
 }

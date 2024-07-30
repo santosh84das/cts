@@ -12,7 +12,6 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
 import { TreasuryDropdownModule } from 'src/app/shared/modules/treasury-dropdown/treasury-dropdown.module';
-import { PensionerStatusComponent } from './pensioner-status.component';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToggleButtonModule } from 'primeng/togglebutton';
@@ -22,11 +21,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { ToastModule } from 'primeng/toast';
 import { SliderModule } from 'primeng/slider';
 import { RatingModule } from 'primeng/rating';
-import { RouterModule, Routes } from '@angular/router';
-
-const routes: Routes = [
-  {path: "",component: PensionerStatusComponent}
-];
+import { PensionerStatusComponent } from './pensioner-status.component';
 
 
 
@@ -55,8 +50,8 @@ const routes: Routes = [
     ToastModule,
     SliderModule,
     RatingModule,
-    MhPrimeDynamicTableModule,
-    RouterModule.forChild(routes)
-  ]
+    MhPrimeDynamicTableModule
+  ],
+  exports: [PensionerStatusComponent]
 })
 export class PensionerStatusModule { }
