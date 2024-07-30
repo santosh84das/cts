@@ -71,7 +71,6 @@ export class DetailsComponent implements OnInit {
       provisionalPension:['',Validators.required],
       interimAllowance:['',Validators.required],
       sharedPension:['',Validators.required],
-      valRadio: ['',Validators.required],
 
 
     });
@@ -81,11 +80,7 @@ export class DetailsComponent implements OnInit {
 
     // enable next
     this.ppoFormDetails.statusChanges.subscribe(status => {
-      if (status === 'INVALID') {
-        this.sd.setFormValid(false);
-      }else if (status === 'VALID') {
-        this.sd.setFormValid(true);
-      }
+      this.sd.setFormValid(true);
       console.log(status);
     });
   }
