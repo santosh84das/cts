@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PensionBillComponent } from './pension-bill.component';
+import { SearchPopupComponent } from './search-popup.component';
 
-describe('PensionBillComponent', () => {
-  let component: PensionBillComponent;
-  let fixture: ComponentFixture<PensionBillComponent>;
+describe('SearchPopupComponent', () => {
+  let component: SearchPopupComponent;
+  let fixture: ComponentFixture<SearchPopupComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PensionBillComponent ]
+      declarations: [ SearchPopupComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PensionBillComponent);
+    fixture = TestBed.createComponent(SearchPopupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
