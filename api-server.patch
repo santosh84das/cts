@@ -1,0 +1,13 @@
+diff --git a/src/environments/environment.ts b/src/environments/environment.ts
+index b7a3152..95b574f 100644
+--- a/src/environments/environment.ts
++++ b/src/environments/environment.ts
+@@ -4,7 +4,7 @@
+ 
+ export const environment = {
+   production: false,
+-  BaseURL:'http://localhost:7249/api/'
++  BaseURL:'http://10.173.160.20:7249/api/'
+ };
+ 
+ /*

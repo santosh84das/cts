@@ -1,7 +1,7 @@
 # Reference: https://learn.microsoft.com/en-us/aspnet/core/test/http-files?view=aspnetcore-8.0
 # VSCode Extension: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
-# @PensionAPI_HostAddress = https://localhost:7249 
-@PensionAPI_HostAddress = http://10.5.215.133:7249/api/
+# @PensionAPI_HostAddress = https://api.docker.test/api/ 
+@PensionAPI_HostAddress = http://api.docker.test
 @accessToken = eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhcHBsaWNhdGlvbiI6IntcIklkXCI6MyxcIk5hbWVcIjpcIkNUU1wiLFwiTGV2ZWxzXCI6W3tcIklkXCI6OCxcIk5hbWVcIjpcIlRyZWFzdXJ5XCIsXCJTY29wZVwiOltcIkRBQVwiXX1dLFwiUm9sZXNcIjpbe1wiSWRcIjoyNyxcIk5hbWVcIjpcImNsZXJrXCIsXCJQZXJtaXNzaW9uc1wiOltcImNhbi1yZWNlaXZlLWJpbGxcIl19XX0iLCJuYW1laWQiOiIzOSIsIm5hbWUiOiJDVFMgQ2xlcmsiLCJuYmYiOjE3MTc5OTY2OTksImV4cCI6MTcxODA4MzA5OSwiaWF0IjoxNzE3OTk2Njk5fQ.tLMRXKlXb2eyiE2ApSRgFgbX9EjvPbGNi1dgp_UpGadv-UitDdS4su2ZV6B4kp4Rf0TXjDQHTW7YvNkwciQVQg
 # {{Login.response.body.$.accessToken}}
 
@@ -14,6 +14,28 @@
 
 @ApprovedPpoId = {{SetApprovePPOFlag.response.body.$.result.ppoId}}
 @ApprovedPpoIdStatusFlag = {{SetApprovePPOFlag.response.body.$.result.statusFlag}}
+
+### Generate Components for First Pension Bill
+# @name GenerateFirstPensionBill
+POST {{PensionAPI_HostAddress}}/api/v1/echo
+# POST {{PensionAPI_HostAddress}}/api/v1/ppo/pension-bill
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "PpoId": "{{GeneratedPpoId}}",
+  "billType": "F",
+  "toDate": "{{$datetime "YYYY-MM-DD"}}"
+}
+
+### Read Pensioner Details for First Bill Generation
+# @name ReadPensionerDetailsForFirstBill
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+GET {{PensionAPI_HostAddress}}/api/v1/ppo/{{GeneratedPpoId}}/first-bill-general
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+
 
 ### Create Pensioner Bank Account
 # @name CreatePensionerBankAccount
@@ -86,7 +108,7 @@ Content-Type: application/json
   "gender": "M",
   "mobileNumber": "{{$randomInt 6000000000 9999999999}}",
   "emailId": "string",
-  "pensionerAddress": "string",
+  "pensionerAddress": "abc",
   "identificationMark": "S",
   "panNo": "PANNO{{$randomInt 1000 9999}}F",
   "aadhaarNo": "{{$randomInt 600000000000 999999999999}}",
@@ -101,8 +123,8 @@ Content-Type: application/json
 
 ### Update PPO Details
 # @name UpdatePPODetails
-PUT {{PensionAPI_HostAddress}}/api/v1/ppo/{{GeneratedPpoId}}/details
-# POST {{PensionAPI_HostAddress}}/api/v1/echo
+# PUT {{PensionAPI_HostAddress}}/api/v1/ppo/{{GeneratedPpoId}}/details
+POST {{PensionAPI_HostAddress}}/api/v1/echo
 Accept: application/json
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
@@ -119,7 +141,7 @@ Content-Type: application/json
   "gender": "M",
   "mobileNumber": "{{$randomInt 6000000000 9999999999}}",
   "emailId": "string",
-  "pensionerAddress": "string",
+  "pensionerAddress": 10,
   "identificationMark": "S",
   "panNo": "PANNO{{$randomInt 1000 9999}}F",
   "aadhaarNo": "{{$randomInt 600000000000 999999999999}}",
@@ -224,11 +246,23 @@ Content-Type: application/json
 
 ### Update PPO Receipt Request
 # @name UpdatePPOReceipt
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
 PUT {{PensionAPI_HostAddress}}/api/v1/manual-ppo/receipts/{{treasuryReceiptNo}}
 Accept: application/json
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
+{
+  "ppoNo": "PPO-291111",
+  "pensionerName": "Jack Smith",
+  "dateOfCommencement": "2024-07-19",
+  "mobileNumber": "8923481395",
+  "receiptDate": "2024-07-27",
+  "psaCode": "A",
+  "ppoType": "N"
+}
+
+###
 {
   "ppoNo": "PPO-{{$randomInt 100000 999999}}",
   "pensionerName": "Jack Smith",
