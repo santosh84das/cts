@@ -58,6 +58,10 @@ const routes: Routes = [
    {
     path: 'modules/pension-process/pensioner-details',
     loadChildren: () => import('./pensions/pension-process/pensioner-details/pensioner-details.module').then(m => m.PensionerDetailsModule),
+   },
+   {
+    path : 'modules/pension-reports/manual-ppo-register',
+    loadChildren: () => import('./pensions/pension-reports/manual-ppo-register/manual-ppo-register.module').then(m => m.ManualPpoRegisterModule),
    }
   
 ];
