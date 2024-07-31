@@ -16,13 +16,13 @@
                 <label for="type" class="col-12 mb-2 md:col-2 md:mb-0">Type:</label>
                 <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
                     <p-dropdown
-                        [options]="[{label: 'Pension', value: 'pension'}, {label: 'Bank', value: 'bank'}]"
+                        [options]="[{label: '', value: ''},{label: 'Pension', value: 'pension'}, {label: 'Bank', value: 'bank'}]"
                         formControlName="type"></p-dropdown>
                 </div>
                 <label for="subType" class="col-12 mb-2 md:col-2 md:mb-0">Sub Type:</label>
                 <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
                     <p-dropdown
-                        [options]="[{label: 'Pension', value: 'pension'}, {label: 'Bank', value: 'bank'}]"
+                        [options]="[{label: '', value: ''},{label: 'Pension', value: 'pension'}, {label: 'Bank', value: 'bank'}]"
                         formControlName="subType"></p-dropdown>
                 </div>
             </div>
@@ -59,14 +59,6 @@
                         [showIcon]="true"></p-calendar>
                 </div>
 
-                <!-- <label for="notionalBasicPension" class="col-12 mb-2 md:col-2 md:mb-0">Notional Basic Pension:</label>
-                <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
-                    <input pInputText formControlName="notionalBasicPension" />
-                </div>
-                <label for="withEffectiveDate" class="col-12 mb-2 md:col-2 md:mb-0">With Effective Date:</label>
-                <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
-                    <p-calendar formControlName="withEffectiveDate" [showIcon]="true"></p-calendar>
-                </div> -->
             </div>
             <div class="formgroup-inline">
                 <label for="basic" class="col-12 mb-2 md:col-2 md:mb-0">Basic:</label>

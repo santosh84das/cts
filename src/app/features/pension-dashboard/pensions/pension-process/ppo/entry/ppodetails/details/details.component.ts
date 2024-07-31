@@ -4,11 +4,13 @@ import { SelectItem } from 'primeng/api';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { SharedDataService  } from '../shared-data.service';
 import { Validators } from '@angular/forms';
+import { PpoDetailsService } from 'src/app/core/services/ppoDetails/ppo-details.service';
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss']
 })
+
 export class DetailsComponent implements OnInit {
   religionOptions: SelectItem[];
   subDivOptions: SelectItem[];
@@ -18,7 +20,8 @@ export class DetailsComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private toastService: ToastService,
-    private sd: SharedDataService
+    private sd: SharedDataService,
+    private service: PpoDetailsService,
   ) { 
     this.ininalizer();
     this.religionOptions = [
@@ -53,7 +56,7 @@ export class DetailsComponent implements OnInit {
       epf: ['',Validators.required],
       upto: ['',Validators.required],
       familyPension: ['',Validators.required],
-      religionPension: ['',Validators.required],
+      // religionPension: ['',Validators.required],
       religion: ['',Validators.required],
       firstPensionGenerated: ['',Validators.required],
       mobileNo:['',Validators.required],
@@ -80,8 +83,13 @@ export class DetailsComponent implements OnInit {
 
     // enable next
     this.ppoFormDetails.statusChanges.subscribe(status => {
-      this.sd.setFormValid(true);
-      console.log(status);
+      if (status === 'VALID') {
+        this.sd.setFormValid(true);
+        this.sd.setObject(this);
+      }
+      else {
+        this.sd.setFormValid(false);
+      }
     });
   }
 
@@ -89,6 +97,22 @@ export class DetailsComponent implements OnInit {
     console.log(this.ppoFormDetails.value);
   }
 
+  // call this method for save database
+  saveData(){
+    if (this.ppoFormDetails.valid) {
+      this.service.CreatePPODetails(this.ppoFormDetails.value).subscribe(
+        (data) => {
+          console.log(data);
+          this.toastService.showSuccess('Data saved successfully');
+        },
+        (error) => {
+          console.log(error);
+          this.toastService.showError('Failed to save data: '+error.message);
+        }
+      )
+    }
+    this.sd.object=undefined
+  }
 
   
 }
