@@ -50,7 +50,7 @@ export class PpodetailsComponent implements OnInit{
   next() {
     this.currentStepIndex++;
     if (this.sd.object != undefined) {
-      this.sd.object.saveData();
+      this.sd.object.saveData(); // universal function for all sub components
     }
   }
 
