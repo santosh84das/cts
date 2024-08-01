@@ -7,8 +7,6 @@ import { Table } from 'primeng/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SearchPopupComponent } from 'src/app/core/search-popup/search-popup.component';
-import { PensionBillService } from 'src/app/core/services/pension-bill/pension-bill.service';
-import { PensionBillApiResponse, PensionBill, Header } from 'src/app/core/models/pension-bill';
 import { SearchPopupConfig } from 'src/app/core/search-popup/search-popup.component';
 
 @Component({
@@ -38,11 +36,8 @@ export class PensionBillComponent implements OnInit {
   apiUrl: string = 'v1/ppo/details'; // Your API URL
 
   constructor(
-    private router: Router,
-    private productService: ProductService,
     private fb: FormBuilder,
     private dialogService: DialogService,
-    private pensionBillService: PensionBillService
   ) { }
 
   ngOnInit() {
