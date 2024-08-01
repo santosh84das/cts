@@ -1,4 +1,3 @@
-
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService, ConfirmationService } from 'primeng/api';
@@ -7,7 +6,10 @@ import { ProductService } from 'src/app/demo/service/product.service';
 import { Table } from 'primeng/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { SearchPopupComponent } from './search-popup/search-popup.component';
+import { SearchPopupComponent } from 'src/app/core/search-popup/search-popup.component';
+import { PensionBillService } from 'src/app/core/services/pension-bill/pension-bill.service';
+import { PensionBillApiResponse, PensionBill, Header } from 'src/app/core/models/pension-bill';
+import { SearchPopupConfig } from 'src/app/core/search-popup/search-popup.component';
 
 @Component({
   selector: 'app-pension-bill',
@@ -33,20 +35,20 @@ export class PensionBillComponent implements OnInit {
   @ViewChild('filter') filter!: ElementRef;
   pensionForm: FormGroup = this.fb.group({});
   isCurrentStepValid = false;
+  apiUrl: string = 'v1/ppo/details'; // Your API URL
 
   constructor(
     private router: Router,
     private productService: ProductService,
     private fb: FormBuilder,
-    private dialogService: DialogService
-  ) {}
+    private dialogService: DialogService,
+    private pensionBillService: PensionBillService
+  ) { }
 
   ngOnInit() {
-    // this.productService.getProductsWithOrdersSmall().then(data => (this.products = data));
     this.dropdownItems = [
       { label: 'Babk', value: 'B' },
       { label: 'Neft', value: 'N' }
-      // Add more items as needed
     ];
 
     this.pensionForm = this.fb.group({
@@ -69,18 +71,18 @@ export class PensionBillComponent implements OnInit {
   }
 
   expandAll() {
-    // if (!this.isExpanded) {
-    //   this.products.forEach((product) =>
-    //     product && product.name ? (this.expandedRows[product.name] = true) : ''
-    //   );
-    // } else {
-    //   this.expandedRows = {};
-    // }
-    // this.isExpanded = !this.isExpanded;
+    if (!this.isExpanded) {
+      this.products.forEach((product) =>
+        product && product.name ? (this.expandedRows[product.name] = true) : ''
+      );
+    } else {
+      this.expandedRows = {};
+    }
+    this.isExpanded = !this.isExpanded;
   }
 
   onGlobalFilter(table: Table, event: Event) {
-    // table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
 
   clear(table: Table) {
@@ -105,8 +107,26 @@ export class PensionBillComponent implements OnInit {
     }
   }
 
+// search popup control
+
   openSearchPopup() {
+    const payload = {
+      listType: 'type1',
+        pageSize: 10,
+     pageIndex: 0,
+    filterParameters: [],
+     sortParameters: {
+    field: 'ppoNo',
+    order: 'asc'}
+    };
+
+    const config: SearchPopupConfig = {
+      payload: payload,
+      apiUrl: this.apiUrl
+    };
+
     this.ref = this.dialogService.open(SearchPopupComponent, {
+      data: config,
       header: 'Search Records',
       width: '60%'
     });
@@ -120,7 +140,7 @@ export class PensionBillComponent implements OnInit {
           periodFrom: record.periodFrom,
           periodTo: record.periodTo,
           accountNo: record.accountNo,
-          bankName: record.email
+          bankName: record.bankName
         });
       }
     });
