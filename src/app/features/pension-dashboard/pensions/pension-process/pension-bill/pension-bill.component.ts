@@ -107,8 +107,8 @@ export class PensionBillComponent implements OnInit {
   openSearchPopup() {
     const payload = {
       listType: 'type1',
-        pageSize: 10,
-     pageIndex: 0,
+      pageSize: 15,
+      pageIndex: 0,
     filterParameters: [],
      sortParameters: {
     field: 'ppoNo',
@@ -122,7 +122,7 @@ export class PensionBillComponent implements OnInit {
 
     this.ref = this.dialogService.open(SearchPopupComponent, {
       data: config,
-      header: 'Search Records',
+      header: 'Search record',
       width: '60%'
     });
 
