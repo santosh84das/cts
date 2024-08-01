@@ -13,7 +13,7 @@ import { RatingModule } from 'primeng/rating';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { PensionBillComponent } from './pension-bill.component';
-import { SearchPopupComponent } from './search-popup/search-popup.component';
+import { SearchPopupComponent } from 'src/app/core/search-popup/search-popup.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @NgModule({
