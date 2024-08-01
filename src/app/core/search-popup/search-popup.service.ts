@@ -2,7 +2,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PensionBillApiResponse } from 'src/app/core/models/pension-bill';
 import { IapiResponce } from '../models/iapi-responce';
 
 @Injectable({

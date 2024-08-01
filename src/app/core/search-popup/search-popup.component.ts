@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { Header, PensionBillApiResponse } from 'src/app/core/models/pension-bill';
-import { Observable } from 'rxjs';
+import { Header} from 'src/app/core/models/pension-bill';
 import { SearchPopupService } from './search-popup.service';
 
 export interface SearchPopupConfig {
@@ -40,11 +39,10 @@ export class SearchPopupComponent implements OnInit {
       (response) => {
         console.log('API Response:', response);
         if (response && response.result) {
-          
           const { headers, data } = response.result;
           this.records = data;
           this.filteredRecords = data;
-          this.cols = headers.map((header: Header) => ({
+          this.cols = headers.map((header:Header) => ({
             field: header.fieldName,
             header: header.name
           }));
@@ -62,13 +60,33 @@ export class SearchPopupComponent implements OnInit {
     this.ref.close(record);
   }
 
+  // filterRecords(): void {
+  //   if (this.searchTerm) {
+  //     console.log(this.searchTerm);
+  //     this.filteredRecords = this.records.filter(record =>
+  //       record.pensionerName?.toLowerCase().includes(this.searchTerm.toLowerCase())
+  //     );
+  //   } else {
+  //     this.filteredRecords = [...this.records];
+  //   }
+  // }
+
   filterRecords(): void {
     if (this.searchTerm) {
+      const lowerCaseSearchTerm = this.searchTerm.toLowerCase();
+      // Filter records based on any property value that contains the search term, case-insensitive.
       this.filteredRecords = this.records.filter(record =>
-        record.pensionerName?.toLowerCase().includes(this.searchTerm.toLowerCase())
+        Object.values(record).some(value => {
+          if (typeof value === 'string' || typeof value === 'number') {
+            return value.toString().toLowerCase().includes(lowerCaseSearchTerm);
+          }
+          return false;
+        })
       );
     } else {
       this.filteredRecords = [...this.records];
     }
   }
+
+  
 }
