@@ -28,6 +28,9 @@ import { SanctionModule } from './sanction/sanction.module';
 import { FamilyNomineeModule } from './family-nominee/family-nominee.module';
 
 
+// md - 50
+// import { FloatLabe } ;
+
 const routes: Routes = [
   { path: '', component: PpodetailsComponent },
 ];
@@ -44,12 +47,10 @@ const routes: Routes = [
     ReactiveFormsModule,    
     DynamicTableModule,
     OptionCardModule,
-    ButtonModule,
     CommonHeaderModule,
     DropdownModule,
     DialogModule,
     CalendarModule,
-    ReactiveFormsModule,
     TreasuryDropdownModule,
     FormsModule,
     InputTextModule,
@@ -58,18 +59,14 @@ const routes: Routes = [
     BrowserModule,
     InputTextareaModule,
     BrowserModule,
-    ReactiveFormsModule,
-    ButtonModule,
     InputTextModule,
     CalendarModule,
     DropdownModule,
     SelectButtonModule,
     CardModule,
     BrowserModule,
-    ReactiveFormsModule,
     FormsModule,
     DropdownModule,
-    RadioButtonModule,
     CheckboxModule,
     InputTextModule,
     StepsModule,
