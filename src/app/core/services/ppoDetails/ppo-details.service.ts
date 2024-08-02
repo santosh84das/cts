@@ -9,18 +9,20 @@ import { catchError, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PpoDetailsService {
-  apiUrl = "v1/ppo/details";
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private toastService: ToastService
-  ) {}
-  
+  ) { }
+
+  /// add a new recode
   CreatePPODetails(
     queryParameters: PPOEntryINF
-  ): Observable<IapiResponce<PPOEntryINF>> {
+  ): Observable<IapiResponce> {
+    const apiUrl = "v1/ppo/details";
+
     return this.http
-      .patch<IapiResponce<PPOEntryINF>>(
-        this.apiUrl,
+      .post<IapiResponce>(
+        apiUrl,
         queryParameters
       )
       .pipe(

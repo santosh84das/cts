@@ -1,25 +1,33 @@
 export interface PPOEntryINF {
-    "ppoId": string,
-    "ppoNo": string,
-    "ppoType": 'P' | 'F' | 'C',
-    "psaType": 'A' | 'D' | 'O',
-    "ppoSubType": string,
-    "ppoCategory": string,
-    "ppoSubCategory": string,
-    "pensionerName": string,
-    "dateOfBirth": string,
-    "gender": 'M' | 'F' | 'O',
-    "mobileNumber": string,
-    "emailId": string,
-    "pensionerAddress":string,
-    "identificationMark": 'S' | 'N',
-    "panNo": string,
-    "aadhaarNo": string,
-    "dateOfRetirement": string,
-    "dateOfCommencement": string,
-    "basicPensionAmount": number,
-    "commutedPensionAmount": string,
-    "enhancePensionAmount": string,
-    "reducedPensionAmount": string,
-    "religion": 'H' | 'M' | 'O'
+        receiptId: number; // integer($int64)
+        ppoNo: string; // string with maxLength: 100, minLength: 0, nullable: true
+        ppoType: 'P' | 'F' | 'C'; // string with pattern: [PFC]
+        ppoSubType: 'E'|'L'|'U'|'V'|'N'|'R'|'P'|'G'|'J'|'K'|'H'|'W'; // string with pattern: [ELUVNRPGJKHW]
+        categoryId: number; // integer($int64)
+        pensionerName?: string; // string with maxLength: 100, minLength: 0, nullable: true
+        gender?: 'M'|'F'; // string with pattern: [MF], nullable: true
+        dateOfBirth?: string; // DateOnly as string
+        mobileNumber?: string; // string with maxLength: 10, minLength: 0, pattern: ^[6-9]\d{9}$
+        emailId?: string; // nullable: true
+        pensionerAddress?: string; // nullable: true
+        identificationMark?: string; // nullable: true
+        panNo?: string; // nullable: true
+        aadhaarNo?: string; // nullable: true
+        dateOfRetirement?: string; // DateOnly as string
+        dateOfCommencement?: string; // DateOnly as string
+        basicPensionAmount: number; // integer($int32)
+        commutedPensionAmount: number; // integer($int32)
+        enhancePensionAmount: number; // integer($int32)
+        reducedPensionAmount: number; // integer($int32)
+        religion?: 'H'|'M'|'O'; // string with pattern: [HMO]
 }
+
+
+// filter interface
+export interface Filters {
+        "field": string,
+        "value": string,
+        "operator":string
+      }
+
+// sort interface

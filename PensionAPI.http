@@ -1,6 +1,6 @@
 # Reference: https://learn.microsoft.com/en-us/aspnet/core/test/http-files?view=aspnetcore-8.0
 # VSCode Extension: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
-# @PensionAPI_HostAddress = https://api.docker.test/api/ 
+# @PensionAPI_HostAddress = https://localhost:7249 
 @PensionAPI_HostAddress = http://api.docker.test
 @accessToken = eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhcHBsaWNhdGlvbiI6IntcIklkXCI6MyxcIk5hbWVcIjpcIkNUU1wiLFwiTGV2ZWxzXCI6W3tcIklkXCI6OCxcIk5hbWVcIjpcIlRyZWFzdXJ5XCIsXCJTY29wZVwiOltcIkRBQVwiXX1dLFwiUm9sZXNcIjpbe1wiSWRcIjoyNyxcIk5hbWVcIjpcImNsZXJrXCIsXCJQZXJtaXNzaW9uc1wiOltcImNhbi1yZWNlaXZlLWJpbGxcIl19XX0iLCJuYW1laWQiOiIzOSIsIm5hbWUiOiJDVFMgQ2xlcmsiLCJuYmYiOjE3MTc5OTY2OTksImV4cCI6MTcxODA4MzA5OSwiaWF0IjoxNzE3OTk2Njk5fQ.tLMRXKlXb2eyiE2ApSRgFgbX9EjvPbGNi1dgp_UpGadv-UitDdS4su2ZV6B4kp4Rf0TXjDQHTW7YvNkwciQVQg
 # {{Login.response.body.$.accessToken}}
@@ -15,16 +15,98 @@
 @ApprovedPpoId = {{SetApprovePPOFlag.response.body.$.result.ppoId}}
 @ApprovedPpoIdStatusFlag = {{SetApprovePPOFlag.response.body.$.result.statusFlag}}
 
-### Generate Components for First Pension Bill
-# @name GenerateFirstPensionBill
-POST {{PensionAPI_HostAddress}}/api/v1/echo
-# POST {{PensionAPI_HostAddress}}/api/v1/ppo/pension-bill
+### Create Pension Component
+# @name CreatePensionBreakup
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+POST {{PensionAPI_HostAddress}}/api/v1/pension/component-rate
 Accept: application/json
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "PpoId": "{{GeneratedPpoId}}",
+  "CategoryId": 30,
+  "BreakupId": 3,
+  "EffectiveFromDate": "2024-04-01",
+  "RateAmount": 1000,
+  "RateType": "A"
+}
+
+### Create Pension Component
+# @name CreatePensionBreakup
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+POST {{PensionAPI_HostAddress}}/api/v1/pension/bill-component
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "ComponentName": "Interim Relief 2016",
+  "ComponentType": "P",
+  "ReliefFlag": false
+}
+
+### Create Pension Category
+# @name CreatePensionCategory
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+POST {{PensionAPI_HostAddress}}/api/v1/pension/category
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "PrimaryCategoryId": 4,
+  "SubCategoryId": 3
+}
+
+### List All PensionCategory
+# @name ListPensionCategory
+# PATCH {{PensionAPI_HostAddress}}/api/v1/pension/category
+# PATCH {{PensionAPI_HostAddress}}/api/v1/pension/primary-category
+# PATCH {{PensionAPI_HostAddress}}/api/v1/pension/sub-category
+# PATCH {{PensionAPI_HostAddress}}/api/v1/pension/bill-component
+PATCH {{PensionAPI_HostAddress}}/api/v1/pension/component-rate
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{"pageSize":10,"pageIndex":0,"filterParameters":[],"sortParameters":{"field":"","order":""}}
+
+### Create Pension SubCategory
+# @name CreatePensionSubCategory
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+POST {{PensionAPI_HostAddress}}/api/v1/pension/sub-category
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "SubCategoryName": "ROPA 2026"
+}
+
+### Create Pension PrimaryCategory
+# @name CreatePensionPrimaryCategory
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+POST {{PensionAPI_HostAddress}}/api/v1/pension/primary-category
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "HoaId": "2071 - 01 - 109 - 00 - 001 - V - 04 - 00",
+  "PrimaryCategoryName": "Defence Pension"
+}
+
+### Generate Components for First Pension Bill
+# @name GenerateFirstPensionBill
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+PATCH {{PensionAPI_HostAddress}}/api/v1/ppo/pension-bill
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "PpoId": {{GeneratedPpoId}},
   "billType": "F",
   "toDate": "{{$datetime "YYYY-MM-DD"}}"
 }
@@ -84,7 +166,15 @@ Accept: application/json
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
-{"pageSize":10,"pageIndex":0,"filterParameters":[],"sortParameters":{"field":"","order":""}}
+{
+  "pageSize":10,
+  "pageIndex":0,
+  "filterParameters":[],
+  "sortParameters":{
+    "field":"",
+    "order":""
+    }
+}
 
 
 
@@ -97,18 +187,18 @@ Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
+  "receiptId": 1, 
   "ppoNo": "PPO-{{$randomInt 100000 999999}}",
   "ppoType": "P",
   "psaType": "A",
   "ppoSubType": "N",
-  "ppoCategory": "C",
-  "ppoSubCategory": "D",
+  "categoryId": 31,
   "pensionerName": "Jack Dowsel",
   "dateOfBirth": "{{$datetime "YYYY-MM-DD"}}",
   "gender": "M",
   "mobileNumber": "{{$randomInt 6000000000 9999999999}}",
   "emailId": "string",
-  "pensionerAddress": "abc",
+  "pensionerAddress": "Malda",
   "identificationMark": "S",
   "panNo": "PANNO{{$randomInt 1000 9999}}F",
   "aadhaarNo": "{{$randomInt 600000000000 999999999999}}",
@@ -141,7 +231,7 @@ Content-Type: application/json
   "gender": "M",
   "mobileNumber": "{{$randomInt 6000000000 9999999999}}",
   "emailId": "string",
-  "pensionerAddress": 10,
+  "pensionerAddress": "Kolkata",
   "identificationMark": "S",
   "panNo": "PANNO{{$randomInt 1000 9999}}F",
   "aadhaarNo": "{{$randomInt 600000000000 999999999999}}",
@@ -214,18 +304,25 @@ Authorization: Bearer {{accessToken}}
 
 ### Read PPO Receipt Request
 # @name GetPPOReceipt
-GET {{PensionAPI_HostAddress}}/api/v1/manual-ppo/receipts/{{treasuryReceiptNo}}
+# GET {{PensionAPI_HostAddress}}/api/v1/manual-ppo/receipts/{{treasuryReceiptNo}}
+GET {{PensionAPI_HostAddress}}/api/v1/manual-ppo/receipts/DAA2024000022
 Accept: application/json
 Authorization: Bearer {{accessToken}}
 
-### List All PPO Receipts Request
+### List All PPO Receipts Request # mark
 # @name GetAllManualPPOReceipts
 PATCH {{PensionAPI_HostAddress}}/api/v1/manual-ppo/receipts
 Accept: application/json
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
-{"pageSize":10,"pageIndex":0,"filterParameters":[],"sortParameters":{"field":"","order":""}}
+{"pageSize":10,"pageIndex":0,"filterParameters":[
+  {
+      "field": "TreasuryReceiptNo",
+      "value": "00003",
+      "operator": "contains"
+    }
+],"sortParameters":{"field":"","order":""}}
 
 ### Create PPO Receipt Request
 # @name CreatePPOReceipt
@@ -352,3 +449,40 @@ Content-Type: application/json
   "refreshToken": "{{refreshToken}}"
 }
 
+
+
+
+aadhaar_no
+active_flag
+basic_pension_amount
+category_id
+commuted_pension_amount
+created_at
+created_by
+date_of_birth
+date_of_commencement
+date_of_retirement
+email_id
+enhance_pension_amount
+financial_year
+gender
+identification_mark
+mobile_number
+pan_no
+pensioner_address
+pensioner_name
+photo_file_id
+ppo_category
+ppo_id
+ppo_no
+ppo_sub_category
+ppo_sub_type
+ppo_type
+psa_type
+receipt_id
+reduced_pension_amount
+religion
+signature_file_id
+treasury_code
+updated_at
+updated_by
