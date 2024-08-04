@@ -1,15 +1,13 @@
     <div class="col-12 md:col-12">
         <!-- Search PPO D -->
 
-        <div class="formgroup-inline">
-            <form [formGroup]="ManualEntrySearchForm">
+        <div class="formgroup-inline" style="width: 100%;">
+            <form [formGroup]="ManualEntrySearchForm" (ngSubmit)="MEDetailsSearch();" style="width: 100%; display: flex; justify-content: right;">
                 <span class="p-float-label">
-                    <input id="float-input" type="text" pInputText formControlName="eppoid">
+                    <input id="float-input" type="text" pInputText formControlName="eppoid" (click)="MEDetailsSearch();">
                     <label for="float-input">e-PPO Application No/TRID</label>
-                    <p-button label="Search" (click)="MEDetailsSearch()"></p-button>
                 </span>
             </form>
-           
         </div>
 
 
@@ -28,14 +26,29 @@
                 <div class="formgroup-inline">
                     <label for="type" class="col-12 mb-2 md:col-2 md:mb-0">Type:</label>
                     <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
-                        <p-dropdown
-                            [options]="[{label: '', value: ''},{label: 'Pension', value: 'pension'}, {label: 'Bank', value: 'bank'}]"
+                        <p-dropdown dataKey="Pension"
+                            [options]="[
+                            {label: 'Pension', value: 'P'}, 
+                            {label: 'Bank', value: 'F'},
+                            {label: 'CPF', value: 'C'}]"
                             formControlName="ppoType"></p-dropdown>
                     </div>
                     <label for="subType" class="col-12 mb-2 md:col-2 md:mb-0">Sub Type:</label>
                     <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
-                        <p-dropdown
-                            [options]="[{label: '', value: ''},{label: 'Pension', value: 'pension'}, {label: 'Bank', value: 'bank'}]"
+                        <p-dropdown dataKey="Employed"
+                            [options]="[
+                            { label: 'Employed', value: 'E' },
+                            { label: 'Widow Daughter', value: 'L' },
+                            { label: 'Unmarried Daughter', value: 'U' },
+                            { label: 'Divorced Daughter', value: 'V' },
+                            { label: 'Minor Son', value: 'N' },
+                            { label: 'Minor Daughter', value: 'R' },
+                            { label: 'Handicapped Son', value: 'P' },
+                            { label: 'Handicapped Daughter', value: 'G' },
+                            { label: 'Dependent Father', value: 'J' },
+                            { label: 'Dependent Mother', value: 'K' },
+                            { label: 'Husband', value: 'H' },
+                            { label: 'Wife', value: 'W' }]"
                             formControlName="ppoSubType"></p-dropdown>
                     </div>
                 </div>
@@ -80,7 +93,7 @@
                 <div class="formgroup-inline">
                     <label for="religion" class="col-12 mb-2 md:col-2 md:mb-0">Religion:</label>
                     <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
-                        <p-dropdown [options]="religionOptions" formControlName="religion"></p-dropdown>
+                        <p-dropdown [options]="religionOptions"  dataKey="Hindu" formControlName="religion"></p-dropdown>
                     </div>
                     <label for="mobileNumber" class="col-12 mb-2 md:col-2 md:mb-0">Mobile No.:</label>
                     <div class="field col-12 mb-2 lg:col-4 lg:mb-0">

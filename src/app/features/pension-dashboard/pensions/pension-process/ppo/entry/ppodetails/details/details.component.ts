@@ -8,6 +8,7 @@ import { PpoDetailsService } from 'src/app/core/services/ppoDetails/ppo-details.
 import { PPOEntryINF } from 'src/app/core/models/ppoentry-inf';
 import { SearchPopupComponent, SearchPopupConfig } from 'src/app/core/search-popup/search-popup.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Payload } from 'src/app/core/models/search-query';
 
 @Component({
   selector: 'app-details',
@@ -50,7 +51,7 @@ export class DetailsComponent implements OnInit {
   ininalizer(): void {;
     // ManualEntrySearchForm Form builder
     this.ManualEntrySearchForm = this.fb.group({
-      eppoid: ['', Validators.required],
+      eppoid: [''],
     });
 
 
@@ -83,14 +84,14 @@ export class DetailsComponent implements OnInit {
       interimAllowance:[''], // not in schema
       sharedPension:[''], // not in schema
 
-      gender: [null, [Validators.pattern('^[MF]$')]], // not in html
+      gender: ['M', [Validators.pattern('^[MF]$')]], // not in html
 
       dateOfBirth: [null],
-      emailId: [null, [Validators.email]], // not in html add it
+      emailId: ["e@e.com", [Validators.email]], // not in html add it
 
       identificationMark: [null], // not in html add it
 
-      enhancePensionAmount: [null, [Validators.required, Validators.pattern(/^\d+$/)]],
+      enhancePensionAmount: ["1001", [Validators.required, Validators.pattern(/^\d+$/)]],
 
 
       // additional
@@ -120,21 +121,19 @@ export class DetailsComponent implements OnInit {
   saveData(){
 
     if (this.ppoFormDetails.valid || true) {
-      console.log(this.ppoFormDetails.valid);
-      console.log(this.ppoFormDetails.value);
-      const value:PPOEntryINF = this.ppoFormDetails.value;
+      this.ppoFormDetails.removeControl('pensionerName'); // not require in server
+      this.ppoFormDetails.removeControl('ppoNo'); // not require in server
 
-    //   this.service.CreatePPODetails(this.ppoFormDetails.value).subscribe(
-    //     (data) => {
-    //       console.log(data);
-    //       this.toastService.showSuccess('Data saved successfully');
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //       this.toastService.showError('Failed to save data: '+error.message);
-    //     }
-    //   )
-    // }
+      this.service.CreatePPODetails(this.ppoFormDetails.value).subscribe(
+        (data) => {
+          console.log(data);
+          this.toastService.showSuccess('Data saved successfully');
+        },
+        (error) => {
+          console.log(error);
+          this.toastService.showError('Failed to save data: '+error.message);
+        }
+      )
     }
     this.sd.object=undefined
   }
@@ -142,7 +141,7 @@ export class DetailsComponent implements OnInit {
   // manual PPO entry search
   
   MEDetailsSearch(){
-    let payload = {
+    let payload:Payload = {
       "pageSize":10,
       "pageIndex":0,
       "filterParameters": [],
@@ -151,35 +150,20 @@ export class DetailsComponent implements OnInit {
         "order":""
       }
     };
+    if (this.ManualEntrySearchForm.valid) {
+      const id = this.ManualEntrySearchForm.value
+      const keys = Object.keys(this.ManualEntrySearchForm.value);
+      payload.filterParameters = [{
+        "field": "TreasuryReceiptNo",
+        "value": id[keys[0]],
+        "operator": "contains"
+      }];
+    }
 
     const config: SearchPopupConfig = {
       payload: payload,
       apiUrl: 'v1/manual-ppo/receipts' // mark popup api url
     };
-    
-    if (this.ManualEntrySearchForm.valid) {
-      const id = this.ManualEntrySearchForm.value
-      const keys = Object.keys(this.ManualEntrySearchForm.value);
-      let payload = {
-        "pageSize":10,
-        "pageIndex":0,
-        "filterParameters": [{
-          "field": "TreasuryReceiptNo",
-          "value": id[keys[0]],
-          "operator": "contains"
-        }],
-        "sortParameters":{
-          "field":"",
-          "order":""
-        }
-      };
-  
-      const config: SearchPopupConfig = {
-        payload: payload,
-        apiUrl: 'v1/manual-ppo/receipts' // mark popup api url
-      };
-
-    }
 
     this.ref = this.dialogService.open(SearchPopupComponent, {
       data: config,
@@ -189,7 +173,10 @@ export class DetailsComponent implements OnInit {
 
     this.ref.onClose.subscribe((record: any) => {
       if (record) {
-        console.log(record);
+        this.ppoFormDetails.controls['receiptId'].setValue(record.id);
+        this.ppoFormDetails.controls['pensionerName'].setValue(record.pensionerName);
+        this.ppoFormDetails.controls['ppoNo'].setValue(record.ppoNo);
+        this.ManualEntrySearchForm.controls["eppoid"].setValue(record.treasuryReceiptNo);
       }
     });
   }
