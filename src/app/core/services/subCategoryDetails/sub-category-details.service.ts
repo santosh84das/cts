@@ -11,21 +11,21 @@ import { log } from 'console';
 import { map, catchError } from 'rxjs/operators';
 import { manualPpoReceiptEntryDTO } from '../../models/manual-ppo-receipt';
 import { IapiResponce } from '../../models/iapi-responce';
-import { PrimaryCategoryDetails } from '../../models/primary-category-details';
+import { SubCategoryDetalis } from 'src/app/core/models/sub-category-detalis';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root'
 })
-export class PrimaryCategoryDetailsService {
-    apiUrl = 'v1/pension/primary-category';
+export class SubCategoryDetailsService {
+    apiUrl = 'v1/pension/Sub-category';
 
     constructor(private http: HttpClient, private toastService: ToastService) {}
 
-    get_all_primary_details(
+    get_all_Sub_details(
         queryParameters: DynamicTableQueryParameters
     ): Observable<IapiResponce> {
         return this.http
-            .patch<IapiResponce>('v1/pension/primary-category', queryParameters)
+            .patch<IapiResponce>('v1/pension/Sub-category', queryParameters)
             .pipe(
                 catchError((error) => {
                     throw this.toastService.showError(error.message);
@@ -33,12 +33,12 @@ export class PrimaryCategoryDetailsService {
             );
     }
 
-    //Get primary Category By Id
-    GetAllPrimaryDetailsByHoaId(
+    //Get Sub Category By Id
+    GetAllSubDetailsByHoaId(
         id: string
-    ): Observable<IapiResponce<PrimaryCategoryDetails>> {
+    ): Observable<IapiResponce<SubCategoryDetalis>> {
         return this.http
-            .get<IapiResponce>('v1/pension/primary-category/' + id)
+            .get<IapiResponce>('v1/pension/Sub-category/' + id)
             .pipe(
                 catchError((error) => {
                     throw this.toastService.showError(error.message);
@@ -46,16 +46,12 @@ export class PrimaryCategoryDetailsService {
             );
     }
 
-    //Add New Primary Category
-    add_new_primary_details(
-        dto: PrimaryCategoryDetails
+    //Add New Sub Category
+    add_new_Sub_details(
+        dto: SubCategoryDetalis
     ): Observable<IapiResponce> {
-        const payload = {
-            HoaId: '2071 - 01 - 109 - 00 - 001 - V - 04 - 00',
-            PrimaryCategoryName: 'Defence Pension',
-        };
         return this.http
-            .post<IapiResponce>('v1/pension/primary-category', dto)
+            .post<IapiResponce>('v1/pension/Sub-category', dto)
             .pipe(
                 catchError((error) => {
                     this.toastService.showError(error.message);
@@ -64,13 +60,13 @@ export class PrimaryCategoryDetailsService {
             );
     }
 
-    //Update Primary Category
-    updatePrimaryCategory(
+    //Update Sub Category
+    updateSubCategoryDetails(
         id: string,
-        dto: PrimaryCategoryDetails
+        dto: SubCategoryDetalis
     ): Observable<IapiResponce> {
         return this.http
-            .put<IapiResponce>(`v1/pension/primary-category/${id}`, dto)
+            .put<IapiResponce>(`v1/pension/Sub-category/${id}`, dto)
             .pipe(
                 catchError((error) => {
                     this.toastService.showError(error.message);

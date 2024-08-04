@@ -27,6 +27,8 @@
 <p-dialog header="Primary Category Details" [(visible)]="displayInsertModal" [modal]="true" [style]="{width: '45vw'}"
     [baseZIndex]="10000">
     <form [formGroup]="primaryForm" class="flex flex-column gap-4 mt-3">
+        <label *ngIf="selectedRow"
+              class="block mb-1 text-color text-lg">ID:{{selectedRow.id}}</label>
         <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
                 <label for="pensionerName" class="block mb-1 text-color text-lg">Head Of Account:<br>(Major-SubMajor-Minor-Plan Status-Schema-Charged Voted-Detail-SubDetail)</label>
@@ -34,10 +36,9 @@
                     class="p-inputtext p-component p-element w-full">
             </div>
 
-        </div>
 
-        <div class="flex gap-2 xl:flex-row flex-column">
             <div class="flex-auto">
+                <br>
                 <label for="mobileNumber" class="block mb-1 text-color text-lg">Description:</label>
                 <input type="text" pinputtext="" formControlName="PrimaryCategoryName" placeholder="Description"
                     class="p-inputtext p-component p-element w-full">

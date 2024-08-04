@@ -37,7 +37,7 @@ const routes: Routes = [
   {path: "pension",component:PensionComponent},
 ];
 @NgModule({
-  declarations: [PensionComponent,PrimaryComponent,PensionCategoryComponent],
+  declarations: [PensionComponent,PrimaryComponent, PensionCategoryComponent],
   imports: [
     CommonModule,
     PensionRoutingModule,
