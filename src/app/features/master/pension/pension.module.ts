@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { PensionRoutingModule } from './pension-routing.module';
 import { PensionComponent } from './pension.component';
 import { RouterModule, Routes } from '@angular/router';
+import { OptionCardModule } from 'src/app/shared/modules/option-card/option-card.module';
 
 const routes: Routes = [
   {path: "",component:PensionComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     PensionRoutingModule,
+    OptionCardModule,
     RouterModule.forChild(routes),
   ],
   exports: [PensionComponent],
