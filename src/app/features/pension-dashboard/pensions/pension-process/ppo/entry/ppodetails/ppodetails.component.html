@@ -6,7 +6,9 @@
                 <div class="flex flex-column gap-4 mt-4">
                     <p-steps [model]="steps" [(activeIndex)]="currentStepIndex"></p-steps>
                     <div class="my-4 px-4">
-                
+                            <div>
+                                <h4>PPOID-{{ppoID}}</h4>
+                            </div>
                             <!-- PPO and OtherDetails -->
                             <div *ngIf="currentStepIndex === 0" class="flex flex-column gap-3">
                                <app-details></app-details>
