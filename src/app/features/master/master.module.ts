@@ -7,6 +7,7 @@ import { OptionCardModule } from 'src/app/shared/modules/option-card/option-card
 import { PensionComponent } from './pension/pension.component';
 
 
+
 @NgModule({
   declarations: [MasterComponent, PensionComponent],
   imports: [
