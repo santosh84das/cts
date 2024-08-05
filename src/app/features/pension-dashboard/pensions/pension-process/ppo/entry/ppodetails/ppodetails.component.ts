@@ -29,7 +29,7 @@ export class PpodetailsComponent implements OnInit{
   currentStepIndex: number = 0;
   steps: any[];
   isFormValid:boolean=false;
-  
+  ppoID?:string;
   constructor(
     private sd:SharedDataService
   ){
@@ -43,6 +43,10 @@ export class PpodetailsComponent implements OnInit{
   ngOnInit(): void {
     this.sd.isFormValid$.subscribe(status => {
       this.isFormValid = status;
+    });
+
+    this.sd.ppoID$.subscribe(status => {
+      this.ppoID = status;
     });
 
   }
