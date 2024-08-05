@@ -62,7 +62,13 @@ const routes: Routes = [
    {
     path : 'modules/pension-reports/manual-ppo-register',
     loadChildren: () => import('./pensions/pension-reports/manual-ppo-register/manual-ppo-register.module').then(m => m.ManualPpoRegisterModule),
+   },
+   {
+    path : 'master/pension/component-rate',
+    loadChildren: () => import('src/app/features/master/pension/component-rate/component-rate.module').then(m => m.ComponentRateModule),
+
    }
+  
   
 ];
 
