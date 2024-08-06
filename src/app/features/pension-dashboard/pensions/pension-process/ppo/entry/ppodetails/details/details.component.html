@@ -151,14 +151,16 @@
                 <div class="formgroup-inline">
                     <label for="pensionerAddress" class="col-12 mb-2 md:col-2 md:mb-0">Address:</label>
                     <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
-                        <textarea pInputTextarea formControlName="pensionerAddress"></textarea>
+                        <input pInputText formControlName="pensionerAddress" />
                     </div>
-                    <label for="remarks" class="col-12 mb-2 md:col-2 md:mb-0">Remarks:</label>
+                   
+                    <label for="remarks" class="col-12 mb-2 md:col-2 md:mb-0">IdentificationMark:</label>
                     <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
-                        <textarea pInputTextarea formControlName="identificationMark"></textarea>
+                        <input pInputText formControlName="identificationMark" />
                     </div>
+                   
                 </div>
-                <div class="formgroup-inline">
+                <!-- <div class="formgroup-inline">
                     <label for="doublePension" class="col-12 mb-2 md:col-2 md:mb-0">Double Pension:</label>
                     <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
                         <p-checkbox formControlName="doublePension"></p-checkbox>
@@ -191,7 +193,7 @@
                     <div class="field col-12 mb-2 lg:col-4 lg:mb-0">
                         <p-checkbox formControlName="sharedPension"></p-checkbox>
                     </div>
-                </div>
+                </div> -->
             </p-fieldset>
         </form>
         

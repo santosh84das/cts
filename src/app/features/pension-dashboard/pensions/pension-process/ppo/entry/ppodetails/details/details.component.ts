@@ -5,7 +5,6 @@ import { ToastService } from 'src/app/core/services/toast.service';
 import { SharedDataService  } from '../shared-data.service';
 import { Validators } from '@angular/forms';
 import { PpoDetailsService } from 'src/app/core/services/ppoDetails/ppo-details.service';
-import { PPOEntryINF } from 'src/app/core/models/ppoentry-inf';
 import { SearchPopupComponent, SearchPopupConfig } from 'src/app/core/search-popup/search-popup.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Payload } from 'src/app/core/models/search-query';
@@ -86,23 +85,14 @@ export class DetailsComponent implements OnInit {
       enhancePensionAmount: ["1001", [Validators.required, Validators.pattern(/^\d+$/)]],
       pensionerAddress: [null], // null
 
-
-      // ret
-      effectiveDate:[''], // not in schema
-      remarks: [''], // not in schema -now-> identificationMark
-      doublePension: [''], // not in schema
-      employedPensioner: [''], // not in schema
-      reEmployed: [''], // not in schema
-      adhocPension: [''], // not in schema
-      provisionalPension: [''], // not in schema
-      interimAllowance:[''], // not in schema
-      sharedPension:[''], // not in schema
-
       // additional
-      retirementDate: [null], //subCatDesc
-      subCatDesc: [null], //subCatDesc
+      retirementDate: [null],
+      subCatDesc: [null],
       categoryIdShow: [null],
-      categoryDescription: [null], /// not in schema
+      categoryDescription: [null],
+
+      //
+      effectiveDate:[null]
 
 
     });
@@ -115,8 +105,7 @@ export class DetailsComponent implements OnInit {
         this.sd.setObject(this);
       }
       else {
-        // this.sd.setFormValid(false);
-        this.sd.setFormValid(true);
+        this.sd.setFormValid(false);
         this.sd.setObject(this);
       }
     });
@@ -137,45 +126,36 @@ export class DetailsComponent implements OnInit {
   }
 
   removeNotrequiredField(): void {
-    // this.ppoFormDetails.removeControl('pensionerName');
-    // this.ppoFormDetails.removeControl('ppoNo');
     this.ppoFormDetails.removeControl('categoryDescription'); 
     this.ppoFormDetails.removeControl('categoryIdShow');
     this.ppoFormDetails.removeControl('subCatDesc');
-
-
-    /// extra fild
-    this.ppoFormDetails.removeControl('effectiveDate');
-    this.ppoFormDetails.removeControl('retirementDate');
-    this.ppoFormDetails.removeControl('doublePension');
-    this.ppoFormDetails.removeControl('employedPensioner');
-    this.ppoFormDetails.removeControl('adhocPension');
-    this.ppoFormDetails.removeControl('provisionalPension');
-    this.ppoFormDetails.removeControl('interimAllowance');
-    this.ppoFormDetails.removeControl('sharedPension');
-    this.ppoFormDetails.removeControl('reEmployed');
-    this.ppoFormDetails.removeControl('remarks');
-
   }
 
   // call this method for save database
-  saveData(){
-    if (this.ppoFormDetails.valid || true) {
+  saveData():boolean {
+    console.log('saveDat');
+    if (this.ppoFormDetails.valid) {
       this.formateDate()
       this.removeNotrequiredField();
       console.log(this.ppoFormDetails.value)
       this.service.CreatePPODetails(this.ppoFormDetails.value).subscribe(
         (response) => {
           console.log(response);
-          this.sd.setPPOID(response.result.id)
+          this.sd.setPPOID(response.result.ppoId);
+          this.toastService.showSuccess(response.message);
+          this.sd.object=undefined;
+          if (response.apiResponseStatus===1) {
+            return true;
+          }
+          return false;
         },
         (error) => {
-          console.log(error);
-          // this.toastService.showError('Failed to save data: '+error.message);
+          this.toastService.showError('Failed to save data: '+error.message);
         }
       )
     }
-    this.sd.object=undefined
+    this.sd.object=undefined;
+    return false;
   }
 
   // manual PPO entry search
@@ -247,7 +227,7 @@ export class DetailsComponent implements OnInit {
 
     this.ref.onClose.subscribe((record: any) => {
       if (record) {
-        console.log(record)
+        // console.log(record)
         this.ppoFormDetails.controls['categoryDescription'].setValue(record.categoryName);
         this.ppoFormDetails.controls['categoryIdShow'].setValue(record.primaryCategoryId);
         this.ppoFormDetails.controls['subCatDesc'].setValue(record.subCategoryId);

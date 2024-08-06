@@ -41,6 +41,7 @@ export class PpodetailsComponent implements OnInit{
     ];
   }
   ngOnInit(): void {
+    // add for detect changes in form valid or not
     this.sd.isFormValid$.subscribe(status => {
       this.isFormValid = status;
     });
@@ -52,9 +53,12 @@ export class PpodetailsComponent implements OnInit{
   }
 
   next() {
-    this.currentStepIndex++;
     if (this.sd.object != undefined) {
-      this.sd.object.saveData(); // universal function for all sub components
+       // universal function for all sub components
+       this.sd.object.saveData();
+       if(this.ppoID != undefined || this.ppoID != null) {
+          this.currentStepIndex++;
+       }
     }
   }
 

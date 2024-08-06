@@ -21,3 +21,11 @@ export interface PPOEntryINF {
         reducedPensionAmount: number; // integer($int32)
         religion?: 'H' | 'M' | 'O'; // string with pattern: [HMO]
 }
+
+export interface CreatePensonarBank {
+        accountHolderName: string,
+        bankAcNo: number,
+        ifscCode: string,
+        bankName: string,
+        branchName: string
+      }

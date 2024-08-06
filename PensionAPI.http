@@ -179,85 +179,31 @@ Accept: application/json
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
+
 {
-    "receiptId": 5,
-    "ppoNo": "PPO-800464",
-    "ppoType": "P",
-    "ppoSubType": "E",
-    "categoryId": 31,
-    "dateOfRetirement": "2024-08-21",
-    "dateOfCommencement": "2024-08-28",
-    "basicPensionAmount": "1234",
-    "commutedPensionAmount": "1234",
-    "reducedPensionAmount": "123",
-    "mobileNumber": "7412589632",
-    "aadhaarNo": "604536890673",
-    "panNo": "PANNO4347F",
-    "gender": "M",
-    "dateOfBirth": "2024-08-22",
-    "religion": "H",
-    "emailId": "t@e.com",
-    "identificationMark": "S",
-    "enhancePensionAmount": "1001",
-    "pensionerAddress": "adc",
-    "pensionerName": "Jack Dowsel"
+  "receiptId": 1, 
+  "ppoNo": "PPO-{{$randomInt 100000 999999}}",
+  "ppoType": "P",
+  "ppoSubType": "N",
+  "categoryId": 31,
+  "pensionerName": "Jack Dowsel",
+  "dateOfBirth": "{{$datetime "YYYY-MM-DD"}}",
+  "gender": "M",
+  "mobileNumber": "{{$randomInt 6000000000 9999999999}}",
+  "emailId": "string",
+  "pensionerAddress": "Malda",
+  "identificationMark": "S",
+  "panNo": "PANNO{{$randomInt 1000 9999}}F",
+  "aadhaarNo": "{{$randomInt 600000000000 999999999999}}",
+  "dateOfRetirement": "{{$datetime "YYYY-MM-DD" -10000 d}}",
+  "dateOfCommencement": "{{$datetime "YYYY-MM-DD" -10001 d}}",
+  "basicPensionAmount": 10000,
+  "commutedPensionAmount": 2000,
+  "enhancePensionAmount": 10000,
+  "reducedPensionAmount": 8000,
+  "religion": "H"
 }
 
-
-
-# {
-#   "receiptId": 1, 
-#   "ppoNo": "PPO-{{$randomInt 100000 999999}}",
-#   "ppoType": "P",
-
-#   "ppoSubType": "N",
-#   "categoryId": 31,
-#   "pensionerName": "Jack Dowsel",
-#   "dateOfBirth": "{{$datetime "YYYY-MM-DD"}}",
-#   "gender": "M",
-#   "mobileNumber": "{{$randomInt 6000000000 9999999999}}",
-#   "emailId": "string",
-#   "pensionerAddress": "Malda",
-#   "identificationMark": "S",
-#   "panNo": "PANNO{{$randomInt 1000 9999}}F",
-#   "aadhaarNo": "{{$randomInt 600000000000 999999999999}}",
-#   "dateOfRetirement": "{{$datetime "YYYY-MM-DD" -10000 d}}",
-#   "dateOfCommencement": "{{$datetime "YYYY-MM-DD" -10001 d}}",
-#   "basicPensionAmount": 10000,
-#   "commutedPensionAmount": 2000,
-#   "enhancePensionAmount": 10000,
-#   "reducedPensionAmount": 8000,
-#   "religion": "H"
-# }
-
-# {
-#     "id": 45,
-#     "ppoId": 24,
-#     "category": null,
-#     "receipt": null,
-#     "bankAccounts": [],
-#     "receiptId": 1,
-#     "ppoNo": "PPO-213536",
-#     "ppoType": "P",
-#     "ppoSubType": "N",
-#     "categoryId": 31,
-#     "pensionerName": "Jack Dowsel",
-#     "gender": "M",
-#     "dateOfBirth": "2024-08-05",
-#     "mobileNumber": "6555515256",
-#     "emailId": "string",
-#     "pensionerAddress": "Malda",
-#     "identificationMark": "S",
-#     "panNo": "PANNO4347F",
-#     "aadhaarNo": "604536890673",
-#     "dateOfRetirement": "1997-03-20",
-#     "dateOfCommencement": "1997-03-19",
-#     "basicPensionAmount": 10000,
-#     "commutedPensionAmount": 2000,
-#     "enhancePensionAmount": 10000,
-#     "reducedPensionAmount": 8000,
-#     "religion": "H"
-#   }
 ### Update PPO Details
 # @name UpdatePPODetails
 # PUT {{PensionAPI_HostAddress}}/api/v1/ppo/{{GeneratedPpoId}}/details
