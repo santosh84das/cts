@@ -27,7 +27,7 @@ export class PpoDetailsService {
       )
       .pipe(
         catchError((error) => {
-          throw this.toastService.showError(error.message);
+          throw error;
         })
       );
   }

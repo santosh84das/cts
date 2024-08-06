@@ -163,6 +163,7 @@ export class DetailsComponent implements OnInit {
     if (this.ppoFormDetails.valid || true) {
       this.formateDate()
       this.removeNotrequiredField();
+      console.log(this.ppoFormDetails.value)
       this.service.CreatePPODetails(this.ppoFormDetails.value).subscribe(
         (response) => {
           console.log(response);
@@ -170,7 +171,7 @@ export class DetailsComponent implements OnInit {
         },
         (error) => {
           console.log(error);
-          this.toastService.showError('Failed to save data: '+error.message);
+          // this.toastService.showError('Failed to save data: '+error.message);
         }
       )
     }
