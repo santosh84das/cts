@@ -1,0 +1,444 @@
+# Reference: https://learn.microsoft.com/en-us/aspnet/core/test/http-files?view=aspnetcore-8.0
+# VSCode Extension: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+# @PensionAPI_HostAddress = https://localhost:7249 
+# @PensionAPI_HostAddress = http://localhost
+@PensionAPI_HostAddress = http://api.docker.test
+@accessToken = eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhcHBsaWNhdGlvbiI6IntcIklkXCI6MyxcIk5hbWVcIjpcIkNUU1wiLFwiTGV2ZWxzXCI6W3tcIklkXCI6OCxcIk5hbWVcIjpcIlRyZWFzdXJ5XCIsXCJTY29wZVwiOltcIkRBQVwiXX1dLFwiUm9sZXNcIjpbe1wiSWRcIjoyNyxcIk5hbWVcIjpcImNsZXJrXCIsXCJQZXJtaXNzaW9uc1wiOltcImNhbi1yZWNlaXZlLWJpbGxcIl19XX0iLCJuYW1laWQiOiIzOSIsIm5hbWUiOiJDVFMgQ2xlcmsiLCJuYmYiOjE3MTc5OTY2OTksImV4cCI6MTcxODA4MzA5OSwiaWF0IjoxNzE3OTk2Njk5fQ.tLMRXKlXb2eyiE2ApSRgFgbX9EjvPbGNi1dgp_UpGadv-UitDdS4su2ZV6B4kp4Rf0TXjDQHTW7YvNkwciQVQg
+# {{Login.response.body.$.accessToken}}
+
+@refreshToken = {{Login.response.body.$.refreshToken}}
+
+
+@treasuryReceiptNo = {{CreatePPOReceipt.response.body.$.result.treasuryReceiptNo}}
+
+@GeneratedPpoId = {{CreatePPODetails.response.body.$.result.ppoId}}
+
+@ApprovedPpoId = {{SetApprovePPOFlag.response.body.$.result.ppoId}}
+@ApprovedPpoIdStatusFlag = {{SetApprovePPOFlag.response.body.$.result.statusFlag}}
+
+### Create Pension Component
+# @name CreatePensionBreakup
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+POST {{PensionAPI_HostAddress}}/api/v1/pension/component-rate
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "CategoryId": 30,
+  "BreakupId": 3,
+  "EffectiveFromDate": "2024-04-01",
+  "RateAmount": 1000,
+  "RateType": "A"
+}
+
+### Create Pension Component
+# @name CreatePensionBreakup
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+POST {{PensionAPI_HostAddress}}/api/v1/pension/bill-component
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "ComponentName": "Interim Relief 2016",
+  "ComponentType": "P",
+  "ReliefFlag": false
+}
+
+### Create Pension Category
+# @name CreatePensionCategory
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+POST {{PensionAPI_HostAddress}}/api/v1/pension/category
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "PrimaryCategoryId": 4,
+  "SubCategoryId": 3
+}
+
+### List All PensionCategory //mark
+# @name ListPensionCategory
+PATCH {{PensionAPI_HostAddress}}/api/v1/pension/category
+# PATCH {{PensionAPI_HostAddress}}/api/v1/pension/primary-category
+# PATCH {{PensionAPI_HostAddress}}/api/v1/pension/sub-category
+# PATCH {{PensionAPI_HostAddress}}/api/v1/pension/bill-component
+# PATCH {{PensionAPI_HostAddress}}/api/v1/pension/component-rate
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{"pageSize":10,"pageIndex":0,"filterParameters":[],"sortParameters":{"field":"","order":""}}
+
+### Create Pension SubCategory
+# @name CreatePensionSubCategory
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+POST {{PensionAPI_HostAddress}}/api/v1/pension/sub-category
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "SubCategoryName": "ROPA 2026"
+}
+
+### Create Pension PrimaryCategory
+# @name CreatePensionPrimaryCategory
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+POST {{PensionAPI_HostAddress}}/api/v1/pension/primary-category
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "HoaId": "2071 - 01 - 109 - 00 - 001 - V - 04 - 00",
+  "PrimaryCategoryName": "Defence Pension"
+}
+
+### Generate Components for First Pension Bill
+# @name GenerateFirstPensionBill
+POST {{PensionAPI_HostAddress}}/api/v1/echo
+# PATCH {{PensionAPI_HostAddress}}/api/v1/ppo/pension-bill
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "PpoId": {{GeneratedPpoId}},
+  "billType": "F",
+  "toDate": "{{$datetime "YYYY-MM-DD"}}"
+}
+
+### Read Pensioner Details for First Bill Generation
+# @name ReadPensionerDetailsForFirstBill
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+GET {{PensionAPI_HostAddress}}/api/v1/ppo/{{GeneratedPpoId}}/first-bill-general
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+
+
+### Create Pensioner Bank Account
+# @name CreatePensionerBankAccount
+POST {{PensionAPI_HostAddress}}/api/v1/ppo/1/bank-accounts
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+    "payMode": "treasury",
+    "bankBranchName": "HOD",
+    "accountNo": "741258",
+    "accountHolderName": "ABC",
+    "IFSCCode": "F1110"
+}
+
+# {
+#   "accountHolderName": "Jack Dowsel",
+#   "bankAcNo": "{{$randomInt 1000000000000000 9999999999999999}}",
+#   "ifscCode": "IFSC{{$randomInt 1000000 9999999}}",
+#   "bankName": "State Bank of India",
+#   "branchName": "Malda"
+# }
+
+### Update Pensioner Bank Account
+# @name UpdatePensionerBankAccount
+PUT {{PensionAPI_HostAddress}}/api/v1/ppo/{{GeneratedPpoId}}/bank-accounts
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "accountHolderName": "Jack Smith",
+  "bankAcNo": "{{$randomInt 1000000000000000 9999999999999999}}",
+  "ifscCode": "IFSC{{$randomInt 1000000 9999999}}",
+  "bankName": "Bank of India",
+  "branchName": "Gour Road"
+}
+
+### Read Pensioner Bank Account
+# @name ReadPensionerBankAccount
+GET {{PensionAPI_HostAddress}}/api/v1/ppo/{{GeneratedPpoId}}/bank-accounts
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+
+### List All PPO Details
+# @name GetAllPPODetails
+PATCH {{PensionAPI_HostAddress}}/api/v1/ppo/bank-accounts
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{"pageSize":10,"pageIndex":0,"filterParameters":[],"sortParameters":{"field":"","order":""}}
+
+
+
+### Create PPO Details
+# @name CreatePPODetails
+# POST {{PensionAPI_HostAddress}}/api/v1/ppo/details
+POST {{PensionAPI_HostAddress}}/api/v1/echo
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+
+{
+  "receiptId": 1, 
+  "ppoNo": "PPO-{{$randomInt 100000 999999}}",
+  "ppoType": "P",
+  "ppoSubType": "N",
+  "categoryId": 31,
+  "pensionerName": "Jack Dowsel",
+  "dateOfBirth": "{{$datetime "YYYY-MM-DD"}}",
+  "gender": "M",
+  "mobileNumber": "{{$randomInt 6000000000 9999999999}}",
+  "emailId": "string",
+  "pensionerAddress": "Malda",
+  "identificationMark": "S",
+  "panNo": "PANNO{{$randomInt 1000 9999}}F",
+  "aadhaarNo": "{{$randomInt 600000000000 999999999999}}",
+  "dateOfRetirement": "{{$datetime "YYYY-MM-DD" -10000 d}}",
+  "dateOfCommencement": "{{$datetime "YYYY-MM-DD" -10001 d}}",
+  "basicPensionAmount": 10000,
+  "commutedPensionAmount": 2000,
+  "enhancePensionAmount": 10000,
+  "reducedPensionAmount": 8000,
+  "religion": "H"
+}
+
+### Update PPO Details
+# @name UpdatePPODetails
+# PUT {{PensionAPI_HostAddress}}/api/v1/ppo/{{GeneratedPpoId}}/details
+POST {{PensionAPI_HostAddress}}/api/v1/echo
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "ppoNo": "PPO-{{$randomInt 100000 999999}}",
+  "ppoType": "P",
+  "psaType": "A",
+  "ppoSubType": "N",
+  "ppoCategory": "C",
+  "ppoSubCategory": "D",
+  "pensionerName": "Jack Smith",
+  "dateOfBirth": "{{$datetime "YYYY-MM-DD"}}",
+  "gender": "M",
+  "mobileNumber": "{{$randomInt 6000000000 9999999999}}",
+  "emailId": "string",
+  "pensionerAddress": "Kolkata",
+  "identificationMark": "S",
+  "panNo": "PANNO{{$randomInt 1000 9999}}F",
+  "aadhaarNo": "{{$randomInt 600000000000 999999999999}}",
+  "dateOfRetirement": "{{$datetime "YYYY-MM-DD"}}",
+  "dateOfCommencement": "{{$datetime "YYYY-MM-DD"}}",
+  "basicPensionAmount": 10000,
+  "commutedPensionAmount": 2000,
+  "enhancePensionAmount": 10000,
+  "reducedPensionAmount": 8000,
+  "religion": "H"
+}
+
+### Check PPO Details
+# @name CheckPpoDetails
+Get {{PensionAPI_HostAddress}}/api/v1/ppo/{{GeneratedPpoId}}/details
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+
+### List All PPO Details
+# @name GetAllPPODetails
+PATCH {{PensionAPI_HostAddress}}/api/v1/ppo/details
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{"pageSize":10,"pageIndex":0,"filterParameters":[],"sortParameters":{"field":"","order":""}}
+
+
+### Approve PPO
+# @name SetApprovePPOFlag
+POST {{PensionAPI_HostAddress}}/api/v1/ppo/status
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "PpoId": "{{GeneratedPpoId}}",
+  "StatusFlag": 12,
+  "StatusWef": "{{$datetime "YYYY-MM-DD" -5 d}}"
+}
+
+### Set PPO Flag
+# @name SetPPOFlag
+POST {{PensionAPI_HostAddress}}/api/v1/ppo/status
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "PpoId": "{{ApprovedPpoId}}",
+  "StatusFlag": 4,
+  "StatusWef": "{{$datetime "YYYY-MM-DD" -2 d}}"
+}
+
+### Reject Approved PPO
+# @name ClearApprovePPOFlag
+DELETE {{PensionAPI_HostAddress}}/api/v1/ppo/{{ApprovedPpoId}}/status/{{ApprovedPpoIdStatusFlag}}
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+
+
+### Check PPO Status Flag
+# @name CheckPPOFlag
+Get {{PensionAPI_HostAddress}}/api/v1/ppo/{{ApprovedPpoId}}/status/{{ApprovedPpoIdStatusFlag}}
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+
+
+
+### Read PPO Receipt Request
+# @name GetPPOReceipt
+GET {{PensionAPI_HostAddress}}/api/v1/manual-ppo/receipts/{{treasuryReceiptNo}}
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+
+### List All PPO Receipts Request
+# @name GetAllManualPPOReceipts
+PATCH {{PensionAPI_HostAddress}}/api/v1/manual-ppo/receipts
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{"pageSize":10,"pageIndex":0,"filterParameters":[],"sortParameters":{"field":"","order":""}}
+
+### Create PPO Receipt Request
+# @name CreatePPOReceipt
+POST {{PensionAPI_HostAddress}}/api/v1/manual-ppo/receipts
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "ppoNo": "PPO-{{$randomInt 100000 999999}}",
+  "pensionerName": "Jack Dowsel",
+  "dateOfCommencement": "2024-07-15",
+  "mobileNumber": "{{$randomInt 6000000000 9999999999}}",
+  "receiptDate": "{{$datetime "YYYY-MM-DD"}}",
+  "psaCode": "A",
+  "ppoType": "N"
+}
+
+### Update PPO Receipt Request
+# @name UpdatePPOReceipt
+# POST {{PensionAPI_HostAddress}}/api/v1/echo
+PUT {{PensionAPI_HostAddress}}/api/v1/manual-ppo/receipts/{{treasuryReceiptNo}}
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "ppoNo": "PPO-291111",
+  "pensionerName": "Jack Smith",
+  "dateOfCommencement": "2024-07-19",
+  "mobileNumber": "8923481395",
+  "receiptDate": "2024-07-27",
+  "psaCode": "A",
+  "ppoType": "N"
+}
+
+###
+{
+  "ppoNo": "PPO-{{$randomInt 100000 999999}}",
+  "pensionerName": "Jack Smith",
+  "dateOfCommencement": "2024-07-19",
+  "mobileNumber": "{{$randomInt 6000000000 9999999999}}",
+  "receiptDate": "{{$datetime "YYYY-MM-DD"}}",
+  "psaCode": "A",
+  "ppoType": "N"
+}
+
+
+
+
+
+
+
+
+### Echo Request
+# @name CreateManualPPOReceipt
+POST {{PensionAPI_HostAddress}}/api/v1/echo
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "treasuryReceiptNo": "{{@treasuryReceiptNo}}",
+  "ppoNo": "PPO-{{$randomInt 100000 999999}}",
+  "pensionerName": "Jack Dowsel",
+  "dateOfCommencement": "2024-07-15",
+  "mobileNumber": "{{$randomInt 6000000000 9999999999}}",
+  "receiptDate": "{{$datetime "YYYY-MM-DD"}}",
+  "psaCode": "P",
+  "ppoType": "N"
+}
+
+### Get DateOnly Request
+# @name GetDateOnly
+GET {{PensionAPI_HostAddress}}/api/v1/date-only
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+
+
+### Set DateOnly Request
+# @name SetDateOnly
+POST {{PensionAPI_HostAddress}}/api/v1/date-only
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "dateOnly": "{{$datetime "YYYY-MM-DD" -5 d}}"
+}
+
+
+### WeatherForecast Request
+# @name GetWeatherForecast
+GET {{PensionAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+
+### Register User
+# @name Register
+POST {{PensionAPI_HostAddress}}/auth/register/
+Content-Type: application/json
+
+{
+  "email": "sns@example.com",
+  "password": "P@ssw0rd"
+}
+
+### Login Request
+# @name Login
+POST {{PensionAPI_HostAddress}}/auth/login/
+Content-Type: application/json
+
+{
+  "email": "sns@example.com",
+  "password": "P@ssw0rd"
+}
+
+### RefreshToken Request
+# @name RefreshToken
+POST {{PensionAPI_HostAddress}}/auth/refresh/
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refreshToken}}"
+}

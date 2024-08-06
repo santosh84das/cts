@@ -33,13 +33,14 @@
                                 id="PpoId"
                                 type="text"
                                 pInputText
-                                formControlName="PpoId"
+                                formControlName="ppoId"
                                 placeholder="PPO ID"
                             />
                             <button
                                 pButton
                                 type="button"
                                 icon="pi pi-search"
+                                (click)=" openSearchPopup()"
                             ></button>
                         </div>
                     </div>
@@ -572,7 +573,7 @@
             </div>
             <div class="flex flex-col mt-1 align-items-center justify-content-center">
                 <div class="flex flex-wrap gap-2">
-                    <button type="submit" pButton pRipple >Submit</button>
+                    <button type="submit" pButton pRipple (click)="save()">Submit</button>
                 </div>
             </div>
         </div>

@@ -1,0 +1,19 @@
+<div>
+  <h2>Search Records</h2>
+  <div>
+    <input type="text" pInputText [(ngModel)]="searchTerm" (ngModelChange)="filterRecords()"
+      placeholder="Search by name" />
+  </div>
+  <p-table [value]="filteredRecords" [scrollable]="true" scrollHeight="300px">
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let col of cols">{{ col.header }}</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-record>
+      <tr (click)="selectRecord(record)">
+        <td *ngFor="let col of cols">{{ record[col.field] }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

@@ -1,7 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PensionReportsComponent } from './pension-reports.component';
+import { ManualPpoRegisterComponent } from './manual-ppo-register/manual-ppo-register.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+
+
+  {path: '', component: PensionReportsComponent},
+  {path: 'manual-ppo-register', component: ManualPpoRegisterComponent},
+
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
