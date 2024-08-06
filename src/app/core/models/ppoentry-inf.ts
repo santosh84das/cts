@@ -22,7 +22,8 @@ export interface PPOEntryINF {
         religion?: 'H' | 'M' | 'O'; // string with pattern: [HMO]
 }
 
-export interface CreatePensonarBank {
+// bank details interface
+export interface CreatePensonarBankDTO {
         accountHolderName: string,
         bankAcNo: number,
         ifscCode: string,

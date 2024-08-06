@@ -122,19 +122,27 @@ Authorization: Bearer {{accessToken}}
 
 ### Create Pensioner Bank Account
 # @name CreatePensionerBankAccount
-POST {{PensionAPI_HostAddress}}/api/v1/ppo/{{GeneratedPpoId}}/bank-accounts
+POST {{PensionAPI_HostAddress}}/api/v1/ppo/1/bank-accounts
 # POST {{PensionAPI_HostAddress}}/api/v1/echo
 Accept: application/json
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "accountHolderName": "Jack Dowsel",
-  "bankAcNo": "{{$randomInt 1000000000000000 9999999999999999}}",
-  "ifscCode": "IFSC{{$randomInt 1000000 9999999}}",
-  "bankName": "State Bank of India",
-  "branchName": "Malda"
+    "payMode": "treasury",
+    "bankBranchName": "HOD",
+    "accountNo": "741258",
+    "accountHolderName": "ABC",
+    "IFSCCode": "F1110"
 }
+
+# {
+#   "accountHolderName": "Jack Dowsel",
+#   "bankAcNo": "{{$randomInt 1000000000000000 9999999999999999}}",
+#   "ifscCode": "IFSC{{$randomInt 1000000 9999999}}",
+#   "bankName": "State Bank of India",
+#   "branchName": "Malda"
+# }
 
 ### Update Pensioner Bank Account
 # @name UpdatePensionerBankAccount

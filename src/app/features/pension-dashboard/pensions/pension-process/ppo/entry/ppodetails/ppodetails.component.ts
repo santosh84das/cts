@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SelectItem } from 'primeng/api';
+import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
 import { Router } from '@angular/router';
 
 
@@ -13,7 +13,10 @@ import { StampIndentService } from 'src/app/core/services/stamp/stamp-indent.ser
 import { ToastService } from 'src/app/core/services/toast.service';
 import { convertDate } from 'src/utils/dateConversion';
 import { SharedDataService } from './shared-data.service';
-
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Payload } from 'src/app/core/models/search-query';
+import { SearchPopupComponent, SearchPopupConfig } from 'src/app/core/search-popup/search-popup.component';
+  
 
 
 interface expandedRows {
@@ -23,15 +26,20 @@ interface expandedRows {
 @Component({
   selector: 'app-ppodetails',
   templateUrl: './ppodetails.component.html',
-  styleUrls: ['./ppodetails.component.scss']
+  styleUrls: ['./ppodetails.component.scss'],
+  providers: [MessageService, ConfirmationService, DialogService],
 })
 export class PpodetailsComponent implements OnInit{
   currentStepIndex: number = 0;
   steps: any[];
   isFormValid:boolean=false;
   ppoID?:string;
+  ref: DynamicDialogRef | undefined;
+
   constructor(
-    private sd:SharedDataService
+    private toastService: ToastService,
+    private sd: SharedDataService,
+    private dialogService: DialogService,
   ){
     this.steps = [
             { label: 'PPO Details' },
@@ -52,13 +60,22 @@ export class PpodetailsComponent implements OnInit{
 
   }
 
+  next_move(){
+    // if alrady ppo id exists make forward else save data and do it
+    if(this.ppoID != undefined || this.ppoID != null) {
+      this.currentStepIndex++;
+    }
+  }
+
   next() {
+    
     if (this.sd.object != undefined) {
        // universal function for all sub components
-       this.sd.object.saveData();
-       if(this.ppoID != undefined || this.ppoID != null) {
-          this.currentStepIndex++;
+       if(this.sd.object.saveData() == true){
+          this.next_move();
        }
+    }else{
+      this.next_move();
     }
   }
 
@@ -67,7 +84,37 @@ export class PpodetailsComponent implements OnInit{
       this.currentStepIndex--;
     }
   }
-  
+  // fetch ppoid if exists
+  fetchPPOID(): void {
+      console.log("Fetching ppoid")
+      let payload:Payload = {
+        "pageSize":10,
+        "pageIndex":0,
+        "filterParameters": [],
+        "sortParameters":{
+          "field":"",
+          "order":""
+        }
+      };
+      
+      const config: SearchPopupConfig = {
+        payload: payload,
+        apiUrl: 'v1/ppo/details' // mark popup api url
+      };
+
+      this.ref = this.dialogService.open(SearchPopupComponent, {
+        data: config,
+        header: 'Search record',
+        width: '60%'
+      });
+
+      this.ref.onClose.subscribe((record: any) => {
+        if (record) {
+          this.sd.setPPOID(record.ppoId);
+          this.next();
+        }
+      });
+  }
 }
 
 // export class PpodetailsComponent implements OnInit {

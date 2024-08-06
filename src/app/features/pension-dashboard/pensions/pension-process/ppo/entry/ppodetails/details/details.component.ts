@@ -111,6 +111,7 @@ export class DetailsComponent implements OnInit {
     });
   }
 
+  // this function do date object to string
   getFormattedDate(date: Date | null): string {
     if (date) {
       return formatDate(date, 'yyyy-MM-dd', 'en-US');
@@ -118,6 +119,7 @@ export class DetailsComponent implements OnInit {
     return '';
   }
 
+  // make this all data objet to string formate yy-mm-dd
   formateDate():void {
     this.ppoFormDetails.controls['dateOfRetirement'].setValue(this.getFormattedDate(this.ppoFormDetails.get('dateOfRetirement')?.value));
     this.ppoFormDetails.controls['dateOfCommencement'].setValue(this.getFormattedDate(this.ppoFormDetails.get('dateOfCommencement')?.value));
@@ -125,6 +127,7 @@ export class DetailsComponent implements OnInit {
     this.ppoFormDetails.controls['dateOfBirth'].setValue(this.getFormattedDate(this.ppoFormDetails.get('dateOfBirth')?.value));
   }
 
+  // remove that fild not required for server
   removeNotrequiredField(): void {
     this.ppoFormDetails.removeControl('categoryDescription'); 
     this.ppoFormDetails.removeControl('categoryIdShow');
