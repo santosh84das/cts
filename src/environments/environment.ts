@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   // BaseURL:'http://localhost/api/'
   BaseURL:'http://api.docker.test/api/'
+  // BaseURL: 'http://localhost/api/'
 };
 
 /*

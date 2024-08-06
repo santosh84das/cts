@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { Product } from 'src/app/demo/api/product';
-import { ProductService } from 'src/app/demo/service/product.service';
 import { Table } from 'primeng/table';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SearchPopupComponent } from 'src/app/core/search-popup/search-popup.component';
 import { SearchPopupConfig } from 'src/app/core/search-popup/search-popup.component';
+import { PensionBill } from 'src/app/core/services/pension-bill/pension-bill.service'
+import { PensionBillResponse, PensionerPayment } from 'src/app/core/models/pension-bill';
 
 @Component({
   selector: 'app-pension-bill',
@@ -29,15 +29,21 @@ export class PensionBillComponent implements OnInit {
   rowGroupMetadata: any;
   expandedRows: { [key: string]: boolean } = {};
   isExpanded: boolean = false;
-
+  ppoId: string = '';
+  payments: PensionerPayment[] = [];
+  period: string = '';
   @ViewChild('filter') filter!: ElementRef;
   pensionForm: FormGroup = this.fb.group({});
   isCurrentStepValid = false;
+  totalDueAmount: number = 0;
   apiUrl: string = 'v1/ppo/details'; // Your API URL
+  private boundGetValue: (() => void) | undefined;
+
 
   constructor(
     private fb: FormBuilder,
     private dialogService: DialogService,
+    private service: PensionBill
   ) { }
 
   ngOnInit() {
@@ -45,6 +51,7 @@ export class PensionBillComponent implements OnInit {
       { label: 'Babk', value: 'B' },
       { label: 'Neft', value: 'N' }
     ];
+    const today = new Date().toISOString().split('T')[0];
 
     this.pensionForm = this.fb.group({
       ppoId: ['', Validators.required],
@@ -54,16 +61,19 @@ export class PensionBillComponent implements OnInit {
       periodTo: ['', Validators.required],
       bankName: ['', Validators.required],
       accountNo: ['', Validators.required],
-      billDate: ['', Validators.required],
-      paymentMode: [null, Validators.required]
+      billDate: [today, Validators.required],
+      // paymentMode: [null, Validators.required]
     });
+    // this.clickListener = this.handleClick.bind(this);
+
 
     this.pensionForm.valueChanges.subscribe(() => {
       this.updateStepValidity();
     });
-
     this.updateStepValidity();
   }
+
+  
 
   expandAll() {
     if (!this.isExpanded) {
@@ -80,10 +90,6 @@ export class PensionBillComponent implements OnInit {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
 
-  clear(table: Table) {
-    table.clear();
-    this.filter.nativeElement.value = '';
-  }
 
   updateStepValidity() {
     this.isCurrentStepValid = this.getCurrentStepControls().valid;
@@ -102,17 +108,18 @@ export class PensionBillComponent implements OnInit {
     }
   }
 
-// search popup control
+  // search popup control
 
   openSearchPopup() {
     const payload = {
       listType: 'type1',
-      pageSize: 15,
+      pageSize: 200,
       pageIndex: 0,
-    filterParameters: [],
-     sortParameters: {
-    field: 'ppoNo',
-    order: 'asc'}
+      filterParameters: [],
+      sortParameters: {
+        field: 'ppoNo',
+        order: 'asc'
+      }
     };
 
     const config: SearchPopupConfig = {
@@ -129,15 +136,46 @@ export class PensionBillComponent implements OnInit {
     this.ref.onClose.subscribe((record: any) => {
       if (record) {
         this.pensionForm.patchValue({
-          ppoNo: record.ppoNo,
-          ppoId: record.ppoId,
-          pensionerName: record.pensionerName,
-          periodFrom: record.periodFrom,
-          periodTo: record.periodTo,
-          accountNo: record.accountNo,
-          bankName: record.bankName
+          ppoId: record.ppoId
         });
+        this.ppoId = record.ppoId; // Update ppoId // Re-evaluate event listener
       }
     });
   }
+
+  getvalue() {
+    const payload2 = {
+      ppoId: this.ppoId,
+      toDate: this.period
+    }
+    if (this.ppoId && this.period) {
+      this.service.getrecord(payload2).subscribe({
+        next: (response: PensionBillResponse) => {
+          if (response && response.result) {
+            const result = response.result;
+            this.pensionForm.patchValue({
+              ppoNo: result.pensioner.ppoNo,
+              pensionerName: result.pensioner.pensionerName,
+              periodFrom: result.pensioner.dateOfRetirement,
+              bankName: result.bankAccount.bankName,
+              accountNo: result.bankAccount.bankAcNo
+            });
+            this.payments = result.pensionerPayments;
+            console.log(this.payments)
+            this.calculateTotalDueAmount();
+
+          }
+        },
+        error: (err) => {
+          console.error('Error fetching record:', err);
+        }
+      });
+    }
+  }
+  calculateTotalDueAmount() {
+    this.totalDueAmount = this.payments.reduce((acc, payment) => acc + payment.dueAmount, 0);
+  }
+
 }
+
+
