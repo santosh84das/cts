@@ -31,10 +31,10 @@ export class ManualPpoReceiptComponent implements OnInit {
   tableData: any;
   modalData: manualPpoReceiptEntryDTO[] = [];
   count: number = 0;
-  isTableDataLoading: boolean = false; 
+  isTableDataLoading: boolean = false;
   treasuryReceiptId!: string;
   manaualPpoPayload!: manualPpoReceiptEntryDTO;
-  selectedRowData: manualPpoReceiptEntryDTO | null = null;  
+  selectedRowData: manualPpoReceiptEntryDTO | null = null;
   selectedRow: any;
   ppoIssuedBy: SelectItem[] = [];
   type: SelectItem[] = [];
@@ -80,7 +80,7 @@ export class ManualPpoReceiptComponent implements OnInit {
     this.getData();
   }
 
-  
+
 
   showInsertDialog() {
     this.displayInsertModal = true;
@@ -93,7 +93,7 @@ export class ManualPpoReceiptComponent implements OnInit {
     if ($event.buttonIdentifier === 'edit') {
         this.EditInit($event.rowData);
     }
-    
+
 }
 
   handleRowSelection($event: any) {
@@ -109,7 +109,7 @@ export class ManualPpoReceiptComponent implements OnInit {
       sortParameters: event.sortParameters
     }
     console.log(this.tableQueryParameters.pageSize);
-    
+
     this.getAllManualPpoReceipt(this.tableQueryParameters);
   }
 
@@ -120,7 +120,7 @@ export class ManualPpoReceiptComponent implements OnInit {
     ];
     this.getAllManualPpoReceipt(this.tableQueryParameters, event);
   }
-  
+
 
   initializeForm(): void {
     this.manualPpoForm = this.fb.group({
@@ -149,14 +149,14 @@ export class ManualPpoReceiptComponent implements OnInit {
   addManualPpoReceipt() {
     if (this.manualPpoForm.valid) {
       const formData = this.manualPpoForm.value;
-  
+
       if (formData.receiptDate && formData.dateOfCommencement) {
         formData.dateOfCommencement = this.datePipe.transform(formData.dateOfCommencement, 'yyyy-MM-dd');
         formData.receiptDate = this.datePipe.transform(formData.receiptDate, 'yyyy-MM-dd');
       }
-  
+
       console.log('Form Data:', formData);
-  
+
       this.manualPpoReceiptService.addNewManualPpoReceipt(formData).subscribe(
         response => {
           if (response.apiResponseStatus === 1) {  // Assuming 1 means success
@@ -178,7 +178,7 @@ export class ManualPpoReceiptComponent implements OnInit {
       this.toastService.showError('Please fill all required fields correctly.');
     }
   }
-  
+
   private handleErrorResponse(response: any) {
     if (response.message && response.message.includes('duplicate key value violates unique constraint')) {
       this.toastService.showError('This PPO number already exists. Please use a different PPO number.');
@@ -254,7 +254,7 @@ export class ManualPpoReceiptComponent implements OnInit {
       );
     }
   }
-  
+
   getData() {
     this.isTableDataLoading = true;
     this.manualPpoReceiptService.getAllManualPpoReceipt(this.tableQueryParameters).subscribe(
@@ -286,7 +286,7 @@ export class ManualPpoReceiptComponent implements OnInit {
                 ppoNo: response.result.ppoNo,
                 pensionerName: response.result.pensionerName,
                 dateOfCommencement: dateOfCommencement,
-                mobileNumber: response.result.mobileNumber,  
+                mobileNumber: response.result.mobileNumber,
                 receiptDate: receiptDate,
                 psaCode: response.result.psaCode,
                 ppoType: response.result.ppoType
@@ -322,7 +322,7 @@ export class ManualPpoReceiptComponent implements OnInit {
           this.resetForm();  // Reset form fields
           this.displayInsertModal = false;  // Close the dialog
         },
-        error => {  
+        error => {
           console.log("Treasury Receipt ID: "+this.selectedRow.treasuryReceiptNo);
           if (error instanceof HttpErrorResponse && error.status === 400) {
             console.error('Error updating data:', error);
@@ -342,7 +342,7 @@ export class ManualPpoReceiptComponent implements OnInit {
   onRowEditInit(data: manualPpoReceiptEntryDTO) {
     this.selectedRowData = { ...data };
     this.manualPpoForm.patchValue(this.selectedRowData);
-    this.displayInsertModal = true;  
+    this.displayInsertModal = true;
   }
 
   onRowEditCancel() {

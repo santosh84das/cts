@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { SubCategoryRoutingModule } from './sub-category-routing.module';
+import { SubCategoryComponent } from './sub-category.component';
 import { OptionCardModule } from 'src/app/shared/modules/option-card/option-card.module';
-import { PensionRoutingModule } from './pension-routing.module';
-import { PensionComponent } from './pension.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { ChipsModule } from 'primeng/chips';
@@ -15,7 +16,6 @@ import { RatingModule } from 'primeng/rating';
 import { DialogModule } from 'primeng/dialog';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { PrimaryComponent } from './primary/primary.component';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { MhPrimeDynamicTableModule } from 'mh-prime-dynamic-table';
 
@@ -29,21 +29,14 @@ import { RippleModule } from 'primeng/ripple';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SliderModule } from 'primeng/slider';
-import { PensionCategoryComponent } from './pension-category/pension-category.component';
-import { SubCategoryComponent } from './sub-category/sub-category.component';
 
 
-const routes: Routes = [
-  {path: "",component:PensionComponent},
-  {path: "pension",component:PensionComponent},
-];
 @NgModule({
-  declarations: [PensionComponent,PrimaryComponent, PensionCategoryComponent,SubCategoryComponent],
+  declarations: [SubCategoryComponent],
   imports: [
     CommonModule,
-    PensionRoutingModule,
+    SubCategoryRoutingModule,
     OptionCardModule,
-    RouterModule.forChild(routes),
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -73,8 +66,7 @@ const routes: Routes = [
     ProgressBarModule,
     SliderModule,
     MhPrimeDynamicTableModule
-  ],
-  exports: [PensionComponent],
-  bootstrap: [PensionComponent]
+
+  ]
 })
-export class PensionModule { }
+export class SubCategoryModule { }

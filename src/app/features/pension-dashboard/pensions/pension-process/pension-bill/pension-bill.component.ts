@@ -15,8 +15,8 @@ import { flush } from '@angular/core/testing';
   templateUrl: 'pension-bill.component.html',
   providers: [MessageService, ConfirmationService, DialogService],
   styles: [`
-    :host ::ng-deep .p-menubar-root-list { 
-      flex-wrap: wrap; 
+    :host ::ng-deep .p-menubar-root-list {
+      flex-wrap: wrap;
     }
   `]
 })
@@ -166,7 +166,7 @@ export class PensionBillComponent implements OnInit {
             this.pensioncategory = result.pensionCategory;
             console.log(this.pensioncategory)
             this.calculateTotalDueAmount();
-            this.isDataLoaded = true; 
+            this.isDataLoaded = true;
 
           }
         },
@@ -181,4 +181,3 @@ export class PensionBillComponent implements OnInit {
   }
 
 }
-
