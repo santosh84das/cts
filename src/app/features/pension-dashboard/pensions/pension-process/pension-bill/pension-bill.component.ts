@@ -7,7 +7,8 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SearchPopupComponent } from 'src/app/core/search-popup/search-popup.component';
 import { SearchPopupConfig } from 'src/app/core/search-popup/search-popup.component';
 import { PensionBill } from 'src/app/core/services/pension-bill/pension-bill.service'
-import { PensionBillResponse, PensionerPayment } from 'src/app/core/models/pension-bill';
+import { PensionBillResponse, PensionCategory, PensionerPayment } from 'src/app/core/models/pension-bill';
+import { flush } from '@angular/core/testing';
 
 @Component({
   selector: 'app-pension-bill',
@@ -31,13 +32,14 @@ export class PensionBillComponent implements OnInit {
   isExpanded: boolean = false;
   ppoId: string = '';
   payments: PensionerPayment[] = [];
+  pensioncategory: PensionCategory | string = '';
   period: string = '';
   @ViewChild('filter') filter!: ElementRef;
   pensionForm: FormGroup = this.fb.group({});
   isCurrentStepValid = false;
   totalDueAmount: number = 0;
   apiUrl: string = 'v1/ppo/details'; // Your API URL
-  private boundGetValue: (() => void) | undefined;
+  isDataLoaded: boolean = false;
 
 
   constructor(
@@ -73,7 +75,7 @@ export class PensionBillComponent implements OnInit {
     this.updateStepValidity();
   }
 
-  
+
 
   expandAll() {
     if (!this.isExpanded) {
@@ -161,8 +163,10 @@ export class PensionBillComponent implements OnInit {
               accountNo: result.bankAccount.bankAcNo
             });
             this.payments = result.pensionerPayments;
-            console.log(this.payments)
+            this.pensioncategory = result.pensionCategory;
+            console.log(this.pensioncategory)
             this.calculateTotalDueAmount();
+            this.isDataLoaded = true; 
 
           }
         },
@@ -177,5 +181,4 @@ export class PensionBillComponent implements OnInit {
   }
 
 }
-
 

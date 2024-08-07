@@ -38,8 +38,6 @@ export interface PensionCategory {
   id: number;
   categoryName: string;
   primaryCategory: PrimaryCategory;
-  subCategory: SubCategory;
-  componentRates: ComponentRate[];
   primaryCategoryId: number;
   subCategoryId: number;
   dataSource: any; // You can replace `any` with the appropriate type if known
@@ -49,31 +47,6 @@ export interface PrimaryCategory {
   id: number;
   hoaId: string;
   primaryCategoryName: string;
-  dataSource: any; // You can replace `any` with the appropriate type if known
-}
-
-export interface SubCategory {
-  id: number;
-  subCategoryName: string;
-  dataSource: any; // You can replace `any` with the appropriate type if known
-}
-
-export interface ComponentRate {
-  id: number;
-  categoryId: number;
-  breakupId: number;
-  breakup: Breakup;
-  effectiveFromDate: string;
-  rateAmount: number;
-  rateType: string;
-  dataSource: any; // You can replace `any` with the appropriate type if known
-}
-
-export interface Breakup {
-  id: number;
-  componentName: string;
-  componentType: string;
-  reliefFlag: boolean;
   dataSource: any; // You can replace `any` with the appropriate type if known
 }
 
