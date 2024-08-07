@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { Header} from 'src/app/core/models/pension-bill';
 import { SearchPopupService } from './search-popup.service';
-
+import { ToastService } from '../services/toast.service';
 export interface SearchPopupConfig {
   payload: any;
   apiUrl: string; // API URL parameter
@@ -18,11 +17,13 @@ export class SearchPopupComponent implements OnInit {
   cols: any[] = [];
   filteredRecords: any[] = [];
   searchTerm: string = '';
+  noresult:string = '';
 
   constructor(
     public ref: DynamicDialogRef,
     public config: DynamicDialogConfig,
-    private search: SearchPopupService
+    private search: SearchPopupService,
+    private tostservice: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -31,18 +32,13 @@ export class SearchPopupComponent implements OnInit {
 
   popUpfunction(): void {
     const { payload, apiUrl } = this.config.data as SearchPopupConfig;
-
-    console.log('Payload:', payload);
-    console.log('API URL:', apiUrl);
-
     this.search.getRecords(apiUrl, payload).subscribe(
       (response) => {
-        console.log('API Response:', response);
         if (response && response.result) {
           const { headers, data } = response.result;
           this.records = data;
           this.filteredRecords = data;
-          this.cols = headers.map((header:Header) => ({
+          this.cols = headers.map((header: any) => ({
             field: header.fieldName,
             header: header.name
           }));
@@ -51,25 +47,14 @@ export class SearchPopupComponent implements OnInit {
         }
       },
       (error: any) => {
-        console.error('Error fetching records', error);
+        this.tostservice.showError('Error fetching records');
+        // console.error('Error fetching records', error);
       }
     );
   }
-
   selectRecord(record: any): void {
     this.ref.close(record);
   }
-
-  // filterRecords(): void {
-  //   if (this.searchTerm) {
-  //     console.log(this.searchTerm);
-  //     this.filteredRecords = this.records.filter(record =>
-  //       record.pensionerName?.toLowerCase().includes(this.searchTerm.toLowerCase())
-  //     );
-  //   } else {
-  //     this.filteredRecords = [...this.records];
-  //   }
-  // }
 
   filterRecords(): void {
     if (this.searchTerm) {
@@ -83,9 +68,18 @@ export class SearchPopupComponent implements OnInit {
           return false;
         })
       );
+      if (this.filterRecords.length === 0){
+
+        this.noresult = 'No records found';
+
+      }else{
+        this.noresult = '';
+      }
     } else {
       this.filteredRecords = [...this.records];
+      this.noresult = '';
     }
+  
   }
 
   
