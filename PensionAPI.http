@@ -3,7 +3,7 @@
 # @PensionAPI_HostAddress = https://api.docker.test/api/ 
 @PensionAPI_HostAddress = http://api.docker.test
 # @PensionAPI_HostAddress = https://localhost:7249 
-@PensionAPI_HostAddress =http://localhost
+# @PensionAPI_HostAddress =http://localhost
 @accessToken = eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhcHBsaWNhdGlvbiI6IntcIklkXCI6MyxcIk5hbWVcIjpcIkNUU1wiLFwiTGV2ZWxzXCI6W3tcIklkXCI6OCxcIk5hbWVcIjpcIlRyZWFzdXJ5XCIsXCJTY29wZVwiOltcIkRBQVwiXX1dLFwiUm9sZXNcIjpbe1wiSWRcIjoyNyxcIk5hbWVcIjpcImNsZXJrXCIsXCJQZXJtaXNzaW9uc1wiOltcImNhbi1yZWNlaXZlLWJpbGxcIl19XX0iLCJuYW1laWQiOiIzOSIsIm5hbWUiOiJDVFMgQ2xlcmsiLCJuYmYiOjE3MTc5OTY2OTksImV4cCI6MTcxODA4MzA5OSwiaWF0IjoxNzE3OTk2Njk5fQ.tLMRXKlXb2eyiE2ApSRgFgbX9EjvPbGNi1dgp_UpGadv-UitDdS4su2ZV6B4kp4Rf0TXjDQHTW7YvNkwciQVQg
 # {{Login.response.body.$.accessToken}}
 
@@ -62,7 +62,7 @@ Content-Type: application/json
 
 ### List All PensionCategory //mark
 # @name ListPensionCategory
-PATCH {{PensionAPI_HostAddress}}/api/v1/pension/category
+PATCH {{PensionAPI_HostAddress}}/api/v1/pension/category  
 # PATCH {{PensionAPI_HostAddress}}/api/v1/pension/primary-category
 # PATCH {{PensionAPI_HostAddress}}/api/v1/pension/sub-category
 # PATCH {{PensionAPI_HostAddress}}/api/v1/pension/bill-component
@@ -146,9 +146,9 @@ Content-Type: application/json
 # @name ListPensionCategory
 # PATCH {{PensionAPI_HostAddress}}/api/v1/pension/category
 # PATCH {{PensionAPI_HostAddress}}/api/v1/pension/primary-category
-# PATCH {{PensionAPI_HostAddress}}/api/v1/pension/sub-category
+PATCH {{PensionAPI_HostAddress}}/api/v1/pension/sub-category
 # PATCH {{PensionAPI_HostAddress}}/api/v1/pension/bill-component
-PATCH {{PensionAPI_HostAddress}}/api/v1/pension/component-rate
+# PATCH {{PensionAPI_HostAddress}}/api/v1/pension/component-rate
 # POST {{PensionAPI_HostAddress}}/api/v1/echo
 Accept: application/json
 Authorization: Bearer {{accessToken}}

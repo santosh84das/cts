@@ -14,9 +14,12 @@ import { reverse } from 'dns';
   styleUrls: ['./component-rate.component.scss']
 })
 export class ComponentRateComponent implements OnInit {
+  // added
+  tabledata: any;
+  isTableDataLoading = false;
+
   ref: DynamicDialogRef | undefined;
   ComponentRateForm = new FormGroup({
-    // added
     rate:  new FormControl('',Validators.required),
     pensionCategoryId: new FormControl('',Validators.required),
     description: new FormControl('', Validators.required),
@@ -25,43 +28,65 @@ export class ComponentRateComponent implements OnInit {
   constructor(private dialogService: DialogService) { }
 
   ngOnInit(): void {
+    console.log('ngOnInit');
   }
 
   onRefresh(){
     console.log(this.ComponentRateForm.value);
   }
 
-  searchOne(){
+  searchOne(): void {
     console.log("Search One");
-    let payload:Payload = {
+    let payload:Payload={
       "pageSize":10,
       "pageIndex":0,
-      "filterParameters": [],
+      "filterParameters":[],
       "sortParameters":{
         "field":"",
         "order":""
       }
     };
-    const config: SearchPopupConfig = {
+    const config : SearchPopupConfig={
       payload: payload,
-      apiUrl: 'v1/manual-ppo/receipts' // mark popup api url
+      apiUrl:'v1/pension/category',
     };
-
     this.ref = this.dialogService.open(SearchPopupComponent, {
       data: config,
       header: 'Search record',
       width: '60%'
     });
-
     this.ref.onClose.subscribe((record: any) => {
-      if (record) {
-        console.log(record)
-      }
+    if (record) {
+      console.log(record);
+      this.ComponentRateForm.controls['pensionCategoryId'].setValue(record.primaryCategoryId);
+      this.ComponentRateForm.controls['description'].setValue(record.categoryName);
+
+      
+    }
     });
   }
 
   searchTwo(){
     console.log("Search Two");
   }
+
+
+  // adding dynamic table
+  handleRowSelection(event: any): void {
+    console.log('Selected rows:', event);
+  }
+
+  handleButtonClick(event: any): void {
+    console.log('Action button clicked:', event);
+  }
+
+  handQueryParameterChange(event: any): void {
+    console.log('Query parameters changed:', event);
+  }
+
+  handsearchKeyChange(event: any): void {
+    console.log('Search key changed:', event);
+  }
+
 
 }

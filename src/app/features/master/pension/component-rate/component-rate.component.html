@@ -57,6 +57,21 @@
                     ></p-button>
                 </div>
             </div>
+            <div class="col-12">
+                <mh-prime-dynamic-table
+                size="small"
+                [data]="tabledata"
+                [numberRowsShown]="10"
+                [rowsPerPageOptions]="[10, 30, 50]"
+                rowSelectionMode = 'multiple'
+                [showTopMenubar]="true"
+                [isLoading]="isTableDataLoading"
+                (rowSelect)="handleRowSelection($event)"
+                (actionButtonClicked)="handleButtonClick($event)"
+                (queryParameterChange)="handQueryParameterChange($event)"
+                (searchKeyChange)="handsearchKeyChange($event)"
+              ></mh-prime-dynamic-table>
+              </div>
         </p-fieldset>
         <div class="w-full text-center mt-2">
             <button
