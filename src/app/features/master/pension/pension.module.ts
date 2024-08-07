@@ -5,7 +5,7 @@ import { PensionRoutingModule } from './pension-routing.module';
 import { PensionComponent } from './pension.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { ChipsModule } from 'primeng/chips';
