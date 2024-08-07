@@ -10,14 +10,13 @@
       size="small"
       [data]="tableData"
       [numberRowsShown]="10"
-      [rowsPerPageOptions]="[10, 30, 50]"
-      rowSelectionMode = 'multiple'
+      [rowsPerPageOptions]="[10, 30, 50,100]"
+
       [showTopMenubar]="true"
       [isLoading]="isTableDataLoading"
       [actionButtons]="tableActionButton"
       [childActionButtons]="tableChildActionButton"
       (rowSelect)="handleRowSelection($event)"
-      (actionButtonClicked)="handleButtonClick($event)"
       (queryParameterChange)="handQueryParameterChange($event)"
       (searchKeyChange)="handsearchKeyChange($event)"
     ></mh-prime-dynamic-table>
@@ -52,9 +51,7 @@
       <button *ngIf="!selectedRow" pButton label="Submit" (click)="add_primary_category()"
               class="p-element p-ripple p-button-rounded p-button p-component"
               [disabled]="!primaryForm.valid"></button>
-      <button *ngIf="selectedRow" pButton label="Update" (click)="update_Primary_category(selectedRow)"
-              class="p-element p-ripple p-button-rounded p-button p-component"
-              [disabled]="!primaryForm.valid"></button>
+
       <button pButton label="Cancel" (click)="cancelPrimaryCategory()"
               class="p-element p-ripple p-button-rounded p-button p-component"></button>
   </div>

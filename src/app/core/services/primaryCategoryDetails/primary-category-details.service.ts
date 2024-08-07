@@ -33,18 +33,6 @@ export class PrimaryCategoryDetailsService {
             );
     }
 
-    //Get primary Category By Id
-    GetAllPrimaryDetailsByHoaId(
-        id: string
-    ): Observable<IapiResponce<PrimaryCategoryDetails>> {
-        return this.http
-            .get<IapiResponce>('v1/pension/primary-category/' + id)
-            .pipe(
-                catchError((error) => {
-                    throw this.toastService.showError(error.message);
-                })
-            );
-    }
 
     //Add New Primary Category
     add_new_primary_details(
@@ -64,18 +52,4 @@ export class PrimaryCategoryDetailsService {
             );
     }
 
-    //Update Primary Category
-    updatePrimaryCategory(
-        id: string,
-        dto: PrimaryCategoryDetails
-    ): Observable<IapiResponce> {
-        return this.http
-            .put<IapiResponce>(`v1/pension/primary-category/${id}`, dto)
-            .pipe(
-                catchError((error) => {
-                    this.toastService.showError(error.message);
-                    return throwError(error);
-                })
-            );
-    }
 }

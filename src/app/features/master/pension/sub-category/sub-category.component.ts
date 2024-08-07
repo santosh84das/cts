@@ -65,114 +65,13 @@ export class SubCategoryComponent implements OnInit {
     ngOnInit(): void {
         this.initializeForm();
 
-        this.tableActionButton = [
-            {
-                buttonIdentifier: 'edit',
-                class: 'p-button-rounded p-button-raised',
-                icon: 'pi pi-pencil',
-                lable: 'Edit',
-            },
-        ];
+
         this.tableQueryParameters = {
             pageSize: 10,
             pageIndex: 0,
         };
-        const sd = {
-            data: [
-                {
-                    id: 1,
-                    hoaId: '2071 - 01 - 101 - 00 - 005 - V - 04 - 00',
-                    SubCategoryName: 'College( Government) Pension',
-                    dataSource: null,
-                },
-                {
-                    id: 4,
-                    hoaId: '2071 - 01 - 109 - 00 - 001 - V - 04 - 00',
-                    SubCategoryName: 'Education Pension',
-                    dataSource: null,
-                },
-                {
-                    id: 43,
-                    hoaId: '2071 - 01 - 101 - 00 - 005 - V - 04 - 00',
-                    SubCategoryName: 'State Pension',
-                    dataSource: null,
-                },
-                {
-                    id: 2,
-                    hoaId: '2071 - 01 - 109 - 00 - 001 - V - 04 - 00',
-                    SubCategoryName: 'Defence Pension',
-                    dataSource: null,
-                },
-                {
-                    id: 13,
-                    hoaId: '2071 - 01 - 101 - 00 - 005 - V - 04 - 00',
-                    SubCategoryName: 'sasasasas',
-                    dataSource: null,
-                },
-                {
-                    id: 14,
-                    hoaId: '2071 - 01 - 101 - 00 - 005 - V - 04 - 00',
-                    SubCategoryName: 'afghjkhkljfvc',
-                    dataSource: null,
-                },
-                {
-                    id: 15,
-                    hoaId: '2071 - 01 - 101 - 00 - 005 - V - 04 - 00',
-                    SubCategoryName: 'sumit',
-                    dataSource: null,
-                },
-                {
-                    id: 28,
-                    hoaId: '2071 - 01 - 109 - 00 - 001 - V - 04 - 12',
-                    SubCategoryName: 'shruti',
-                    dataSource: null,
-                },
 
-                {
-                    id: 29,
-                    hoaId: '2071 - 01 - 109 - 00 - 001 - V - 04 - 60',
-                    SubCategoryName: 'amit',
-                    dataSource: null,
-                },
-            ],
-            dataCount: 8,
-            headers: [
-                {
-                    name: 'Sub Category ID',
-                    dataType: 'text',
-                    fieldName: 'id',
-                    filterField: 'id',
-                    filterEnums: null,
-                    isFilterable: true,
-                    isSortable: true,
-                    objectTypeValueField: null,
-                },
-                {
-                    name: 'Head of Account',
-                    dataType: 'text',
-                    fieldName: 'hoaId',
-                    filterField: 'hoaId',
-                    filterEnums: null,
-                    isFilterable: true,
-                    isSortable: true,
-                    objectTypeValueField: null,
-                },
-                {
-                    name: 'Sub Category Name',
-                    dataType: 'text',
-                    fieldName: 'SubCategoryName',
-                    filterField: 'SubCategoryName',
-                    filterEnums: null,
-                    isFilterable: true,
-                    isSortable: true,
-
-                    objectTypeValueField: null,
-                },
-            ],
-        };
-
-        this.tableData = sd;
-        // this.getData();
+        this.getData();
     }
 
     showInsertDialog() {
@@ -180,13 +79,6 @@ export class SubCategoryComponent implements OnInit {
         this.SubForm.reset();
     }
 
-    handleButtonClick($event: any) {
-        console.log('Button clicked:', $event);
-
-        if ($event.buttonIdentifier === 'edit') {
-            this.EditInit($event.rowData);
-        }
-    }
 
     handleRowSelection($event: any) {
         console.log('Row selected:', $event);
@@ -202,7 +94,6 @@ export class SubCategoryComponent implements OnInit {
         };
         console.log(this.tableQueryParameters.pageSize);
 
-        this.get_all_Sub_details(this.tableQueryParameters);
     }
 
     handsearchKeyChange(event: string): void {
@@ -210,7 +101,6 @@ export class SubCategoryComponent implements OnInit {
         this.tableQueryParameters.filterParameters = [
             { field: 'searchKey', value: event },
         ];
-        this.get_all_Sub_details(this.tableQueryParameters, event);
     }
 
     initializeForm(): void {
@@ -239,11 +129,7 @@ export class SubCategoryComponent implements OnInit {
             ).subscribe(
                 (response) => {
                     if (response.apiResponseStatus === 1) {
-                        // Assuming 1 means success
                         console.log('Form submitted successfully:', response);
-                        this.get_all_Sub_details(
-                            this.tableQueryParameters
-                        );
                         this.displayInsertModal = false; // Close the dialog
                         this.toastService.showSuccess(
                             'Sub Category Details added successfully'
@@ -251,6 +137,7 @@ export class SubCategoryComponent implements OnInit {
                     } else {
                         this.handleErrorResponse(response);
                     }
+                    this.getData();
                 },
                 (error) => {
                     console.error('Error submitting form:', error);
@@ -288,107 +175,6 @@ export class SubCategoryComponent implements OnInit {
         this.SubForm.reset();
     }
 
-    // Get Manual PPO Receipt By Id
-    get_all_Sub_details_by_HoaId(treasuryReceiptNo: string) {
-        console.log('Fetching Manual PPO Receipt By Id...');
-        this.SubCategoryDetalisService.GetAllSubDetailsByHoaId(
-            treasuryReceiptNo
-        ).subscribe((response) => {
-            console.log('API Response:', response);
-            if (response.apiResponseStatus === 1) {
-                this.tableData = response.result;
-            } else {
-                this.toastService.showAlert(
-                    response.message,
-                    response.apiResponseStatus
-                );
-            }
-        });
-    }
-
-    //  w i search
-    get_all_Sub_details(
-        tableQueryParameters: DynamicTableQueryParameters,
-        treasuryReceiptNo?: string
-    ) {
-        this.isTableDataLoading = true;
-        if (treasuryReceiptNo) {
-            this.SubCategoryDetalisService.GetAllSubDetailsByHoaId(
-                treasuryReceiptNo
-            ).subscribe(
-                (response: any) => {
-                    this.isTableDataLoading = false;
-                    if (response && response.apiResponseStatus === 1) {
-                        const updatedData = [response.result].map(
-                            (item: any) => ({
-                                ...item,
-                                receiptDate: convertDate(item.receiptDate),
-                            })
-                        );
-                        this.tableData = {
-                            headers: this.tableData.headers,
-                            data: updatedData,
-                            dataCount: updatedData.length,
-                        };
-                    } else {
-                        this.toastService.showAlert(
-                            response?.message || 'An error occurred',
-                            response?.apiResponseStatus || 0
-                        );
-                    }
-                    this.cd.detectChanges();
-                },
-                (error) => {
-                    this.isTableDataLoading = false;
-                    console.error('API Error:', error);
-                    this.toastService.showAlert(
-                        'An error occurred while fetching data',
-                        0
-                    );
-                }
-            );
-        } else {
-            console.log('tableQueryParameters: ' + tableQueryParameters);
-            this.SubCategoryDetalisService.get_all_Sub_details(
-                tableQueryParameters
-            ).subscribe(
-                (response: any) => {
-                    this.isTableDataLoading = false;
-                    if (
-                        response &&
-                        response.apiResponseStatus === 1 &&
-                        response.result
-                    ) {
-                        const updatedData = response.result.data.map(
-                            (item: any) => ({
-                                ...item,
-                                receiptDate: convertDate(item.receiptDate),
-                            })
-                        );
-                        this.tableData = {
-                            ...response.result,
-                            data: updatedData,
-                        };
-                    } else {
-                        this.toastService.showAlert(
-                            response?.message || 'An error occurred',
-                            response?.apiResponseStatus || 0
-                        );
-                    }
-                    this.cd.detectChanges();
-                },
-                (error) => {
-                    this.isTableDataLoading = false;
-                    console.error('API Error:', error);
-                    this.toastService.showAlert(
-                        'An error occurred while fetching data',
-                        0
-                    );
-                }
-            );
-        }
-    }
-
     getData() {
         const data = this.tableQueryParameters;
         this.isTableDataLoading = true;
@@ -412,75 +198,6 @@ export class SubCategoryComponent implements OnInit {
                 );
             }
         );
-    }
-
-    EditInit(rowData: any): void {
-        console.log('EditInit called with rowData:', rowData);
-        this.selectedRow = rowData;
-        var treasuryReceiptId: string = this.selectedRow.treasuryReceiptNo;
-        console.log('Treasury Receipt ID:', treasuryReceiptId);
-
-        this.SubCategoryDetalisService.GetAllSubDetailsByHoaId(
-            treasuryReceiptId
-        ).subscribe({
-            next: (response) => {
-                console.log('Fetched DTO:', response);
-                this.SubForm.patchValue({
-                    SubCategoryName: response.result.SubCategoryName,
-                });
-                console.log('Form Values:', this.SubForm.value);
-                this.displayInsertModal = true;
-            },
-            error: (err) => {
-                this.toastService.showError(
-                    'Failed to fetch PPO receipt details.'
-                );
-            },
-        });
-    }
-
-    // Update Manual PPO Receipt
-    update_Sub_category(selectedRow: any) {
-        console.log('Selected Row:', this.selectedRow);
-        console.log('Form Data:', this.SubForm.value);
-        if (this.selectedRow && this.SubForm.valid) {
-            const formData = this.SubForm.value;
-            const updateDto: SubCategoryDetalis = {
-                SubCategoryName: formData.SubCategoryName,
-            };
-            this.SubCategoryDetalisService.updateSubCategoryDetails(
-                this.selectedRow.treasuryReceiptNo,
-                updateDto
-            ).subscribe(
-                (response) => {
-                    console.log('Update successful:', response);
-                    this.get_all_Sub_details(this.tableQueryParameters); // Refresh table data
-                    this.resetForm(); // Reset form fields
-                    this.displayInsertModal = false; // Close the dialog
-                },
-                (error) => {
-                    console.log(
-                        'Treasury Receipt ID: ' +
-                            this.selectedRow.treasuryReceiptNo
-                    );
-                    if (
-                        error instanceof HttpErrorResponse &&
-                        error.status === 400
-                    ) {
-                        console.error('Error updating data:', error);
-                        const errorMessage = error.error.message;
-                        this.toastService.showError(errorMessage);
-                    } else {
-                        console.error('Error updating data:', error);
-                        this.toastService.showError(
-                            'An unexpected error occurred. Please try again.'
-                        );
-                    }
-                }
-            );
-        } else {
-            console.log('Form is not valid. Cannot update.');
-        }
     }
 
     onRowEditInit(data: SubCategoryDetalis) {

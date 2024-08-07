@@ -15,7 +15,7 @@ import { PensionCategoryDetails } from 'src/app/core/models/pension-category-det
 })
 export class PensionCategoryDetailsService {
 
-    apiUrl = "v1/pension/Pension-category";
+    apiUrl = "v1/pension/category";
 
 
     constructor(private http: HttpClient, private toastService: ToastService) {}
@@ -25,7 +25,7 @@ export class PensionCategoryDetailsService {
     ): Observable<IapiResponce> {
       return this.http
         .patch<IapiResponce>(
-          'v1/pension/Pension-category',
+          'v1/pension/category',
           queryParameters
         )
         .pipe(
@@ -34,36 +34,45 @@ export class PensionCategoryDetailsService {
           })
         );
     }
-
-    //Get Pension Category By Id
-    GetAllPensionDetailsByHoaId(id: string): Observable<IapiResponce<PensionCategoryDetails>> {
-      return this.http.get<IapiResponce>('v1/pension/Pension-category/' + id).pipe(
-        catchError((error) => {
-          throw this.toastService.showError(error.message);
-        })
-      );
-
+    get_all_primary_details(
+        queryParameters: DynamicTableQueryParameters
+    ): Observable<IapiResponce> {
+        return this.http
+            .patch<IapiResponce>('v1/pension/primary-category', queryParameters)
+            .pipe(
+                catchError((error) => {
+                    throw this.toastService.showError(error.message);
+                })
+            );
     }
+
+    get_all_Sub_details(
+        queryParameters: DynamicTableQueryParameters
+    ): Observable<IapiResponce> {
+        return this.http
+            .patch<IapiResponce>('v1/pension/sub-category', queryParameters)
+            .pipe(
+                catchError((error) => {
+                    throw this.toastService.showError(error.message);
+                })
+            );
+    }
+
+
+
 
     //Add New Pension Category
-    add_new_Pension_details(dto: PensionCategoryDetails): Observable<IapiResponce> {
-      return this.http.post<IapiResponce>('v1/pension/Pension-category', dto,
+    add_new_Pension_details(dto: PensionCategoryDetails): Observable<IapiResponce<PensionCategoryDetails>> {
+      return this.http.post<IapiResponce<PensionCategoryDetails>>('v1/pension/category', dto,
       ).pipe(
         catchError((error) => {
-          this.toastService.showError(error.message);
-          throw error;
+            throw  this.toastService.showError(error.message);
+
         })
       );
     }
 
-    //Update Pension Category
-    updatePensionDetails(id: string, dto: PensionCategoryDetails): Observable<IapiResponce> {
-      return this.http.put<IapiResponce>(`v1/pension/Pension-category/${id}`, dto).pipe(
-        catchError((error) => {
-          this.toastService.showError(error.message);
-          return throwError(error);
-        })
-      );
-    }
+
+
 
 }

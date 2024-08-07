@@ -30,6 +30,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SliderModule } from 'primeng/slider';
 import { PensionCategoryComponent } from './pension-category/pension-category.component';
+import { SubCategoryComponent } from './sub-category/sub-category.component';
 
 
 const routes: Routes = [
@@ -37,7 +38,7 @@ const routes: Routes = [
   {path: "pension",component:PensionComponent},
 ];
 @NgModule({
-  declarations: [PensionComponent,PrimaryComponent, PensionCategoryComponent],
+  declarations: [PensionComponent,PrimaryComponent, PensionCategoryComponent,SubCategoryComponent],
   imports: [
     CommonModule,
     PensionRoutingModule,

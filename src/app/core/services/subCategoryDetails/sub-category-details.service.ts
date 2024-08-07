@@ -17,7 +17,7 @@ import { SubCategoryDetalis } from 'src/app/core/models/sub-category-detalis';
   providedIn: 'root'
 })
 export class SubCategoryDetailsService {
-    apiUrl = 'v1/pension/Sub-category';
+    apiUrl = 'v1/pension/sub-category';
 
     constructor(private http: HttpClient, private toastService: ToastService) {}
 
@@ -25,7 +25,7 @@ export class SubCategoryDetailsService {
         queryParameters: DynamicTableQueryParameters
     ): Observable<IapiResponce> {
         return this.http
-            .patch<IapiResponce>('v1/pension/Sub-category', queryParameters)
+            .patch<IapiResponce>('v1/pension/sub-category', queryParameters)
             .pipe(
                 catchError((error) => {
                     throw this.toastService.showError(error.message);
@@ -33,25 +33,13 @@ export class SubCategoryDetailsService {
             );
     }
 
-    //Get Sub Category By Id
-    GetAllSubDetailsByHoaId(
-        id: string
-    ): Observable<IapiResponce<SubCategoryDetalis>> {
-        return this.http
-            .get<IapiResponce>('v1/pension/Sub-category/' + id)
-            .pipe(
-                catchError((error) => {
-                    throw this.toastService.showError(error.message);
-                })
-            );
-    }
 
     //Add New Sub Category
     add_new_Sub_details(
         dto: SubCategoryDetalis
     ): Observable<IapiResponce> {
         return this.http
-            .post<IapiResponce>('v1/pension/Sub-category', dto)
+            .post<IapiResponce>('v1/pension/sub-category', dto)
             .pipe(
                 catchError((error) => {
                     this.toastService.showError(error.message);
@@ -60,18 +48,5 @@ export class SubCategoryDetailsService {
             );
     }
 
-    //Update Sub Category
-    updateSubCategoryDetails(
-        id: string,
-        dto: SubCategoryDetalis
-    ): Observable<IapiResponce> {
-        return this.http
-            .put<IapiResponce>(`v1/pension/Sub-category/${id}`, dto)
-            .pipe(
-                catchError((error) => {
-                    this.toastService.showError(error.message);
-                    return throwError(error);
-                })
-            );
-    }
+
 }

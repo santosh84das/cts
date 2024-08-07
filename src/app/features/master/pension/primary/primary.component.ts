@@ -64,14 +64,7 @@ export class PrimaryComponent {
     ngOnInit(): void {
         this.initializeForm();
 
-        this.tableActionButton = [
-            {
-                buttonIdentifier: 'edit',
-                class: 'p-button-rounded p-button-raised',
-                icon: 'pi pi-pencil',
-                lable: 'Edit',
-            },
-        ];
+
         this.tableQueryParameters = {
             pageSize: 10,
             pageIndex: 0,
@@ -170,8 +163,8 @@ export class PrimaryComponent {
             ],
         };
 
-        this.tableData = sd;
-        // this.getData();
+        // this.tableData = sd;
+        this.getData();
     }
 
     showInsertDialog() {
@@ -179,13 +172,6 @@ export class PrimaryComponent {
         this.primaryForm.reset();
     }
 
-    handleButtonClick($event: any) {
-        console.log('Button clicked:', $event);
-
-        if ($event.buttonIdentifier === 'edit') {
-            this.EditInit($event.rowData);
-        }
-    }
 
     handleRowSelection($event: any) {
         console.log('Row selected:', $event);
@@ -201,7 +187,6 @@ export class PrimaryComponent {
         };
         console.log(this.tableQueryParameters.pageSize);
 
-        this.get_all_primary_details(this.tableQueryParameters);
     }
 
     handsearchKeyChange(event: string): void {
@@ -209,7 +194,6 @@ export class PrimaryComponent {
         this.tableQueryParameters.filterParameters = [
             { field: 'searchKey', value: event },
         ];
-        this.get_all_primary_details(this.tableQueryParameters, event);
     }
 
     initializeForm(): void {
@@ -249,9 +233,7 @@ export class PrimaryComponent {
                     if (response.apiResponseStatus === 1) {
                         // Assuming 1 means success
                         console.log('Form submitted successfully:', response);
-                        this.get_all_primary_details(
-                            this.tableQueryParameters
-                        );
+
                         this.displayInsertModal = false; // Close the dialog
                         this.toastService.showSuccess(
                             'Primary Category Details added successfully'
@@ -259,6 +241,7 @@ export class PrimaryComponent {
                     } else {
                         this.handleErrorResponse(response);
                     }
+                    this.getData();
                 },
                 (error) => {
                     console.error('Error submitting form:', error);
@@ -296,106 +279,6 @@ export class PrimaryComponent {
         this.primaryForm.reset();
     }
 
-    // Get Manual PPO Receipt By Id
-    get_all_primary_details_by_HoaId(treasuryReceiptNo: string) {
-        console.log('Fetching Manual PPO Receipt By Id...');
-        this.PrimaryCategoryDetailsService.GetAllPrimaryDetailsByHoaId(
-            treasuryReceiptNo
-        ).subscribe((response) => {
-            console.log('API Response:', response);
-            if (response.apiResponseStatus === 1) {
-                this.tableData = response.result;
-            } else {
-                this.toastService.showAlert(
-                    response.message,
-                    response.apiResponseStatus
-                );
-            }
-        });
-    }
-
-    //  w i search
-    get_all_primary_details(
-        tableQueryParameters: DynamicTableQueryParameters,
-        treasuryReceiptNo?: string
-    ) {
-        this.isTableDataLoading = true;
-        if (treasuryReceiptNo) {
-            this.PrimaryCategoryDetailsService.GetAllPrimaryDetailsByHoaId(
-                treasuryReceiptNo
-            ).subscribe(
-                (response: any) => {
-                    this.isTableDataLoading = false;
-                    if (response && response.apiResponseStatus === 1) {
-                        const updatedData = [response.result].map(
-                            (item: any) => ({
-                                ...item,
-                                receiptDate: convertDate(item.receiptDate),
-                            })
-                        );
-                        this.tableData = {
-                            headers: this.tableData.headers,
-                            data: updatedData,
-                            dataCount: updatedData.length,
-                        };
-                    } else {
-                        this.toastService.showAlert(
-                            response?.message || 'An error occurred',
-                            response?.apiResponseStatus || 0
-                        );
-                    }
-                    this.cd.detectChanges();
-                },
-                (error) => {
-                    this.isTableDataLoading = false;
-                    console.error('API Error:', error);
-                    this.toastService.showAlert(
-                        'An error occurred while fetching data',
-                        0
-                    );
-                }
-            );
-        } else {
-            console.log('tableQueryParameters: ' + tableQueryParameters);
-            this.PrimaryCategoryDetailsService.get_all_primary_details(
-                tableQueryParameters
-            ).subscribe(
-                (response: any) => {
-                    this.isTableDataLoading = false;
-                    if (
-                        response &&
-                        response.apiResponseStatus === 1 &&
-                        response.result
-                    ) {
-                        const updatedData = response.result.data.map(
-                            (item: any) => ({
-                                ...item,
-                                receiptDate: convertDate(item.receiptDate),
-                            })
-                        );
-                        this.tableData = {
-                            ...response.result,
-                            data: updatedData,
-                        };
-                    } else {
-                        this.toastService.showAlert(
-                            response?.message || 'An error occurred',
-                            response?.apiResponseStatus || 0
-                        );
-                    }
-                    this.cd.detectChanges();
-                },
-                (error) => {
-                    this.isTableDataLoading = false;
-                    console.error('API Error:', error);
-                    this.toastService.showAlert(
-                        'An error occurred while fetching data',
-                        0
-                    );
-                }
-            );
-        }
-    }
 
     getData() {
         const data = this.tableQueryParameters;
@@ -422,82 +305,6 @@ export class PrimaryComponent {
         );
     }
 
-    EditInit(rowData: any): void {
-        console.log('EditInit called with rowData:', rowData);
-        this.selectedRow = rowData;
-        var treasuryReceiptId: string = this.selectedRow.treasuryReceiptNo;
-        console.log('Treasury Receipt ID:', treasuryReceiptId);
-
-        this.PrimaryCategoryDetailsService.GetAllPrimaryDetailsByHoaId(
-            treasuryReceiptId
-        ).subscribe({
-            next: (response) => {
-                console.log('Fetched DTO:', response);
-                this.primaryForm.patchValue({
-                    HoaId: response.result.HoaId,
-                    PrimaryCategoryName: response.result.PrimaryCategoryName,
-                });
-                console.log('Form Values:', this.primaryForm.value);
-                this.displayInsertModal = true;
-            },
-            error: (err) => {
-                this.toastService.showError(
-                    'Failed to fetch PPO receipt details.'
-                );
-            },
-        });
-    }
-
-    // Update Manual PPO Receipt
-    update_Primary_category(selectedRow: any) {
-        console.log('Selected Row:', this.selectedRow);
-        console.log('Form Data:', this.primaryForm.value);
-        if (this.selectedRow && this.primaryForm.valid) {
-            const formData = this.primaryForm.value;
-            const updateDto: PrimaryCategoryDetails = {
-                HoaId: formData.HoaId,
-                PrimaryCategoryName: formData.PrimaryCategoryName,
-            };
-            this.PrimaryCategoryDetailsService.updatePrimaryCategory(
-                this.selectedRow.treasuryReceiptNo,
-                updateDto
-            ).subscribe(
-                (response) => {
-                    console.log('Update successful:', response);
-                    this.get_all_primary_details(this.tableQueryParameters); // Refresh table data
-                    this.resetForm(); // Reset form fields
-                    this.displayInsertModal = false; // Close the dialog
-                },
-                (error) => {
-                    console.log(
-                        'Treasury Receipt ID: ' +
-                            this.selectedRow.treasuryReceiptNo
-                    );
-                    if (
-                        error instanceof HttpErrorResponse &&
-                        error.status === 400
-                    ) {
-                        console.error('Error updating data:', error);
-                        const errorMessage = error.error.message;
-                        this.toastService.showError(errorMessage);
-                    } else {
-                        console.error('Error updating data:', error);
-                        this.toastService.showError(
-                            'An unexpected error occurred. Please try again.'
-                        );
-                    }
-                }
-            );
-        } else {
-            console.log('Form is not valid. Cannot update.');
-        }
-    }
-
-    onRowEditInit(data: PrimaryCategoryDetails) {
-        this.selectedRowData = { ...data };
-        this.primaryForm.patchValue(this.selectedRowData);
-        this.displayInsertModal = true;
-    }
 
     onRowEditCancel() {
         this.selectedRowData = null;
