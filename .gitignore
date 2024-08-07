@@ -42,3 +42,5 @@ Thumbs.db
 layout.css
 src/assets/demo/styles/badges.css
 src/assets/layout/styles/theme/designer
+
+*.http
