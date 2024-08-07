@@ -98,7 +98,6 @@ export class ManualPpoReceiptComponent implements OnInit {
 
   handleRowSelection($event: any) {
     console.log('Row selected:', $event);
-    
   }
 
   handQueryParameterChange(event: any) {
