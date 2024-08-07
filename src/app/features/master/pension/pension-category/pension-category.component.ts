@@ -49,8 +49,8 @@ export class PensionCategoryComponent implements OnInit {
     PensionOption: SelectItem[] = [];
     type: SelectItem[] = [];
     selectedDrop: SelectItem = { value: '' };
-    primary_id_select:SelectItem[] = [];
-    sub_id_select:SelectItem[] = [];
+    primary_id_select: SelectItem[] = [];
+    sub_id_select: SelectItem[] = [];
     rowData: any;
 
     constructor(
@@ -67,7 +67,6 @@ export class PensionCategoryComponent implements OnInit {
     ngOnInit(): void {
         this.initializeForm();
 
-
         this.tableQueryParameters = {
             pageSize: 10000,
             pageIndex: 0,
@@ -78,11 +77,11 @@ export class PensionCategoryComponent implements OnInit {
     showInsertDialog() {
         this.displayInsertModal = true;
         this.PensionForm.reset();
+        this.primary_id_select = [];
+        this.sub_id_select = [];
         this.get_id_from_primary_category();
         this.get_id_from_sub_category();
     }
-
-
 
     handleRowSelection($event: any) {
         console.log('Row selected:', $event);
@@ -97,14 +96,12 @@ export class PensionCategoryComponent implements OnInit {
             sortParameters: event.sortParameters,
         };
         console.log(this.tableQueryParameters.pageSize);
-
     }
 
     handsearchKeyChange(event: string): void {
         console.log('Search key changed:', event);
-        this.tableQueryParameters.filterParameters = [
-            { field: 'searchKey', value: event },
-        ];
+        this.findById(event);
+
     }
 
     initializeForm(): void {
@@ -133,22 +130,15 @@ export class PensionCategoryComponent implements OnInit {
                 formData
             ).subscribe(
                 (response) => {
-                    console.log(response.apiResponseStatus);
                     if (response) {
                         // Assuming 1 means success
-                        console.log('Form submitted successfully:', response);
-
                         this.displayInsertModal = false; // Close the dialog
-                        this.toastService.showSuccess(
-                            'Pension Category Details added successfully'
-                        );
-                        this.primary_id_select = [];
-                        this.sub_id_select=[];
+
+                        this.checkIfAlreadyExsist(formData);
                     } else {
                         this.handleErrorResponse(response);
                     }
                     this.getData();
-
                 },
                 (error) => {
                     console.error('Error submitting form:', error);
@@ -186,7 +176,6 @@ export class PensionCategoryComponent implements OnInit {
         this.PensionForm.reset();
     }
 
-
     getData() {
         const data = this.tableQueryParameters;
         this.isTableDataLoading = true;
@@ -196,7 +185,6 @@ export class PensionCategoryComponent implements OnInit {
             (response: any) => {
                 this.tableData = response.result;
                 this.isTableDataLoading = false;
-
             },
             (error) => {
                 this.isTableDataLoading = false;
@@ -209,71 +197,93 @@ export class PensionCategoryComponent implements OnInit {
         );
     }
 
-        //get id from  primary
-        get_id_from_primary_category(){
+    //get id from  primary
+    get_id_from_primary_category() {
+        const data = this.tableQueryParameters;
+        this.PensionCategoryDetailsService.get_all_primary_details(
+            data
+        ).subscribe(
+            (response: any) => {
+                this.isTableDataLoading = false;
+                let value = response.result.data;
+                value = [...value];
 
-
-            const data = this.tableQueryParameters;
-            this.PensionCategoryDetailsService.get_all_primary_details(
-                data
-            ).subscribe(
-                (response: any) => {
-                    this.isTableDataLoading = false;
-                    let value = response.result.data;
-                    value = [...value];
-
-                    let len_val=value.length;
-                    for (let i = 0; i < len_val; i++) {
-                        this.primary_id_select.push({label: value[i].id ,value:value[i].id});
-                    }
-                    console.log(this.primary_id_select);
-                },
-                (error) => {
-                    this.isTableDataLoading = false;
-                    console.error('API Error:', error);
-                    this.toastService.showAlert(
-                        'An error occurred while fetching data',
-                        0
-                    );
+                let len_val = value.length;
+                for (let i = 0; i < len_val; i++) {
+                    this.primary_id_select.push({
+                        label: value[i].id,
+                        value: value[i].id,
+                    });
                 }
-            );
+            },
+            (error) => {
+                this.isTableDataLoading = false;
+                console.error('API Error:', error);
+                this.toastService.showAlert(
+                    'An error occurred while fetching data',
+                    0
+                );
+            }
+        );
+    }
+    //get id from  sub
+    get_id_from_sub_category() {
+        const data = this.tableQueryParameters;
+        this.PensionCategoryDetailsService.get_all_Sub_details(data).subscribe(
+            (response: any) => {
+                this.isTableDataLoading = false;
+                let value = response.result.data;
+                value = [...value];
 
-        }
-        //get id from  sub
-        get_id_from_sub_category(){
+                let primary_id = this.tableData;
 
-
-            const data = this.tableQueryParameters;
-            this.PensionCategoryDetailsService.get_all_Sub_details(
-                data
-            ).subscribe(
-                (response: any) => {
-                    this.isTableDataLoading = false;
-                    let value = response.result.data;
-                    value = [...value];
-                    // console.log(value);
-
-                    let primary_id=this.tableData;
-                    console.log(primary_id);
-                    let len_val=value.length;
-                    for (let i = 0; i < len_val; i++) {
-                        this.sub_id_select.push({label: value[i].id ,value:value[i].id});
-                    }
-                    // console.log(this.primary_id_select);
-                },
-                (error) => {
-                    this.isTableDataLoading = false;
-                    console.error('API Error:', error);
-                    this.toastService.showAlert(
-                        'An error occurred while fetching data',
-                        0
-                    );
+                let len_val = value.length;
+                for (let i = 0; i < len_val; i++) {
+                    this.sub_id_select.push({
+                        label: value[i].id,
+                        value: value[i].id,
+                    });
                 }
-            );
+            },
+            (error) => {
+                this.isTableDataLoading = false;
+                console.error('API Error:', error);
+                this.toastService.showAlert(
+                    'An error occurred while fetching data',
+                    0
+                );
+            }
+        );
+    }
 
+    checkIfAlreadyExsist(parms: any) {
+        let flag = true;
+        let value = this.tableData.data;
+        let match_from1 = parms.PrimaryCategoryId;
+        let match_from2 = parms.SubCategoryId;
+        let len_val = value.length;
+        for (let i = 0; i < len_val; i++) {
+            if (value[i].primaryCategoryId == match_from1) {
+                if (value[i].subCategoryId == match_from2) {
+                    flag = false;
+                }
+            }
         }
+        if (flag == true) {
+            this.toastService.showSuccess(
+                'Pension Category Details added successfully'
+            );
+        } else {
+            this.toastService.showError(
+                'Pension Category Details already exsists'
+            );
+        }
+    }
 
-
+    findById(id: any) {
+        let value = this.tableData;
+        console.log(value);
+    }
     emitPensionCategorySelected(): void {
         this.PensionCategorySelected.emit(this.PensionForm.value);
     }
@@ -282,6 +292,6 @@ export class PensionCategoryComponent implements OnInit {
         this.PensionForm.reset();
         this.displayInsertModal = false;
         this.primary_id_select = [];
-        this.sub_id_select=[];
+        this.sub_id_select = [];
     }
 }

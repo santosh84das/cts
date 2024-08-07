@@ -67,7 +67,7 @@ export class SubCategoryComponent implements OnInit {
 
 
         this.tableQueryParameters = {
-            pageSize: 10,
+            pageSize: 10000,
             pageIndex: 0,
         };
 
@@ -145,7 +145,6 @@ export class SubCategoryComponent implements OnInit {
                 }
             );
         } else {
-            console.log('Form is not valid. Cannot submit.');
             this.toastService.showError(
                 'Please fill all required fields correctly.'
             );

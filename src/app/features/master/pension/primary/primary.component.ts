@@ -66,7 +66,7 @@ export class PrimaryComponent {
 
 
         this.tableQueryParameters = {
-            pageSize: 10,
+            pageSize: 10000,
             pageIndex: 0,
         };
         const sd = {
