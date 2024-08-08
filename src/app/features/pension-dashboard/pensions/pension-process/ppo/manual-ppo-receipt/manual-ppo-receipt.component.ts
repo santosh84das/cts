@@ -9,6 +9,7 @@ import { ToastService } from 'src/app/core/services/toast.service';
 import { convertDate } from 'src/utils/dateConversion';
 import { DatePipe } from '@angular/common';
 import { SelectItem } from 'primeng/api';
+import { PensionManualPPOReceiptService } from 'src/app/api';
 
 interface expandedRows {
   [key: string]: boolean;
@@ -45,6 +46,7 @@ export class ManualPpoReceiptComponent implements OnInit {
     private datePipe: DatePipe,
     private toastService: ToastService,
     private manualPpoReceiptService: ManualPpoReceiptService,
+    private pensionManualPpoReceiptService : PensionManualPPOReceiptService,
     private fb: FormBuilder,
     private cd: ChangeDetectorRef
   ) { }
@@ -257,7 +259,7 @@ export class ManualPpoReceiptComponent implements OnInit {
 
   getData() {
     this.isTableDataLoading = true;
-    this.manualPpoReceiptService.getAllManualPpoReceipt(this.tableQueryParameters).subscribe(
+    this.pensionManualPpoReceiptService.ppoReceiptsList(this.tableQueryParameters).subscribe(
       (response: any) => {
         this.tableData = response.result;
         this.isTableDataLoading = false;

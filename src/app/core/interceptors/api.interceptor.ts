@@ -22,7 +22,10 @@ export class ApiInterceptor implements HttpInterceptor {
         const token = localStorage.getItem('jwtToken');
         // this.loadingIndeterminate.showLoading();
         this.spinner.show();
-        const baseURL = environment.BaseURL;
+        var baseURL = environment.BaseURL;
+        if(request.url.startsWith("http")) {
+            baseURL = "";
+        }
         if (token) {
             request = request.clone({
                 setHeaders: {

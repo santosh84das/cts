@@ -1,4 +1,6 @@
 import { APP_INITIALIZER, CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ApiModule, BASE_PATH } from './api';
+import { environment } from 'src/environments/environment';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -45,6 +47,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
         AppComponent, NotfoundComponent, ServerDownComponent, LoginComponent, NotFoundComponent, StaticLoginComponent,
     ],
     imports: [
+        ApiModule,
         AppRoutingModule,
         AppLayoutModule,
         ToastModule,
@@ -56,11 +59,12 @@ import { RadioButtonModule } from 'primeng/radiobutton';
         ButtonModule,
         BrowserModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule        
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
+        { provide: BASE_PATH, useValue: environment.OpenApiBaseURL},
         {
             provide: APP_INITIALIZER,
             useFactory: (authTokenService: AuthTokenService, rolesService: NgxRolesService) => function () {
