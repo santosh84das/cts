@@ -66,6 +66,14 @@ const routes: Routes = [
    {
     path: 'modules/pension-process/bill-print',
     loadChildren: () => import('./pensions/pension-process/bill-print/bill-print.module').then(m => m.BillPrintModule)
+   },
+   {
+    path: 'modules/pension-process/bill-print/regular-pension',
+    loadChildren: () => import('./pensions/pension-process/bill-print/regular-pension/regular-pension.module').then(m => m.RegularPensionModule),
+   },
+   {
+    path: 'modules/pension-process/bill-print/first-pension',
+    loadChildren: () => import('./pensions/pension-process/bill-print/first-pension/first-pension.module').then(m => m.FirstPensionModule),
    }
   
 ];
