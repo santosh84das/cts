@@ -132,7 +132,7 @@ export class PensionBillComponent implements OnInit {
     this.ref = this.dialogService.open(SearchPopupComponent, {
       data: config,
       header: 'Search record',
-      width: '60%'
+      width: '50%'
     });
 
     this.ref.onClose.subscribe((record: any) => {
