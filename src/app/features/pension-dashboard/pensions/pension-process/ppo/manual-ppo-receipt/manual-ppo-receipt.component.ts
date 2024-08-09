@@ -259,7 +259,7 @@ export class ManualPpoReceiptComponent implements OnInit {
 
   getData() {
     this.isTableDataLoading = true;
-    this.pensionManualPpoReceiptService.ppoReceiptsList(this.tableQueryParameters).subscribe(
+    this.pensionManualPpoReceiptService.getAllPpoReceipts(this.tableQueryParameters).subscribe(
       (response: any) => {
         this.tableData = response.result;
         this.isTableDataLoading = false;
