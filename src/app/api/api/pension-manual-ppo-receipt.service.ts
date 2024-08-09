@@ -105,10 +105,10 @@ export class PensionManualPPOReceiptService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ppoReceiptsCreate(manualPpoReceiptEntryDTO?: ManualPpoReceiptEntryDTO, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ManualPpoReceiptResponseDTOAPIResponse>;
-    public ppoReceiptsCreate(manualPpoReceiptEntryDTO?: ManualPpoReceiptEntryDTO, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ManualPpoReceiptResponseDTOAPIResponse>>;
-    public ppoReceiptsCreate(manualPpoReceiptEntryDTO?: ManualPpoReceiptEntryDTO, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ManualPpoReceiptResponseDTOAPIResponse>>;
-    public ppoReceiptsCreate(manualPpoReceiptEntryDTO?: ManualPpoReceiptEntryDTO, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public createPpoReceipt(manualPpoReceiptEntryDTO?: ManualPpoReceiptEntryDTO, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ManualPpoReceiptResponseDTOAPIResponse>;
+    public createPpoReceipt(manualPpoReceiptEntryDTO?: ManualPpoReceiptEntryDTO, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ManualPpoReceiptResponseDTOAPIResponse>>;
+    public createPpoReceipt(manualPpoReceiptEntryDTO?: ManualPpoReceiptEntryDTO, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ManualPpoReceiptResponseDTOAPIResponse>>;
+    public createPpoReceipt(manualPpoReceiptEntryDTO?: ManualPpoReceiptEntryDTO, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -178,10 +178,10 @@ export class PensionManualPPOReceiptService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ppoReceiptsList(dynamicListQueryParameters?: DynamicListQueryParameters, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ListAllPpoReceiptsResponseDTOIEnumerableDynamicListResultJsonAPIResponse>;
-    public ppoReceiptsList(dynamicListQueryParameters?: DynamicListQueryParameters, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ListAllPpoReceiptsResponseDTOIEnumerableDynamicListResultJsonAPIResponse>>;
-    public ppoReceiptsList(dynamicListQueryParameters?: DynamicListQueryParameters, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ListAllPpoReceiptsResponseDTOIEnumerableDynamicListResultJsonAPIResponse>>;
-    public ppoReceiptsList(dynamicListQueryParameters?: DynamicListQueryParameters, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public getAllPpoReceipts(dynamicListQueryParameters?: DynamicListQueryParameters, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ListAllPpoReceiptsResponseDTOIEnumerableDynamicListResultJsonAPIResponse>;
+    public getAllPpoReceipts(dynamicListQueryParameters?: DynamicListQueryParameters, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ListAllPpoReceiptsResponseDTOIEnumerableDynamicListResultJsonAPIResponse>>;
+    public getAllPpoReceipts(dynamicListQueryParameters?: DynamicListQueryParameters, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ListAllPpoReceiptsResponseDTOIEnumerableDynamicListResultJsonAPIResponse>>;
+    public getAllPpoReceipts(dynamicListQueryParameters?: DynamicListQueryParameters, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -251,12 +251,12 @@ export class PensionManualPPOReceiptService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ppoReceiptsRead(treasuryReceiptNo: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ManualPpoReceiptResponseDTOJsonAPIResponse>;
-    public ppoReceiptsRead(treasuryReceiptNo: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ManualPpoReceiptResponseDTOJsonAPIResponse>>;
-    public ppoReceiptsRead(treasuryReceiptNo: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ManualPpoReceiptResponseDTOJsonAPIResponse>>;
-    public ppoReceiptsRead(treasuryReceiptNo: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public getPpoReceiptByTreasuryReceiptNo(treasuryReceiptNo: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ManualPpoReceiptResponseDTOJsonAPIResponse>;
+    public getPpoReceiptByTreasuryReceiptNo(treasuryReceiptNo: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ManualPpoReceiptResponseDTOJsonAPIResponse>>;
+    public getPpoReceiptByTreasuryReceiptNo(treasuryReceiptNo: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ManualPpoReceiptResponseDTOJsonAPIResponse>>;
+    public getPpoReceiptByTreasuryReceiptNo(treasuryReceiptNo: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (treasuryReceiptNo === null || treasuryReceiptNo === undefined) {
-            throw new Error('Required parameter treasuryReceiptNo was null or undefined when calling ppoReceiptsRead.');
+            throw new Error('Required parameter treasuryReceiptNo was null or undefined when calling getPpoReceiptByTreasuryReceiptNo.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -316,12 +316,12 @@ export class PensionManualPPOReceiptService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public ppoReceiptsUpdate(treasuryReceiptNo: string, manualPpoReceiptEntryDTO?: ManualPpoReceiptEntryDTO, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ManualPpoReceiptResponseDTOJsonAPIResponse>;
-    public ppoReceiptsUpdate(treasuryReceiptNo: string, manualPpoReceiptEntryDTO?: ManualPpoReceiptEntryDTO, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ManualPpoReceiptResponseDTOJsonAPIResponse>>;
-    public ppoReceiptsUpdate(treasuryReceiptNo: string, manualPpoReceiptEntryDTO?: ManualPpoReceiptEntryDTO, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ManualPpoReceiptResponseDTOJsonAPIResponse>>;
-    public ppoReceiptsUpdate(treasuryReceiptNo: string, manualPpoReceiptEntryDTO?: ManualPpoReceiptEntryDTO, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public updatePpoReceiptByTreasuryReceiptNo(treasuryReceiptNo: string, manualPpoReceiptEntryDTO?: ManualPpoReceiptEntryDTO, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<ManualPpoReceiptResponseDTOJsonAPIResponse>;
+    public updatePpoReceiptByTreasuryReceiptNo(treasuryReceiptNo: string, manualPpoReceiptEntryDTO?: ManualPpoReceiptEntryDTO, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<ManualPpoReceiptResponseDTOJsonAPIResponse>>;
+    public updatePpoReceiptByTreasuryReceiptNo(treasuryReceiptNo: string, manualPpoReceiptEntryDTO?: ManualPpoReceiptEntryDTO, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<ManualPpoReceiptResponseDTOJsonAPIResponse>>;
+    public updatePpoReceiptByTreasuryReceiptNo(treasuryReceiptNo: string, manualPpoReceiptEntryDTO?: ManualPpoReceiptEntryDTO, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (treasuryReceiptNo === null || treasuryReceiptNo === undefined) {
-            throw new Error('Required parameter treasuryReceiptNo was null or undefined when calling ppoReceiptsUpdate.');
+            throw new Error('Required parameter treasuryReceiptNo was null or undefined when calling updatePpoReceiptByTreasuryReceiptNo.');
         }
 
         let localVarHeaders = this.defaultHeaders;
