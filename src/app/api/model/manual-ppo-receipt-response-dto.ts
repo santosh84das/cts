@@ -20,6 +20,7 @@ export interface ManualPpoReceiptResponseDTO {
     receiptDate?: DateOnly;
     psaCode?: string;
     ppoType?: string;
+    id?: number;
     treasuryReceiptNo?: string | null;
 }
 
