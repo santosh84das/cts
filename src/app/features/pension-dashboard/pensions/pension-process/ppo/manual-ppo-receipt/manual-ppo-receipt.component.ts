@@ -156,7 +156,7 @@ export class ManualPpoReceiptComponent implements OnInit {
 
       console.log('Form Data:', formData);
 
-      this.pensionManualPpoReceiptService.ppoReceiptsCreate(formData).subscribe(
+      this.pensionManualPpoReceiptService.createPpoReceipt(formData).subscribe(
         response => {
           if (response.apiResponseStatus === 1) {  // Assuming 1 means success
             console.log('Form submitted successfully:', response);
@@ -195,7 +195,7 @@ export class ManualPpoReceiptComponent implements OnInit {
   getManualPpoReceiptByTreasuryReceiptNo(treasuryReceiptNo: string | null | undefined) {
   if (treasuryReceiptNo) {
     console.log('Fetching Manual PPO Receipt By Id...');
-    this.pensionManualPpoReceiptService.ppoReceiptsRead(treasuryReceiptNo.toString())
+    this.pensionManualPpoReceiptService.getPpoReceiptByTreasuryReceiptNo(treasuryReceiptNo.toString())
       .subscribe((response) => {
         console.log('API Response:', response);
         if (response.apiResponseStatus === 1) {
@@ -215,7 +215,7 @@ export class ManualPpoReceiptComponent implements OnInit {
   getAllManualPpoReceipt(tableQueryParameters: DynamicTableQueryParameters, treasuryReceiptNo?: string) {
     this.isTableDataLoading = true;
     if (treasuryReceiptNo) {
-      this.pensionManualPpoReceiptService.ppoReceiptsRead(treasuryReceiptNo).subscribe(
+      this.pensionManualPpoReceiptService.getPpoReceiptByTreasuryReceiptNo(treasuryReceiptNo).subscribe(
         (response: any) => {
           console.log('API Responsef for update:', response);
           this.isTableDataLoading = false;
@@ -238,7 +238,7 @@ export class ManualPpoReceiptComponent implements OnInit {
       );
     } else {
       console.log("tableQueryParameters: "+tableQueryParameters);
-      this.pensionManualPpoReceiptService.ppoReceiptsList(tableQueryParameters).subscribe(
+      this.pensionManualPpoReceiptService.getAllPpoReceipts(tableQueryParameters).subscribe(
         (response: any) => {
           this.isTableDataLoading = false;
           if (response && response.apiResponseStatus === 1 && response.result) {
@@ -282,7 +282,7 @@ export class ManualPpoReceiptComponent implements OnInit {
     const treasuryReceiptId: string = this.selectedRow.treasuryReceiptNo;
     console.log('Treasury Receipt ID:', treasuryReceiptId);
 
-    this.pensionManualPpoReceiptService.ppoReceiptsRead(treasuryReceiptId).subscribe({
+    this.pensionManualPpoReceiptService.getPpoReceiptByTreasuryReceiptNo(treasuryReceiptId).subscribe({
         next: response => {
             if (response.result) {
                 console.log('Fetched DTO:', response);
@@ -355,7 +355,7 @@ private convertToDate(dateOnly: any): Date | null {
       psaCode: formData.psaCode,
       ppoType: formData.ppoType
     };
-    this.pensionManualPpoReceiptService.ppoReceiptsUpdate(this.selectedRow.treasuryReceiptNo, updateDto).subscribe(
+    this.pensionManualPpoReceiptService.updatePpoReceiptByTreasuryReceiptNo(this.selectedRow.treasuryReceiptNo, updateDto).subscribe(
       response => {
         console.log('Update successful:', response);
         this.getAllManualPpoReceipt(this.tableQueryParameters);  // Refresh table data
