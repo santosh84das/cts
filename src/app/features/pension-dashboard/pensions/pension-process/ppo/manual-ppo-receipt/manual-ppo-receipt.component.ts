@@ -3,13 +3,13 @@ import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@ang
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActionButtonConfig, DynamicTable, DynamicTableQueryParameters, TableHeader } from 'mh-prime-dynamic-table';
 import { Status } from 'src/app/core/enum/stampIndentStatusEnum';
-import { manualPpoReceiptEntryDTO } from 'src/app/core/models/manual-ppo-receipt';
-import { ManualPpoReceiptService } from 'src/app/core/services/manualPpoReceipt/manual-ppo-receipt.service';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { convertDate } from 'src/utils/dateConversion';
 import { DatePipe } from '@angular/common';
 import { SelectItem } from 'primeng/api';
-import { PensionManualPPOReceiptService } from 'src/app/api';
+import { PensionManualPPOReceiptService, ManualPpoReceiptEntryDTO, ManualPpoReceiptResponseDTO, DateOnly } from 'src/app/api';
+import { error } from 'console';
+
 
 interface expandedRows {
   [key: string]: boolean;
@@ -30,12 +30,10 @@ export class ManualPpoReceiptComponent implements OnInit {
   tableActionButton: ActionButtonConfig[] = [];
   tableChildActionButton: ActionButtonConfig[] = [];
   tableData: any;
-  modalData: manualPpoReceiptEntryDTO[] = [];
   count: number = 0;
   isTableDataLoading: boolean = false;
   treasuryReceiptId!: string;
-  manaualPpoPayload!: manualPpoReceiptEntryDTO;
-  selectedRowData: manualPpoReceiptEntryDTO | null = null;
+  selectedRowData: ManualPpoReceiptResponseDTO | null = null;
   selectedRow: any;
   ppoIssuedBy: SelectItem[] = [];
   type: SelectItem[] = [];
@@ -45,7 +43,6 @@ export class ManualPpoReceiptComponent implements OnInit {
   constructor(
     private datePipe: DatePipe,
     private toastService: ToastService,
-    private manualPpoReceiptService: ManualPpoReceiptService,
     private pensionManualPpoReceiptService : PensionManualPPOReceiptService,
     private fb: FormBuilder,
     private cd: ChangeDetectorRef
@@ -159,7 +156,7 @@ export class ManualPpoReceiptComponent implements OnInit {
 
       console.log('Form Data:', formData);
 
-      this.manualPpoReceiptService.addNewManualPpoReceipt(formData).subscribe(
+      this.pensionManualPpoReceiptService.createPpoReceipt(formData).subscribe(
         response => {
           if (response.apiResponseStatus === 1) {  // Assuming 1 means success
             console.log('Form submitted successfully:', response);
@@ -195,25 +192,32 @@ export class ManualPpoReceiptComponent implements OnInit {
   }
 
   // Get Manual PPO Receipt By Id
-  getManualPpoReceiptByTreasuryReceiptNo(treasuryReceiptNo: string) {
+  getManualPpoReceiptByTreasuryReceiptNo(treasuryReceiptNo: string | null | undefined) {
+  if (treasuryReceiptNo) {
     console.log('Fetching Manual PPO Receipt By Id...');
-    this.manualPpoReceiptService.getManualPpoDetailsById(treasuryReceiptNo)
+    this.pensionManualPpoReceiptService.getPpoReceiptByTreasuryReceiptNo(treasuryReceiptNo.toString())
       .subscribe((response) => {
         console.log('API Response:', response);
         if (response.apiResponseStatus === 1) {
           this.tableData = response.result;
         } else {
-          this.toastService.showAlert(response.message, response.apiResponseStatus);
+          this.toastService.showAlert(response.message || 'An unexpected error occurred', response.apiResponseStatus || 0);
         }
       });
+  } else {
+    console.log('treasuryReceiptNo is null or undefined');
+    // Handle the case where treasuryReceiptNo is null or undefined
+    this.toastService.showAlert('treasuryReceiptNo is null or undefined', 0);
   }
+}
 
   // Get All Manual PPO Receipt
   getAllManualPpoReceipt(tableQueryParameters: DynamicTableQueryParameters, treasuryReceiptNo?: string) {
     this.isTableDataLoading = true;
     if (treasuryReceiptNo) {
-      this.manualPpoReceiptService.getManualPpoDetailsById(treasuryReceiptNo).subscribe(
+      this.pensionManualPpoReceiptService.getPpoReceiptByTreasuryReceiptNo(treasuryReceiptNo).subscribe(
         (response: any) => {
+          console.log('API Responsef for update:', response);
           this.isTableDataLoading = false;
           if (response && response.apiResponseStatus === 1) {
             const updatedData = [response.result].map((item: any) => ({
@@ -234,7 +238,7 @@ export class ManualPpoReceiptComponent implements OnInit {
       );
     } else {
       console.log("tableQueryParameters: "+tableQueryParameters);
-      this.manualPpoReceiptService.getAllManualPpoReceipt(tableQueryParameters).subscribe(
+      this.pensionManualPpoReceiptService.getAllPpoReceipts(tableQueryParameters).subscribe(
         (response: any) => {
           this.isTableDataLoading = false;
           if (response && response.apiResponseStatus === 1 && response.result) {
@@ -275,77 +279,113 @@ export class ManualPpoReceiptComponent implements OnInit {
   EditInit(rowData: any): void {
     console.log('EditInit called with rowData:', rowData);
     this.selectedRow = rowData;
-    var treasuryReceiptId: string = this.selectedRow.treasuryReceiptNo;
+    const treasuryReceiptId: string = this.selectedRow.treasuryReceiptNo;
     console.log('Treasury Receipt ID:', treasuryReceiptId);
 
-    this.manualPpoReceiptService.getManualPpoDetailsById(treasuryReceiptId).subscribe({
+    this.pensionManualPpoReceiptService.getPpoReceiptByTreasuryReceiptNo(treasuryReceiptId).subscribe({
         next: response => {
-            console.log('Fetched DTO:', response);
-            const dateOfCommencement = response.result.dateOfCommencement ? new Date(response.result.dateOfCommencement) : null;
-            const receiptDate = response.result.receiptDate ? new Date(response.result.receiptDate) : null;
+            if (response.result) {
+                console.log('Fetched DTO:', response);
 
-            this.manualPpoForm.patchValue({
-                ppoNo: response.result.ppoNo,
-                pensionerName: response.result.pensionerName,
-                dateOfCommencement: dateOfCommencement,
-                mobileNumber: response.result.mobileNumber,
-                receiptDate: receiptDate,
-                psaCode: response.result.psaCode,
-                ppoType: response.result.ppoType
-            });
-            console.log('Form Values:', this.manualPpoForm.value);
-            this.displayInsertModal = true;
+                const dateOfCommencement = this.convertToDate(response.result.dateOfCommencement);
+                const receiptDate = this.convertToDate(response.result.receiptDate);
+
+                this.manualPpoForm.patchValue({
+                  ppoNo: response.result.ppoNo,
+                  pensionerName: response.result.pensionerName,
+                  dateOfCommencement: dateOfCommencement,
+                  mobileNumber: response.result.mobileNumber,
+                  receiptDate: receiptDate,
+                  psaCode: response.result.psaCode,
+                  ppoType: response.result.ppoType
+              });
+              
+                console.log('Form Values:', this.manualPpoForm.value);
+                this.displayInsertModal = true;
+            } else {
+                this.toastService.showError('No PPO receipt details found.');
+            }
         },
         error: err => {
             this.toastService.showError('Failed to fetch PPO receipt details.');
         }
     });
+}
+
+private convertToDate(dateOnly: any): Date | null {
+  if (!dateOnly) {
+      return null;
   }
+  
+  if (dateOnly instanceof Date) {
+      return dateOnly;
+  }
+  if (typeof dateOnly === 'string') {
+      const parsedDate = new Date(dateOnly);
+      return isNaN(parsedDate.getTime()) ? null : parsedDate;
+  }
+  const { year, month, day } = dateOnly;
+  if (year && month && day) {
+      return new Date(year, month - 1, day); 
+  }
+  return null;
+}
+
+
+
+
+
 
   // Update Manual PPO Receipt
   updateManualPpoReceipt(selectedRow: any) {
-    console.log('Selected Row:', this.selectedRow);
-    console.log('Form Data:', this.manualPpoForm.value);
-    if (this.selectedRow && this.manualPpoForm.valid) {
-      const formData = this.manualPpoForm.value;
-      const updateDto: manualPpoReceiptEntryDTO = {
-        ppoNo: formData.ppoNo,
-        pensionerName: formData.pensionerName,
-        dateOfCommencement: this.datePipe.transform(formData.dateOfCommencement, 'yyyy-MM-dd')!,
-        mobileNumber: formData.mobileNumber,
-        receiptDate: this.datePipe.transform(formData.receiptDate, 'yyyy-MM-dd')!,
-        psaCode: formData.psaCode,
-        ppoType: formData.ppoType
-      };
-      this.manualPpoReceiptService.updateManualPpoReceipt(this.selectedRow.treasuryReceiptNo,updateDto).subscribe(
-        response => {
-          console.log('Update successful:', response);
-          this.getAllManualPpoReceipt(this.tableQueryParameters);  // Refresh table data
-          this.resetForm();  // Reset form fields
-          this.displayInsertModal = false;  // Close the dialog
-        },
-        error => {
-          console.log("Treasury Receipt ID: "+this.selectedRow.treasuryReceiptNo);
-          if (error instanceof HttpErrorResponse && error.status === 400) {
-            console.error('Error updating data:', error);
-            const errorMessage = error.error.message;
-            this.toastService.showError(errorMessage);
-          } else {
-            console.error('Error updating data:', error);
-            this.toastService.showError('An unexpected error occurred. Please try again.');
-          }
-        }
-      );
-    } else {
-      console.log('Form is not valid. Cannot update.');
+  console.log('Selected Row:', this.selectedRow);
+  console.log('Form Data:', this.manualPpoForm.value);
+  if (this.selectedRow && this.manualPpoForm.valid) {
+    const formData = this.manualPpoForm.value;
+    if (formData.dateOfCommencement && formData.receiptDate) {
+      formData.dateOfCommencement = this.datePipe.transform(formData.dateOfCommencement, 'yyyy-MM-dd');
+      formData.receiptDate = this.datePipe.transform(formData.receiptDate, 'yyyy-MM-dd');
     }
+    const updateDto: ManualPpoReceiptResponseDTO = {
+      ppoNo: formData.ppoNo,
+      pensionerName: formData.pensionerName,
+      dateOfCommencement: formData.dateOfCommencement,
+      mobileNumber: formData.mobileNumber,
+      receiptDate: formData.receiptDate,
+      psaCode: formData.psaCode,
+      ppoType: formData.ppoType
+    };
+    this.pensionManualPpoReceiptService.updatePpoReceiptByTreasuryReceiptNo(this.selectedRow.treasuryReceiptNo, updateDto).subscribe(
+      response => {
+        console.log('Update successful:', response);
+        this.getAllManualPpoReceipt(this.tableQueryParameters);  // Refresh table data
+        this.resetForm();  // Reset form fields
+        this.displayInsertModal = false;  // Close the dialog
+      },
+      error => {
+        console.log("Treasury Receipt ID: " + this.selectedRow.treasuryReceiptNo);
+        if (error instanceof HttpErrorResponse && error.status === 400) {
+          console.error('Error updating data:', error);
+          const errorMessage = error.error.message;
+          this.toastService.showError(errorMessage);
+        } else {
+          console.error('Error updating data:', error);
+          this.toastService.showError('An unexpected error occurred. Please try again.');
+        }
+      }
+    );
+  } else {
+    console.log('Form is not valid. Cannot update.');
   }
+}
 
-  onRowEditInit(data: manualPpoReceiptEntryDTO) {
-    this.selectedRowData = { ...data };
-    this.manualPpoForm.patchValue(this.selectedRowData);
-    this.displayInsertModal = true;
-  }
+onRowEditInit(data: ManualPpoReceiptResponseDTO) {
+  this.selectedRowData = { ...data };
+  this.manualPpoForm.patchValue(this.selectedRowData);
+  this.displayInsertModal = true;
+}
+
+
 
   onRowEditCancel() {
     this.selectedRowData = null;
